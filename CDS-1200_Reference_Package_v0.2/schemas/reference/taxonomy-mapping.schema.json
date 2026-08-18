@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:cds:schema:reference:taxonomy-mapping",
+  "version": "0.2.0",
+  "title": "CDS Taxonomy Mapping",
+  "allOf": [
+    {
+      "$ref": "urn:cds:schema:common:envelope"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "document_type": {
+          "const": "taxonomy_mapping"
+        },
+        "mapping_id": {
+          "type": "string",
+          "minLength": 3
+        },
+        "internal_category_id": {
+          "type": "string",
+          "minLength": 3
+        },
+        "channel": {
+          "type": "string",
+          "minLength": 1
+        },
+        "taxonomy_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "external_node_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "mapping_status": {
+          "type": "string",
+          "enum": [
+            "proposed",
+            "approved",
+            "deprecated",
+            "rejected"
+          ]
+        },
+        "inherited": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "mapping_id",
+        "internal_category_id",
+        "channel",
+        "taxonomy_version",
+        "external_node_id",
+        "mapping_status",
+        "inherited"
+      ]
+    }
+  ],
+  "unevaluatedProperties": false
+}

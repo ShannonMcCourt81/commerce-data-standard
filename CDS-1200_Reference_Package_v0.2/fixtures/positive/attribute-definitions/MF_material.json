@@ -1,0 +1,29 @@
+{
+  "cds_schema": "urn:cds:schema:core:attribute-definition",
+  "cds_version": "0.2",
+  "document_type": "attribute_definition",
+  "document_id": "attr_mf_material",
+  "revision": 1,
+  "status": "active",
+  "tenant_id": "org_reference",
+  "created_at": "2026-08-03T00:00:00Z",
+  "updated_at": "2026-08-03T00:00:00Z",
+  "source_system": "cds-reference-package",
+  "attribute_id": "MF_material",
+  "label": "Material",
+  "description": "Material composition.",
+  "scope": "product",
+  "value_type": "composition_list",
+  "cardinality": {
+    "minimum": 1,
+    "maximum": 10
+  },
+  "dictionary_id": "dict_material",
+  "behaviour": {
+    "filterable": true,
+    "searchable": true,
+    "displayable": true,
+    "comparison_strategy": "unordered_composition"
+  },
+  "channel_mappings": []
+}

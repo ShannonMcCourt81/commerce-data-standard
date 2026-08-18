@@ -1,0 +1,5 @@
+dictionary_key,row_type,value_id,label,maps_to,aliases,facet_ids,status,provenance,version,locale
+pet_size,canonical,small,Small,,small breed;toy breed;mini,,active,seed,0.5.0,en-GB
+pet_size,canonical,medium,Medium,,medium breed,,active,seed,0.5.0,en-GB
+pet_size,canonical,large,Large,,large breed,,active,seed,0.5.0,en-GB
+pet_size,canonical,extra_large,Extra Large,,giant breed;XL,,active,seed,0.5.0,en-GB

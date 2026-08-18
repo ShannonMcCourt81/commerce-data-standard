@@ -1,0 +1,13 @@
+dictionary_key,row_type,value_id,label,maps_to,aliases,facet_ids,status,provenance,version,locale
+installation_type,canonical,freestanding,Freestanding,,,,active,seed,0.4.0,en-GB
+installation_type,canonical,built_in,Built-In,,built in,,active,seed,0.4.0,en-GB
+installation_type,canonical,integrated,Integrated,,fully integrated,,active,seed,0.4.0,en-GB
+installation_type,canonical,semi_integrated,Semi-Integrated,,semi integrated,,active,seed,0.4.0,en-GB
+installation_type,canonical,countertop,Countertop,,benchtop;bench top,,active,seed,0.4.0,en-GB
+installation_type,canonical,wall_mounted,Wall-Mounted,,wall mount,,active,seed,0.4.0,en-GB
+installation_type,canonical,portable,Portable,,,,active,seed,0.4.0,en-GB
+installation_type,canonical,plumbed,Plumbed,,plumbed in;requires plumbing,,active,seed,0.4.0,en-GB
+installation_type,canonical,undermount,Undermount,,under mount;under cupboard,,active,seed,0.5.0,en-GB
+installation_type,canonical,flush_mounted,Flush-Mounted,,flush mount;flushmount,,active,seed,0.5.0,en-GB
+installation_type,canonical,recessed,Recessed,,in-ceiling;in-wall,,active,seed,0.5.0,en-GB
+installation_type,canonical,ceiling_mounted,Ceiling-Mounted,,ceiling mount,,active,seed,0.5.0,en-GB

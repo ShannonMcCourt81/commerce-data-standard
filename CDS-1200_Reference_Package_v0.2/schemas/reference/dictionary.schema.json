@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:cds:schema:reference:dictionary",
+  "version": "0.2.0",
+  "title": "CDS Dictionary Definition",
+  "allOf": [
+    {
+      "$ref": "urn:cds:schema:common:envelope"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "document_type": {
+          "const": "dictionary"
+        },
+        "dictionary_id": {
+          "type": "string",
+          "minLength": 3
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "purpose": {
+          "type": "string"
+        },
+        "value_type": {
+          "type": "string",
+          "enum": [
+            "flat",
+            "hierarchical"
+          ]
+        },
+        "default_locale": {
+          "type": "string"
+        },
+        "governance_owner": {
+          "type": "string",
+          "minLength": 1
+        },
+        "dictionary_version": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "dictionary_id",
+        "name",
+        "value_type",
+        "default_locale",
+        "governance_owner",
+        "dictionary_version"
+      ]
+    }
+  ],
+  "unevaluatedProperties": false
+}

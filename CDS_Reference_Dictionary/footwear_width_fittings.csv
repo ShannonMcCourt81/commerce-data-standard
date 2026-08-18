@@ -1,0 +1,5 @@
+dictionary_key,row_type,value_id,label,maps_to,aliases,facet_ids,status,provenance,version,locale
+footwear_width_fitting,canonical,narrow,Narrow,,slim fit,,active,seed,0.1.0,en-GB
+footwear_width_fitting,canonical,standard,Standard,,regular;medium,,active,seed,0.1.0,en-GB
+footwear_width_fitting,canonical,wide,Wide,,wide fit,,active,seed,0.1.0,en-GB
+footwear_width_fitting,canonical,extra_wide,Extra Wide,,extra wide fit;xw,,active,seed,0.1.0,en-GB

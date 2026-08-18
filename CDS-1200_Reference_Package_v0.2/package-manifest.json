@@ -1,0 +1,416 @@
+{
+  "package": "CDS-1200 Reference Package",
+  "version": "0.2.1",
+  "schema_dialect": "https://json-schema.org/draft/2020-12/schema",
+  "hash_convention": "sha256 per file; manifest itself and evidence/ excluded; package_hash = sha256 over sorted 'path  sha256' lines.",
+  "package_hash": "8459d2e184fe734c56ee135ca201d420d359706d2383971ea1f2c1816f63ef62",
+  "schema_registry": [
+    {
+      "id": "urn:cds:schema:assurance:conformance-manifest",
+      "version": "0.2.0",
+      "path": "schemas/assurance/conformance-manifest.schema.json"
+    },
+    {
+      "id": "urn:cds:schema:assurance:validation-output",
+      "version": "0.2.0",
+      "path": "schemas/assurance/validation-output.schema.json"
+    },
+    {
+      "id": "urn:cds:schema:automation:ai-proposal",
+      "version": "0.2.0",
+      "path": "schemas/automation/ai-proposal.schema.json"
+    },
+    {
+      "id": "urn:cds:schema:channel:channel-profile",
+      "version": "0.2.0",
+      "path": "schemas/channel/channel-profile.schema.json"
+    },
+    {
+      "id": "urn:cds:schema:channel:field-mapping",
+      "version": "0.2.0",
+      "path": "schemas/channel/field-mapping.schema.json"
+    },
+    {
+      "id": "urn:cds:schema:channel:observation-record",
+      "version": "0.2.0",
+      "path": "schemas/channel/observation-record.schema.json"
+    },
+    {
+      "id": "urn:cds:schema:channel:publication-record",
+      "version": "0.2.0",
+      "path": "schemas/channel/publication-record.schema.json"
+    },
+    {
+      "id": "urn:cds:schema:channel:verification-result",
+      "version": "0.2.0",
+      "path": "schemas/channel/verification-result.schema.json"
+    },
+    {
+      "id": "urn:cds:schema:common:entity-reference",
+      "version": "0.2.0",
+      "path": "schemas/common/entity-reference.schema.json"
+    },
+    {
+      "id": "urn:cds:schema:common:envelope",
+      "version": "0.2.0",
+      "path": "schemas/common/envelope.schema.json"
+    },
+    {
+      "id": "urn:cds:schema:common:localised-text",
+      "version": "0.2.0",
+      "path": "schemas/common/localised-text.schema.json"
+    },
+    {
+      "id": "urn:cds:schema:common:measurement",
+      "version": "0.2.0",
+      "path": "schemas/common/measurement.schema.json"
+    },
+    {
+      "id": "urn:cds:schema:common:money",
+      "version": "0.2.0",
+      "path": "schemas/common/money.schema.json"
+    },
+    {
+      "id": "urn:cds:schema:core:attribute-definition",
+      "version": "0.2.0",
+      "path": "schemas/core/attribute-definition.schema.json"
+    },
+    {
+      "id": "urn:cds:schema:core:product",
+      "version": "0.2.0",
+      "path": "schemas/core/product.schema.json"
+    },
+    {
+      "id": "urn:cds:schema:core:variant",
+      "version": "0.2.0",
+      "path": "schemas/core/variant.schema.json"
+    },
+    {
+      "id": "urn:cds:schema:reference:category",
+      "version": "0.2.0",
+      "path": "schemas/reference/category.schema.json"
+    },
+    {
+      "id": "urn:cds:schema:reference:dictionary-value",
+      "version": "0.2.0",
+      "path": "schemas/reference/dictionary-value.schema.json"
+    },
+    {
+      "id": "urn:cds:schema:reference:dictionary",
+      "version": "0.2.0",
+      "path": "schemas/reference/dictionary.schema.json"
+    },
+    {
+      "id": "urn:cds:schema:reference:facet-definition",
+      "version": "0.2.0",
+      "path": "schemas/reference/facet-definition.schema.json"
+    },
+    {
+      "id": "urn:cds:schema:reference:taxonomy-mapping",
+      "version": "0.2.0",
+      "path": "schemas/reference/taxonomy-mapping.schema.json"
+    }
+  ],
+  "files": [
+    {
+      "path": "CHANGELOG.md",
+      "sha256": "9b508588dce55e21d5c2e59179a385c54f10bd6dc7dbe06ffcfa6ba07ebe0d23",
+      "bytes": 5553
+    },
+    {
+      "path": "LICENSE-CODE.md",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358
+    },
+    {
+      "path": "LICENSE-SPEC.md",
+      "sha256": "9ba9550ad48438d0836ddab3da480b3b69ffa0aac7b7878b5a0039e7ab429411",
+      "bytes": 18657
+    },
+    {
+      "path": "LICENSE.txt",
+      "sha256": "70aeda058ac865fee7df0b054b935dfac60e8529154f13df52318071a9bac60f",
+      "bytes": 874
+    },
+    {
+      "path": "README.md",
+      "sha256": "c2f546b03909aba9385224c74d5f51e9abadd42c67469101c438dfe8cf3ab933",
+      "bytes": 2460
+    },
+    {
+      "path": "fixtures/negative/ai-confidence-out-of-range.json",
+      "sha256": "81d8d258e68d0d3860917d975ecfb91a29a7d6d02245a9b1ae3e85aa693b82fd",
+      "bytes": 925
+    },
+    {
+      "path": "fixtures/negative/attribute-invalid-semantic-name.json",
+      "sha256": "7df8bcbf27d311138269486d00df272463cda546668106eecb33969a4961a41a",
+      "bytes": 785
+    },
+    {
+      "path": "fixtures/negative/dictionary-value-invalid-code.json",
+      "sha256": "42827b12440398aa9fef6705880c9585cdfd2efe8503fb53ded291d6dd29f6ea",
+      "bytes": 881
+    },
+    {
+      "path": "fixtures/negative/envelope-bad-status.json",
+      "sha256": "63685e1ab43b984e219b1577f42f2969b92243241e80940880fff95c0fed7172",
+      "bytes": 334
+    },
+    {
+      "path": "fixtures/negative/envelope-missing-revision.json",
+      "sha256": "25bd8201176eb4be9256ec97d40c0dc2dd32d7c76387cceaf316cc8c6b9e6262",
+      "bytes": 319
+    },
+    {
+      "path": "fixtures/negative/observation-invalid-timestamp.json",
+      "sha256": "11ccc20b57d22ac6a82688fd10c49b8bf127488922ea05073806c93339d07b7a",
+      "bytes": 1051
+    },
+    {
+      "path": "fixtures/negative/product-attribute-wrong-type.json",
+      "sha256": "c5ca823f5f5dee9fa9727a4415c03166096d4939a5b6128e82c22a2679c29de8",
+      "bytes": 1115
+    },
+    {
+      "path": "fixtures/negative/product-missing-product-id.json",
+      "sha256": "a2bdce7eb55fe3171895a90008c1851bceaa79b4f09872f584c9025a6c2f2aed",
+      "bytes": 1183
+    },
+    {
+      "path": "fixtures/negative/publication-invalid-status.json",
+      "sha256": "a9c00b4ab8d4a4b0b0e8753db703ae39e358e452052fcb4868946d00ee2155fc",
+      "bytes": 1113
+    },
+    {
+      "path": "fixtures/negative/timestamp-missing-offset.json",
+      "sha256": "643cf795269ec93388920a59ce7766c0f369fc69e88af863baa34790d4b201e7",
+      "bytes": 1145
+    },
+    {
+      "path": "fixtures/negative/variant-invalid-gtin.json",
+      "sha256": "12355a2d8f8f16c9c2ad599ee8e4c33887a8859e488d3a6608dc8c9ba8c36a7f",
+      "bytes": 814
+    },
+    {
+      "path": "fixtures/negative/verification-invalid-status.json",
+      "sha256": "ca16a376810ab4bfab21210414e921cce53efeda4838d9808df202602be36606",
+      "bytes": 1435
+    },
+    {
+      "path": "fixtures/negative/verification-missing-reason-code.json",
+      "sha256": "c9c11d1310f642a9357b57c53da4639343e36fff8577ededa92c3e698cab156b",
+      "bytes": 1674
+    },
+    {
+      "path": "fixtures/positive/ai/colour-mapping.ai-proposal.json",
+      "sha256": "0e1d443c057e336f73a621a3d8c97055651189c3df1c0f9b50ab26e3a3227d0d",
+      "bytes": 1188
+    },
+    {
+      "path": "fixtures/positive/assurance/reference.conformance-manifest.json",
+      "sha256": "f7cd1e5eab09750e8bfba433fe6a171dbb291f416d829248a2c49962fe4967e6",
+      "bytes": 838
+    },
+    {
+      "path": "fixtures/positive/attribute-definitions/MF_colour.json",
+      "sha256": "83344a04bebc85032fa6d0311f01e8e5cb39aaf9508967a70ded1f5c149298b9",
+      "bytes": 778
+    },
+    {
+      "path": "fixtures/positive/attribute-definitions/MF_material.json",
+      "sha256": "9bd87c7df5cfa297cc4b35e5903283899b295ada204453c8ca5020aec502da93",
+      "bytes": 786
+    },
+    {
+      "path": "fixtures/positive/channels/shopify.channel-profile.json",
+      "sha256": "2d8919f4c400b977293efa48ce8db9cc1f219fa217930b4f1f599e92e3d6f219",
+      "bytes": 1712
+    },
+    {
+      "path": "fixtures/positive/classification/womens-shirts.category.json",
+      "sha256": "1b4a078c832028d221c986216a97c4c350bd43a23f59a46b098e665cc2b9de08",
+      "bytes": 654
+    },
+    {
+      "path": "fixtures/positive/classification/womens-shirts.shopify-mapping.json",
+      "sha256": "66cfd492f0292a27875642871e798693aad053059c2077efd88e6e244808eb1d",
+      "bytes": 605
+    },
+    {
+      "path": "fixtures/positive/dictionaries/colour.dictionary.json",
+      "sha256": "2fa611229bb680351a6015b37087c8bb3b37989f675fe115b759eecae1417acc",
+      "bytes": 620
+    },
+    {
+      "path": "fixtures/positive/dictionaries/colour_navy.value.json",
+      "sha256": "58c2ccc06c425c73605147b2ce69866c3e2edb88ff1d6da677c303da4d934d2c",
+      "bytes": 876
+    },
+    {
+      "path": "fixtures/positive/facets/colour-family.json",
+      "sha256": "fa5c70495c77ede6bfdced20bb4abb03c73d4bec6e1924023905451b986287ef",
+      "bytes": 712
+    },
+    {
+      "path": "fixtures/positive/observation/shopify-shirt.observation.json",
+      "sha256": "a7d166934666e2f3f0df9180e9a597a18b45a23b70ee3e92e51a248f40dc3a41",
+      "bytes": 1146
+    },
+    {
+      "path": "fixtures/positive/products/relaxed-linen-shirt.product.json",
+      "sha256": "ad088421739338a6e84be0a2163521fe75277bb341b590241f374ac6c639ca64",
+      "bytes": 1216
+    },
+    {
+      "path": "fixtures/positive/publication/shopify-shirt.publication.json",
+      "sha256": "1ab31317e108cab3b8e18f59ffb3f8c16b6116f8ac50a2badb39790bd1efb2bd",
+      "bytes": 1118
+    },
+    {
+      "path": "fixtures/positive/variants/relaxed-linen-shirt-navy-m.variant.json",
+      "sha256": "1c2b6b3c04dd586ef1dce2b3ae40df2b3d16ed6ded58c607ae2bdb479d4f5eb6",
+      "bytes": 815
+    },
+    {
+      "path": "fixtures/positive/variants/relaxed-linen-shirt-navy-s.variant.json",
+      "sha256": "daa4c17d662c65031c870352f4df4be183df03b7923cfbeecea8a3f58a589347",
+      "bytes": 814
+    },
+    {
+      "path": "fixtures/positive/verification/shopify-shirt.verification.json",
+      "sha256": "7e38c48850ff2e605167966c070782a6d96b9e177495285705a7ff5be811a775",
+      "bytes": 1652
+    },
+    {
+      "path": "requirements.txt",
+      "sha256": "10ff7f8ce71269398ffcbc8fd77d6d24b047a905f6c02db72c11fd5597f85fd9",
+      "bytes": 64
+    },
+    {
+      "path": "schemas/assurance/conformance-manifest.schema.json",
+      "sha256": "dd5bf9fc5c1d4ffa5a9709342e6b75248af64766381bfeb5647c7db71d68aba0",
+      "bytes": 2532
+    },
+    {
+      "path": "schemas/assurance/validation-output.schema.json",
+      "sha256": "7f28e5b416ae452e0e1b7ca8a99b28202e94dd907cbb5dab2ab863954660edfd",
+      "bytes": 901
+    },
+    {
+      "path": "schemas/automation/ai-proposal.schema.json",
+      "sha256": "2a30d4277b9607afdf779feba2078ca7f7b5910f9f6e72c1f02da736e33ba524",
+      "bytes": 3341
+    },
+    {
+      "path": "schemas/channel/channel-profile.schema.json",
+      "sha256": "eb93b7dc5284bde39937230474cf25f7f2d0ee36afd4e1671cdf4af2cb595d08",
+      "bytes": 1706
+    },
+    {
+      "path": "schemas/channel/field-mapping.schema.json",
+      "sha256": "bb1e4b938442c6fb51fab8d30070fe8b96fd7091d8e5e7d32314433c636b2264",
+      "bytes": 1484
+    },
+    {
+      "path": "schemas/channel/observation-record.schema.json",
+      "sha256": "9c0e0ed79ba092a22d54044a58ee0611496068d5e76bfa113f0a5d8713193893",
+      "bytes": 2698
+    },
+    {
+      "path": "schemas/channel/publication-record.schema.json",
+      "sha256": "87d1f4e60d90aa26066b19d6888debafd3447e551bcc08d746113670f490d294",
+      "bytes": 2642
+    },
+    {
+      "path": "schemas/channel/verification-result.schema.json",
+      "sha256": "4151f758e334bf8a0b51457f5bb5dc61850fe0224ee00e7ef49639529777cecb",
+      "bytes": 4727
+    },
+    {
+      "path": "schemas/common/entity-reference.schema.json",
+      "sha256": "b477c01bb990bab59fefafdca3b1e3f268bcc727a60c9eb5fad6665e54ed7315",
+      "bytes": 592
+    },
+    {
+      "path": "schemas/common/envelope.schema.json",
+      "sha256": "ea9ea1d7b4ef5d393e17c6c7acadf6c1673c018d03144917fc4ae987ef39fa6c",
+      "bytes": 1835
+    },
+    {
+      "path": "schemas/common/localised-text.schema.json",
+      "sha256": "44184ebdca78df7418c61fb372a37c068835f91cf6913ba1906f5548c078f229",
+      "bytes": 439
+    },
+    {
+      "path": "schemas/common/measurement.schema.json",
+      "sha256": "f1aa4ed68a7761d6162d1f7e1e152be333021fec55b33f90df6fc7d8454e063e",
+      "bytes": 457
+    },
+    {
+      "path": "schemas/common/money.schema.json",
+      "sha256": "533b2dac6df0d69cfa7b48e63edf7166bfbda6705818143d46e4fcaf164ab20b",
+      "bytes": 754
+    },
+    {
+      "path": "schemas/core/attribute-definition.schema.json",
+      "sha256": "129cd4d1eeb604382a1d53879ab069939f7c9bd16392bb3d6e3730bfbb52269d",
+      "bytes": 3316
+    },
+    {
+      "path": "schemas/core/product.schema.json",
+      "sha256": "9cffe10ed3200547184de82619c9aa36738ae60f960a7a468e3571a8f24cdf8c",
+      "bytes": 7607
+    },
+    {
+      "path": "schemas/core/variant.schema.json",
+      "sha256": "a211af0e641b9a9f21d474cb146ceefd21f242fb4897184cf4070d68d0d499de",
+      "bytes": 4713
+    },
+    {
+      "path": "schemas/reference/category.schema.json",
+      "sha256": "e6f82b257b7585a913b88721ce723c6e8ba0bda2351aa9f27525034369baa744",
+      "bytes": 1445
+    },
+    {
+      "path": "schemas/reference/dictionary-value.schema.json",
+      "sha256": "fd5905e407bf6f7759d668af02b01f8d21197ef693efae4be03ba398144493c6",
+      "bytes": 2330
+    },
+    {
+      "path": "schemas/reference/dictionary.schema.json",
+      "sha256": "5db8fe973ddb5ff084e91a82b84b0ea4c7c0c534c4253438f757bd1c4b110683",
+      "bytes": 1226
+    },
+    {
+      "path": "schemas/reference/facet-definition.schema.json",
+      "sha256": "9d608fb80fe713bd783738e46700ff5c9edde6cbc76e4793a8fa5b469bc97bce",
+      "bytes": 1591
+    },
+    {
+      "path": "schemas/reference/taxonomy-mapping.schema.json",
+      "sha256": "77c39b7994fa9af5cee78cae1ce8ab1b1d78f0c21b6d6906abd932cb5afbeea9",
+      "bytes": 1349
+    },
+    {
+      "path": "tests/expected-validation-results.json",
+      "sha256": "d128e96cf9ef9f80b434ba6ed8f753d614c66b296de65eab0c779d9fe7fe73f2",
+      "bytes": 6905
+    },
+    {
+      "path": "tests/semantic-tests.json",
+      "sha256": "ecd9b301b4fa50c5064e4e2e06c76ed5b8c2b4bd58338b1874d39ddb369901d6",
+      "bytes": 1420
+    },
+    {
+      "path": "tools/make_manifest.py",
+      "sha256": "785970d577368823ad4176c2bc3139b1d2af32a0234540d045ee8540118ae415",
+      "bytes": 2202
+    },
+    {
+      "path": "tools/validate.py",
+      "sha256": "1c657939875d848f386b924894ba36d5a97fde7009c404fafccc987bcfb2ce46",
+      "bytes": 8696
+    }
+  ]
+}

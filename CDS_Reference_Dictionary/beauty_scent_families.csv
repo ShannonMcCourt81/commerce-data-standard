@@ -1,0 +1,15 @@
+dictionary_key,row_type,value_id,label,maps_to,aliases,facet_ids,status,provenance,version,locale
+beauty_scent_family,canonical,floral,Floral,,flowery,,active,seed,0.1.0,en-GB
+beauty_scent_family,canonical,citrus,Citrus,,,,active,seed,0.1.0,en-GB
+beauty_scent_family,canonical,woody,Woody,,woods,,active,seed,0.1.0,en-GB
+beauty_scent_family,canonical,fresh,Fresh,,clean,,active,seed,0.1.0,en-GB
+beauty_scent_family,canonical,amber,Amber,,oriental,,active,seed,0.1.0,en-GB
+beauty_scent_family,canonical,gourmand,Gourmand,,sweet,,active,seed,0.1.0,en-GB
+beauty_scent_family,canonical,green,Green,,,,active,seed,0.1.0,en-GB
+beauty_scent_family,canonical,aquatic,Aquatic,,marine;ozonic,,active,seed,0.1.0,en-GB
+beauty_scent_family,canonical,musk,Musk,,musky,,active,seed,0.1.0,en-GB
+beauty_scent_family,canonical,herbal,Herbal,,aromatic,,active,seed,0.1.0,en-GB
+beauty_scent_family,canonical,chypre,Chypre,,mossy,,active,seed,0.5.0,en-GB
+beauty_scent_family,canonical,fougere,Fougere,,aromatic fougere;fern,,active,seed,0.5.0,en-GB
+beauty_scent_family,canonical,spicy,Spicy,,warm spicy,,active,seed,0.5.0,en-GB
+beauty_scent_family,canonical,leather,Leather,,leathery,,active,seed,0.5.0,en-GB

@@ -1,0 +1,9 @@
+dictionary_key,row_type,value_id,label,maps_to,aliases,facet_ids,definition,status,provenance,version,locale
+energy_rating_system,canonical,au_energy_rating,AU Energy Rating,,energy rating label;star rating,,Australia and New Zealand star-based energy label (more stars = more efficient),active,seed,0.4.0,en-GB
+energy_rating_system,canonical,eu_energy_label,EU Energy Label,,,,European Union A-G scale energy label,active,seed,0.4.0,en-GB
+energy_rating_system,canonical,uk_energy_label,UK Energy Label,,,,United Kingdom A-G scale energy label,active,seed,0.4.0,en-GB
+energy_rating_system,canonical,energy_star,Energy Star,,,,North American efficiency programme; membership is an evidence-gated claim,active,seed,0.4.0,en-GB
+energy_rating_system,canonical,wels_water_rating,AU WELS Water Rating,,wels,,Australian water-efficiency star label (water not energy; grouped with rating schemes),active,seed,0.4.0,en-GB
+energy_rating_system,canonical,sg_energy_label,SG Energy Label,,mels;nea energy label;tick rating,,Singapore tick-based energy label (1-5 ticks) under the NEA Mandatory Energy Labelling Scheme,active,seed,0.5.0,en-GB
+energy_rating_system,canonical,jp_energy_label,JP Energy Label,,uniform energy-saving label;top runner label,,Japan Uniform Energy-Saving Labelling programme star label showing achievement against METI Top Runner targets,active,seed,0.5.0,en-GB
+energy_rating_system,canonical,cn_energy_label,CN Energy Label,,china energy label,,China mandatory energy information label with efficiency grades 1-5 (grade 1 most efficient),active,seed,0.5.0,en-GB

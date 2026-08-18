@@ -1,0 +1,6 @@
+dictionary_key,row_type,value_id,label,maps_to,aliases,facet_ids,status,provenance,version,locale
+toy_age_range,canonical,age_0_2,0-2 years,,baby;infant;toddler,,active,seed,0.5.0,en-GB
+toy_age_range,canonical,age_3_5,3-5 years,,preschool;preschooler,,active,seed,0.5.0,en-GB
+toy_age_range,canonical,age_6_8,6-8 years,,,,active,seed,0.5.0,en-GB
+toy_age_range,canonical,age_9_12,9-12 years,,tween,,active,seed,0.5.0,en-GB
+toy_age_range,canonical,age_13_plus,13+ years,,teen;teenager;adult,,active,seed,0.5.0,en-GB

@@ -1,0 +1,19 @@
+dictionary_key,row_type,value_id,label,maps_to,aliases,facet_ids,status,provenance,version,locale
+pattern,canonical,plain,Plain,,,,active,seed,0.2.0,en-GB
+pattern,canonical,striped,Striped,,,,active,seed,0.2.0,en-GB
+pattern,canonical,checked,Checked,,,,active,seed,0.2.0,en-GB
+pattern,canonical,plaid,Plaid,,tartan,,active,seed,0.2.0,en-GB
+pattern,canonical,floral,Floral,,,,active,seed,0.2.0,en-GB
+pattern,canonical,animal,Animal Print,,,,active,seed,0.2.0,en-GB
+pattern,canonical,geometric,Geometric,,,,active,seed,0.2.0,en-GB
+pattern,canonical,abstract,Abstract,,,,active,seed,0.2.0,en-GB
+pattern,canonical,paisley,Paisley,,,,active,seed,0.2.0,en-GB
+pattern,canonical,polka_dot,Polka Dot,,,,active,seed,0.2.0,en-GB
+pattern,canonical,graphic,Graphic,,placement print,,active,seed,0.2.0,en-GB
+pattern,canonical,colour_block,Colour Block,,,,active,seed,0.2.0,en-GB
+pattern,canonical,motif,Motif,,,,active,seed,0.2.0,en-GB
+pattern,canonical,gingham,Gingham,,,,active,seed,0.5.0,en-GB
+pattern,canonical,houndstooth,Houndstooth,,dogtooth,,active,seed,0.5.0,en-GB
+pattern,canonical,tie_dye,Tie Dye,,tie-dye,,active,seed,0.5.0,en-GB
+pattern,canonical,camouflage,Camouflage,,camo,,active,seed,0.5.0,en-GB
+pattern,canonical,ombre,Ombre,,gradient;dip dye,,active,seed,0.5.0,en-GB

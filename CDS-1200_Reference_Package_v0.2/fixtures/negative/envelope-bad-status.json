@@ -1,0 +1,12 @@
+{
+  "cds_schema": "urn:cds:schema:common:envelope",
+  "cds_version": "0.2",
+  "document_type": "product",
+  "document_id": "prd_shirt_100",
+  "revision": 1,
+  "status": "live",
+  "tenant_id": "org_reference",
+  "created_at": "2026-08-03T00:00:00Z",
+  "updated_at": "2026-08-03T00:00:00Z",
+  "source_system": "cds-reference-package"
+}

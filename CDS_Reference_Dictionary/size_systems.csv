@@ -1,0 +1,21 @@
+dictionary_key,row_type,value_id,label,maps_to,aliases,facet_ids,status,provenance,version,locale
+size_system,canonical,au,AU,,australian;aus,,active,seed,0.1.0,en-GB
+size_system,canonical,uk,UK,,british;gb,,active,seed,0.1.0,en-GB
+size_system,canonical,us,US,,american;usa,,active,seed,0.1.0,en-GB
+size_system,canonical,eu,EU,,european;eur,,active,seed,0.1.0,en-GB
+size_system,canonical,it,IT,,italian,,active,seed,0.1.0,en-GB
+size_system,canonical,fr,FR,,french,,active,seed,0.1.0,en-GB
+size_system,canonical,jp,JP,,japanese,,active,seed,0.1.0,en-GB
+size_system,canonical,int,International,,alpha sizing;s m l;one-size scale,,active,seed,0.1.0,en-GB
+size_system,canonical,us_mens,US Men's,,us men;us mens footwear,,active,seed,0.1.0,en-GB
+size_system,canonical,us_womens,US Women's,,us women;us womens footwear,,active,seed,0.1.0,en-GB
+size_system,canonical,uk_footwear,UK Footwear,,uk shoe size,,active,seed,0.1.0,en-GB
+size_system,canonical,eu_footwear,EU Footwear,,eu shoe size;paris point,,active,seed,0.1.0,en-GB
+size_system,canonical,uk_bra,UK Bra,,uk bra size;british bra sizing,,active,seed,0.5.0,en-GB
+size_system,canonical,us_bra,US Bra,,us bra size;american bra sizing,,active,seed,0.5.0,en-GB
+size_system,canonical,eu_bra,EU Bra,,eu bra size;european bra sizing,,active,seed,0.5.0,en-GB
+size_system,canonical,fr_bra,FR Bra,,french bra size,,active,seed,0.5.0,en-GB
+size_system,canonical,au_bra,AU Bra,,au bra size;australian bra sizing,,active,seed,0.5.0,en-GB
+size_system,canonical,kids_age,Kids Age,,age sizing;years,,active,seed,0.5.0,en-GB
+size_system,canonical,kids_height,Kids Height,,height in cm;cm sizing,,active,seed,0.5.0,en-GB
+size_system,canonical,us_kids,US Kids,,us toddler sizes;us children's sizes,,active,seed,0.5.0,en-GB

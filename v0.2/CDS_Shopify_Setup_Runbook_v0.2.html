@@ -1,0 +1,696 @@
+<!doctype html><html><head><meta charset="utf-8"><title>CDS Shopify Setup Runbook v0.2</title><style>body{font-family:Georgia,serif;font-size:10.5pt;line-height:1.45;color:#1a1a1a;max-width:100%;margin:0 24px}
+h1{font-size:20pt;border-bottom:2px solid #333;padding-bottom:4px;margin-top:28px}
+h2{font-size:15pt;margin-top:22px} h3{font-size:12pt} h4{font-size:10.5pt}
+table{border-collapse:collapse;width:100%;font-size:9pt;margin:8px 0}
+th,td{border:1px solid #999;padding:3px 6px;text-align:left;vertical-align:top}
+th{background:#eee} code{font-family:Menlo,monospace;font-size:8.5pt;background:#f4f4f4;padding:0 2px}
+pre{background:#f4f4f4;padding:8px;font-size:8.5pt;overflow-x:hidden;white-space:pre-wrap}
+blockquote{border-left:3px solid #bbb;margin-left:0;padding-left:10px;color:#444}
+div.chapter{page-break-before:always}
+@page{margin:18mm 15mm}</style></head><body><h1>Commerce Data Standard (CDS)</h1>
+<h2>Shopify Store Setup Runbook (CDS v0.2)</h2>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Status</td>
+<td><strong>v0.2 Companion — Informative</strong> (profile companion; not normative standard text)</td>
+</tr>
+<tr>
+<td>Release</td>
+<td>CDS v0.2</td>
+</tr>
+<tr>
+<td>Date</td>
+<td>2026-08-17</td>
+</tr>
+<tr>
+<td>Doc type</td>
+<td>How-to runbook (operator-facing)</td>
+</tr>
+<tr>
+<td>Applies to</td>
+<td>New Shopify store, apparel + homewares retailer, small team, PIM-first operation</td>
+</tr>
+<tr>
+<td>Profile stack</td>
+<td>CDS Core → <code>cds.profile.apparel.v0_2</code> + <code>cds.profile.homewares.v0_2</code> (CDS-1500) → CDS-SHOPIFY-0.2 (CDS-900 §4) → this store's organisation profile</td>
+</tr>
+<tr>
+<td>Normative status</td>
+<td>Entirely <strong>informative</strong>. Every step cites the requirement IDs it implements; the cited chapters govern. Where this runbook and a CDS v0.2 chapter disagree, the chapter wins.</td>
+</tr>
+<tr>
+<td>Supersedes (operationally)</td>
+<td>Legacy implementation runbook (its sequencing doctrine is retained; its v0.1-era details are re-based on CDS v0.2)</td>
+</tr>
+<tr>
+<td>Depends on</td>
+<td>CDS-200, CDS-300, CDS-400, CDS-500, CDS-600, CDS-900, CDS-1300, CDS-1500; starter data: <code>CDS_Reference_Dictionary/</code> (Appendix E contract)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>TL;DR — the whole runbook in one page</h2>
+<p><strong>What you're building.</strong> A Shopify store where the PIM is the single source of truth. Product data is described once in the PIM, projected out to Shopify and Google, then <em>read back and compared</em> — so every field on every product shows Green (matches), Amber (missing/pending/accepted difference) or Red (contradiction), with a machine-readable reason underneath. Shopify becomes a screen you publish to, not a place you edit.</p>
+<p><strong>The five ideas everything else hangs off:</strong></p>
+<ol>
+<li><strong>Design before platform, platform before products.</strong> Taxonomy and dictionaries on paper first; Shopify structures second; products last. Retrofitting order is the expensive mistake (Phases 0–3 before 4–8 before 9).</li>
+<li><strong>Controlled words, not free text.</strong> Colours, materials, fits etc. come from the seed dictionaries — a supplier's "French Navy" maps to canonical <code>french_navy</code>, displays as "French Navy", filters as "Blue". Unknown values queue for a human; nothing invents vocabulary (Phase 2).</li>
+<li><strong>Everything customers filter by is a governed metafield; tags only drive collections.</strong> Tags are generated from the category tree, never hand-typed, never exposed as filters (Phases 3–6).</li>
+<li><strong>One writer per field.</strong> The PIM owns product content; Shopify staff edits to PIM-owned fields become detected <em>drift</em>, not silent truth. Google gets the landing-page colour name, never the broad family (Phase 8).</li>
+<li><strong>Published ≠ correct.</strong> A successful API call proves nothing; the read-back loop in Phase 10 is what proves the store actually says what the PIM says.</li>
+</ol>
+<p><strong>You will be stopped for six OWNER DECISIONS:</strong> small-team profile (0), category tie-break order (1), colour family set (2), tag suffix format (3), metafield posture — visible vs app-owned (4, recommendation: visible + drift detection), and the go/no-go gates between product waves (9).</p>
+<p><strong>Done looks like:</strong> the completion checklist passes — PIM authoritative, expected state reproducible, read-back stored separately, every difference classified with a reason, and the storefront filter shows "Blue" while the product page shows "French Navy". That is also, not coincidentally, the CDS vertical-slice acceptance test.</p>
+<p><strong>Time-boxing honestly:</strong> Phases 0–3 are thinking work (days, mostly yours); Phases 4–8 are configuration (days); Phase 9 scales with catalogue size; Phase 10 runs forever — it's the point.</p>
+<hr />
+<p><strong>How to use this document.</strong> Work top to bottom. Each step states <em>what to do</em>, <em>why</em> (one line), and the CDS requirement IDs it implements — read the cited rules before improvising. Steps marked <strong>OWNER DECISION</strong> stop the line until the owner decides and the decision is recorded in the organisation profile. The sequencing doctrine is the legacy store's proven order — design before platform, platform structures before products — updated so that the PIM schema and dictionaries come first, because in v0.2 the PIM is authoritative for everything Shopify displays.</p>
+<p><strong>The sequence at a glance:</strong></p>
+<pre><code>Phase 0  Prerequisites and declarations
+Phase 1  Taxonomy design (on paper, with tie-break order + decision log)
+Phase 2  Dictionaries and attribute schema in the PIM (seed from the CDS Reference Dictionary package)
+Phase 3  Tag vocabulary and collection projection design
+Phase 4  Shopify store bootstrap (permissions, app, metafield posture + definitions)
+Phase 5  Automated collections
+Phase 6  Search &amp; Discovery filters (within verified limits)
+Phase 7  Navigation menu
+Phase 8  PIM channel wiring (channel profile, mappings, ownership, GMC)
+Phase 9  Products — pilot cohort, then waves
+Phase 10 Switch on publish → observe → verify (+ two queued empirical checks)
+         Completion checklist (vertical-slice acceptance)
+</code></pre>
+<p>Build in this order and adding the 500th product is as fast as adding the first. Build in any other order and you will retrofit for months — the legacy runbook's core lesson, unchanged.</p>
+<hr />
+<h2>Phase 0 — Prerequisites and Declarations</h2>
+<h3>0.1 Confirm the Shopify store and plan</h3>
+<p>Create the store (or claim the dev store) on a current standard plan. No feature in this runbook requires Shopify Plus. If a variant decomposition strategy involving <strong>combined listings</strong> is ever contemplated, confirm plan availability first — it has historically been Plus-restricted and is not verified for the current plan.
+<strong>Why:</strong> the whole runbook must run within the plan's declared capabilities.
+Implements: CDS900-R002, CDS900-R023 (preflight against declared limits); caveat per CDS-900 §4.5.1.</p>
+<h3>0.2 Confirm PIM readiness</h3>
+<p>Before anything is configured in Shopify, the PIM must be able to:</p>
+<ol>
+<li>Store canonical values separately from display labels, facet values and channel representations (value layers).</li>
+<li>Persist an <strong>expected channel state</strong> per product/field that is reproducible from versioned inputs (canonical revision + mapping version + dictionary version).</li>
+<li>Store read-back (observed) values <strong>separately</strong> from canonical values — never overwriting them.</li>
+<li>Retain observation records <strong>append-only</strong> per field and channel (previous observed value, new observed value, detection interval must be recoverable).</li>
+<li>Name visible fields per the CDS-300 registry (<code>STD_</code>, <code>CAT_</code>, <code>VAR_</code>, <code>MF_</code>, <code>CH_</code>, <code>OBS_</code>, <code>QA_</code>, …).</li>
+</ol>
+<p>If any of these is missing, stop: the verification loop in Phase 10 cannot be honest without them.
+<strong>Why:</strong> the PIM is the master layer for the whole lifecycle; these five capabilities are the load-bearing floor.
+Implements: CDS500-R001, CDS500-R005, CDS500-R022, CDS500-R077a, CDS200-R031, CDS300-R009.</p>
+<h3>0.3 Confirm the dictionary seed package is present</h3>
+<p>Locate <code>CDS_Reference_Dictionary/</code> and verify it against its <code>manifest.json</code> and <code>SHA256SUMS.txt</code> (the manifest is the version authority — the folder is deliberately unversioned; every CSV row carries the Appendix E column contract: <code>dictionary_key</code>, <code>row_type</code>, <code>value_id</code>, <code>label</code>, <code>aliases</code>, <code>facet_ids</code>, <code>status</code>, <code>provenance</code>, <code>version</code>, <code>locale</code>).
+<strong>Why:</strong> Phase 2 seeds governed dictionaries from this package; a tampered or contract-violating package poisons everything downstream.
+Implements: CDS-1500 Appendix E (column contract), CDS1500-R011.</p>
+<h3>0.4 OWNER DECISION — declare the small-team profile</h3>
+<p>A small team may declare the <strong>small-team profile</strong> in its conformance claim: combined migration credentials are permitted (with attributable audit logging reviewed at wave exit) and the intervention-free readiness demonstration is waived where operators and project team are the same people. All other requirements apply unchanged; functions are hats, not headcount — every function still gets a <strong>named owner</strong>.
+<strong>Standing recommendation:</strong> declare it. This store is exactly the profile's target.
+<strong>Why:</strong> it makes the conformance claim honest for a small team without waiving any evidence.
+Implements: CDS1300-R003, CDS1300-R004, CDS1300-R005 (Table 2-1), CDS1300-R053.</p>
+<h3>0.5 Open the organisation profile document</h3>
+<p>Open <code>CDS_Adoption_Workbook_v0.2.md</code> and use it as the organisation profile, or represent the same fields in the PIM. It accumulates every decision this runbook produces: tie-break order, tag format, metafield posture, facet sets, channel capability declarations, named function owners. Every divergence from the platform/industry profiles gets documented here.
+<strong>Why:</strong> an organisation profile may extend the stack but must document every divergence.
+Implements: CDS900-R005, CDS900-R006.</p>
+<hr />
+<h2>Phase 1 — Taxonomy Design (on paper, before any system)</h2>
+<p>This is the legacy runbook's most important phase, carried forward intact: the taxonomy is a document — spreadsheet or whiteboard — settled before Shopify or the PIM is touched.</p>
+<h3>1.1 Design the internal category tree</h3>
+<p>Draft the internal tree for the full intended range (apparel + homewares), 2–4 levels deep (3 is the sweet spot for 100–1,000 products). Recommended shape: <strong>Product Family → Product Type → Category</strong> (e.g. <code>Apparel &gt; Women &gt; Tops &gt; Shirts</code>; <code>Homewares &gt; Living Room &gt; Tables &gt; Side Tables</code>). For every node apply the scale test: will it hold ≥5 products; would a customer seek it specifically; can you write one sentence saying what belongs and what does not. Merge failures into the parent.
+<strong>Why:</strong> every collection, filter, menu item and channel mapping downstream is a projection of this tree.
+Implements: CDS200-R013, CDS200-R014, CDS200-R016.</p>
+<h3>1.2 Enforce one primary category per product type</h3>
+<p>Every product will get <strong>exactly one primary internal category</strong> — the most specific applicable node. Products may later appear in many collections and carry secondary placements, but classification is single-homed. Distinguish <em>taxonomy overlap</em> (categories not distinct — fix the boundaries now) from <em>merchandising overlap</em> (one function, two audiences — solved later with <code>merch_*</code> tags and cross-links, never a second category).
+<strong>Why:</strong> single-homing is what makes collections, breadcrumbs, inheritance and channel mappings deterministic.
+Implements: CDS200-R015, CDS200-R016, CDS200-R019, CDS200-R022, CDS600-R012, CDS600-R091.</p>
+<h3>1.3 OWNER DECISION — declare the tie-break order</h3>
+<p>When a product plausibly fits two categories, resolution uses an <strong>organisation-declared, documented, ordered rule set</strong>, applied in order until one rule decides, and applied consistently forever after. Record the declared order in the organisation profile.
+<strong>Recommended default (adopt unless you have a reason not to):</strong>
+1. <strong>Customer mental model</strong> — where would the buying customer navigate or search?
+2. <strong>Dominant use</strong> — what is the product primarily designed to do?
+3. <strong>Material / form</strong> — what is it physically, where use is ambiguous?
+4. <strong>Commercial priority</strong> — where do its assortment peers sit?</p>
+<p><em>(The legacy runbook's four rules — primary use, purchase intent, brand classification, majority audience — are superseded by this list; "purchase intent" survives as rule 1, "majority audience" as rule 4. The owner has flagged this order may be revisited after practical use.)</em>
+<strong>Why:</strong> the rule matters less than declaring one and never re-litigating it per product.
+Implements: CDS200-R017.</p>
+<h3>1.4 Start the taxonomy decision log — and keep it forever</h3>
+<p>Create the decision log now, as part of the taxonomy document, and migrate it into the PIM when categories are entered. Every tie-break entry records at minimum: <strong>product type/product | category chosen | rule applied | date</strong>. Subsequent matching products follow the logged entry; changing a decision requires a superseding entry, never an ad-hoc different assignment. Example entries for this range:</p>
+<pre><code>Product type        Category chosen                       Rule applied            Date
+Unisex hoodies      Apparel &gt; Men &gt; Tops &gt; Hoodies        4 commercial priority   2026-08-04
+                    (+ merch_unisex tag for Women browse)
+Sports bras         Apparel &gt; Women &gt; Activewear          1 customer mental model 2026-08-04
+Outdoor cushions    Homewares &gt; Outdoor &gt; Cushions        1 customer mental model 2026-08-04
+Table lamps         Homewares &gt; Lighting &gt; Table Lamps    2 dominant use          2026-08-04
+</code></pre>
+<p>Also decide and log the <strong>accessories rule</strong> once (accessories under their parent product category, or in their own node) and apply it everywhere.
+<strong>Why:</strong> the log is the mechanism that makes the tie-break order enforceable by future editors.
+Implements: CDS200-R018.</p>
+<h3>1.5 Map each category to Shopify's Standard Product Taxonomy</h3>
+<p>For every <strong>final</strong> internal category, record one Shopify Standard Product Taxonomy category (browse at shopify.github.io/product-taxonomy). Store the mapping <strong>on the category entity</strong> in the taxonomy document (later the PIM), inherited by products; product-level exceptions only as documented, governed overrides. Assigning this category on a Shopify product is what <strong>unlocks the pre-built category metafields</strong> (apparel: size, colour, fabric, neckline, sleeve length…; homewares vary by node) — the raw material for Phase 6 filters.</p>
+<pre><code>Internal:  Apparel &gt; Women &gt; Tops &gt; Shirts
+Shopify:   Apparel &amp; Accessories &gt; Clothing &gt; Clothing Tops &gt; Shirts
+Internal:  Homewares &gt; Living Room &gt; Tables &gt; Side Tables
+Shopify:   Furniture &gt; Tables &gt; Accent Tables (closest current node)
+</code></pre>
+<p><strong>Why:</strong> one mapping per category gives every product the right <code>product_category</code> and unlocked attribute fields with zero per-product work.
+Implements: CDS900-R014, CDS900-R015, CDS900-R016, CDS200-R020; platform facts per CDS-900 §4.3 [S1].</p>
+<h3>1.6 Map each category to the Google product taxonomy</h3>
+<p>On the same category records, store the Google taxonomy mapping as a <strong>channel mapping</strong> (<code>CH_google_product_category</code> — a taxonomy ID <em>or</em> full breadcrumb, never both). Map at the highest level where Google's match is right and let children inherit; override a child only where Google has a distinctly better node. <code>CH_google_product_type</code> will later be derived from the internal category path (broad → specific) — do not hand-author it.
+<strong>Why:</strong> Google classification is a per-category mapping, set once and inherited — never a per-product chore and never canonical truth.
+Implements: CDS900-R042, CDS900-R043, CDS900-R044, CDS200-R020, CDS200-R005.</p>
+<h3>1.7 Define the Shopify product type vocabulary</h3>
+<p>List one controlled, single-concept product type per final category (<code>Shirt</code>, <code>Side Table</code>, <code>Decorative Cushion</code>). It is a merchant vocabulary distinct from both the category tree and the Shopify taxonomy — never a concatenation of attributes ("Blue Linen Relaxed Shirt" is wrong).
+<strong>Why:</strong> product type is a third classification surface; keeping it controlled keeps it useful.
+Implements: CDS900-R014, CDS900-R017.</p>
+<hr />
+<h2>Phase 2 — Dictionaries and Attribute Schema in the PIM</h2>
+<p>Dictionaries before bulk data, always. This phase happens in the PIM (or its governing documents) — still nothing in Shopify.</p>
+<h3>2.1 Seed governed dictionaries from the CDS Reference Dictionary package</h3>
+<p>Import the package CSVs from <code>CDS_Reference_Dictionary/</code> as the initial content of this organisation's <strong>governed</strong> dictionaries: colour facets, colour reference values, <code>material_apparel</code>, <code>material_homewares</code>, <code>material_facet</code>, patterns, fits, styles, occasions, rooms, finishes, shapes. On adoption they become governed data under your control: stable <code>value_id</code>s, lifecycle status, provenance, aliases preserved; a published canonical code is never silently redefined — changes go through deprecation with replacement mappings.
+<strong>Why:</strong> requirement levels bind to governed dictionaries, not to loose CSVs; adopting the seed verbatim is the fast, conformant start.
+Implements: CDS1500-R004, CDS1500-R011, CDS1500-R050.</p>
+<h3>2.2 OWNER DECISION — colour facet family set</h3>
+<p>The colour facet baseline (CDS-1500 Appendix C) ships 18 families. <strong>Recommended: run the ~12-family core</strong> — black, white, grey, beige, brown, red, orange, yellow, green, blue, purple, pink, plus <strong>multicolour</strong> as a status value — and enable extensions only where the assortment warrants them: <strong>gold/silver</strong> (metallic decor, jewellery), <strong>clear</strong> (glassware), <strong>cream/natural</strong> (textiles, natural-fibre homewares). For this apparel + homewares range, core-12 <strong>plus natural and clear</strong> is a sensible opening declaration; extensions later follow normal facet governance. Record the declared set in the organisation profile. Note the pre-split ambiguous shades are already handled in the seed: <code>charcoal_grey</code>/<code>charcoal_black</code>, <code>rust_orange</code>/<code>rust_brown</code>, <code>tan_beige</code>/<code>tan_brown</code> — never re-merge them.
+<strong>Why:</strong> a shorter family list filters better; the split shades keep facet membership deterministic at dictionary level.
+Implements: CDS1500-R017, CDS1500-R020, CDS1500-R048, CDS1500-R049; baseline per CDS-1500 Appendix C.1–C.3.</p>
+<h3>2.3 Confirm the shared colour architecture</h3>
+<p>One colour-family facet vocabulary across apparel <strong>and</strong> homewares (customers see the same "Blue" everywhere); canonical shade dictionaries beneath may differ per range. Multi-facet shades (teal → <code>green|blue</code>) keep their ordered facet list, primary first. Product-level facet overrides exist only as governed override records with provenance — never dictionary edits per product.
+<strong>Why:</strong> consistent filter language store-wide; deterministic facet membership.
+Implements: CDS1500-R044, CDS1500-R019, CDS1500-R021, CDS600-R034.</p>
+<h3>2.4 Create Attribute Definitions from the industry baselines</h3>
+<p>In the PIM, create an Attribute Definition for every attribute in CDS-1500 Appendix A (apparel) and Appendix B (homewares), with the baseline requirement levels (<strong>R</strong> required / <strong>C</strong> conditional / <strong>REC</strong> recommended / <strong>O</strong> optional) evaluated per product family — never as one flat universal list. Non-negotiables to get right now:</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Key rule</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>VAR_colour</code></td>
+<td>Variant scope where colour distinguishes sellable units; stores the <strong>canonical value_id</strong> (<code>colour_french_navy</code>), never text</td>
+</tr>
+<tr>
+<td><code>MF_colour_display</code> / <code>MF_colour_facet</code></td>
+<td>Projections derived from the variants' canonical values — never independently authored</td>
+</tr>
+<tr>
+<td><code>VAR_size_label</code> + <code>VAR_size_system</code> + <code>VAR_size_sort_key</code></td>
+<td>Size always carries its system (<code>AU_WOMENS_NUMERIC</code>, <code>ALPHA</code>, …) and a semantic sort key</td>
+</tr>
+<tr>
+<td><code>MF_fibre_composition</code></td>
+<td>Numeric percentages against canonical material ids, totalling 100% per component; fabric type is a separate field, never a substitute</td>
+</tr>
+<tr>
+<td><code>MF_material_primary</code> / <code>MF_material_facet</code></td>
+<td>Facet family never erases the specific canonical material</td>
+</tr>
+<tr>
+<td>Dimensions (<code>MF_height_mm</code> etc.), capacity, weight</td>
+<td>Typed numeric values with declared units — display strings alone are non-conformant</td>
+</tr>
+<tr>
+<td>Claims (<code>MF_organic_claim</code>, <code>MF_recycled_content_percent</code>)</td>
+<td>Stored separately from material identity; require evidence</td>
+</tr>
+</tbody>
+</table>
+<p>Each definition also declares: scope, data type, dictionary binding, <strong>channel source layer</strong> (which value layer — canonical, display or facet — feeds each channel), publication mapping, and <strong>comparison strategy</strong> (from the normalisation registry) — these feed Phases 8 and 10 directly.
+<strong>Why:</strong> the Attribute Definition is where behaviour lives; products only store values.
+Implements: CDS1500-R001, CDS1500-R002, CDS1500-R006, CDS1500-R009, CDS1500-R012–R014, CDS1500-R023–R028, CDS1500-R034, CDS1500-R037, CDS200-R023–R026, CDS500-R055.</p>
+<h3>2.5 Plan the known-missing dictionaries</h3>
+<p>The seed package does not ship: size systems, fabric types, care-instruction symbols, country of origin, component roles, season/weather relevance, use environment. For launch you need <strong>size systems</strong> at minimum (apparel is unpublishable without them). Create a governed size-system dictionary now (e.g. <code>AU_WOMENS_NUMERIC</code>, <code>ALPHA</code>, <code>AU_MENS_NUMERIC</code>, <code>EU_FOOTWEAR</code>, <code>BEDDING_AU</code>); queue the rest. Until governed, these fields cannot satisfy R-level requirements.
+<strong>Why:</strong> disclosure of the gap is in the package; closing the size-system gap is a launch blocker for apparel.
+Implements: CDS-1500 Appendix E.3, CDS1500-R011, CDS1500-R026, CDS1500-R033.</p>
+<h3>2.6 Register the namespace registry entries</h3>
+<p>Confirm the PIM's namespace registry covers every prefix this store will use — at minimum <code>STD_</code>, <code>CAT_</code>, <code>VAR_</code>, <code>MF_</code>, <code>CH_</code>, <code>SEO_</code>, <code>MED_</code>, <code>WF_</code>, <code>QA_</code>, <code>OBS_</code>, <code>IMPORT_</code>, <code>AI_</code> — each with meaning, owner, scope, publication behaviour and lifecycle status. <code>WF_</code>, <code>QA_</code>, <code>OBS_</code>, <code>IMPORT_</code>, <code>AI_</code> are never published to customer-facing channels. New channel fields use <code>CH_</code> (<code>DF_</code> is deprecated; migration aliases only).
+<strong>Why:</strong> CDS-300 is the registry of record; every visible identifier must resolve against it.
+Implements: CDS300-R009, CDS300-R010, CDS300-R012, CDS900-R069.</p>
+<hr />
+<h2>Phase 3 — Tag Vocabulary and Collection Projection Design</h2>
+<p>Tags in v0.2 are <strong>governed integration signals</strong> — projections regenerated from rules, never the store of structured facts. Design the whole vocabulary before Shopify sees a single tag.</p>
+<h3>3.1 Derive <code>collection_*</code> tags from the taxonomy — never invent them</h3>
+<p>Every browsable taxonomy node becomes exactly one <code>collection_</code> tag, computed by the PIM from the category path at publication. A product in <code>Apparel &gt; Women &gt; Tops &gt; Shirts</code> carries <code>collection_Women</code>, <code>collection_Tops</code>, <code>collection_Shirts</code> — generated, not typed. Nobody ever types a <code>collection_*</code> tag by hand.
+<strong>Why:</strong> the tag layer is a projection of classification; deriving it makes collections self-maintaining.
+Implements: CDS200-R007, CDS900-R026, CDS1300-R032.</p>
+<h3>3.2 Register the non-collection tag namespaces</h3>
+<p>Adopt the CDS-SHOPIFY-0.2 tag namespace profile:</p>
+<table>
+<thead>
+<tr>
+<th>Prefix</th>
+<th>Purpose</th>
+<th>Generation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>collection_</code></td>
+<td>Automated collection / navigation projection</td>
+<td>Computed from category rules</td>
+</tr>
+<tr>
+<td><code>merch_</code></td>
+<td>Merchandising signals (<code>merch_new_arrival</code>, <code>merch_sale</code>, <code>merch_clearance</code>, <code>merch_featured</code>, <code>merch_unisex</code>)</td>
+<td>Governed manual or rule-based</td>
+</tr>
+<tr>
+<td><code>season_</code></td>
+<td>Seasonal relevance where a binary signal suffices (<code>season_winter</code>, <code>season_summer</code>)</td>
+<td>Controlled value / rule-based</td>
+</tr>
+<tr>
+<td><code>workflow_</code> / <code>supplier_</code></td>
+<td>Internal signals</td>
+<td>PIM-only by default; published by exception only</td>
+</tr>
+</tbody>
+</table>
+<p>Anything with a <em>value</em> (size, colour, material, fit, room…) is <strong>not a tag</strong> — it is an attribute (Phase 2) filtered via metafields (Phase 6). If you catch yourself designing multiple tags for values of one thing, stop: that is an attribute. Keep the legacy Sale/Clearance discipline: <code>merch_sale</code> = temporary promotion on a continuing product; <code>merch_clearance</code> = end-of-line sell-through; never one collection for both.
+<strong>Why:</strong> structured values in metafields, binary signals in tags — the split that keeps Phase 6 filters clean.
+Implements: CDS900-R028, CDS900-R029, CDS900-R027 (owner + lifecycle per merch collection).</p>
+<h3>3.3 OWNER DECISION — tag suffix format (one-way door)</h3>
+<p>Choose one format for tag suffixes and record it in the organisation profile: <strong>human-readable</strong> (<code>collection_Shirts</code>, mixed case, spaces allowed — readable in Shopify admin) or <strong>slug</strong> (<code>collection_shirts</code>, lowercase-hyphen — friendlier to Liquid and programmatic use). CDS v0.2 does not mandate either; what it mandates is that every published tag is generated, registered or explicitly approved. <strong>The choice is permanent in practice</strong> — changing it later means bulk-updating every product, collection rule and filter config. Standing recommendation: human-readable, matching the legacy store's proven convention.
+<strong>Why:</strong> collection rules in Phase 5 must match tag strings exactly, forever.
+Implements: CDS900-R029; formatting is an organisation-profile declaration (CDS900-R005).</p>
+<h3>3.4 Record the tag registry and its ownership contract</h3>
+<p>Write the full tag registry (every tag, namespace, source: computed vs manual, purpose) into the organisation profile / PIM. Declare tag-list ownership now: <strong>PARTITIONED_PIM</strong> — the PIM owns the <code>collection_*</code>, <code>merch_*</code>, <code>season_*</code> partitions and regenerates them on every publication; tags written by other apps (reviews, loyalty, shipping) are externally owned and must survive publication. This matters because Shopify's <code>productUpdate</code> tag write is a <strong>full replacement</strong>: the connector must read the current downstream tag list, retain externally owned members, regenerate the PIM-owned partitions, and write the merged set — or use an explicitly additive operation — and must declare which in the mapping.
+<strong>Why:</strong> a partial tag write on a full-replace API silently deletes every other tag on the product.
+Implements: CDS900-R029, CDS900-R030, CDS500-R025, CDS500-R026, CDS500-R027; platform fact per CDS-900 §4.6 [S7].</p>
+<hr />
+<h2>Phase 4 — Shopify Store Bootstrap</h2>
+<p>Now — with taxonomy, dictionaries and tag design settled — touch Shopify.</p>
+<h3>4.1 Base store configuration</h3>
+<p>Set store details, markets, currency (AUD), taxes, shipping, checkout, legal pages, and the theme skeleton. Keep the theme choice compatible with: metafield display on product pages, breadcrumbs, and Search &amp; Discovery filter rendering (check before committing — some themes need apps or Liquid work for breadcrumbs).
+<strong>Why:</strong> mechanical groundwork; the theme constrains Phases 6–7.
+Implements: (platform housekeeping; no CDS requirement — retained from legacy runbook.)</p>
+<h3>4.2 Staff accounts and permissions — use the one real lever</h3>
+<p>Create staff accounts using the <strong>verified permission granularity</strong>: Shopify product permissions are View, View cost, Create and edit, Edit cost, Edit price, Export, Delete — <strong>there is no field-level or per-product edit restriction on any plan</strong>, and anyone with product edit rights can also add, edit and delete metafield definitions and values. Therefore:</p>
+<ol>
+<li><strong>Withhold "Create and edit" products</strong> from every staff member who does not operationally need it (fulfilment, support, finance). This is the only preventive lever that exists.</li>
+<li>For staff who must have product edit rights, protection is <strong>detection-only</strong>: training plus the Phase 10 drift loop.</li>
+<li>Train every product-editing staff member on exactly <strong>which admin edits will be overwritten or flagged as drift</strong> (all PIM-owned fields — in practice: everything descriptive).</li>
+<li>Record the resulting authority-cutover evidence per field class in the organisation profile: permission withholding = evidence class (a); drift detection = class (b); accepted detection-only with named residual-risk owner = class (c). Shopify standard fields are always at best (b)/(c) — they cannot be write-protected.
+<strong>Why:</strong> honest protection on Shopify is one blunt permission plus detection; pretending otherwise is non-conformant.
+Implements: CDS900-R011, CDS1300-R014, CDS1300-R051; platform facts per CDS-900 §4.1 (verified 2026-08-04).</li>
+</ol>
+<h3>4.3 Install the PIM connector app with least privilege</h3>
+<p>Create the custom app (Admin API, GraphQL) for the PIM connector. Grant only the scopes the declared operations need (products, product listings, publications, metafields/metaobjects read-write; read-only elsewhere). Store credentials in secret management — never in product records, logs or exported evidence. Distinct permissions for destructive operations where supported.
+<strong>Why:</strong> the connector is the single authorised writer; its blast radius should match its contract.
+Implements: CDS500-R089, CDS500-R090, CDS500-R091, CDS500-R047.</p>
+<h3>4.4 OWNER DECISION — metafield edit-protection posture</h3>
+<p>For PIM-owned metafields there are two postures, either conformant if declared with its residual risk:</p>
+<table>
+<thead>
+<tr>
+<th>Posture</th>
+<th>Protection</th>
+<th>Cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>App-owned reserved namespaces</strong></td>
+<td>Shopify blocks all staff edits — the only edit-proof mechanism</td>
+<td>Fields are <strong>invisible in Shopify admin</strong>: staff cannot see the data they are selling with; operator visibility loss is itself an error source</td>
+</tr>
+<tr>
+<td><strong>Merchant-visible metafields</strong></td>
+<td>None beyond permissions — any product-editor can edit or delete definitions and values</td>
+<td>Full admin visibility of human-readable <code>MF_*</code> data; protection is training + drift detection after the fact</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Standing recommendation (owner's stated preference): merchant-visible + drift detection.</strong> It matches how the legacy pipeline actually worked — detection via Match fields, not prevention — and Phase 10's attribution workflow exists precisely to make detection fast and honest. Declare the chosen posture and its residual risk in the organisation profile / channel profile.
+<strong>Why:</strong> this is the D17 trade-off; the standard permits either but demands the declaration.
+Implements: CDS-900 §4.1 (D17 trade-off), CDS500-R077b context, CDS1300-R014(b).</p>
+<h3>4.5 Create custom metafield definitions</h3>
+<p>Create Shopify <strong>custom metafield definitions</strong> for every attribute that (a) will publish to Shopify and (b) has no suitable category metafield — per the schema-level choice recorded on each Attribute Definition in Phase 2 (the category-vs-custom choice is a schema decision, never per-product). Use a durable namespace/key (e.g. <code>cds.material_facet</code>, <code>cds.colour_facet</code>, <code>cds.room</code>, <code>cds.fit</code>) — the internal key may differ from the visible <code>MF_</code> identifier. Every definition intended as a storefront filter must have a <strong>filterable data type</strong> (single-line text, boolean, numeric, metaobject reference). Expected set for this store: colour facet, material facet, fit, room, style, occasion, pattern, finish, shape, dimensions (numeric), care instructions (non-filter).
+Category metafields need no creation — they unlock automatically when a product is assigned its Standard Taxonomy category (Phase 9); prefer them where they exist and record the choice per attribute.
+<strong>Why:</strong> filter groups in Phase 6 can only be built from proper metafield definitions.
+Implements: CDS900-R018, CDS900-R019, CDS900-R020, CDS900-R021; CDS-300 §8 (identifier vs machine key).</p>
+<hr />
+<h2>Phase 5 — Automated Collections</h2>
+<h3>5.1 Create one automated collection per browsable taxonomy node</h3>
+<p>For every node customers will browse to, create an <strong>automated</strong> collection whose single condition is <code>product tag is equal to collection_&lt;Node&gt;</code> — the tag string matching the Phase 3 registry exactly, the collection name matching the tag minus the prefix. Set sort order deliberately (Best selling is a fine default). Manual collections are reserved for genuinely curated editorial sets.</p>
+<pre><code>Collection: Shirts        Condition: product tag equals collection_Shirts
+Collection: Side Tables   Condition: product tag equals collection_Side Tables
+</code></pre>
+<p><strong>Why:</strong> collections generated from the taxonomy maintain themselves; hand-curated taxonomy collections rot.
+Implements: CDS900-R026, CDS600-R013.</p>
+<h3>5.2 Create merchandising collections with owners and lifecycles</h3>
+<p>Create the overlay collections from <code>merch_*</code>/<code>season_*</code> tags: New Arrivals (<code>merch_new_arrival</code>), Sale (<code>merch_sale</code>), Clearance (<code>merch_clearance</code>), Featured (<code>merch_featured</code>), Winter Edit (<code>season_winter</code>), etc. For each, record in the organisation profile: <strong>owner, membership rule (computed/curated/hybrid), activation window, retirement rule</strong>. Keep Sale and Clearance separate collections, always.
+<strong>Why:</strong> merchandising collections without declared owners and lifecycles become permanent junk drawers.
+Implements: CDS900-R027, CDS600-R014, CDS600-R015.</p>
+<h3>5.3 Anti-pattern review</h3>
+<p>Before proceeding, check: no manual collection standing in for a taxonomy node; no two collections splitting one customer intent ("Hoodies" and "Sweatshirts"); no collection named differently from its tag rule; no per-brand collections (brand is a Vendor filter in Phase 6); no hand-maintained Sale collection. Shopify does not display filters on collections containing more than 5,000 products; split a collection before that limit is reached.
+<strong>Why:</strong> each anti-pattern is a future rebuild.
+Implements: legacy discipline under CDS900-R026–R028; limit-preflight spirit of CDS900-R035.</p>
+<hr />
+<h2>Phase 6 — Search &amp; Discovery Filters</h2>
+<h3>6.1 Install Search &amp; Discovery and set the filter policy</h3>
+<p>Install Shopify's free <strong>Search &amp; Discovery</strong> app. Policy, from the facet architecture: customer filters come from the <strong>facet layer</strong> — governed facet dictionaries projected into metafields — plus the useful built-ins. Configure <strong>per collection context</strong>, not one global set: apparel collections get Size / Colour / Fit / Material / Price / Availability / Brand(Vendor); homewares collections get Colour / Material / Room / Style / Price / Availability, with dimensions where the category warrants (rugs, tables).
+<strong>Never expose as filters:</strong> raw tags of any namespace (<code>collection_*</code>, <code>merch_*</code>, <code>season_*</code> — S&amp;D renders tags as one undifferentiated wall of internal strings), uncontrolled distinct values, or any attribute failing the eligibility test (decision-relevant? covered? discriminating? comprehensible? stable?).
+<strong>Why:</strong> filters are a curated projection, not an exposure of the data model.
+Implements: CDS900-R031, CDS900-R032, CDS600-R021, CDS600-R022, CDS600-R027, CDS600-R028, CDS200-R007.</p>
+<h3>6.2 Configure the colour filter as facet families</h3>
+<p>The colour filter uses the <strong>facet family</strong> metafield (Blue, Green, …, per the Phase 2.2 declared set) — never the shade names. The product page continues to show the display shade ("French Navy"); the filter shows "Blue". Where S&amp;D value grouping is used as a convenience, the <strong>authoritative grouping remains the PIM facet dictionary</strong> — S&amp;D grouping is a channel-level mirror of it, never the master.
+<strong>Why:</strong> ~12 recognisable families filter; 80 supplier shade names do not.
+Implements: CDS900-R033, CDS900-R034, CDS600-R034, CDS600-R035, CDS1500-R017.</p>
+<h3>6.3 Preflight against the verified S&amp;D limits</h3>
+<p>Record in the channel capability declaration and check every facet projection against the verified limits: <strong>25 filters per store; 100 values displayed per storefront filter; 1,000 values visible per filter in the app; 200 unique values per filter group; 1,000 filter groups store-wide; no filters on collections over 5,000 products or searches over 100,000 results; the Category filter cannot use value grouping</strong>. With the Phase 2 dictionaries none of these should bind — the preflight exists to catch future dictionary growth before Shopify rejects, hides or truncates a filter.
+<strong>Why:</strong> projections must be preflighted against declared platform limits, not discovered in production.
+Implements: CDS900-R035; limits per CDS-900 §4.7 [S2] (verified 2026-08-17).</p>
+<h3>6.4 Record facet definitions and their behaviour declarations</h3>
+<p>For every live filter, complete its Facet Definition in the PIM: stable ID, label, source attribute, eligible contexts, value dictionary, selection mode, <strong>count unit and method</strong> (including the disjunctive-count rule: an unselected value's count predicts the effect of adding it), ordering (sizes sort semantically by sort key, never alphabetically), disclosure default, owner. Declare at facet-set level: <strong>cross-facet AND, within-facet OR</strong> (the CDS defaults) and the response-time target. Declare the zero-result policy: values producing no truthful result are <strong>disabled or hidden</strong>; out-of-stock values may remain visible only with a clear unavailable state; zero-result pages preserve filters and offer removal of one constraint.
+Shopify note: native S&amp;D evaluates variant-option and availability filters <strong>at variant scope</strong> (different filters AND at variant level), so the combination-availability capability is declared <strong>present</strong> in the channel profile. Per-value <strong>count accuracy</strong> under combined selections is <em>not yet verified</em> — it is Empirical Check 1 in Phase 10.
+<strong>Why:</strong> undeclared filter behaviour becomes platform-default behaviour nobody chose.
+Implements: CDS600-R024, CDS600-R025, CDS600-R026, CDS600-R047, CDS600-R048, CDS600-R056, CDS600-R058–R062, CDS600-R041, CDS600-R064, CDS600-R115; capability declaration per CDS-900 §4.7 (resolved note) and CDS600-R054/R055.</p>
+<h3>6.5 Accessibility and mobile pass on the filter UI</h3>
+<p>Verify in the theme: filter groups and controls carry programmatic labels; selected/disabled states and counts are exposed to assistive technology; swatches always have text labels (colour is never the sole signal); keyboard focus order is logical and visible; mobile filter panel shows active-filter count, previews the result count on deferred apply, and preserves selections on close.
+<strong>Why:</strong> these are normative requirements, not polish.
+Implements: CDS600-R036, CDS600-R068, CDS600-R069, CDS600-R070, CDS600-R072, CDS600-R092–R098.</p>
+<hr />
+<h2>Phase 7 — Navigation Menu</h2>
+<h3>7.1 Build the menu from the taxonomy, max three visible levels</h3>
+<p>Main menu mirrors the taxonomy: Level 1 = top nav items, Level 2 = dropdown, Level 3 = mega-menu columns. Navigation is a <strong>curated entry</strong>, not a full rendering — deep or thin nodes stay reachable via category pages and search without appearing in the menu. Labels are customer language, non-overlapping within a level; no "Other/General/Misc".
+<strong>Why:</strong> the menu is the primary place flat Shopify collections read as a hierarchy.
+Implements: CDS600-R009, CDS600-R010, CDS600-R011, CDS600-R017, CDS600-R018.</p>
+<h3>7.2 Every menu item links to a collection</h3>
+<p>No menu links to search queries, filtered URLs or static pages where a collection exists. This is what keeps navigation stable, merchandisable and SEO-viable.
+<strong>Why:</strong> collections are the durable navigation destinations; URLs and filters are not.
+Implements: CDS600-R013 (deterministic membership behind each destination); legacy rule carried forward.</p>
+<h3>7.3 Breadcrumbs, cross-links, parent/sibling links</h3>
+<p>Configure in the theme: breadcrumbs on every collection and product page showing one canonical path per product consistent with the primary category (<code>Home &gt; Women &gt; Tops &gt; Shirts &gt; Relaxed Linen Shirt</code>); sub-collection tiles above the grid on parent pages; "Back to [parent]" and "Also in [parent]" sibling links on child pages; "Shop more [collection]" on product pages. Merchandising overlap (the unisex hoodie) is served by cross-links and <code>merch_*</code> collections — never a second primary path.
+<strong>Why:</strong> breadcrumbs and cross-links are how a flat collection model communicates structure and rescues direct-landing visitors.
+Implements: CDS600-R088, CDS600-R089, CDS600-R090, CDS600-R016, CDS200-R022.</p>
+<h3>7.4 Mobile three-tap test and faceted-SEO policy</h3>
+<p>Test on a phone: any Level 3 collection reachable in ≤3 taps; back-navigation at every level; &lt;8 items per menu level. Then declare the faceted-URL policy in the organisation profile: which facet combinations are indexable (default: none — canonical collection URLs only; facet selections do not mint crawlable URLs), and confirm the category/collection structure is crawlable independently of any facet URLs.
+<strong>Why:</strong> unmanaged facet URLs create an unbounded duplicate crawl space.
+Implements: CDS600-R104–R107; mobile discipline per CDS600-R068–R072.</p>
+<hr />
+<h2>Phase 8 — PIM Channel Wiring</h2>
+<h3>8.1 Create the Shopify channel profile in the PIM</h3>
+<p>Record the channel profile: write mode (GraphQL Admin API), read mode (API read-back), operation semantics per object class, rate limits, <strong>propagation window per write mode</strong> (bounds PENDING and drives Amber→Red escalation), identity fields (Shopify product/variant/metafield IDs — retained after creation), <strong>critical field set</strong> (recommended: title, price, availability, primary image, <code>collection_*</code> tag partition), and the highest assurance level claimed (target: PA-7).
+<strong>Why:</strong> every downstream behaviour in Phase 10 keys off these declarations.
+Implements: CDS500-R011, CDS500-R012, CDS500-R013, CDS900-R036.</p>
+<h3>8.2 Define field mappings under the common mapping contract</h3>
+<p>For every published field, record the ten contract properties: canonical source, target path, transformation, requiredness, cardinality, <strong>write semantics</strong>, read-back path, comparison rule, ownership, failure policy. Shopify-specific write semantics that must be encoded, not assumed:</p>
+<ul>
+<li><strong><code>productUpdate</code> does not update variants.</strong> Variant data goes through <code>productVariantsBulkUpdate</code> or <code>productSet</code>. The connector must use the correct current mutation per object class.</li>
+<li><strong>Tags are full-replace</strong> on <code>productUpdate</code>; the connector writes the merged set per the Phase 3.4 partition contract (or uses <code>tagsAdd</code> additively) and declares which.</li>
+<li>Tags and list fields compare as <strong>sets</strong>; rich text under a declared canonicalisation; references by stable IDs, not display text.</li>
+<li>Each MF_ attribute's projection (category metafield / custom metafield / native field) is the schema decision recorded in Phase 2/4 — the canonical <code>MF_</code> prefix never changes because of the target.
+<strong>Why:</strong> connectors written against assumed platform behaviour silently stop updating variants and silently delete tags.
+Implements: CDS900-R008, CDS900-R010, CDS900-R012, CDS900-R013, CDS900-R030, CDS900-R038, CDS900-R039, CDS900-R040, CDS500-R025; platform facts per CDS-900 §4.1 [S6], §4.6 [S7].</li>
+</ul>
+<h3>8.3 Variant and option projection rules</h3>
+<p>Only SKU-producing differences become Shopify variant options (size, sellable colour). The connector preflights projected option count (≤3) and variant count (≤2,048 documented; themes/channels may support less) against the declared limits <strong>before</strong> publication; anything exceeding them uses a documented decomposition strategy, never silent truncation. Do not create variants merely to make something filterable — that is the facet layer's job.
+<strong>Why:</strong> the variant boundary is a canonical-model rule; Shopify limits are a preflight, not a surprise.
+Implements: CDS900-R022, CDS900-R023, CDS900-R024, CDS200-R008; limits per CDS-900 §4.5 [S4].</p>
+<h3>8.4 Google Merchant Center wiring</h3>
+<p>Configure the GMC projection (direct feed/API from the PIM, or via Shopify's channel with the reduced observation coverage honestly declared):</p>
+<ul>
+<li><strong><code>color</code> = the landing-page colour value</strong> — the Display Label / sellable colour ("French Navy"), <strong>never the facet family</strong>. Submitting "Blue" for a French Navy landing page risks disapproval.</li>
+<li>When colour identifies a variant, also publish Google's <code>variant_option</code> alongside <code>color</code>.</li>
+<li>The broad searchable colour name goes in <strong><code>title</code></strong> where discoverability is wanted.</li>
+<li><strong>Multi-colour:</strong> up to 3 slash-separated values, one primary + up to two secondary ("Navy/White") — never commas or merged strings.</li>
+<li><code>CH_google_product_category</code> from the Phase 1.6 category mappings (ID or breadcrumb, one form); <code>CH_google_product_type</code> derived from the internal category path.</li>
+<li><code>item_group_id</code> groups variants consistently across updates; GTINs published wherever they exist (omitting an existing GTIN limits visibility); brand required for new products.</li>
+<li>GMC disapprovals/diagnostics are imported as <strong>observed channel quality events</strong> — never written into canonical fields; a feed accepted into GMC is not "verified" — unobserved fields are UNOBSERVABLE with a coverage ratio.
+<strong>Why:</strong> GMC compliance rules are dated platform facts; the facet family is a storefront-filter concern only.
+Implements: CDS900-R042–R050; colour rule per CDS-900 §5.2 resolved note [G4] (verified 2026-08-04).</li>
+</ul>
+<hr />
+<h2>Phase 9 — Products: Pilot Cohort, Then Waves</h2>
+<h3>9.1 Enter the pilot cohort in the PIM</h3>
+<p>Pick a representative pilot: one apparel family with size+colour variants (e.g. women's shirts), one homewares family with dimensions (e.g. side tables), one multi-colour print product (cushion), one product with a taxonomy-decision-log entry. Enter them PIM-first: primary category from Phase 1; variant values as canonical <code>value_id</code>s; attributes per the Phase 2 definitions; editors manually add <strong>only</strong> <code>merch_*</code>/<code>season_*</code> tags — <code>collection_*</code> tags and all projections are computed. Requiredness preflight blocks publication of R-level gaps; unknown supplier values enter quarantine, never silently extend dictionaries.
+<strong>Why:</strong> a pilot proves the whole chain end to end before scale-out.
+Implements: CDS1300-R015, CDS200-R015, CDS200-R011, CDS1500-R010, CDS900-R058; wave pattern per CDS-1300 §16.</p>
+<h3>9.2 Publish the pilot and verify structural landing</h3>
+<p>Publish via the connector. For each pilot product confirm in Shopify admin and storefront:</p>
+<ol>
+<li>Standard taxonomy category assigned → <strong>category metafields appeared</strong> on the product edit page.</li>
+<li>Product appears in every expected automated collection (its full category path + any merch collections) and no others.</li>
+<li>Variants landed with correct option values, prices, SKUs (via the variant-capable mutation).</li>
+<li>Metafield values landed under the intended definitions.</li>
+<li>Externally owned tags (if any test tags were set) survived the tag write.
+<strong>Why:</strong> structural verification before data verification; each check maps to a Phase 4–8 decision.
+Implements: CDS900-R013, CDS900-R015, CDS900-R026, CDS900-R030; unlock behaviour per CDS-900 §4.3 [S1].</li>
+</ol>
+<h3>9.3 Finalise S&amp;D filters against real category metafields</h3>
+<p>Return to Search &amp; Discovery: with pilot products carrying category metafields, add any category-metafield-based filter sources that were unavailable pre-products (S&amp;D lists metafields in use), confirm each filter group shows governed facet values only, and re-run the 6.3 limit preflight.
+<strong>Why:</strong> some filter sources only become selectable once products exercise the definitions.
+Implements: CDS900-R018, CDS900-R021, CDS900-R035.</p>
+<h3>9.4 Expand by wave with entry/exit criteria</h3>
+<p>Scale out by category wave (tops → dresses → knitwear → …; cushions → tableware → lighting → …). Each wave declares scope, entry criteria, exit criteria, rollback point, evidence package, and a <strong>proving period</strong> (post-cutover observation window that must elapse defect-free — one full business cycle recommended) before exit. Quality denominators include failed and quarantined records — completeness over a silently reduced population is non-conformant.
+<strong>Why:</strong> bounded, evidenced waves are the adoption pattern; the pilot is wave zero.
+Implements: CDS1300-R039, CDS1300-R041, CDS1300-R046, CDS1300-R047, CDS1300-R055–R057.</p>
+<hr />
+<h2>Phase 10 — Switch On Publish → Observe → Verify</h2>
+<p>This phase turns the store from "synced" into "verified". The loop: canonical revision → expected projection → preflight → dispatch → acknowledgement → <strong>independent observation</strong> → comparison → drift classification → governed repair.</p>
+<h3>10.1 Arm scheduled read-back and comparison</h3>
+<p>Enable the observation schedule: read back every PIM-owned published field via the Admin API (never the outbound payload, never a write-populated cache), on a cadence where <strong>critical-set fields verify more frequently</strong> than descriptive fields, respecting the declared propagation window (in-window latency = PENDING, not drift). Store snapshots with capture time, source and channel identity — separately from canonical values, <strong>append-only</strong>. Comparisons run under each field's declared registry comparator (money round-2dp, NORMALIZED_TEXT, UNORDERED_SET for tags — substring containment is never equality).
+<strong>Why:</strong> acknowledgement is not proof; observation is the only honest basis for "it's live and correct".
+Implements: CDS500-R002, CDS500-R003, CDS500-R035, CDS500-R048, CDS500-R049, CDS500-R050, CDS500-R051, CDS500-R052, CDS500-R055, CDS500-R058, CDS500-R077a, CDS900-R037.</p>
+<h3>10.2 Wire statuses, traffic lights and escalation</h3>
+<p>Surface results per field using the CDS-500 status enum exactly (MATCH / MISSING / MISMATCH / PENDING / UNOBSERVABLE / NOT_APPLICABLE / OVERRIDDEN / ERROR) with reason codes, presented as traffic lights: GREEN = MATCH only; <strong>AMBER = missing/pending/unobservable/overridden</strong> (absence is Amber, never Red); RED = confirmed MISMATCH or ERROR. Configure escalation: Amber escalates to Red presentation when the propagation window lapses unresolved or the field is in the critical set; any critical-set Red caps the product/channel aggregate at Red. Every indicator exposes its detailed status and reason code — Amber is never a generic bucket.
+<strong>Why:</strong> the single normative status model, applied without local invention.
+Implements: CDS900-R041, CDS500-R060–R073, CDS500-R084–R086.</p>
+<h3>10.3 Empirical Check 1 (queued vertical-slice task) — S&amp;D count accuracy under combined selections</h3>
+<p>Variant-scope filtering is verified present; <strong>per-value count accuracy under combined selections is not</strong> — this store is the test bench. On a pilot collection, construct the classic trap: a shirt with Blue only in S/M and White only in M.
+1. Select Colour: Blue + Size: M → the trap product must be <strong>excluded</strong> (no purchasable Blue/M variant).
+2. With Blue selected, read the displayed count next to each unselected Size value → each count must equal the number of products that would actually remain after adding that size (disjunctive semantics), counted in the declared unit.
+3. Repeat with Availability toggled and a third facet (Material) active.
+Record outcomes as evidence in the channel profile. If counts are inaccurate, update the profile's capability declaration honestly (counts approximate; combination filtering accurate) and reflect the declared count method in the Facet Definitions.
+<strong>Why:</strong> the declared count semantics must match observed platform behaviour, or the declaration must change.
+Implements: CDS600-R052, CDS600-R053, CDS600-R054, CDS600-R056, CDS600-R057; open item per CDS-900 §4.7 resolved note and CDS-600 §16 resolved note.</p>
+<h3>10.4 Empirical Check 2 (queued vertical-slice task) — drift-attribution correlation workflow</h3>
+<p>Prove the detection-plus-attribution loop end to end with a controlled staff edit:</p>
+<ol>
+<li>Have a staff account edit a PIM-owned field in Shopify admin (e.g. change a metafield value and a product title).</li>
+<li>Confirm the next observation cycle classifies both as drift type <strong>EXTERNAL_EDIT</strong> with the correct previous observed value, new observed value and detection interval (append-only history makes this recoverable).</li>
+<li>Run the correlation: narrow the detection interval against the Shopify <strong>Store activity log</strong> (recent window, view-only) and any <code>products/update</code> webhook timestamps (<code>X-Shopify-Triggered-At</code> — payload has <em>no</em> actor field) and the Events query (product field edits may generate <strong>no</strong> event).</li>
+<li>Record the attribution outcome class on the drift record: <strong>actor identified / actor class identified / unattributable</strong>. All three outcomes are valid; the record must be honest.</li>
+<li>Confirm attribution never delayed detection, status or escalation, and that repair follows the governed policy (auto-republish is permitted only for EXCLUSIVE_PIM/partition-owned fields).
+<strong>Why:</strong> on Shopify, attribution is best-effort correlation by design — this check proves the workflow and calibrates expectations before real drift arrives.
+Implements: CDS500-R076, CDS500-R077a–c, CDS500-R078, CDS500-R080, CDS500-R028; attribution mechanisms and limits per CDS-900 §4.1 (verified 2026-08-04).</li>
+</ol>
+<h3>10.5 Run the proving period and hand over to run-state</h3>
+<p>Operate the full loop through the declared proving period. Exit requires: verification health above approved thresholds; the two empirical checks recorded; run-state ownership accepted by named owners (same people is fine under the small-team profile — the acceptance record is not waived); temporary credentials rotated or retired; runbooks for publishing, verification triage, dictionary review and taxonomy change in place.
+<strong>Why:</strong> migration ends when the operating model is owned, not when the last job completes.
+Implements: CDS1300-R041, CDS1300-R044, CDS1300-R045, CDS1300-R054, CDS1300-R056, CDS1300-R057.</p>
+<hr />
+<h2>Completion Checklist — Vertical-Slice Acceptance (handoff §13)</h2>
+<p>The store is done when every box below is checkable with evidence, not opinion. The first five are the vertical-slice acceptance criteria; the rest are this runbook's phase gates.</p>
+<p><strong>Vertical-slice acceptance criteria:</strong></p>
+<ul>
+<li>[ ] <strong>PIM authoritative.</strong> Every governed product fact has exactly one declared authority; descriptive attributes, classification and mappings are PIM-owned; Shopify edits to PIM-owned fields are detected as drift, not absorbed. <em>(CDS200-R027, CDS500-R028, CDS900-R011)</em></li>
+<li>[ ] <strong>Reproducible expected state.</strong> For any published product, the expected Shopify representation can be regenerated from the same canonical revision + mapping version + dictionary version and matches what was stored at dispatch time. <em>(CDS500-R015, CDS500-R022)</em></li>
+<li>[ ] <strong>Read-back stored separately.</strong> Observed Shopify values live in observation records (<code>OBS_</code>-scope), append-only, never overwriting canonical values; adoption of an observed value is only ever an explicit, attributed change. <em>(CDS500-R005, CDS500-R077a, CDS200-R031)</em></li>
+<li>[ ] <strong>Differences classified.</strong> Every non-MATCH field carries a core status from the eight-value enum plus a reason code; drift carries a cause category; missing and unobservable are never conflated; traffic lights follow the CDS-500 mapping with Amber escalation armed. <em>(CDS500-R054, CDS500-R060–R065, CDS500-R070, CDS900-R041)</em></li>
+<li>[ ] <strong>Clean facet family on filters, display shade on the product page.</strong> The storefront colour filter shows the governed facet families (Blue); the product page and card show the display shade ("French Navy"); the GMC feed carries the landing-page value; the three layers remain distinct, related values in the PIM. <em>(CDS900-R033, CDS600-R033–R035, CDS1500-R014, CDS-900 §5.2)</em></li>
+</ul>
+<p><strong>Phase gates:</strong></p>
+<ul>
+<li>[ ] Taxonomy documented; one primary category per product; tie-break order declared; decision log live and enforced. <em>(Phase 1)</em></li>
+<li>[ ] Dictionaries seeded from the CDS Reference Dictionary package and governed; colour facet set declared; attribute definitions with requirement levels, source layers and comparators in place; size systems governed. <em>(Phase 2)</em></li>
+<li>[ ] Tag registry recorded; suffix format declared; tag ownership PARTITIONED_PIM with merged full-replace writes proven (external tag survives publication). <em>(Phase 3, 9.2)</em></li>
+<li>[ ] Staff permissions applied per the withhold-product-edit lever; metafield posture declared with residual risk; authority-cutover evidence class recorded per field family; staff trained on what counts as drift. <em>(Phase 4)</em></li>
+<li>[ ] One automated collection per browsable node, rules matching the registry exactly; merch collections have owners and lifecycles. <em>(Phase 5)</em></li>
+<li>[ ] S&amp;D filters per collection context from facet metafields only; verified limits preflighted; facet definitions complete with count semantics and zero-result policy; accessibility pass done. <em>(Phase 6)</em></li>
+<li>[ ] Menu ≤3 levels, every item a collection, mobile 3-tap pass, breadcrumbs canonical, faceted-SEO policy declared. <em>(Phase 7)</em></li>
+<li>[ ] Channel profile with propagation window and critical set; mappings declare write semantics (variant mutation, tag merge); variant preflight armed; GMC colour/title/multi-colour rules encoded. <em>(Phase 8)</em></li>
+<li>[ ] Pilot cohort published and structurally verified; waves defined with proving periods; quality denominators include quarantined records. <em>(Phase 9)</em></li>
+<li>[ ] Publish→observe→verify running on schedule; Empirical Check 1 (S&amp;D count accuracy) and Empirical Check 2 (drift-attribution correlation) executed and recorded; run-state accepted by named owners. <em>(Phase 10)</em></li>
+</ul>
+<hr />
+<h2>Appendix A — One Attribute End-to-End: the Worked Example <em>(informative)</em></h2>
+<p>The whole system, for one product fact, with the exact names you would type. The fact: <strong>the colour of a cushion</strong> — the most universal filter in retail, and the example every CDS document shares. Every dictionary-backed, filterable attribute follows this identical shape — swap the vocabulary and the names. (Simpler attributes — free text, numbers, measurements — skip the dictionary and facet parts but keep the same definition → value → publish → verify spine.)</p>
+<h3>Step 1 — The dictionary (already shipped)</h3>
+<p>In <code>CDS_Reference_Dictionary/colour_reference_values.csv</code>, the colour vocabulary (field key <code>colour</code>) holds, among its shades:</p>
+<table>
+<thead>
+<tr>
+<th>Code (what software stores)</th>
+<th>Name (what people see)</th>
+<th>Filter family</th>
+<th>Also matches (aliases)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>french_navy</code></td>
+<td>French Navy</td>
+<td>blue</td>
+<td>french navy, dark navy</td>
+</tr>
+<tr>
+<td><code>navy</code></td>
+<td>Navy</td>
+<td>blue</td>
+<td>navy blue, dark blue</td>
+</tr>
+</tbody>
+</table>
+<p>The filter family points into the second colour vocabulary, <code>colour_facets.csv</code> (field key <code>colour_facet</code>), where <code>blue</code> displays as <strong>Blue</strong> — the broad family customers filter by, so the filter never shows forty near-identical shades.</p>
+<h3>Step 2 — The PIM attribute definition (once, at Phase 2)</h3>
+<p>Create one Attribute Definition — the record that gives the field its behaviour (CDS-200 §7):</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Value</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Identifier</td>
+<td><code>MF_colour</code></td>
+<td>Semantic identifier — CDS-300 registry, <code>MF_</code> = structured attribute</td>
+</tr>
+<tr>
+<td>Human label</td>
+<td>Colour</td>
+<td>What operators and storefronts display</td>
+</tr>
+<tr>
+<td>Scope</td>
+<td>product</td>
+<td>Single-colour cushion; colour is variant-scoped only when it creates sellable variants</td>
+</tr>
+<tr>
+<td>Value type</td>
+<td><code>enum_reference</code></td>
+<td>Values must come from a dictionary</td>
+</tr>
+<tr>
+<td>Dictionary binding</td>
+<td><code>colour</code></td>
+<td>The vocabulary from Step 1 — nothing else is accepted</td>
+</tr>
+<tr>
+<td>Requiredness</td>
+<td><strong>R</strong> (Required) for homewares decor</td>
+<td>CDS-1500 §4 requirement levels; publication blocked when absent</td>
+</tr>
+<tr>
+<td>Facet policy</td>
+<td>filterable via the colour family</td>
+<td>Customers filter <strong>Blue</strong>, never the forty-shade list</td>
+</tr>
+<tr>
+<td>Comparison strategy</td>
+<td>exact match of each projected channel value, whitespace/case-normalised</td>
+<td>Used by read-back verification (Step 5)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Channel source layers</strong> — declared per CDS200-R026: which projection each destination receives:</p>
+<table>
+<thead>
+<tr>
+<th>Destination</th>
+<th>Receives</th>
+<th>For this cushion</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Shopify display metafield</td>
+<td>display label</td>
+<td>French Navy</td>
+</tr>
+<tr>
+<td>Shopify filter metafield</td>
+<td>facet family</td>
+<td>Blue</td>
+</tr>
+<tr>
+<td>Google Merchant <code>color</code></td>
+<td>display label</td>
+<td>French Navy — the landing-page value; the family is never sent (CDS-900 §5.2)</td>
+</tr>
+</tbody>
+</table>
+<h3>Step 3 — The product record (every product, mostly via import)</h3>
+<p>On the cushion's PIM record: <code>MF_colour = french_navy</code>. That code is the canonical fact; every visible form of it is looked up, never typed.</p>
+<p><strong>Import auto-match:</strong> a supplier CSV says <code>Dark Navy</code> → the alias matches (case-insensitively) → the PIM stores <code>french_navy</code>, recording provenance (import + supplier + matched alias). A supplier writing an unknown name — the standard's own famous case is <code>Moonlit Harbour</code> — does <strong>not</strong> create a value: it lands in the quarantine queue for a human, who either aliases it to an existing shade or promotes it as a new one (CDS-400 §17). Because colour is Required here, the cushion does not publish until resolved.</p>
+<h3>Step 4 — The Shopify side (once, at Phase 4)</h3>
+<p>Create two <strong>product metafield definitions</strong> (the store's declared metafield posture applies — Phase 4.4):</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Definition 1 — Display colour</th>
+<th>Definition 2 — Colour family (the filter)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Namespace and key</td>
+<td><code>custom.colour_display</code></td>
+<td><code>custom.colour_family</code></td>
+</tr>
+<tr>
+<td>Type</td>
+<td>single line text</td>
+<td>single line text</td>
+</tr>
+<tr>
+<td>Validation</td>
+<td>restricted to the dictionary's display labels (French Navy, Navy, …)</td>
+<td>restricted to the family labels (Blue, Green, … — the 18-family baseline)</td>
+</tr>
+<tr>
+<td>Filtering</td>
+<td>—</td>
+<td>the Search &amp; Discovery filter source, so the storefront filter offers <strong>Blue</strong> (CDS-900 §4: text metafields are filter sources)</td>
+</tr>
+</tbody>
+</table>
+<p><em>Operational note: capabilities — custom product metafield definitions, choice validation, storefront access, S&amp;D filtering on text metafields — are the CDS-900-verified facts; the admin clicks to create them are Shopify UI detail not recorded in the dated profile — follow Shopify's current metafields help.</em></p>
+<h3>Step 5 — Publish, read back, verify (Phase 8/10, automatic)</h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Expected (projected from <code>french_navy</code>)</th>
+<th>Observed (read-back)</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>custom.colour_display</code></td>
+<td>French Navy</td>
+<td>French Navy</td>
+<td>status <strong>MATCH</strong> → shown Green</td>
+</tr>
+<tr>
+<td><code>custom.colour_family</code></td>
+<td>Blue</td>
+<td>Blue</td>
+<td>status <strong>MATCH</strong> → shown Green</td>
+</tr>
+<tr>
+<td><code>CH_google_color</code></td>
+<td>French Navy</td>
+<td>per Google's observability (diagnostics/coverage declared honestly)</td>
+<td>verified to the declared coverage</td>
+</tr>
+</tbody>
+</table>
+<p>If a staff member edits the display metafield to "Navy" (a valid choice — but wrong for this cushion), the next read-back shows expected ≠ observed → status <strong>MISMATCH</strong> (shown Red — the colour of the light is presentation over the status), reason code <code>CDS_VALUE_DIFFERS</code>, drift class EXTERNAL_EDIT — with the previous observed value and the detection window recorded (CDS500-R077a). Correlating that window against the Store activity log to attribute <em>who</em> made the edit is the separate follow-up step (CDS500-R077b; best-effort on Shopify per CDS-900).</p>
+<p><strong>And the end state is the acceptance sentence of the whole standard:</strong> the product page says <strong>French Navy</strong>, the filter says <strong>Blue</strong>, Google gets the landing-page value, and every one of those is verifiably derived from one code on one record.</p>
+<p>Implements: CDS200-R023–R024, R026 (attribute definitions incl. channel source layers), CDS400 dictionary binding + §17 quarantine, CDS300 registry naming, CDS900-R012/R028 + §4 metafield guidance + §5.2 Google color, CDS500 §16–§18 verification, CDS500-R077a (observation history; attribution correlation per R077b).</p>
+<hr />
+<p><em>This runbook is informative companion material to CDS v0.2. Platform behaviour statements inherit the verification dates of CDS-900 (references retrieved 2026-08-03/04); re-verify against the current dated profile before relying on them in a later release.</em></p></body></html>

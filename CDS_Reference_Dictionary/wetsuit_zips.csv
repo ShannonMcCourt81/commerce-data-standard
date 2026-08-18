@@ -1,0 +1,4 @@
+dictionary_key,row_type,value_id,label,maps_to,aliases,facet_ids,status,provenance,version,locale
+wetsuit_zip,canonical,back_zip,Back Zip,,back zipper,,active,seed,0.7.0,en-GB
+wetsuit_zip,canonical,chest_zip,Chest Zip,,front zip;chest zipper,,active,seed,0.7.0,en-GB
+wetsuit_zip,canonical,zip_free,Zip Free,,zipperless;zipless;no zip,,active,seed,0.7.0,en-GB

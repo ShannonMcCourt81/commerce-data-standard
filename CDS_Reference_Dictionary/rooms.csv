@@ -1,0 +1,16 @@
+dictionary_key,row_type,value_id,label,maps_to,aliases,facet_ids,status,provenance,version,locale
+room,canonical,living_room,Living Room,,,,active,seed,0.2.0,en-GB
+room,canonical,bedroom,Bedroom,,,,active,seed,0.2.0,en-GB
+room,canonical,dining_room,Dining Room,,,,active,seed,0.2.0,en-GB
+room,canonical,kitchen,Kitchen,,,,active,seed,0.2.0,en-GB
+room,canonical,bathroom,Bathroom,,,,active,seed,0.2.0,en-GB
+room,canonical,home_office,Home Office,,,,active,seed,0.2.0,en-GB
+room,canonical,entryway,Entryway,,hallway,,active,seed,0.5.0,en-GB
+room,canonical,nursery,Nursery,,,,active,seed,0.2.0,en-GB
+room,canonical,kids_room,Kids Room,,,,active,seed,0.2.0,en-GB
+room,canonical,laundry,Laundry,,,,active,seed,0.2.0,en-GB
+room,canonical,outdoor,Outdoor,,,,active,seed,0.2.0,en-GB
+room,canonical,multi_room,Multi-room,,,,active,seed,0.2.0,en-GB
+room,canonical,balcony,Balcony,,,,active,seed,0.5.0,en-GB
+room,canonical,garage,Garage,,,,active,seed,0.5.0,en-GB
+room,canonical,conservatory,Conservatory,,sunroom,,active,seed,0.5.0,en-GB

@@ -1,0 +1,23 @@
+dictionary_key,row_type,value_id,label,maps_to,aliases,facet_ids,status,provenance,version,locale
+footwear_style,canonical,sneaker,Sneaker,,trainer;runner,,active,seed,0.1.0,en-GB
+footwear_style,canonical,boot,Boot,,,,active,seed,0.1.0,en-GB
+footwear_style,canonical,ankle_boot,Ankle Boot,,bootie,,active,seed,0.1.0,en-GB
+footwear_style,canonical,loafer,Loafer,,penny loafer,,active,seed,0.1.0,en-GB
+footwear_style,canonical,oxford_shoe,Oxford,,balmoral,,active,seed,0.1.0,en-GB
+footwear_style,canonical,derby,Derby,,gibson;blucher,,active,seed,0.1.0,en-GB
+footwear_style,canonical,heel_pump,Pump,,court shoe;heels,,active,seed,0.1.0,en-GB
+footwear_style,canonical,sandal,Sandal,,,,active,seed,0.1.0,en-GB
+footwear_style,canonical,slide,Slide,,slider,,active,seed,0.1.0,en-GB
+footwear_style,canonical,mule,Mule,,,,active,seed,0.1.0,en-GB
+footwear_style,canonical,ballet_flat,Ballet Flat,,ballerina;ballet pump,,active,seed,0.1.0,en-GB
+footwear_style,canonical,espadrille,Espadrille,,,,active,seed,0.1.0,en-GB
+footwear_style,canonical,slipper,Slipper,,house shoe,,active,seed,0.1.0,en-GB
+footwear_style,canonical,hiking_boot,Hiking Boot,,walking boot;trail boot,,active,seed,0.1.0,en-GB
+footwear_style,canonical,chelsea_boot,Chelsea Boot,,,,active,seed,0.5.0,en-GB
+footwear_style,canonical,combat_boot,Combat Boot,,military boot;lug boot,,active,seed,0.5.0,en-GB
+footwear_style,canonical,wedge,Wedge,,wedge heel;wedges,,active,seed,0.5.0,en-GB
+footwear_style,canonical,boat_shoe,Boat Shoe,,deck shoe,,active,seed,0.5.0,en-GB
+footwear_style,canonical,clog,Clog,,,,active,seed,0.5.0,en-GB
+footwear_style,canonical,mary_jane,Mary Jane,,mary-jane,,active,seed,0.5.0,en-GB
+footwear_style,canonical,flip_flop,Flip Flop,,thong;thongs;plugger,,active,seed,0.5.0,en-GB
+footwear_style,canonical,brogue,Brogue,,wingtip,,active,seed,0.5.0,en-GB

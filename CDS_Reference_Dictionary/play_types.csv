@@ -1,0 +1,11 @@
+dictionary_key,row_type,value_id,label,maps_to,aliases,facet_ids,status,provenance,version,locale
+play_type,canonical,construction,Construction,,building sets;building blocks;bricks,,active,seed,0.5.0,en-GB
+play_type,canonical,creative_arts,Arts & Crafts,,craft;creative play;drawing,,active,seed,0.5.0,en-GB
+play_type,canonical,pretend_play,Pretend Play,,role play;dress up;play sets,,active,seed,0.5.0,en-GB
+play_type,canonical,outdoor_play,Outdoor Play,,outdoor toys;ride-ons;sandpit toys,,active,seed,0.5.0,en-GB
+play_type,canonical,board_game,Board Game,,family games;card games;tabletop,,active,seed,0.5.0,en-GB
+play_type,canonical,puzzle,Puzzle,,jigsaw,,active,seed,0.5.0,en-GB
+play_type,canonical,electronic_toy,Electronic Toy,,interactive toy;remote control;RC,,active,seed,0.5.0,en-GB
+play_type,canonical,plush,Plush & Soft Toys,,soft toy;stuffed animal;teddy,,active,seed,0.5.0,en-GB
+play_type,canonical,dolls_action_figures,Dolls & Action Figures,,doll;action figure;figurine,,active,seed,0.5.0,en-GB
+play_type,canonical,vehicles,Toy Vehicles,,toy cars;trains;die-cast,,active,seed,0.5.0,en-GB

@@ -1,0 +1,7 @@
+dictionary_key,row_type,value_id,label,maps_to,aliases,facet_ids,status,provenance,version,locale
+footwear_closure,canonical,lace_up,Lace Up,,laces;lace fastening,,active,seed,0.1.0,en-GB
+footwear_closure,canonical,slip_on,Slip On,,pull on,,active,seed,0.1.0,en-GB
+footwear_closure,canonical,buckle,Buckle,,buckle fastening,,active,seed,0.1.0,en-GB
+footwear_closure,canonical,zip,Zip,,zipper;zip fastening,,active,seed,0.1.0,en-GB
+footwear_closure,canonical,velcro_strap,Velcro Strap,,hook and loop;hook and loop strap,,active,seed,0.1.0,en-GB
+footwear_closure,canonical,elastic_gore,Elastic Gore,,elastic side;gusset,,active,seed,0.1.0,en-GB

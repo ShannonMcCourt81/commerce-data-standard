@@ -1,0 +1,9 @@
+dictionary_key,row_type,value_id,label,maps_to,aliases,facet_ids,status,provenance,version,locale
+beauty_skin_type,canonical,normal,Normal,,,,active,seed,0.1.0,en-GB
+beauty_skin_type,canonical,dry,Dry,,,,active,seed,0.1.0,en-GB
+beauty_skin_type,canonical,oily,Oily,,,,active,seed,0.1.0,en-GB
+beauty_skin_type,canonical,combination,Combination,,combo,,active,seed,0.1.0,en-GB
+beauty_skin_type,canonical,sensitive,Sensitive,,,,active,seed,0.1.0,en-GB
+beauty_skin_type,canonical,all_skin_types,All Skin Types,,all skin,,active,seed,0.1.0,en-GB
+beauty_skin_type,canonical,blemish_prone,Blemish-prone,,breakout-prone,,active,seed,0.5.0,en-GB
+beauty_skin_type,canonical,dehydrated,Dehydrated,,,,active,seed,0.5.0,en-GB

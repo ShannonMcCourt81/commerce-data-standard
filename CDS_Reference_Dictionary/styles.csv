@@ -1,0 +1,29 @@
+dictionary_key,row_type,value_id,label,maps_to,aliases,facet_ids,status,provenance,version,locale
+style,canonical,classic,Classic,,,,active,seed,0.2.0,en-GB
+style,canonical,minimal,Minimal,,,,active,seed,0.2.0,en-GB
+style,canonical,modern,Modern,,,,active,seed,0.2.0,en-GB
+style,canonical,contemporary,Contemporary,,,,active,seed,0.2.0,en-GB
+style,canonical,casual,Casual,,,,active,seed,0.2.0,en-GB
+style,canonical,formal,Formal,,,,active,seed,0.2.0,en-GB
+style,canonical,romantic,Romantic,,,,active,seed,0.2.0,en-GB
+style,canonical,bohemian,Bohemian,,,,active,seed,0.2.0,en-GB
+style,canonical,coastal,Coastal,,,,active,seed,0.2.0,en-GB
+style,canonical,resort,Resort,,,,active,seed,0.2.0,en-GB
+style,canonical,streetwear,Streetwear,,,,active,seed,0.2.0,en-GB
+style,canonical,athleisure,Athleisure,,,,active,seed,0.2.0,en-GB
+style,canonical,workwear,Workwear,,,,active,seed,0.2.0,en-GB
+style,canonical,vintage_inspired,Vintage-inspired,,,,active,seed,0.2.0,en-GB
+style,canonical,scandinavian,Scandinavian,,,,active,seed,0.2.0,en-GB
+style,canonical,industrial,Industrial,,,,active,seed,0.2.0,en-GB
+style,canonical,rustic,Rustic,,,,active,seed,0.2.0,en-GB
+style,canonical,country,Country,,,,active,seed,0.2.0,en-GB
+style,canonical,luxury,Luxury,,,,active,seed,0.2.0,en-GB
+style,canonical,preppy,Preppy,,,,active,seed,0.5.0,en-GB
+style,canonical,smart_casual,Smart Casual,,,,active,seed,0.5.0,en-GB
+style,canonical,western,Western,,,,active,seed,0.5.0,en-GB
+style,canonical,utility,Utility,,,,active,seed,0.5.0,en-GB
+style,canonical,mid_century,Mid-century,,mid-century modern;MCM,,active,seed,0.5.0,en-GB
+style,canonical,french_provincial,French Provincial,,provincial,,active,seed,0.5.0,en-GB
+style,canonical,hamptons,Hamptons,,,,active,seed,0.5.0,en-GB
+style,canonical,japandi,Japandi,,,,active,seed,0.5.0,en-GB
+style,canonical,art_deco,Art Deco,,deco,,active,seed,0.5.0,en-GB

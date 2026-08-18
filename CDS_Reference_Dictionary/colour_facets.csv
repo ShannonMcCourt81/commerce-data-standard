@@ -1,0 +1,19 @@
+dictionary_key,row_type,value_id,label,maps_to,aliases,facet_ids,definition,status,provenance,version,locale
+colour_facet,canonical,black,Black,,,,Near-black and black visual colours,active,seed,0.2.0,en-GB
+colour_facet,canonical,white,White,,,,White visual colours,active,seed,0.2.0,en-GB
+colour_facet,canonical,grey,Grey,,,,Neutral grey family,active,seed,0.2.0,en-GB
+colour_facet,canonical,silver,Silver,,,,Silver metallic appearance,active,seed,0.2.0,en-GB
+colour_facet,canonical,brown,Brown,,,,Brown family,active,seed,0.2.0,en-GB
+colour_facet,canonical,beige,Beige,,,,Warm pale brown and neutral family,active,seed,0.2.0,en-GB
+colour_facet,canonical,cream,Cream,,,,Warm off-white family,active,seed,0.2.0,en-GB
+colour_facet,canonical,yellow,Yellow,,,,Yellow family,active,seed,0.2.0,en-GB
+colour_facet,canonical,orange,Orange,,,,Orange family,active,seed,0.2.0,en-GB
+colour_facet,canonical,red,Red,,,,Red family,active,seed,0.2.0,en-GB
+colour_facet,canonical,pink,Pink,,,,Pink family,active,seed,0.2.0,en-GB
+colour_facet,canonical,purple,Purple,,,,Purple family,active,seed,0.2.0,en-GB
+colour_facet,canonical,blue,Blue,,,,Blue family,active,seed,0.2.0,en-GB
+colour_facet,canonical,green,Green,,,,Green family,active,seed,0.2.0,en-GB
+colour_facet,canonical,gold,Gold,,,,Gold metallic appearance,active,seed,0.2.0,en-GB
+colour_facet,canonical,clear,Clear,,,,Transparent or substantially colourless,active,seed,0.2.0,en-GB
+colour_facet,canonical,multicolour,Multi-colour,,,,No single dominant colour or intentionally mixed palette,active,seed,0.2.0,en-GB
+colour_facet,canonical,natural,Natural,,,,Uncoloured natural appearance where no clearer family applies,active,seed,0.2.0,en-GB

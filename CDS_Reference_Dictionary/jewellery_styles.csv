@@ -1,0 +1,13 @@
+dictionary_key,row_type,value_id,label,maps_to,aliases,facet_ids,status,provenance,version,locale
+jewellery_style,canonical,stud,Stud,,stud earring,,active,seed,0.5.0,en-GB
+jewellery_style,canonical,hoop,Hoop,,hoop earring,,active,seed,0.5.0,en-GB
+jewellery_style,canonical,huggie,Huggie,,huggie hoop,,active,seed,0.5.0,en-GB
+jewellery_style,canonical,drop,Drop,,dangle;dangly,,active,seed,0.5.0,en-GB
+jewellery_style,canonical,pendant,Pendant,,,,active,seed,0.5.0,en-GB
+jewellery_style,canonical,chain,Chain,,,,active,seed,0.5.0,en-GB
+jewellery_style,canonical,charm,Charm,,,,active,seed,0.5.0,en-GB
+jewellery_style,canonical,bangle,Bangle,,,,active,seed,0.5.0,en-GB
+jewellery_style,canonical,cuff,Cuff,,,,active,seed,0.5.0,en-GB
+jewellery_style,canonical,tennis,Tennis,,tennis bracelet;line bracelet,,active,seed,0.5.0,en-GB
+jewellery_style,canonical,signet,Signet,,signet ring,,active,seed,0.5.0,en-GB
+jewellery_style,canonical,solitaire,Solitaire,,,,active,seed,0.5.0,en-GB

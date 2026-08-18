@@ -1,0 +1,15 @@
+dictionary_key,row_type,value_id,label,maps_to,aliases,facet_ids,status,provenance,version,locale
+shape,canonical,round,Round,,,,active,seed,0.2.0,en-GB
+shape,canonical,square,Square,,,,active,seed,0.2.0,en-GB
+shape,canonical,rectangular,Rectangular,,,,active,seed,0.2.0,en-GB
+shape,canonical,oval,Oval,,,,active,seed,0.2.0,en-GB
+shape,canonical,cylindrical,Cylindrical,,,,active,seed,0.2.0,en-GB
+shape,canonical,tapered,Tapered,,,,active,seed,0.2.0,en-GB
+shape,canonical,organic,Organic,,irregular,,active,seed,0.2.0,en-GB
+shape,canonical,arched,Arched,,,,active,seed,0.2.0,en-GB
+shape,canonical,cone,Cone,,,,active,seed,0.2.0,en-GB
+shape,canonical,spherical,Spherical,,,,active,seed,0.2.0,en-GB
+shape,canonical,hexagonal,Hexagonal,,hexagon,,active,seed,0.5.0,en-GB
+shape,canonical,geometric,Geometric,,,,active,seed,0.5.0,en-GB
+shape,canonical,scalloped,Scalloped,,scallop,,active,seed,0.5.0,en-GB
+shape,canonical,semi_circular,Semi-circular,,half moon;demilune,,active,seed,0.5.0,en-GB

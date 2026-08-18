@@ -1,0 +1,23 @@
+dictionary_key,row_type,value_id,label,maps_to,aliases,facet_ids,care_group,status,provenance,version,locale
+care_instruction,canonical,machine_wash_cold,Machine Wash Cold,,machine wash 30;cold wash,,wash,active,seed,0.1.0,en-GB
+care_instruction,canonical,machine_wash_warm,Machine Wash Warm,,machine wash 40;warm wash,,wash,active,seed,0.1.0,en-GB
+care_instruction,canonical,hand_wash,Hand Wash,,hand wash only,,wash,active,seed,0.1.0,en-GB
+care_instruction,canonical,do_not_wash,Do Not Wash,,,,wash,active,seed,0.1.0,en-GB
+care_instruction,canonical,gentle_cycle,Gentle Cycle,,delicate cycle,,wash,active,seed,0.1.0,en-GB
+care_instruction,canonical,wash_dark_separately,Wash Dark Colours Separately,,wash separately;wash with like colours,,wash,active,seed,0.1.0,en-GB
+care_instruction,canonical,do_not_bleach,Do Not Bleach,,no bleach,,bleach,active,seed,0.1.0,en-GB
+care_instruction,canonical,tumble_dry_low,Tumble Dry Low,,tumble dry low heat,,dry,active,seed,0.1.0,en-GB
+care_instruction,canonical,do_not_tumble_dry,Do Not Tumble Dry,,no tumble dry,,dry,active,seed,0.1.0,en-GB
+care_instruction,canonical,line_dry,Line Dry,,hang dry;air dry,,dry,active,seed,0.1.0,en-GB
+care_instruction,canonical,dry_flat,Dry Flat,,flat dry;reshape and dry flat,,dry,active,seed,0.1.0,en-GB
+care_instruction,canonical,iron_low,Iron Low,,cool iron;iron low heat,,iron,active,seed,0.1.0,en-GB
+care_instruction,canonical,iron_medium,Iron Medium,,warm iron;iron medium heat,,iron,active,seed,0.1.0,en-GB
+care_instruction,canonical,do_not_iron,Do Not Iron,,,,iron,active,seed,0.1.0,en-GB
+care_instruction,canonical,dry_clean_only,Dry Clean Only,,dry clean;professional clean only,,professional,active,seed,0.1.0,en-GB
+care_instruction,canonical,do_not_dry_clean,Do Not Dry Clean,,,,professional,active,seed,0.1.0,en-GB
+care_instruction,canonical,do_not_wring,Do Not Wring,,do not twist;do not wring or twist,,wash,active,seed,0.5.0,en-GB
+care_instruction,canonical,wash_inside_out,Wash Inside Out,,turn inside out to wash,,wash,active,seed,0.5.0,en-GB
+care_instruction,canonical,machine_wash_hot,Machine Wash Hot,,machine wash 60;hot wash,,wash,active,seed,0.5.0,en-GB
+care_instruction,canonical,iron_high,Iron High,,hot iron;iron high heat,,iron,active,seed,0.5.0,en-GB
+care_instruction,canonical,iron_reverse_side,Iron Reverse Side,,iron inside out;iron wrong side only,,iron,active,seed,0.5.0,en-GB
+care_instruction,canonical,dry_in_shade,Dry in Shade,,dry away from sunlight,,dry,active,seed,0.5.0,en-GB

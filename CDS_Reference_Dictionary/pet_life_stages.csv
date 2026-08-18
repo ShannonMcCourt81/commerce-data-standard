@@ -1,0 +1,5 @@
+dictionary_key,row_type,value_id,label,maps_to,aliases,facet_ids,definition,status,provenance,version,locale
+pet_life_stage,canonical,young,Young,,puppy;kitten;junior,,Pre-adult life stage; species display term (puppy or kitten) is a channel mapping,active,seed,0.5.0,en-GB
+pet_life_stage,canonical,adult,Adult,,,,,active,seed,0.5.0,en-GB
+pet_life_stage,canonical,senior,Senior,,mature,,,active,seed,0.5.0,en-GB
+pet_life_stage,canonical,all_life_stages,All Life Stages,,all ages,,Product formulated or suitable for every life stage,active,seed,0.5.0,en-GB

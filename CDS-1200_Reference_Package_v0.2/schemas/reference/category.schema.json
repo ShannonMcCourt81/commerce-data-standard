@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:cds:schema:reference:category",
+  "version": "0.2.0",
+  "title": "CDS Internal Category",
+  "allOf": [
+    {
+      "$ref": "urn:cds:schema:common:envelope"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "document_type": {
+          "const": "category"
+        },
+        "category_id": {
+          "type": "string",
+          "minLength": 3
+        },
+        "parent_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "path": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 3
+          },
+          "$comment": "Ordered ancestor category_ids ending with this category's own id — stable identifiers, not display labels (CDS1100-15/ADR-D5)."
+        },
+        "product_family_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "required_attribute_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "category_id",
+        "parent_id",
+        "name",
+        "path",
+        "product_family_id",
+        "required_attribute_ids"
+      ]
+    }
+  ],
+  "unevaluatedProperties": false
+}

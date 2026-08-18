@@ -1,0 +1,1035 @@
+requirement_id,chapter,keyword_profile,text
+CDS000-R001,CDS-000,MUST NOT+SHOULD NOT+MUST+SHOULD+MAY,"The key words MUST, MUST NOT, SHOULD, SHOULD NOT and MAY in CDS documents are to be interpreted as described in RFC 2119 and RFC 8174: they are normative **only when they appear in upper case within the body of a requirement sentence**."
+CDS000-R002,CDS-000,MUST NOT,The keyword SHALL is not used in CDS. Requirement sentences MUST NOT carry a detached requirement-level prefix label; the in-sentence keyword governs. *(Resolves the prefix-corruption defect catalogued in the v0.2 errata manifest.)*
+CDS000-R003,CDS-000,declarative,"Every normative requirement carries a stable requirement identifier of the form `CDSnnn-Rmmm` (chapter number, requirement number). Identifiers are never reused after retirement."
+CDS000-R004,CDS-000,declarative,"Every section is explicitly marked normative or informative. Examples, worked scenarios and platform observations are informative unless individually marked otherwise."
+CDS000-R005,CDS-000,MUST NOT,"Each defined term has exactly one authoritative definition, in CDS-100. Each normative topic has exactly one authoritative home chapter; other chapters cite it and MUST NOT restate its requirements. The authoritative homes are: terminology — CDS-100; entity and authority model — CDS-200; namespaces and naming — CDS-300; dictionaries and value layers — CDS-400; publication, observation, verificatio"
+CDS000-R006,CDS-000,MUST NOT,"Architecture decisions are recorded as ADRs in a single global register, one ADR per decision. A superseded ADR is marked superseded and cross-referenced; the same decision MUST NOT be recorded in multiple ADRs."
+CDS000-R007,CDS-000,MUST NOT,The corpus has one release version shared by every chapter and companion package. The current release is **v0.2 Review Draft**. Chapters MUST NOT carry independent versions.
+CDS000-R008,CDS-000,declarative,"Release gates: v0.9 requires external/domain review, stable profiles and a complete conformance package; v1.0 requires stable governance, independently tested schemas, current verified profiles and documented adopters. No CDS artifact may be labelled v1.0 before those gates pass."
+CDS000-R009,CDS-000,declarative,Schema `$id`s are release-independent URNs (`urn:cds:schema:<domain>:<name>`); each schema carries its own semantic version; instances pin their corpus release via the envelope `cds_version`. (Details: CDS-1100.)
+CDS000-R010,CDS-000,declarative,"Principle identifiers use the form `CDS-P-nn`; they share no identifier space with chapter numbers, requirement IDs or ADR IDs."
+CDS000-R011,CDS-000,MUST NOT+MAY,Profile precedence: more specific profiles (platform → industry → organisation) MAY add constraints; CDS core semantics remain authoritative for shared concepts. A profile MUST NOT weaken a core requirement; deviations go through the exception process (CDS-800).
+CDS000-R012,CDS-000,declarative,"Conformance levels, their tests and claim rules are defined solely in CDS-1000 (Foundation → Structured → Publisher → Verified → Governed, with overlay profiles such as AI-Assured). Levels are strictly cumulative. *(ADR-D1.)*"
+CDS100-R001,CDS-100,MUST NOT+MUST,"The definitions in this chapter are normative. A term has exactly one CDS definition; other chapters MUST use these terms consistently and MUST NOT redefine them. Where industry usage conflicts, the CDS definition prevails within CDS documents."
+CDS100-R002,CDS-100,declarative,"Each definition names the chapter that owns the term's detailed requirements (""Home""). Definitions state *what a term means*; the home chapter states *what implementations must do*."
+CDS100-R003,CDS-100,MUST NOT,The following terms are retired and MUST NOT be used in v0.2+ documents except when quoting v0.1 drafts or legacy systems:
+CDS200-R001,CDS-200,MUST,A CDS implementation MUST maintain a canonical product layer independent of any single sales channel.
+CDS200-R002,CDS-200,MUST NOT,"A channel-specific limitation MUST NOT reduce the information fidelity of the canonical model. Channel constraints are absorbed by field mappings and profiles (CDS-500, CDS-900)."
+CDS200-R003,CDS-200,MUST NOT+MAY,"A downstream read-back MAY inform verification, but MUST NOT silently overwrite canonical values. Observed state is stored separately from canonical state (observation mechanics: CDS-500 §14–§15)."
+CDS200-R004,CDS-200,MUST,Canonical information MUST be stored once and projected many times.
+CDS200-R005,CDS-200,SHOULD,"A field that exists only because one channel requires it SHOULD be represented as a channel field or mapping (`CH_` scope, CDS-300), not as canonical product truth."
+CDS200-R006,CDS-200,MUST+MAY,"An implementation MAY store data physically in relational tables, documents, graphs or spreadsheets, but MUST preserve the logical entities below and the rules attached to them."
+CDS200-R007,CDS-200,MUST NOT+MUST,Tags MUST be governed projections generated from canonical data (e.g. `collection_*` signals regenerated from classification rules) and MUST NOT serve as the primary store for structured product facts. Tag governance is defined in CDS-400; tag publication and merge semantics in CDS-500.
+CDS200-R008,CDS-200,MUST NOT+MUST,A difference MUST create a distinct sellable unit before it is modelled as a variant option. Attributes that do not produce a separately sellable unit MUST NOT be modelled as variant options merely to make them filterable (filterability is a facet concern — CDS-600).
+CDS200-R009,CDS-200,MUST+MAY,"A Product with no variant options has exactly one variant, which MAY be implicit in storage but MUST be countable as a variant for publication and verification purposes."
+CDS200-R010,CDS-200,MUST,Product-level attribute values MUST describe facts shared by all variants of the product.
+CDS200-R011,CDS-200,MUST,"Variant-level attribute values MUST describe facts specific to the sellable unit, and MUST be stored as canonical `value_id`s (never raw source spellings) per ADR-D4."
+CDS200-R012,CDS-200,MUST NOT+MUST,"Where a variant-scoped attribute (such as colour on a multi-colour product) is presented at product level for display, faceting or search, the product-level value MUST be a projection derived from the variant values and MUST NOT be an independently authored canonical fact."
+CDS200-R013,CDS-200,MUST,"An implementation MUST maintain an internal taxonomy that is independent of any channel taxonomy. Core requirements in this section bind to *an internal taxonomy*, not to any particular tier structure."
+CDS200-R014,CDS-200,SHOULD+MAY,The three-tier shape **Product Family → Product Type → Category** (e.g. Apparel → Shirt → Linen Shirts) SHOULD be adopted as the recommended profile shape; industry profiles (CDS-1500) refine it. Implementations MAY use a different documented internal structure without loss of conformance to this section.
+CDS200-R015,CDS-200,MUST,A product MUST have exactly one primary internal category.
+CDS200-R016,CDS-200,SHOULD,The primary category SHOULD be the most specific applicable node — a node none of whose child nodes applies to the product.
+CDS200-R017,CDS-200,MUST,"Where more than one category could serve as the primary category, the assignment MUST be resolved using an **organisation-declared, documented, ordered set of tie-break rules**, applied in order until one yields a decision and applied consistently across the catalogue. The following ordering is the **recommended default** *(informative)*:"
+CDS200-R018,CDS-200,MUST,"Every tie-break decision MUST be recorded in a taxonomy decision log entry carrying at least: the product type or product concerned, the category chosen, the rule applied, and the date. Subsequent products matching a logged entry MUST follow it; changing the decision requires a superseding log entry, not an ad-hoc different assignment."
+CDS200-R019,CDS-200,MUST NOT+MAY,"A product MAY additionally hold **secondary category placements**. Secondary placements are non-projecting: they MUST NOT drive external taxonomy mappings, required-attribute inheritance or collection projection unless a rule explicitly and individually opts a placement in."
+CDS200-R020,CDS-200,MUST NOT+MUST+MAY,External taxonomy identifiers (channel or standard taxonomies) MUST be stored as Taxonomy Mappings from internal categories (or products) and MUST NOT replace the internal taxonomy. Category-level mappings MAY be inherited by child categories.
+CDS200-R021,CDS-200,MUST+MAY,"A product MAY carry a per-channel taxonomy mapping override where the category-level mapping is wrong for that specific product on that specific channel. Such an override MUST be recorded as a governed override record (CDS-500 §21), scoped to product + channel."
+CDS200-R022,CDS-200,MUST NOT+MAY,A product MAY appear in multiple collections without being assigned multiple primary categories. Collections are merchandising groupings and MUST NOT redefine classification (presentation rules: CDS-600).
+CDS200-R023,CDS-200,MUST,Every governed attribute MUST have an Attribute Definition.
+CDS200-R024,CDS-200,MUST,Products and variants MUST store values; Attribute Definitions MUST store behaviour.
+CDS200-R025,CDS-200,SHOULD,A channel mapping SHOULD be defined on the Attribute Definition rather than repeated on every product.
+CDS200-R026,CDS-200,MUST,"The Attribute Definition MUST declare which value layer feeds each consuming channel (canonical value, display label or facet value); channels are never fed implicitly from the facet layer (ADR-D4)."
+CDS200-R027,CDS-200,MUST,"Every governed product fact MUST have exactly one declared authority, recorded on the Attribute Definition or in an equivalent authority matrix."
+CDS200-R028,CDS-200,MUST NOT,Two systems MUST NOT simultaneously claim authoritative ownership of the same product fact.
+CDS200-R029,CDS-200,MUST,"Delegation of authority MUST be an explicit recorded declaration on the Attribute Definition or authority matrix, carrying at least: the delegated fact scope, the delegate system, the approving owner, the effective date and a review date. Undeclared delegation is non-conformant; ""the other system just edits it"" is not delegation."
+CDS200-R030,CDS-200,MUST,"A channel-specific deviation from the projected canonical value MUST be expressed as a governed override record as defined in CDS-500 §21 (scope, replacement value, reason, owner, approval, time bounds, verification expectation). A downstream edit to a PIM-owned field without an active override record is drift (CDS-500 §11)."
+CDS200-R031,CDS-200,MUST,Read-back (observed) values MUST be stored separately from canonical values (observation record: CDS-500 §15). See also R003.
+CDS200-R032,CDS-200,MUST,An implementation MUST be able to determine which canonical revision produced a published channel state (record linkage: CDS-500 §8).
+CDS200-R033,CDS-200,SHOULD,"Mappings and dictionaries SHOULD be versioned, because changes to them alter downstream output without changing the product record (dictionary versioning: CDS-400; mapping-set versioning: CDS-500)."
+CDS200-R034,CDS-200,MUST,Conditional requirements MUST be represented as explicit rules rather than undocumented staff knowledge.
+CDS200-R035,CDS-200,MUST,"Validation errors MUST distinguish missing, invalid, conflicting and unmapped values."
+CDS200-R036,CDS-200,SHOULD,"Rules SHOULD operate on canonical values and declared channel projections, not on uncontrolled display text."
+CDS300-R001,CDS-300,MUST,A visible field identifier MUST communicate its semantic role without requiring ordinary users to consult a separate document during routine work.
+CDS300-R002,CDS-300,MUST,"The namespace segment MUST be two to eight uppercase ASCII characters, MUST begin with a letter, and MUST be followed by a single underscore separator."
+CDS300-R003,CDS-300,MUST+SHOULD+MAY,The field-name portion SHOULD use lowercase snake_case. The first field-name segment MUST begin with a lowercase letter; subsequent segments MAY be numeric (e.g. `CH_google_custom_label_0`).
+CDS300-R004,CDS-300,MUST NOT+MUST,"The complete identifier MUST NOT contain spaces, colons, equals signs, dots, slashes, backslashes, commas or Unicode punctuation, and MUST use only ASCII letters, digits and underscores unless a profile explicitly permits another character set."
+CDS300-R005,CDS-300,MUST,Identifiers MUST match the regular expression:
+CDS300-R006,CDS-300,MUST,A field registry MUST enforce identifier uniqueness case-insensitively.
+CDS300-R007,CDS-300,SHOULD NOT+MAY,"Hyphens MAY appear inside controlled values and tags where CDS-400 permits, but SHOULD NOT be used as a field-name separator."
+CDS300-R008,CDS-300,MUST NOT,"Names MUST NOT use positional codes such as `field_1`, `misc_2` or `data_a` as permanent identifiers."
+CDS300-R009,CDS-300,MUST,Every visible field identifier MUST belong to a prefix registered in this registry or in the implementation's extension registry (§20). *(Upholds CDS-P-09.)*
+CDS300-R010,CDS-300,MUST,"An implementation MUST maintain a namespace registry identifying, for every visible prefix: meaning, owner, allowed scope, publication behaviour, lifecycle status (active, deprecated, reserved) and — for deprecated prefixes — replacement and deprecation date."
+CDS300-R011,CDS-300,MUST,"A field MUST use the namespace that describes its semantic responsibility, not its current storage location or delivery mechanism."
+CDS300-R012,CDS-300,MUST NOT,"WF_, QA_, SYS_, AI_, IMPORT_ and OBS_ fields MUST NOT be published to customer-facing channels unless a channel profile explicitly requires them."
+CDS300-R013,CDS-300,MUST,The STD_ namespace MUST contain exactly the fields enumerated in the STD_ registry table. Adding or removing an STD_ field is a registry change under CDS-800 change control.
+CDS300-R014,CDS-300,MUST,A structured product attribute not present in the STD_ enumeration MUST use MF_ (or a more specific registered namespace whose domain it belongs to).
+CDS300-R015,CDS-300,SHOULD,"The field-name portion SHOULD state the product fact or operational purpose in plain, specific language, using terminology defined by CDS-100/CDS-400 or by the applicable channel specification."
+CDS300-R016,CDS-300,SHOULD NOT+MAY,"Acronyms such as SKU, GTIN, MPN, URL and SEO MAY be retained where widely recognised; other unexplained abbreviations SHOULD NOT be used."
+CDS300-R017,CDS-300,MUST,Every machine key exposed to users MUST have a stable semantic identifier or an equally self-describing equivalent.
+CDS300-R018,CDS-300,MUST NOT+MAY,A human label MAY contain spaces and title case but MUST NOT replace the semantic identifier in exports or integrations.
+CDS300-R019,CDS-300,MUST,"The mapping between semantic identifier, machine key and channel destination MUST be discoverable from the Attribute Definition or field registry."
+CDS300-R020,CDS-300,SHOULD+MAY,"Exports and integrations SHOULD preserve identifier case. Where a target is lossy (e.g. a platform that case-folds keys), an export MAY apply case-folding **only where the registry or Attribute Definition declares a reversible mapping** between the semantic identifier and the folded form; the folded form then round-trips deterministically. *(Resolves finding 300-6; upholds CDS-P-09.)*"
+CDS300-R021,CDS-300,MUST,The first field-name segment after `CH_` MUST identify the channel using its registered lowercase channel key.
+CDS300-R022,CDS-300,MUST,"Channel keys MUST remain stable even when the technical transport changes (file feed, API or otherwise)."
+CDS300-R023,CDS-300,MUST NOT+SHOULD NOT,CH_ MUST NOT be used for a canonical attribute merely because that attribute is sent to a channel; a canonical fact used by many channels remains canonical and SHOULD NOT be duplicated under multiple CH_ fields unless distinct channel representations are required.
+CDS300-R024,CDS-300,declarative,"A field is a feed-layer projection if and only if it is a literal serialized feed column; such projections live under CH_, and the feed artifact is verified end-to-end at the formatted-output layer (verification model: CDS-500). *(ADR-D24, replacing the untestable ""retain DF_ where useful"".)*"
+CDS300-R025,CDS-300,MUST,"MF_ fields MUST describe product information — never integration status, workflow state or system metadata."
+CDS300-R026,CDS-300,SHOULD,"An MF_ field SHOULD be backed by an Attribute Definition (CDS-200 §7) declaring type, cardinality, dictionary binding, display, facet and channel mappings."
+CDS300-R027,CDS-300,MUST NOT,"Where a channel publishes an MF_ attribute as a native or standard field, that is the channel profile's mapping concern; the canonical prefix MUST NOT change."
+CDS300-R028,CDS-300,MUST,"CAT_ MUST be used for internal classification and taxonomy assignments, not external taxonomy mappings (those are CH_)."
+CDS300-R029,CDS-300,MUST,VAR_ MUST be used for values specific to a sellable unit or variant option (variant boundary rule: CDS-200 §5).
+CDS300-R030,CDS-300,MUST,"WF_ fields MUST describe work state, responsibility or approval."
+CDS300-R031,CDS-300,MUST+SHOULD,"SYS_ fields MUST represent technical identity, timestamps, versions, process metadata or **computed quality metrics** (e.g. `SYS_completeness_score`), and SHOULD remain hidden from customer-facing channels."
+CDS300-R032,CDS-300,MUST,"A QA_ identifier MUST use the form `QA_<channel>_<field_name>`, where `<channel>` is a registered channel key. No other QA_ shape is valid. *(Resolves finding 300-2: the v0.1 registry's own example `QA_completeness_score` would have failed the v0.1 §21 validation; it is now `SYS_completeness_score`.)*"
+CDS300-R033,CDS-300,MUST,"The associated verification record MUST retain expected value, observed value, detailed status, comparison strategy and timestamps even where a UI shows only a traffic-light symbol. Status vocabulary and traffic-light mapping are defined solely in CDS-500."
+CDS300-R034,CDS-300,MUST NOT+MAY,Legacy `Match_` prefixes MAY be accepted as deprecated aliases (§21) but MUST NOT be used in new design.
+CDS300-R035,CDS-300,MUST,"SEO_ MUST be used only for metadata whose primary purpose is search presentation, indexing or discoverability. Legacy fields containing the token ""SEO"" MUST be classified by actual responsibility before migration — production `DF_Airtable_SEO_*` fields were feed fields and migrate to CH_ (REVIEW-002A LEG-3)."
+CDS300-R036,CDS-300,MUST,MED_ MUST be used for media assets and media-specific metadata.
+CDS300-R037,CDS-300,MUST,"PRC_ and INV_ MUST be used only when the PIM is the declared authority or governed integration surface for those domains (CDS-200 authority model). Where it is not, price and inventory facts observed from their mastering systems use OBS_ or remain outside the visible registry."
+CDS300-R038,CDS-300,MUST NOT+MUST,"AI_ fields MUST represent proposals, provenance, confidence or workflow metadata; they MUST NOT replace the canonical field namespace. On acceptance, the value is stored in its semantic canonical field (e.g. `MF_material`) with AI provenance retained per CDS-700."
+CDS300-R039,CDS-300,MUST NOT+MUST,IMPORT_ fields MUST retain source provenance and MUST NOT be treated as canonical values; promotion to canonical goes through the value-layer model (CDS-400).
+CDS300-R040,CDS-300,MUST NOT+MUST,OBS_ fields MUST hold observed downstream state only and MUST NOT silently overwrite canonical values (CDS-500; CDS-P-02).
+CDS300-R041,CDS-300,MUST,"Where separate fields are materially required, the suffix MUST identify display, canonical or facet purpose explicitly."
+CDS300-R042,CDS-300,SHOULD NOT,Implementations SHOULD NOT persist redundant per-product representations that the dictionary can derive deterministically.
+CDS300-R043,CDS-300,MUST NOT,"Locale MUST NOT be encoded in the visible field identifier; localised values are dimensions of one identifier, declared in the Attribute Definition."
+CDS300-R044,CDS-300,MUST NOT+SHOULD,"The identifier MUST NOT be overloaded with type, requiredness or cardinality suffixes when those properties are represented in the schema; suffixes such as `_list`, `_required` or `_text` SHOULD be avoided unless they carry enduring business meaning."
+CDS300-R045,CDS-300,MUST,"An extension namespace MUST be registered before use, and its registry entry MUST define purpose, owner, examples, publication behaviour and deprecation policy."
+CDS300-R046,CDS-300,MUST NOT+MUST,"An extension prefix MUST satisfy the grammar of §3 and MUST NOT collide, case-insensitively, with **any** prefix in the §4 registry — core, conditional, reserved, recommended-extension or deprecated. *(Resolves finding 300-3: the entire core set is reserved, not only CDS_/TMP_/LEG_/EXT_.)*"
+CDS300-R047,CDS-300,MUST NOT,Reserved prefixes MUST NOT be repurposed by an organisation.
+CDS300-R048,CDS-300,MUST+SHOULD+MAY,"Forward compatibility: future CDS releases MAY register new core prefixes. Organisation prefixes SHOULD therefore be organisation-distinctive (never generic domain words likely to be standardised). If a later CDS release registers a prefix that collides with an existing organisation extension, the CDS registration prevails and the organisation prefix MUST be migrated using the §21 pattern within t"
+CDS300-R049,CDS-300,SHOULD NOT,Organisation prefixes SHOULD NOT encode temporary project names or staff initials.
+CDS300-R050,CDS-300,MUST,A deprecated identifier MUST identify its replacement and deprecation date in the registry.
+CDS300-R051,CDS-300,MUST+MAY,Aliases MAY be accepted on import but MUST resolve to exactly one canonical identifier; synonymous fields MUST be consolidated or explicitly linked by alias and deprecation metadata.
+CDS300-R052,CDS-300,MUST,"Every sanctioned alias prefix MUST carry a registry entry with status `deprecated`, so that §22 validation accepts it during migration. *(Resolves finding 300-4, where the v0.1 chapter's own sanctioned alias failed its own validation; per ADR-D24.)*"
+CDS300-R053,CDS-300,MUST+SHOULD,"Renaming MUST include impact analysis covering formulas, imports, exports, channel mappings, automation and verification, and a migration SHOULD preserve old and new fields through a verified transition period (copy → verify → switch → retire) wherever data loss is possible."
+CDS300-R054,CDS-300,MUST+SHOULD,"Validation MUST reject an identifier whose namespace has no registry entry (core, extension or deprecated). Deprecated-prefix identifiers MUST be accepted only as aliases per §21 and SHOULD raise a deprecation warning."
+CDS300-R055,CDS-300,MUST,"Validation MUST reject identifiers failing the §3 grammar, including empty segments, duplicate underscores, leading or trailing underscores and non-ASCII punctuation."
+CDS300-R056,CDS-300,MUST,"Validation MUST verify that the channel key of a CH_, QA_ or OBS_ identifier exists in the channel registry."
+CDS300-R057,CDS-300,SHOULD,Validation SHOULD warn on unexplained abbreviations and excessively long identifiers.
+CDS300-R058,CDS-300,MUST,"Identifiers MUST be validated before schema or import changes are accepted, and AI-generated field proposals MUST pass the same registry and naming validation as human proposals."
+CDS300-R059,CDS-300,SHOULD,"AI systems SHOULD receive the semantic identifier together with its human label, description, data type, dictionary binding and examples — never the identifier alone."
+CDS300-R060,CDS-300,MUST NOT,"An AI system MUST NOT infer schema properties from a prefix (e.g. that every MF_ field is free text, that every CH_ field is canonical, or that any prefix implies a storage mechanism)."
+CDS400-R001,CDS-400,MUST,"A CDS implementation MUST treat governed values as first-class reference-data entities rather than uncontrolled text wherever consistent reuse, filtering, search, validation or channel mapping is required."
+CDS400-R002,CDS-400,MUST,The PIM MUST remain the authority for canonical dictionary values and their mappings.
+CDS400-R003,CDS-400,MUST NOT,A customer-facing filter MUST NOT be created by exposing every distinct incoming or display value.
+CDS400-R004,CDS-400,MUST,"A dictionary MUST have a declared semantic scope, a named owner and a declared value identity scheme."
+CDS400-R005,CDS-400,MUST NOT,Labels MUST NOT be used as the only permanent identifier for governed values.
+CDS400-R006,CDS-400,MUST,"The original source value MUST remain available, verbatim with provenance, for audit and reprocessing."
+CDS400-R007,CDS-400,MUST,"An Alias Mapping Record MUST resolve to exactly one canonical value within its declared context, unless the mapping is explicitly marked ambiguous and routed for review."
+CDS400-R008,CDS-400,MUST,"Facet values, display labels, search synonyms and channel representations MUST be derived from or linked to canonical values rather than maintained as unrelated free text."
+CDS400-R009,CDS-400,MUST,Every canonical value MUST have a stable `value_id` or equivalent immutable identity.
+CDS400-R010,CDS-400,MUST+SHOULD,A canonical code SHOULD use lowercase ASCII snake_case and MUST remain stable when a display label changes.
+CDS400-R011,CDS-400,MUST NOT,Changing a label MUST NOT create a new value identity when the underlying meaning is unchanged.
+CDS400-R012,CDS-400,MUST,"Merging or splitting meanings MUST be performed through an explicit governed migration (§24), never a silent label edit."
+CDS400-R013,CDS-400,SHOULD+MAY,"Display labels MAY contain spaces, punctuation and brand language; canonical codes SHOULD remain portable and stable."
+CDS400-R014,CDS-400,MUST,Source values MUST be retained exactly as received when traceability is required.
+CDS400-R015,CDS-400,MUST,An Alias Mapping Record MUST identify the dictionary (via `dictionary_key`) and context in which it is valid.
+CDS400-R016,CDS-400,SHOULD,Supplier-specific mappings SHOULD be supported where the same term has different meanings between suppliers.
+CDS400-R017,CDS-400,MUST,Canonical values MUST be semantically distinct within their dictionary.
+CDS400-R018,CDS-400,SHOULD,Canonical values SHOULD preserve commercially useful detail that would be lost in a broader facet value.
+CDS400-R019,CDS-400,MUST NOT,A canonical value MUST NOT be created solely because one supplier uses a unique spelling.
+CDS400-R020,CDS-400,SHOULD,A canonical value SHOULD be reused across products and suppliers whenever the meaning is equivalent.
+CDS400-R021,CDS-400,MAY,A product MAY use a display label that differs from the value's canonical label.
+CDS400-R022,CDS-400,MUST,"A display label MUST remain linked to a canonical value when the field participates in governed filtering, search or channel publication."
+CDS400-R023,CDS-400,SHOULD NOT,A display label SHOULD NOT be used as the only search or facet value.
+CDS400-R024,CDS-400,MUST NOT+MUST,"Label precedence MUST be resolved in this order: (1) a product-level display label, valid only when recorded as a governed Display Label link to the canonical value; (2) the value's locale display label for the viewer's locale; (3) the value's canonical label. A product-level free-text label with no Display Label link MUST NOT override the value's labels in governed contexts."
+CDS400-R025,CDS-400,MUST NOT,"The Facet Dictionary, referenced through the `facet_mappings` property of canonical values, is the single authoritative mechanism for facet membership. Facet membership MUST NOT be derived from the parent hierarchy (§13), from labels or from any other source. *(Resolves CDS-400-2.)*"
+CDS400-R026,CDS-400,MUST,Facet values MUST be explicitly governed in a Facet Dictionary or equivalent configuration.
+CDS400-R027,CDS-400,MUST+SHOULD,"A facet dictionary SHOULD minimise unnecessary near-duplicate choices while preserving distinctions that materially affect purchase intent. *(Downgraded from MUST: ""minimise"" is not mechanically testable; the testable mechanism is CDS400-R028.)*"
+CDS400-R028,CDS-400,MUST,"A new or materially changed facet dictionary MUST have a recorded usability review, covering the §10.1 checklist, before activation."
+CDS400-R029,CDS-400,MUST+MAY,`facet_mappings` is an ordered list. The first facet value is the primary membership; a canonical value MUST have exactly one primary facet value per facet dimension and MAY have additional secondary memberships where justified.
+CDS400-R030,CDS-400,MUST+MAY,"A multi-colour or multi-material product MAY participate in multiple facet values; the storefront MUST treat the product as one result, never a duplicate. Multicolour is a facet or status value, never a canonical shade (CDS-100 §3)."
+CDS400-R031,CDS-400,SHOULD,Channel representations SHOULD be defined at dictionary level rather than repeated on every product.
+CDS400-R032,CDS-400,MAY,A product-level channel override MAY be used only when the product genuinely requires a different output and the reason is recorded (override semantics: CDS-500 §21).
+CDS400-R033,CDS-400,MUST,"A missing required channel mapping MUST produce a validation or publication error, never silent free-text substitution."
+CDS400-R034,CDS-400,MUST NOT+MUST,"Search synonyms MUST NOT change canonical identity, and a synonym that is ambiguous across dictionaries MUST be scoped to the applicable dictionary or attribute."
+CDS400-R035,CDS-400,MUST NOT+MUST,Hierarchy and related-value relationships MUST be explicit records and MUST NOT be inferred solely from labels.
+CDS400-R036,CDS-400,MUST NOT,A value MUST NOT have circular parent relationships.
+CDS400-R037,CDS-400,MUST NOT,"A parent relationship MUST NOT erase, replace or auto-merge the child value."
+CDS400-R038,CDS-400,SHOULD,"Related-value links SHOULD state their relationship type: synonym, similar, substitute, compatible or contrast."
+CDS400-R039,CDS-400,MUST NOT,A composition MUST NOT be reduced to an unstructured material label when percentages or component roles are required.
+CDS400-R040,CDS-400,MUST,Multi-value order MUST be declared significant or insignificant by the Attribute Definition.
+CDS400-R041,CDS-400,MAY,Facet membership MAY be derived from each component while the structured composition remains canonical.
+CDS400-R042,CDS-400,MUST NOT,Normalisation MUST NOT overwrite the original source value.
+CDS400-R043,CDS-400,MUST,Exact governed mappings MUST take precedence over fuzzy or AI-assisted matching.
+CDS400-R044,CDS-400,MUST,Numeric and measurement values MUST use type-aware comparison rather than text comparison.
+CDS400-R045,CDS-400,MAY,A dictionary MAY define locale-specific or supplier-specific normalisation rules.
+CDS400-R046,CDS-400,MUST,Every mapping MUST be scoped at least by dictionary (`dictionary_key`) or attribute.
+CDS400-R047,CDS-400,MUST NOT,Ambiguous aliases MUST NOT resolve globally without context.
+CDS400-R048,CDS-400,MUST NOT+MUST,"Where context is insufficient to resolve a source term, the term MUST enter review or remain unresolved; it MUST NOT be force-mapped."
+CDS400-R049,CDS-400,MUST NOT+MUST,"Implementations MUST record the two statuses as separate enums on their respective entities and MUST NOT conflate them in schemas, UIs or exports."
+CDS400-R050,CDS-400,MUST NOT+MUST,Unknown source values MUST be surfaced to a review queue or explicit error process; they MUST NOT be silently dropped.
+CDS400-R051,CDS-400,MUST NOT,"Bulk imports MUST NOT silently create new canonical values. Promotion of a source term to a canonical value is an explicit governed act, performed only by roles authorised under §25 — this applies equally to human, scripted and AI-initiated imports."
+CDS400-R052,CDS-400,MUST,"A promotion proposal MUST include source evidence, affected products and suggested mappings."
+CDS400-R053,CDS-400,MUST,"While a source term for an attribute is `quarantined`, that attribute value MUST be omitted from every projection (display, facet, search, channel) for the affected products. The raw source value is never published as a stand-in."
+CDS400-R054,CDS-400,MUST,"Verification of an affected field MUST carry the reason code `CDS_VALUE_QUARANTINED` (reason-code registry: CDS-1100 §21; use in verification: CDS-500). The field is reported as attention-state, not silently skipped."
+CDS400-R055,CDS-400,MUST NOT,A quarantined value MUST NOT block publication of the product as a whole unless the affected attribute is declared requiredness-blocking for that channel in its Attribute Definition or channel profile; in that case the product publication fails validation per CDS400-R033.
+CDS400-R056,CDS-400,MUST,Measurements MUST separate numeric value from unit identity.
+CDS400-R057,CDS-400,MUST,Unit conversions MUST use declared conversion rules and precision.
+CDS400-R058,CDS-400,MUST,"An implementation MUST distinguish similarly named units with different definitions, such as short ton and metric tonne."
+CDS400-R059,CDS-400,MAY,Display units MAY differ by locale or channel while the canonical measurement remains stable.
+CDS400-R060,CDS-400,SHOULD,A colour dictionary SHOULD distinguish canonical shade from broad colour family.
+CDS400-R061,CDS-400,MUST NOT+MAY,"Hex, RGB or other digital swatch values MAY be stored but MUST NOT be treated as an exact representation of physical material colour unless measured under a defined process."
+CDS400-R062,CDS-400,SHOULD,A product with a branded colour name SHOULD retain that name for display while participating in one or more governed colour facets.
+CDS400-R063,CDS-400,MUST,Pattern and colour MUST remain separate attributes even when a supplier combines them in one phrase.
+CDS400-R064,CDS-400,MUST,Specific material identity and material family MUST be separate where both are useful.
+CDS400-R065,CDS-400,SHOULD,Composition percentages SHOULD be stored as structured values and SHOULD sum according to the organisation's declared tolerance rules.
+CDS400-R066,CDS-400,MUST NOT,"Claims such as organic, recycled, vegan or certified MUST NOT be inferred solely from the material name unless governed evidence supports the claim."
+CDS400-R067,CDS-400,MUST,"There is one materials dictionary per organisation. Where the same canonical code needs different family or facet treatment in different commercial contexts (e.g. cotton in apparel vs homewares), the treatment MUST be expressed as context-scoped family and facet mappings keyed by `dictionary_key` scope (e.g. `material.apparel`, `material.homewares`) on the shared canonical value — never by forking"
+CDS400-R068,CDS-400,MUST,A size value MUST be scoped to a declared size system or scale when the label is not globally unambiguous.
+CDS400-R069,CDS-400,MUST,"Display size, canonical size code and measurement chart MUST be separable."
+CDS400-R070,CDS-400,SHOULD,Size conversion tables SHOULD be represented as governed mappings with provenance and effective dates.
+CDS400-R071,CDS-400,MUST,"Fit descriptors such as slim, regular, relaxed and oversized MUST be maintained separately from size."
+CDS400-R072,CDS-400,MUST,Canonical codes and value identifiers MUST remain language-neutral or follow a stable declared base-language policy.
+CDS400-R073,CDS-400,MUST,"Localised labels MUST identify locale, not merely language, where regional wording differs."
+CDS400-R074,CDS-400,SHOULD,A missing translation SHOULD fall back according to a declared locale policy and SHOULD be visible as a completeness issue.
+CDS400-R075,CDS-400,MAY,Search synonyms MAY vary by locale and market.
+CDS400-R076,CDS-400,SHOULD,"A mapping change SHOULD record the previous value, the new value, the actor and the affected product count."
+CDS400-R077,CDS-400,MUST,"AI-created suggestions MUST record model or process identity, confidence and evidence where available (full AI provenance requirements: CDS-700)."
+CDS400-R078,CDS-400,MUST,"Every canonical value record MUST carry a `version`, and every alias, facet and channel mapping MUST carry a `mapping_version`, incremented on any governed change."
+CDS400-R079,CDS-400,MUST NOT,"A canonical value MUST NOT be deleted while products, aliases, rules or channel mappings reference it."
+CDS400-R080,CDS-400,MUST,Deprecated values MUST identify a replacement or state that no direct replacement exists.
+CDS400-R081,CDS-400,SHOULD,Mapping changes SHOULD support preview of affected products and expected downstream changes before activation.
+CDS400-R082,CDS-400,declarative,The following changes are breaking changes to value meaning:
+CDS400-R083,CDS-400,MUST,Every dictionary MUST have a named owner.
+CDS400-R084,CDS-400,MUST,The organisation MUST define which roles may create canonical values and which may only propose them.
+CDS400-R085,CDS-400,SHOULD,Facet changes SHOULD include merchandising or customer-experience review; channel mapping changes SHOULD include channel validation or test publication.
+CDS400-R086,CDS-400,SHOULD,"Publication records SHOULD identify the dictionary version and `mapping_version` used to generate channel output, so the expected value is reproducible."
+CDS400-R087,CDS-400,MUST,Verification MUST compare the expected representation (generated from the active mapping version) with the observed representation under the declared comparison strategy (CDS-500 §16).
+CDS400-R088,CDS-400,SHOULD,A dictionary change that alters expected output SHOULD trigger re-publication or re-verification for affected records.
+CDS400-R089,CDS-400,MUST,"AI MUST receive the applicable dictionary, attribute context and allowed values before proposing a mapping where practical."
+CDS400-R090,CDS-400,MUST NOT+MUST,AI suggestions outside the dictionary MUST be marked as promotion proposals or unknown and routed under §17 and §25; AI MUST NOT silently create a new active canonical value (CDS400-R051 applies; autonomy ceilings: CDS-700 §5).
+CDS400-R091,CDS-400,SHOULD,"AI SHOULD return confidence, evidence and alternative candidates for ambiguous values; abstention is a first-class outcome (CDS-700)."
+CDS400-R092,CDS-400,MUST NOT,"Optimisation MUST NOT remove provenance, `mapping_version` or the ability to reproduce expected output."
+CDS400-R093,CDS-400,MUST NOT,A dictionary capability badge MUST NOT be claimed unless all lower badges are also satisfied; badge claims are made and evidenced under CDS-1000.
+CDS500-R001,CDS-500,MUST,The PIM MUST remain the master product-information layer throughout the publication lifecycle (authority model: CDS-200).
+CDS500-R002,CDS-500,MUST NOT,"Publication MUST NOT be considered complete solely because a payload was generated, transmitted or acknowledged."
+CDS500-R003,CDS-500,MUST,"Where a channel permits observation, the implementation MUST compare observed downstream state with the expected channel state."
+CDS500-R004,CDS-500,MUST NOT+MUST,"Where a channel cannot be observed, the implementation MUST report that limitation explicitly and MUST NOT represent the state as verified."
+CDS500-R005,CDS-500,MUST NOT+MUST+MAY,"Channel read-back MAY inform verification and repair, but observed state MUST NOT overwrite canonical values silently. Any adoption of an observed value into the canonical record MUST be an explicit, attributed, auditable change. *(This is the single normative home of the read-back rule; CDS-200 and other chapters cite it.)*"
+CDS500-R006,CDS-500,MUST,Each lifecycle stage MUST produce a durable status or evidence record sufficient to explain the current publication state.
+CDS500-R007,CDS-500,MUST NOT,A later stage MUST NOT erase the evidence of an earlier stage.
+CDS500-R008,CDS-500,MUST NOT,"An implementation MUST NOT claim a higher publication assurance level than the evidence it maintains. *(Conformance levels, tests and claims: CDS-1000.)*"
+CDS500-R009,CDS-500,MUST,"Publication projections and observed snapshots MUST identify the channel, product, revision and time to which they apply."
+CDS500-R010,CDS-500,MUST,A verification result MUST reference both the expected projection and the observed snapshot used in the comparison.
+CDS500-R011,CDS-500,MUST,"Every channel connector MUST publish a governed, machine-readable or equivalent capability profile."
+CDS500-R012,CDS-500,MUST,A channel profile MUST declare a propagation window for each write mode it supports. The window bounds PENDING (§17) and drives Amber-to-Red escalation (§18).
+CDS500-R013,CDS-500,MUST+MAY,An organisation claiming verification for a channel MUST declare the channel's critical field set (which MAY be empty). The critical set drives escalation (§18) and the critical-failure cap (§23).
+CDS500-R014,CDS-500,MUST,A field unsupported by the channel MUST be marked unsupported rather than silently dropped.
+CDS500-R015,CDS-500,MUST,The same projection inputs MUST produce the same expected channel state unless a declared non-deterministic process is involved.
+CDS500-R016,CDS-500,MUST,"A projection MUST retain lineage to every canonical field, mapping and rule that contributed to each output field."
+CDS500-R017,CDS-500,MUST,"A new mapping, dictionary or transformation version MUST be able to trigger re-projection even when the canonical product record has not changed."
+CDS500-R018,CDS-500,MUST,Every transformation MUST be identified by a versioned rule or function.
+CDS500-R019,CDS-500,SHOULD,Transformations SHOULD be deterministic and side-effect free.
+CDS500-R020,CDS-500,MUST,Lossy transformations MUST be declared so that verification compares against the expected lossy output rather than the richer canonical value.
+CDS500-R021,CDS-500,MUST,"A transformation error MUST be reported separately from a channel rejection or a downstream mismatch (see §17, ERROR family)."
+CDS500-R022,CDS-500,MUST,"Expected state MUST be calculated before dispatch and MUST be stored, or exactly reproducible from versioned inputs, for later comparison."
+CDS500-R023,CDS-500,MUST,"Expected state MUST reflect declared channel transformations, not merely raw canonical values."
+CDS500-R024,CDS-500,MUST,Fields intentionally omitted by rule MUST be distinguishable from fields lost during transformation or publication.
+CDS500-R025,CDS-500,MUST,Every published field and list MUST have a declared ownership mode.
+CDS500-R026,CDS-500,MUST NOT,Full-replace operations MUST NOT delete channel-owned or externally owned values unless the ownership contract explicitly permits it.
+CDS500-R027,CDS-500,MUST,"A partitioned or merged full-replace list MUST be rebuilt before dispatch by reading the current downstream list, retaining externally owned members, and regenerating all PIM-owned members from current rules."
+CDS500-R028,CDS-500,MUST,"A manual downstream edit to an EXCLUSIVE_PIM field MUST be classified as drift, not accepted silently into the canonical record."
+CDS500-R029,CDS-500,MUST,Blocking preflight errors MUST prevent dispatch.
+CDS500-R030,CDS-500,MUST+MAY,Preflight warnings MAY permit dispatch but MUST remain visible in the publication record.
+CDS500-R031,CDS-500,SHOULD,"Bulk publication SHOULD provide a preview of field additions, modifications and removals — including full-replace list effects — before execution."
+CDS500-R032,CDS-500,MUST,"Every dispatch attempt MUST have a unique, immutable attempt record, even when retries belong to the same logical job."
+CDS500-R033,CDS-500,MUST,A batch MUST report partial success without converting successful items into failures or hiding failed items inside an overall success status.
+CDS500-R034,CDS-500,MUST,Acknowledgement status MUST remain separate from verification status.
+CDS500-R035,CDS-500,MUST NOT,"A successful transport response (2xx, successful upload, processed feed) MUST NOT automatically produce MATCH verification results."
+CDS500-R036,CDS-500,SHOULD,"Where the channel supports idempotency keys, the connector SHOULD use them for retriable write operations."
+CDS500-R037,CDS-500,MUST,"A delta publication MUST be calculated against a known prior expected or observed state, not against assumptions."
+CDS500-R038,CDS-500,MUST,"The connector MUST declare whether an empty value means clear, omit, unknown or no change."
+CDS500-R039,CDS-500,SHOULD,Sorting SHOULD be canonicalised for semantically unordered lists to produce stable diffs and checksums.
+CDS500-R040,CDS-500,MUST,"Retries MUST use a bounded policy with attempt limits, delay and a terminal state."
+CDS500-R041,CDS-500,MUST NOT,"Deterministic validation, mapping and transformation errors MUST NOT be retried without a relevant data or configuration change."
+CDS500-R042,CDS-500,MUST,A partial batch failure MUST preserve successful results and separately queue or report failed items.
+CDS500-R043,CDS-500,MUST,"Rate limiting and connector back-pressure MUST be visible as operational states, not misclassified as product-data errors."
+CDS500-R044,CDS-500,MUST,A rollback MUST identify the exact previously verified projection being restored.
+CDS500-R045,CDS-500,MAY,"Where rollback is unsupported, the connector MAY republish an equivalent prior expected state as a new operation."
+CDS500-R046,CDS-500,MUST,"Withdrawal, deletion, unpublishing and archiving MUST be distinct operations when the channel distinguishes them."
+CDS500-R047,CDS-500,MUST,Destructive operations MUST require stronger authorisation than ordinary field updates.
+CDS500-R048,CDS-500,MUST,"The verification schedule MUST account for the channel's declared propagation window (CDS500-R012) so that in-window latency is reported as PENDING, not drift."
+CDS500-R049,CDS-500,SHOULD,Fields in the declared critical set SHOULD be verified more frequently than low-risk descriptive fields.
+CDS500-R050,CDS-500,MUST,"Observed snapshots MUST include capture time, source, channel record identity and freshness status."
+CDS500-R051,CDS-500,MUST NOT,Read-back MUST NOT reuse the outbound payload as the observed state.
+CDS500-R052,CDS-500,MUST NOT+MAY,"A connector cache MAY serve as an observation source only when it was populated from channel read operations, and its entries carry capture time and provenance satisfying CDS500-R050. A cache populated from the connector's own writes MUST NOT be used as observed state."
+CDS500-R053,CDS-500,SHOULD,"Where the write endpoint and the customer-visible endpoint differ, implementations SHOULD verify the surface relevant to the business objective."
+CDS500-R054,CDS-500,MUST NOT+MUST,"An implementation MUST preserve the distinction between absence of data and absence of observability. UNSUPPORTED, PERMISSION_DENIED and NOT_RETURNED MUST NOT be collapsed into the MISSING verification status without the evidence required by the derivation table in §17.4."
+CDS500-R055,CDS-500,MUST,Every verifiable field MUST declare a comparison strategy that is an entry in the implementation's normalisation registry.
+CDS500-R056,CDS-500,MUST,"Each registry entry MUST declare: a stable comparator identifier, a behaviour version, supported input types, ordered normalisation steps, the equality rule, any tolerance parameters, and test vectors including at least one negative (non-matching) case. A change to normalisation or tolerance behaviour MUST increment the comparator version."
+CDS500-R057,CDS-500,MUST NOT,"A comparator's declared behaviour and test vectors are the sole authority for what its normalisation may discard. A comparator MUST NOT be applied outside its declared input types, and an implementation MUST NOT substitute a broader comparator than the one the field declares. *(This replaces the untestable v0.1 ""must not hide meaningful data loss"" rule: what the comparator may hide is exactly what"
+CDS500-R058,CDS-500,MUST NOT+MUST,Substring containment MUST NOT be used as a text-equality rule. Registries MUST record the substring false-green case of Appendix A.4 as a negative test vector for any text comparator.
+CDS500-R059,CDS-500,SHOULD,"Comparison inputs and normalised forms SHOULD be retained for diagnostics, alongside the comparator identifier and version used."
+CDS500-R060,CDS-500,MUST NOT,"The core verification status enum is exactly: **MATCH, MISSING, MISMATCH, PENDING, UNOBSERVABLE, NOT_APPLICABLE, OVERRIDDEN, ERROR**. Implementations MUST NOT add, remove or rename core statuses."
+CDS500-R061,CDS-500,MUST+SHOULD,"Every field-level verification result MUST carry a core status; it SHOULD additionally carry a detailed status. Where a detailed status is recorded, its core status MUST be derived from the following table with no implementation-defined variation:"
+CDS500-R062,CDS-500,MUST NOT+MUST,"SUPERSEDED is a record-retention state, not a live verification status. A verification result belonging to an older projection or publication revision MUST be marked superseded when a newer result for the same field exists, MUST be retained for audit, and MUST NOT appear in current status displays, health denominators or the machine status enum. *(Resolves the STALE_EXPECTED/SUPERSEDED boundary: S"
+CDS500-R063,CDS-500,MUST NOT+MUST+MAY,Every field-level verification result whose core status is not MATCH MUST carry a machine-readable `reason_code` drawn from the CDS_* reason-code registry defined in CDS-1100 §21. A free-text `message` MAY accompany the reason code but MUST NOT replace it.
+CDS500-R064,CDS-500,MUST,A MATCH produced under a redirected-expected override (§22) MUST carry OVERRIDDEN provenance (override identity) visible alongside the status.
+CDS500-R065,CDS-500,MUST,"Where an expected value exists for a field, the field's detailed verification status MUST be derived from the observation coverage state (§15) as follows:"
+CDS500-R066,CDS-500,MUST NOT+MUST,"A field result MUST NOT remain PENDING beyond the channel's declared propagation window. When the window lapses, the implementation MUST re-verify: re-observe and re-derive the status under CDS500-R065, recording reason code `CDS_PROPAGATION_WINDOW_EXPIRED` on any non-MATCH outcome. If re-observation is not possible, the status MUST become UNOBSERVABLE with that reason code. In all cases the lapse"
+CDS500-R067,CDS-500,MUST,"Verification status MUST be field-specific before it is aggregated to product, batch or channel level."
+CDS500-R068,CDS-500,MUST,"A product-level verified claim MUST identify the canonical revision and the verification scope (which fields, which coverage) it covers."
+CDS500-R069,CDS-500,MUST,"Where traffic-light presentation is used, the colour mapping MUST be:"
+CDS500-R070,CDS-500,MUST,"An AMBER indicator MUST escalate to RED presentation when either declared condition is met: (a) the channel's declared propagation window for the publication has lapsed without resolution, or (b) the field is a member of the channel's declared critical set (CDS500-R013). Escalation changes presentation and alerting; it does not alter the stored status or reason code."
+CDS500-R071,CDS-500,MUST,WAIVED results MUST always present as AMBER. A waiver never produces GREEN; only a redirected-expected override that yields a true MATCH does (§22).
+CDS500-R072,CDS-500,MUST NOT+MUST,"The user interface MUST make the detailed status and reason code accessible from every traffic-light indicator. AMBER MUST NOT function as a generic category: the indicator MUST distinguish — via detailed status and reason code — whether the field is missing, pending, unobservable, overridden or waived."
+CDS500-R073,CDS-500,MUST NOT,Colours MUST NOT be stored or exchanged as verification statuses. Machine records carry statuses and reason codes; colour is derived at presentation time.
+CDS500-R074,CDS-500,MUST+MAY,"An implementation MAY maintain expected/observed/match verification records at the formatted-output layer, in addition to canonical-versus-channel field verification. Where it claims this layer, each formatted-output field MUST use the §17 status enum, the §16 registry comparators and the §18 presentation rules, and the feed artifact MUST be verified end-to-end (generated output compared against t"
+CDS500-R075,CDS-500,MUST NOT,"A formatted-output MATCH MUST NOT substitute for downstream observation: it proves the feed said what was intended, not that the channel stored or displays it."
+CDS500-R076,CDS-500,SHOULD,Drift detection SHOULD assign a cause category separate from the verification status and reason code.
+CDS500-R077,CDS-500,SHOULD,A known channel normalisation SHOULD be incorporated into expected-state or comparator rules (with a registry entry per §16.2) rather than generating repeated false alarms.
+CDS500-R077a,CDS-500,MUST,"Observation records MUST be retained append-only per field and channel (never overwritten in place), so that for any drifted field the implementation can produce: the **previous observed value**, the **new observed value**, and the **detection interval** (last observation at which the field still matched, first observation at which it differed)."
+CDS500-R077b,CDS-500,SHOULD,"When drift of type EXTERNAL_EDIT is detected, the implementation SHOULD correlate the detection interval with whatever actor evidence the channel exposes (event logs, audit logs, webhook actor metadata, staff activity records — declared per channel profile, CDS-900) and record the attribution outcome (actor identified, actor class identified, or unattributable) on the drift record."
+CDS500-R077c,CDS-500,MUST NOT,"Attribution evidence is observed data about the channel, never a verdict about intent. An unattributable drift is still drift; attribution failure MUST NOT delay detection, verification status or escalation."
+CDS500-R078,CDS-500,MUST,Automatic repair MUST be limited to fields and operations owned by the PIM under the declared ownership contract.
+CDS500-R079,CDS-500,SHOULD,Critical or destructive repair actions SHOULD require approval or a pre-authorised policy.
+CDS500-R080,CDS-500,MUST,Every repair action MUST create a new evidence record and MUST trigger re-verification where observation is supported.
+CDS500-R081,CDS-500,MUST NOT,An override MUST NOT silently replace canonical product truth; the canonical value is unchanged and the override is a distinct governed record.
+CDS500-R082,CDS-500,MUST+SHOULD,Overrides SHOULD be time-bounded and MUST carry a review date.
+CDS500-R083,CDS-500,MUST,Verification MUST compare against the active redirected expected value when one exists.
+CDS500-R084,CDS-500,MUST,"Health calculations MUST publish their weighting, inclusion and critical-field rules."
+CDS500-R085,CDS-500,MUST,Any field in the declared critical set (CDS500-R013) whose presentation is RED — directly or via escalation (CDS500-R070) — MUST cap the aggregate product and channel presentation at RED regardless of the numeric score.
+CDS500-R086,CDS-500,MUST NOT,NOT_APPLICABLE and superseded results MUST NOT count as successes in any health denominator; UNOBSERVABLE fields MUST NOT count as matched. *(No 100% match rate for unobserved fields — see CDS-1400.)*
+CDS500-R087,CDS-500,MUST,Audit records MUST be append-only or otherwise protected against silent alteration.
+CDS500-R088,CDS-500,MUST,"Sensitive payload content and credentials MUST be redacted or securely referenced without destroying operational traceability (hashes, IDs and reason codes retained)."
+CDS500-R089,CDS-500,MUST NOT+MUST,"Connector credentials MUST be stored in a secret-management mechanism and MUST NOT be embedded in product records, logs or exported evidence."
+CDS500-R090,CDS-500,SHOULD,Connectors SHOULD use the least privilege sufficient for their declared operations.
+CDS500-R091,CDS-500,SHOULD,"Create, update, delete, withdraw, override and repair actions SHOULD support distinct permissions."
+CDS500-R092,CDS-500,MUST,Bulk systems MUST preserve product- and field-level outcomes even when transport is batched.
+CDS500-R093,CDS-500,SHOULD,A batch restart SHOULD resume from durable item states rather than replaying the full batch.
+CDS500-R094,CDS-500,MAY,"Checksums MAY be used to avoid unnecessary projection, dispatch or comparison work, provided the checksum inputs are versioned and auditable."
+CDS500-R095,CDS-500,MUST,"AI-generated repair actions MUST remain constrained by field ownership, permissions and approval policy (CDS500-R078/R079)."
+CDS500-R096,CDS-500,MUST+MAY,"AI MAY propose that two values are semantically equivalent, but only a governed comparator or approved mapping MUST determine the verification result."
+CDS500-R097,CDS-500,MUST NOT,An AI agent MUST NOT convert an UNOBSERVABLE or PENDING field into MATCH based on likelihood or inference.
+CDS500-R098,CDS-500,SHOULD,"AI repair and triage proposals SHOULD key off reason codes and detailed statuses, not presentation colours."
+CDS500-R099,CDS-500,MUST,"Each comparator registry entry MUST record: `comparator_id`, `version`, `input_types`, `normalisation_steps` (ordered), `equality_rule`, `tolerance` (where applicable), `diagnostics`, and `test_vectors` including negative cases (per CDS500-R056/R058)."
+CDS600-R001,CDS-600,MUST,A CDS implementation MUST derive customer-facing discovery structures from governed product information rather than from uncontrolled labels entered independently in the storefront.
+CDS600-R002,CDS-600,MUST NOT,Customer-facing simplification MUST NOT destroy the richer canonical or source information held by the PIM.
+CDS600-R003,CDS-600,MAY,"A storefront MAY vary presentation by device, market or audience, provided the underlying meaning remains consistent."
+CDS600-R004,CDS-600,MUST,"Customer experience structures MUST be treated as projections of canonical information, not as independent product facts."
+CDS600-R005,CDS-600,SHOULD,"The PIM or governed commerce layer SHOULD be able to explain which canonical values and rules produced each customer-facing label, filter and collection membership."
+CDS600-R006,CDS-600,MUST,These constructs MUST remain logically distinct even when a platform implements more than one of them with the same technical feature.
+CDS600-R007,CDS-600,MUST NOT,A collection MUST NOT be treated as a substitute for a missing controlled attribute when customers need to refine by that attribute.
+CDS600-R008,CDS-600,MUST NOT,A facet MUST NOT be used to redefine a product category.
+CDS600-R009,CDS-600,SHOULD,Primary navigation SHOULD expose no more than the levels required for customers to orient themselves and reach a useful product set.
+CDS600-R010,CDS-600,MAY,"Deep internal taxonomy nodes MAY remain available through category pages, search or links without appearing in the main menu."
+CDS600-R011,CDS-600,MUST,"Navigation labels MUST have clear, non-overlapping meanings within the same level."
+CDS600-R012,CDS-600,MAY,A product MAY be discoverable from multiple navigation paths while retaining one primary internal category (CDS-200 §6).
+CDS600-R013,CDS-600,SHOULD,A category page SHOULD inherit its product membership from classification or an equivalent deterministic rule.
+CDS600-R014,CDS-600,MUST,"A merchandising collection MUST declare whether membership is computed, manually curated or hybrid."
+CDS600-R015,CDS-600,SHOULD,"Temporary collections SHOULD have an owner, activation window and retirement rule."
+CDS600-R016,CDS-600,SHOULD,Parent pages SHOULD explain their scope and provide clear paths to child categories or relevant facets.
+CDS600-R017,CDS-600,MUST+SHOULD,"Navigation, collection and facet labels MUST be written in customer language and SHOULD avoid internal abbreviations."
+CDS600-R018,CDS-600,MUST+SHOULD,"A label MUST distinguish neighbouring choices. Terms such as Other, General or Miscellaneous SHOULD be avoided unless no clearer grouping exists."
+CDS600-R019,CDS-600,SHOULD,"Where a term is ambiguous across industries or regions, the label SHOULD include qualifying context."
+CDS600-R020,CDS-600,SHOULD+MAY,"Synonyms MAY support search, but the interface SHOULD present one preferred label per concept."
+CDS600-R021,CDS-600,MUST,Every customer-facing facet MUST have a governed Facet Definition.
+CDS600-R022,CDS-600,MUST,"Facet values MUST come from controlled canonical or facet dictionaries (CDS-400), not from unrestricted distinct strings."
+CDS600-R023,CDS-600,SHOULD,The same logical facet SHOULD retain one identifier across channels even where the display label is localised.
+CDS600-R024,CDS-600,MUST,"A Facet Definition MUST declare its count unit (products, purchasable variants or another declared unit) and its count method (§16)."
+CDS600-R025,CDS-600,MUST NOT+MUST,A Facet Definition MUST declare its selection logic; interfaces MUST NOT rely on undocumented platform defaults.
+CDS600-R026,CDS-600,MUST NOT+MUST,"How facets combine across a result set is a property of the facet set, not of an individual facet. The cross-facet operator MUST be declared at the facet-set (category- or context-profile) level, and a Facet Definition MUST NOT carry its own cross-facet operator. *(Resolves CDS-600-4; see §15 and Appendix A.)*"
+CDS600-R027,CDS-600,MUST NOT,A field MUST NOT become a facet merely because the platform permits filtering on it.
+CDS600-R028,CDS-600,SHOULD,Facet eligibility SHOULD be reviewed per category profile rather than globally.
+CDS600-R029,CDS-600,SHOULD,Low-coverage or highly fragmented facets SHOULD remain hidden until data quality and grouping are adequate (thresholds per §28).
+CDS600-R030,CDS-600,MUST NOT+MUST,Facet values MUST be projections of canonical values and MUST NOT replace those canonical values in the PIM.
+CDS600-R031,CDS-600,MAY,Many canonical values MAY map to one broader facet value when that grouping improves customer comprehension.
+CDS600-R032,CDS-600,MAY,"A canonical value MAY map to more than one facet group only where the secondary membership is deliberate, documented and non-deceptive."
+CDS600-R033,CDS-600,MUST,"*(Definition — resolves CDS-600-7.)* The **sellable colour** of a Variant is the canonical value of its colour Variant Option (CDS-100 §2–§3). What the customer sees is that canonical value's Display Label (e.g. ""French Navy""); what filtering uses is the Facet Value the canonical value maps to (e.g. Blue). Implementations MUST maintain this distinction; the Display Label is never itself the canoni"
+CDS600-R034,CDS-600,MUST,A colour facet MUST use a controlled colour-family dictionary rather than exposing every display colour as a separate filter value.
+CDS600-R035,CDS-600,MAY,The storefront MAY display the sellable colour's Display Label on the product card or product page while filtering by the broader family.
+CDS600-R036,CDS-600,MUST NOT+MUST,Colour swatches MUST NOT be the sole means of communicating a value; a text label MUST remain available (§24).
+CDS600-R037,CDS-600,SHOULD,"Multi-colour, transparent, metallic and natural finishes SHOULD be modelled explicitly rather than forced into an inaccurate basic hue. Multicolour is a facet/status value, never a canonical shade (CDS-100 §3)."
+CDS600-R038,CDS-600,SHOULD,"Where a product contains several meaningful colours, the system SHOULD distinguish primary colour, secondary colour and multicolour status."
+CDS600-R039,CDS-600,MUST,Size facets MUST preserve the distinction between the displayed size label and the normalised size order or scale.
+CDS600-R040,CDS-600,MUST,"A category profile MUST define which size system applies (e.g. alpha, numeric apparel, footwear, waist, bedding, dimensional)."
+CDS600-R041,CDS-600,MUST,Size values MUST sort semantically rather than alphabetically.
+CDS600-R042,CDS-600,MUST NOT,Fit MUST NOT be inferred from size alone.
+CDS600-R043,CDS-600,SHOULD+MAY,Numeric dimension facets SHOULD use normalised units and MAY present customer-local units.
+CDS600-R044,CDS-600,MUST,Material composition MUST remain separately available from the simplified material facet where percentages or blends matter.
+CDS600-R045,CDS-600,MUST NOT+SHOULD,Style and occasion facets SHOULD use a small governed vocabulary and MUST NOT become an uncontrolled list of marketing phrases.
+CDS600-R046,CDS-600,SHOULD,Homewares facets SHOULD be category-aware; a Room facet may be useful for decor but irrelevant for cookware components. *(Industry baselines: CDS-1500.)*
+CDS600-R047,CDS-600,SHOULD,"Different facets SHOULD combine with AND logic (Blue AND Linen), as the declared facet-set default."
+CDS600-R048,CDS-600,SHOULD,Multiple values within the same categorical facet SHOULD combine with OR logic (Blue OR Green).
+CDS600-R049,CDS-600,MUST+MAY,"An AND-within-facet mode MAY be used where a product must possess all selected values, but the interface MUST make that behaviour clear."
+CDS600-R050,CDS-600,MUST,Single-select facets MUST prevent contradictory simultaneous choices.
+CDS600-R051,CDS-600,MUST,"A range facet MUST define inclusive boundaries, units and rounding behaviour."
+CDS600-R052,CDS-600,MUST,Facet counts MUST declare their counting unit and availability scope (CDS600-R024).
+CDS600-R053,CDS-600,SHOULD,Variant-defined facets SHOULD evaluate valid variant combinations rather than independent product-level unions.
+CDS600-R054,CDS-600,MUST NOT,"Where the storefront platform supports combination-level availability filtering, a product MUST NOT be counted as satisfying a selected combination unless at least one eligible sellable unit satisfies the complete selected combination."
+CDS600-R055,CDS-600,MUST+SHOULD,"Where the storefront platform does not support combination-level availability filtering, the implementation MUST disclose that limitation in its platform profile (CDS-900) and SHOULD approximate combination behaviour as closely as the platform allows. *(Resolves CDS-600-2.)*"
+CDS600-R056,CDS-600,MUST,"*(Disjunctive count semantics — resolves CDS-600-5.)* Within a multi-select OR facet, the count displayed for an unselected value MUST be computed against the result set produced by all *other* facet selections, excluding that facet's own current selection, so that the count predicts the effect of adding the value rather than reporting the already-filtered set. The count method in force MUST be de"
+CDS600-R057,CDS-600,SHOULD,The interface SHOULD update counts or availability after each selection so customers can anticipate the effect of another filter.
+CDS600-R058,CDS-600,MUST,A facet value whose selection would produce no truthful available result in the current context MUST be disabled or hidden.
+CDS600-R059,CDS-600,MUST NOT+MUST+MAY,"As a governed exception to R058's hiding branch, out-of-stock values MAY remain visible for discovery only where the interface presents a clear unavailable state; unavailable values MUST be distinguished from purchasable options and MUST NOT be presented as normally selectable."
+CDS600-R060,CDS-600,MUST,"When no results remain, the interface MUST preserve the selected filters and provide a clear recovery action."
+CDS600-R061,CDS-600,SHOULD,Recovery SHOULD identify the narrowest selected constraint or offer removal of one filter at a time.
+CDS600-R062,CDS-600,MUST NOT,A zero-result message MUST NOT imply that the store has no relevant products when the result is caused by an over-restrictive combination.
+CDS600-R063,CDS-600,SHOULD,High-value decision facets SHOULD appear before secondary descriptive facets.
+CDS600-R064,CDS-600,MUST,"Size, numeric ranges and lifecycle stages MUST use semantic order rather than alphabetical order."
+CDS600-R065,CDS-600,MAY,"Colour families MAY use a stable merchandising order or a visual palette order, provided labels remain accessible."
+CDS600-R066,CDS-600,SHOULD,"Long value lists SHOULD use search, grouping or progressive disclosure rather than expanding the page indefinitely."
+CDS600-R067,CDS-600,SHOULD,A facet SHOULD be expanded by default only when it is broadly useful in the current context.
+CDS600-R068,CDS-600,MUST,Mobile filtering MUST expose the number of active filters and provide a persistent way to clear or edit them.
+CDS600-R069,CDS-600,MUST+SHOULD+MAY,"An apply action MAY defer result updates inside a mobile filter panel; where it does, the apply control MUST display a preview of the result count that will apply, and selected counts and availability SHOULD remain understandable while the panel is open. *(Resolves CDS-600-9.)*"
+CDS600-R070,CDS-600,MUST,"Filter controls MUST remain operable with touch targets, keyboard navigation and assistive technology (§24)."
+CDS600-R071,CDS-600,SHOULD,A long mobile facet list SHOULD support internal search or grouping rather than forcing excessive scrolling.
+CDS600-R072,CDS-600,MUST,Closing the filter interface MUST preserve current selections unless the user explicitly cancels them.
+CDS600-R073,CDS-600,SHOULD,"Search indexes SHOULD include canonical values, display labels, approved aliases and relevant facet families."
+CDS600-R074,CDS-600,MUST NOT+MUST,A search synonym MUST map to a preferred concept or query expansion and MUST NOT create an uncontrolled duplicate value.
+CDS600-R075,CDS-600,SHOULD,"Brand, SKU, MPN and GTIN identifiers SHOULD be indexed according to access and relevance requirements."
+CDS600-R076,CDS-600,SHOULD+MAY,"Search query interpretation MAY infer a facet selection, but the resulting refinement SHOULD be visible to the customer."
+CDS600-R077,CDS-600,MUST NOT,Misspelling tolerance and semantic expansion MUST NOT override exact product identifiers or create materially misleading results.
+CDS600-R078,CDS-600,MUST,Every sort option MUST declare the data and tie-breakers used.
+CDS600-R079,CDS-600,MUST,Price sorting MUST use the same customer-visible price basis used in the current market and tax context.
+CDS600-R080,CDS-600,SHOULD,"Newness SHOULD use a governed publication or arrival date, not an arbitrary last-edit timestamp."
+CDS600-R081,CDS-600,SHOULD+MAY,"Relevance ranking MAY use behavioural signals, but product-data completeness and availability SHOULD remain quality inputs."
+CDS600-R082,CDS-600,MUST,Sponsored or commercially influenced ranking MUST be identifiable where applicable.
+CDS600-R083,CDS-600,SHOULD,A product card SHOULD display the attributes necessary to distinguish neighbouring products without reproducing the entire product page.
+CDS600-R084,CDS-600,MUST,Variant swatches or size indicators MUST reflect actual eligible variants and availability.
+CDS600-R085,CDS-600,SHOULD,"A colour swatch SHOULD use the governed Display Label and visual sample, while its filter behaviour uses the facet family."
+CDS600-R086,CDS-600,MUST,"Product-card badges such as New, Sale, Clearance or Exclusive MUST originate from governed lifecycle or merchandising rules."
+CDS600-R087,CDS-600,MUST NOT,A product card MUST NOT show an unavailable price or variant as though it were the active purchasable choice.
+CDS600-R088,CDS-600,SHOULD,Breadcrumbs SHOULD reflect the chosen customer navigation context while remaining consistent with the primary category model.
+CDS600-R089,CDS-600,MAY,Cross-links MAY surface a product to another audience without assigning a second primary category.
+CDS600-R090,CDS-600,SHOULD,Editorial and campaign pages SHOULD link back to stable category or collection destinations where customers can continue browsing.
+CDS600-R091,CDS-600,MUST,A product appearing in several collections MUST retain one canonical identity and one primary classification.
+CDS600-R092,CDS-600,MUST,Facet groups and controls MUST have programmatically determinable labels.
+CDS600-R093,CDS-600,MUST,"Selected state, disabled state and result counts MUST be exposed to assistive technology."
+CDS600-R094,CDS-600,MUST NOT+MUST,"Colour swatches and colour indicators MUST include text alternatives, and colour MUST NOT be the sole signal for any value, state or distinction."
+CDS600-R095,CDS-600,MUST,Keyboard focus MUST follow a logical order and remain visible.
+CDS600-R096,CDS-600,MUST,Changes to result counts MUST be announced to assistive technology without causing disruptive focus movement.
+CDS600-R097,CDS-600,MUST,Clear-all and remove-filter controls MUST have unambiguous accessible names.
+CDS600-R098,CDS-600,MUST,"Range controls MUST expose current values, minimum, maximum and units."
+CDS600-R099,CDS-600,MUST,"An implementation MUST declare a response-time target for facet and filter interactions and MUST monitor performance against that declared target. *(Resolves CDS-600-8; replaces the untestable ""quickly enough"" wording.)*"
+CDS600-R100,CDS-600,MUST+SHOULD,The storefront MUST fail safely when a facet service is unavailable; product browsing SHOULD remain possible.
+CDS600-R101,CDS-600,MUST NOT+MUST,Cached counts MUST identify their freshness and MUST NOT be presented as live availability when they are materially stale relative to the declared target and propagation windows.
+CDS600-R102,CDS-600,SHOULD,Large dictionaries SHOULD support indexed lookup rather than rendering all values unconditionally.
+CDS600-R103,CDS-600,MUST NOT,Performance optimisation MUST NOT change selection semantics or counts without explicit disclosure.
+CDS600-R104,CDS-600,MUST,"An implementation MUST define which facet combinations are indexable, canonicalised, blocked or represented without unique URLs."
+CDS600-R105,CDS-600,SHOULD,"Indexable landing pages SHOULD have stable intent, sufficient product depth and unique explanatory content."
+CDS600-R106,CDS-600,SHOULD NOT,Transient or extremely narrow combinations SHOULD NOT become indexable pages by default.
+CDS600-R107,CDS-600,MUST,The canonical category and collection structure MUST remain discoverable independently of facet-generated URLs.
+CDS600-R108,CDS-600,MUST NOT,SEO policy MUST NOT weaken customer filter behaviour merely to simplify crawling.
+CDS600-R109,CDS-600,MUST NOT+MAY,"Personalisation MAY reorder facets, values or products but MUST NOT change the semantic meaning of a facet."
+CDS600-R110,CDS-600,MUST,A personalised interface MUST retain a predictable way to access the full applicable filter set.
+CDS600-R111,CDS-600,MUST NOT,Sensitive personal inference MUST NOT be required for ordinary product discovery.
+CDS600-R112,CDS-600,MUST,Analytics identifiers MUST remain stable when display labels change.
+CDS600-R113,CDS-600,SHOULD,"Facet analytics SHOULD distinguish exposure, interaction and resulting product-set size."
+CDS600-R114,CDS-600,MUST,"The organisation MUST declare its thresholds for facet usage and facet coverage. A facet whose usage exceeds the declared usage threshold while its coverage falls below the declared coverage threshold MUST trigger data-quality review rather than automatic removal. *(Resolves CDS-600-11; replaces the untestable ""high-use facet with poor coverage"".)*"
+CDS600-R115,CDS-600,MUST,"Every facet MUST have an owner responsible for definition, dictionary, coverage and retirement."
+CDS600-R116,CDS-600,MUST,New facet values MUST enter through the governed dictionary or mapping workflows defined in CDS-400.
+CDS600-R117,CDS-600,SHOULD,Renaming a visible label SHOULD preserve the stable facet and value identifiers.
+CDS600-R118,CDS-600,MUST,"Merging or splitting values MUST include migration, publication, search and analytics impact analysis."
+CDS600-R119,CDS-600,SHOULD,"Facet changes SHOULD be tested against representative categories, devices and product combinations before release."
+CDS600-R120,CDS-600,MUST,"Deprecated values MUST retain aliases or redirects long enough to protect imports, saved URLs and historical analytics where applicable."
+CDS700-R001,CDS-700,MUST NOT+MUST,"AI MUST operate as a producer of proposals, evidence or bounded actions; it MUST NOT become the implicit source of truth for product information."
+CDS700-R002,CDS-700,MUST,"AI-generated information MUST conform to the same schemas, dictionaries, validation rules and publication controls as information entered by a human or imported from a supplier."
+CDS700-R003,CDS-700,MUST,The PIM MUST remain the master product-information layer when AI is used (CDS-200; CDS-P-02).
+CDS700-R004,CDS-700,MUST,An implementation MUST make AI participation visible and auditable: authorised operators MUST be able to enumerate the active AI workflows (via the registry of §33) and inspect the work objects (§6) behind any AI-originated value.
+CDS700-R005,CDS-700,MUST,"Every AI workflow MUST identify its inputs, expected output schema, validation rules, approval policy and permitted destination state."
+CDS700-R006,CDS-700,MUST NOT,An AI workflow MUST NOT write directly into a canonical field unless its autonomy level and the field's risk class explicitly permit that action.
+CDS700-R007,CDS-700,MUST,*(normative)* An implementation MUST declare the role an AI workflow performs rather than describing all AI activity as a single generic enrichment step.
+CDS700-R008,CDS-700,MUST,An organisation MUST declare the autonomy level for each AI workflow.
+CDS700-R009,CDS-700,MUST NOT,A4 MUST NOT be interpreted as unrestricted autonomy.
+CDS700-R010,CDS-700,MUST NOT,"High-risk fields — price, tax, regulated claims, hazardous-use instructions, legal warranties and safety information — MUST NOT use A3 or A4 without an explicit specialist-approved policy."
+CDS700-R011,CDS-700,MUST+MAY,**Bounded A3** is A3 operated under all four of the following controls. A workflow claiming A3 MUST implement all four; R2-risk tasks (Appendix B) MAY use A3 only in this bounded form: 1. a **per-field policy** declaring which fields and value classes are eligible for automatic acceptance; 2. a **calibrated confidence threshold** derived from representative reviewed examples for that task and fiel
+CDS700-R012,CDS-700,MUST,An A4 workflow MUST enumerate its permitted actions in its workflow definition; any action not enumerated is prohibited for that workflow.
+CDS700-R013,CDS-700,MUST,AI proposals MUST be stored separately from canonical values until accepted by the declared approval policy.
+CDS700-R014,CDS-700,MUST NOT,Rejecting or superseding a proposal MUST NOT erase its audit record.
+CDS700-R015,CDS-700,MUST,"The review state of an AI proposal MUST use the shared enum: `proposed`, `review_required`, `accepted`, `rejected`, `superseded`, `expired`. This enum is identical in CDS-700 and the CDS-1100 ai-proposal schema — they describe the same record. Execution failure (timeout, malformed output, tool error) is a work-object disposition (§28), not a review state."
+CDS700-R016,CDS-700,MUST,"An evidence record MUST identify the publisher and the basis for its class assignment; evidence that cannot meet the E1–E3 criteria MUST be classed E4. For E2 ""certified feed"" evidence the certifier MUST be named."
+CDS700-R017,CDS-700,MUST,Every factual AI proposal MUST identify the evidence used or explicitly declare that no eligible evidence was available.
+CDS700-R018,CDS-700,MUST NOT,AI MUST NOT convert absence of evidence into a positive product claim.
+CDS700-R019,CDS-700,MUST,Conflicting eligible sources MUST be surfaced as a conflict rather than silently resolved by model preference.
+CDS700-R020,CDS-700,MUST,An AI workflow MUST receive an explicit output schema.
+CDS700-R021,CDS-700,MUST,Out-of-schema fields MUST be rejected or quarantined.
+CDS700-R022,CDS-700,MUST,"When an output requires a dictionary value, the AI MUST select from the allowed identifiers or return an unknown-value proposal (CDS-400 §17)."
+CDS700-R023,CDS-700,MUST,The original extracted text MUST be preserved when the normalised result may be disputed or reprocessed.
+CDS700-R024,CDS-700,SHOULD,"Unit conversion and arithmetic SHOULD be performed by deterministic code after AI extraction, not by unchecked model calculation."
+CDS700-R025,CDS-700,MUST,"A normalisation step MUST identify whether the result was exact, alias-based, transformed or inferred."
+CDS700-R026,CDS-700,MUST,AI classification MUST select from the current approved taxonomy identifiers.
+CDS700-R027,CDS-700,SHOULD,"The classifier SHOULD return ranked candidates, confidence and the evidence that distinguished the selected category from nearby alternatives."
+CDS700-R028,CDS-700,MUST NOT,A category suggestion MUST NOT automatically create a new category.
+CDS700-R029,CDS-700,MUST NOT+MUST,External taxonomy suggestions MUST remain channel mappings and MUST NOT replace the internal classification.
+CDS700-R030,CDS-700,MUST NOT,AI MUST NOT create a canonical dictionary value merely to avoid returning unknown.
+CDS700-R031,CDS-700,MUST,"A proposed alias MUST retain the source wording, language, supplier and approval status."
+CDS700-R032,CDS-700,MUST NOT,"Generated content MUST NOT introduce product capabilities, compatibility, certifications, scarcity, sustainability or performance claims that are absent from approved information."
+CDS700-R033,CDS-700,SHOULD,"The workflow SHOULD distinguish factual fields, marketing interpretation and stylistic wording."
+CDS700-R034,CDS-700,MUST,A generated title MUST preserve the identifiers and distinguishing attributes required by the organisation's declared product-title policy (R035).
+CDS700-R035,CDS-700,MUST,"An organisation using AI title generation MUST declare a **product-title policy**: a per-catalogue or per-category-profile statement of which identifiers (e.g. brand, model number) and which distinguishing attributes (e.g. colour, size, capacity) a title must preserve, and any ordering or length constraints. The policy is the testable reference for R034."
+CDS700-R036,CDS-700,SHOULD,"Generated content SHOULD cite or internally link the canonical fields used, so reviewers can trace each factual statement."
+CDS700-R037,CDS-700,MUST,The canonical source language and approved translation MUST remain linked by version.
+CDS700-R038,CDS-700,SHOULD,Dictionary values SHOULD use locale-specific display labels (CDS-400) rather than being translated independently in every product record.
+CDS700-R039,CDS-700,MUST,"AI translation MUST preserve product identifiers, measurements, brand names and regulated wording according to field policy."
+CDS700-R040,CDS-700,MUST,"A translation workflow MUST report omitted, ambiguous or culturally adapted content."
+CDS700-R041,CDS-700,MUST,Visual analysis MUST distinguish visible observation from inferred product fact.
+CDS700-R042,CDS-700,MUST NOT+SHOULD,AI-generated alt text SHOULD describe relevant visible content concisely and MUST NOT repeat unsupported marketing claims.
+CDS700-R043,CDS-700,SHOULD,"Image-derived colour SHOULD be treated as observational (E3) evidence: lighting, editing, display profiles and material reflectance can all shift apparent colour."
+CDS700-R044,CDS-700,MUST NOT+MUST,Sensitive or private information found in media MUST be handled under the organisation's security policy and MUST NOT be copied into product content by default.
+CDS700-R045,CDS-700,MUST,"AI channel optimisation MUST operate on expected channel state (CDS-500), not rewrite canonical information to match a channel limitation."
+CDS700-R046,CDS-700,MUST,Channel-specific generated text MUST be stored as a CH_ override or draft when it differs from canonical content (CDS-300).
+CDS700-R047,CDS-700,MUST,Policy-sensitive marketplace attributes MUST be validated against current channel rules before publication.
+CDS700-R048,CDS-700,MUST NOT,An AI suggestion MUST NOT be treated as evidence that a channel will accept or display the value.
+CDS700-R049,CDS-700,MUST+MAY,AI MAY propose search synonyms; dictionary and search owners MUST approve terms that materially broaden or redirect meaning.
+CDS700-R050,CDS-700,MUST NOT,AI MUST NOT expose every generated concept as a customer facet.
+CDS700-R051,CDS-700,MUST,Merchandising suggestions MUST remain distinguishable from taxonomy classification.
+CDS700-R052,CDS-700,MUST+SHOULD,Personalised or generated collection membership SHOULD be explainable by declared signals and MUST respect availability and exclusion rules.
+CDS700-R053,CDS-700,MUST NOT,A confidence score MUST NOT be used as the sole acceptance criterion.
+CDS700-R054,CDS-700,MUST,The workflow MUST support an explicit abstain or insufficient-evidence outcome.
+CDS700-R055,CDS-700,SHOULD,Thresholds SHOULD be calibrated on representative reviewed examples for the specific task and field; for bounded A3 this calibration is mandatory (R011).
+CDS700-R056,CDS-700,MUST,"An AI proposal MUST record the source references, model, workflow version, timestamp and validation results."
+CDS700-R057,CDS-700,SHOULD,"Where feasible, extracted facts SHOULD include a source snippet, document region, image region or field reference."
+CDS700-R058,CDS-700,MUST NOT,The implementation MUST NOT require or expose private model chain-of-thought as an audit mechanism.
+CDS700-R059,CDS-700,SHOULD,"A human-readable decision summary SHOULD explain the evidence, mapping and policy outcome without revealing sensitive internal reasoning."
+CDS700-R060,CDS-700,MUST,A reviewer MUST be able to see which fields will change before acceptance.
+CDS700-R061,CDS-700,MUST,"Bulk approval MUST provide a summary of affected products, values, risks and validation exceptions."
+CDS700-R062,CDS-700,SHOULD,"Human corrections SHOULD be captured as evaluation data, subject to privacy and governance policy."
+CDS700-R063,CDS-700,SHOULD,An implementation SHOULD use deterministic logic whenever the same inputs should always produce one objectively correct result.
+CDS700-R064,CDS-700,MUST NOT+MUST,"For each task the workflow registry (§33) marks as deterministic-eligible, the registry entry MUST either name the deterministic implementation used or record why no reliable deterministic rule exists. *(This replaces the untestable v0.1 rule ""AI MUST NOT be used to obscure a missing deterministic rule"" with an auditable mechanism.)*"
+CDS700-R065,CDS-700,MUST,Guardrails MUST be evaluated after AI output and before canonical acceptance or publication.
+CDS700-R066,CDS-700,MUST,A failed guardrail MUST produce a specific reason code rather than a generic AI error.
+CDS700-R067,CDS-700,MUST NOT,A model instruction alone MUST NOT be treated as a sufficient guardrail for critical rules that can be enforced deterministically.
+CDS700-R068,CDS-700,MUST NOT+MUST,"AI_ fields MUST represent proposals, provenance, confidence or workflow metadata; they MUST NOT replace the canonical field namespace."
+CDS700-R069,CDS-700,MUST,"After acceptance, the value MUST be stored in its semantic canonical field (e.g. MF_material) while AI provenance remains linked in the audit record."
+CDS700-R070,CDS-700,MUST,Every production AI result MUST identify the model and workflow version used.
+CDS700-R071,CDS-700,SHOULD,"Prompt templates, tool permissions, retrieval sources, output schemas and thresholds SHOULD be versioned together as one deployable configuration."
+CDS700-R072,CDS-700,MUST,A workflow change that may alter accepted outputs MUST pass evaluation (§24) before production rollout.
+CDS700-R073,CDS-700,MUST,Historical proposals MUST remain associated with the configuration that generated them.
+CDS700-R074,CDS-700,MUST,An AI workflow MUST be evaluated before bulk production use.
+CDS700-R075,CDS-700,SHOULD,"The benchmark set SHOULD include diverse suppliers, categories, languages, missing data, conflicting evidence and unknown dictionary values."
+CDS700-R076,CDS-700,MUST,Evaluation results MUST be associated with the exact workflow version.
+CDS700-R077,CDS-700,SHOULD,"Production workflows SHOULD be re-evaluated after material model, prompt, schema, dictionary or source changes."
+CDS700-R078,CDS-700,SHOULD,"The implementation SHOULD monitor changes in acceptance rate, correction rate, unknown-value rate, content violations and downstream mismatch rate."
+CDS700-R079,CDS-700,MUST,A significant regression MUST be able to pause or roll back the affected workflow.
+CDS700-R080,CDS-700,MUST NOT,Previously accepted canonical values MUST NOT be silently regenerated merely because a model version changed.
+CDS700-R081,CDS-700,MUST+SHOULD+MAY,"Monitoring obligations MUST scale with the declared autonomy level of a workflow: segmented monitoring that distinguishes AI-originated from human-originated values MUST apply to A3 and A4 workflows, SHOULD apply to A2 workflows, and MAY be limited to volume and sampled quality checks for A1. Operational monitoring mechanics are defined in CDS-1400, which cites this rule for its AI segmentation re"
+CDS700-R082,CDS-700,MUST+SHOULD,Each AI workflow definition MUST declare the data classes it may receive as input; supplying data outside the declared classes is non-conformant. Declared inputs SHOULD be the minimum necessary for the task.
+CDS700-R083,CDS-700,MUST NOT,Secrets and credentials MUST NOT be included in model input. This prohibition admits no policy exception.
+CDS700-R084,CDS-700,MUST NOT,"Private customer data MUST NOT be included in model input unless a declared data-handling policy explicitly permits it and states the safeguards applied (such as minimisation, masking or pseudonymisation, retention limits and access controls)."
+CDS700-R085,CDS-700,MUST NOT+MUST,Tool permissions MUST be scoped to the workflow; read access MUST NOT imply write or publication access.
+CDS700-R086,CDS-700,MUST,Logs and evidence records MUST follow retention and access-control policy.
+CDS700-R087,CDS-700,MUST NOT+MUST,"An AI workflow MUST NOT infer regulated or rights-bearing claims — such as certifications, origin claims, sustainability claims, medical claims or legal warranties — from style, context or similar products. *Informative note:* which claim categories are regulated, and how, is jurisdiction-dependent; the categories named here are examples, and organisations MUST rely on their declared claim policie"
+CDS700-R088,CDS-700,MUST NOT,Generated content MUST NOT reproduce supplier or third-party content beyond the rights the organisation holds to use it.
+CDS700-R089,CDS-700,SHOULD,Generated content SHOULD avoid close stylistic imitation of identifiable third-party content even where reproduction rights are not directly at issue.
+CDS700-R090,CDS-700,MUST,Brand and trademark wording MUST follow approved source and brand policy.
+CDS700-R091,CDS-700,SHOULD,Restricted or regulated categories SHOULD use specialist review profiles and narrower autonomy levels.
+CDS700-R092,CDS-700,MUST NOT+MUST,Retries MUST be bounded and MUST NOT conceal repeated failure.
+CDS700-R093,CDS-700,MUST,"A fallback model or workflow MUST meet the same schema, evidence and evaluation requirements as the primary."
+CDS700-R094,CDS-700,MUST,Each agent or tool MUST have a declared role and least-privilege permission set.
+CDS700-R095,CDS-700,MUST,The orchestrator MUST preserve task lineage across delegated steps.
+CDS700-R096,CDS-700,MUST NOT,An agent MUST NOT grant itself broader authority based on its own confidence or task interpretation.
+CDS700-R097,CDS-700,SHOULD,A human-readable workflow name and state SHOULD be visible to operators.
+CDS700-R098,CDS-700,MUST NOT,AI workflows MUST NOT bypass CDS-500 expected channel state and publication preflight.
+CDS700-R099,CDS-700,MUST,AI-generated channel overrides MUST be visibly channel-specific and independently reviewable.
+CDS700-R100,CDS-700,MAY,"Direct AI publication MAY be used only under A4 for an explicitly approved, low-risk workflow with rollback and downstream verification."
+CDS700-R101,CDS-700,SHOULD,"Price, inventory, legal status and safety-critical changes SHOULD remain outside direct AI publication unless governed by a specialist standard and deterministic controls."
+CDS700-R102,CDS-700,MUST,An accepted AI value MUST be included in ordinary CDS-500 field-level verification when published.
+CDS700-R103,CDS-700,MUST,"Before a downstream mismatch involving AI-originated content is dispositioned as an AI-content defect, its triage record MUST evidence that mapping, transformation and channel behaviour were checked and excluded."
+CDS700-R104,CDS-700,MAY,AI MAY assist with anomaly triage; repair actions remain governed by field ownership and CDS-500 policy.
+CDS700-R105,CDS-700,MUST,An implementation MUST retain sufficient audit data to reconstruct how an AI proposal reached canonical or published state.
+CDS700-R106,CDS-700,SHOULD,"Operational metrics SHOULD distinguish quality, throughput, cost and human effort."
+CDS700-R107,CDS-700,MUST NOT,"A cost-optimisation change MUST NOT alter a workflow's declared evidence-class requirements, validation configuration or required review rate except through the workflow change process (§23, §33). *(This replaces the untestable v0.1 rule ""cost optimisation MUST NOT silently reduce quality"" with a reviewable mechanism.)*"
+CDS700-R108,CDS-700,MUST,"Every production AI workflow MUST have an accountable owner, a declared autonomy level, a risk class, evaluation evidence and approved destination permissions."
+CDS700-R109,CDS-700,MUST,"Organisations operating production AI workflows MUST maintain a registry of approved workflows recording, per workflow: owner, role (§4), autonomy level, risk class, permitted fields and destinations, input data classes (R082), deterministic-eligibility disposition (R064) and current version. The registry is the mechanism behind R004's visibility requirement."
+CDS700-R110,CDS-700,MUST,"Workflow changes MUST follow versioning, evaluation, approval and rollback policy (§23–§25); model or prompt changes that can alter output semantics MUST pass change and regression controls before rollout."
+CDS700-R111,CDS-700,MUST,AI-generated canonical changes MUST retain provenance and applicable human-review evidence (§18–§19).
+CDS700-R112,CDS-700,MUST,Deprecated workflows MUST be disabled for new work while historical audit records remain readable.
+CDS800-R001,CDS-800,MUST,"Every CDS implementation MUST define accountable ownership for the canonical product model, each governed data domain and each publication channel."
+CDS800-R002,CDS-800,MUST NOT+MUST,"The governance model MUST cover definition, operation, monitoring and change, and MUST NOT stop after initial PIM configuration."
+CDS800-R003,CDS-800,SHOULD,An organisation SHOULD maintain one identifiable forum or accountable role capable of resolving cross-domain conflicts.
+CDS800-R004,CDS-800,MUST,"A decision right MUST identify who may approve, who must be consulted and who must be informed."
+CDS800-R005,CDS-800,SHOULD NOT,The person requesting a material change SHOULD NOT be the only person approving it when the change can affect many products or channels.
+CDS800-R006,CDS-800,MUST,"The organisation MUST declare, in its implementation statement (§9), the thresholds that make a change *material* (for example: product count affected, number of channels affected, breaking-change class per §11)."
+CDS800-R007,CDS-800,MUST+MAY,"One person MAY hold multiple roles, but each responsibility MUST remain explicitly assigned."
+CDS800-R008,CDS-800,MUST,"Role assignment MUST be reviewed when personnel, systems or operating models change."
+CDS800-R009,CDS-800,SHOULD,Each governed domain SHOULD have a concise ownership contract accessible to operators and automated agents.
+CDS800-R010,CDS-800,MUST,"A domain contract MUST distinguish canonical facts from derived display, facet and channel representations."
+CDS800-R011,CDS-800,MUST NOT,Lower-level artefacts MUST NOT silently contradict higher-level normative requirements.
+CDS800-R012,CDS-800,MUST,"Where an implementation cannot satisfy a requirement, the deviation MUST be represented through the exception process (§14) rather than hidden in procedure."
+CDS800-R013,CDS-800,MUST,A profile MUST identify the CDS release it depends on.
+CDS800-R014,CDS-800,MUST NOT+MAY,"A profile MAY add required attributes, dictionaries, rules or mappings, but MUST NOT weaken any base CDS requirement or the cumulativity of the conformance levels. *(The v0.1 exception-based escape clause is deleted — finding 800-2. Implementation-level deviations use the exception process (§14); a profile itself is never a vehicle for weakening.)*"
+CDS800-R015,CDS-800,MUST NOT+MUST,Organisation-specific extensions MUST use governed identifiers registered per CDS-300 and MUST NOT collide with reserved CDS namespaces.
+CDS800-R016,CDS-800,MUST,Local implementation choices MUST be documented in an implementation statement or equivalent controlled record.
+CDS800-R017,CDS-800,MAY,"Local naming MAY differ from CDS examples, provided semantic intent and the mapping to CDS terms remain unambiguous."
+CDS800-R018,CDS-800,MUST,"Material changes (per the declared thresholds, R006) MUST be represented by a durable change proposal before production implementation."
+CDS800-R019,CDS-800,MUST+MAY,"Emergency changes MAY use an accelerated path, but MUST be documented and reviewed retrospectively."
+CDS800-R020,CDS-800,MUST,Version identifiers MUST change when a governed artefact changes semantically.
+CDS800-R021,CDS-800,MUST,"A release record MUST identify included changes, migrations, tests, approvals and effective date."
+CDS800-R022,CDS-800,MUST,"A breaking change MUST include a migration plan and a defined compatibility period, unless immediate removal is required for safety, law or severe data-integrity risk."
+CDS800-R023,CDS-800,SHOULD,Migration tooling SHOULD provide a preview of affected products and values before bulk changes are applied.
+CDS800-R024,CDS-800,MUST,Channel mappings and verification logic MUST be reviewed when canonical identifiers or value semantics change.
+CDS800-R025,CDS-800,MUST,Deprecated fields and values MUST identify a replacement or explicitly state that no replacement exists.
+CDS800-R026,CDS-800,MUST+MAY,"Aliases MAY support ingestion and migration, but MUST resolve to one canonical identity."
+CDS800-R027,CDS-800,MUST NOT,A deprecated identifier MUST NOT be reused for a different meaning.
+CDS800-R028,CDS-800,MUST,"Removal MUST be blocked while verified active dependencies remain, unless a documented risk decision authorises otherwise."
+CDS800-R029,CDS-800,MUST,"Every exception MUST have an owner, scope, rationale, compensating-control assessment and a review or expiry date."
+CDS800-R030,CDS-800,MUST NOT,Expired exceptions MUST NOT remain silently active.
+CDS800-R031,CDS-800,MUST,"Exception closure MUST record a retest result demonstrating that conformance was re-established, or a new approved exception continuing the deviation. *(New in v0.2 — finding 800-6.)*"
+CDS800-R032,CDS-800,MUST,"Quality rules MUST identify the applicable scope, severity, owner and remediation path."
+CDS800-R033,CDS-800,SHOULD NOT,A product SHOULD NOT be published while blocking quality rules fail.
+CDS800-R034,CDS-800,MUST,"Each governance metric (for example exception age, change failure rate) MUST be defined with an explicit formula and denominator such that repeated calculation produces comparable results."
+CDS800-R035,CDS-800,SHOULD,Quality targets SHOULD be set by risk and business use rather than one universal threshold.
+CDS800-R036,CDS-800,MUST,"Audit evidence MUST be sufficient to reconstruct who changed what, when, under which authority and with what downstream effect."
+CDS800-R037,CDS-800,MUST,"Retention periods MUST be declared per record class in the implementation statement and reflect legal, operational and assurance needs."
+CDS800-R038,CDS-800,MUST,Access MUST follow least privilege and be granted according to role responsibilities.
+CDS800-R039,CDS-800,SHOULD,"Privileged actions such as schema change, bulk publication, mapping replacement and canonical-value deletion SHOULD require stronger authentication and enhanced audit logging."
+CDS800-R040,CDS-800,MUST NOT,"Supplier credentials, channel tokens and other secrets MUST NOT be exposed through human-readable product fields or AI model inputs. *(Absolute — aligned with the CDS-700 §26 credential rule, finding 700-3; the v0.1 ""approved need"" escape applied only to non-secret confidential source data, which remains policy-gated under CDS-700.)*"
+CDS800-R041,CDS-800,SHOULD,Production and test environments SHOULD be separated.
+CDS800-R042,CDS-800,SHOULD,Material high-risk changes SHOULD involve at least two distinct accountable participants.
+CDS800-R043,CDS-800,MUST,"Organisation-specific products, dictionaries, mappings, credentials, exceptions and audit records MUST be isolated from other organisations."
+CDS800-R044,CDS-800,MUST NOT+MAY,"A shared CDS baseline MAY provide definitions and templates, but MUST NOT expose or merge tenant-specific values without explicit authorisation."
+CDS800-R045,CDS-800,MUST,Imports and bulk actions MUST execute within a declared organisation context.
+CDS800-R046,CDS-800,MUST,"Cross-tenant administrative access MUST be privileged, logged and reviewed."
+CDS800-R047,CDS-800,MUST,"Every supplier source MUST have an identified owner, acquisition method, field mapping, refresh policy and trust classification."
+CDS800-R048,CDS-800,SHOULD,Raw source values SHOULD be preserved separately from resolved canonical values (value model: CDS-400).
+CDS800-R049,CDS-800,MUST,Bulk imports MUST provide validation results and a preview of high-impact changes before commit.
+CDS800-R050,CDS-800,MUST,Every category MUST have a recorded scope definition that distinguishes what belongs from what does not.
+CDS800-R051,CDS-800,MUST,"A taxonomy change MUST analyse product reassignment, collection, navigation, facet, SEO and channel impacts before approval."
+CDS800-R052,CDS-800,SHOULD,Ambiguous product-type decisions SHOULD be recorded in a taxonomy decision log.
+CDS800-R053,CDS-800,MUST,"New canonical values MUST be checked for existing synonyms, aliases and facet membership before approval."
+CDS800-R054,CDS-800,MUST,"Facet-grouping changes MUST consider customer usability, product counts, search behaviour and channel effects (facet requirements: CDS-600)."
+CDS800-R055,CDS-800,MUST,"Dictionary owners MUST monitor unknown, ambiguous and unmapped value rates."
+CDS800-R056,CDS-800,MUST,Channel representations MUST be reviewed when destination vocabularies change.
+CDS800-R057,CDS-800,MUST,A new attribute MUST have an Attribute Definition (CDS-200 §7) before product values are created at scale.
+CDS800-R058,CDS-800,MUST,Attribute removal or semantic change MUST follow the compatibility and migration controls of §12.
+CDS800-R059,CDS-800,MUST,"Introduction, deprecation or retirement of a semantic namespace MUST follow the change proposal lifecycle (§10) and be recorded in the CDS-300 registry."
+CDS800-R060,CDS-800,SHOULD+MAY,"Legacy prefix aliases MAY remain during migration, but new fields SHOULD use the current approved namespace."
+CDS800-R061,CDS-800,MUST,Each active channel MUST have an owner and a maintained capability profile.
+CDS800-R062,CDS-800,MUST,"Channel changes MUST be assessed against mappings, publication, observation and verification before production rollout."
+CDS800-R063,CDS-800,MUST,Every production AI workflow MUST have a named owner recorded in the workflow registry (CDS-700).
+CDS800-R064,CDS-800,MUST,"A material incident MUST have an owner, severity, affected scope, containment action and closure evidence."
+CDS800-R065,CDS-800,MUST,Incident closure MUST include verification that canonical and downstream states are correct.
+CDS800-R066,CDS-800,SHOULD,"Repeated incidents SHOULD trigger root-cause review of schema, process, tooling or authority design."
+CDS800-R067,CDS-800,MUST,A production release MUST identify the included change records and the versions of affected governed artefacts.
+CDS800-R068,CDS-800,SHOULD,"High-impact releases SHOULD use staged rollout, limited product cohorts or channel canaries."
+CDS800-R069,CDS-800,MUST NOT,A release MUST NOT be considered complete until required verification and health checks pass.
+CDS800-R070,CDS-800,MUST NOT+MUST,A conformance claim MUST describe the implemented scope and level honestly; an organisation MUST NOT claim conformance to capabilities it has not implemented.
+CDS800-R071,CDS-800,MUST NOT+MUST,An implementation MUST pass all MUST and MUST NOT requirements applicable to its declared scope.
+CDS800-R072,CDS-800,SHOULD+MAY,"SHOULD requirements MAY be unmet only where a documented rationale exists. *(Keyword corrected per the CLEANUP-PASS §C ambiguous-case ruling: the governing modal is MAY; ""SHOULD requirements"" is a noun reference to the requirement class.)*"
+CDS800-R073,CDS-800,MUST,"A conformance claim MUST be accompanied by a dated conformance statement conforming to CDS-1000 §23, approved by the Conformance Declaration Executive."
+CDS800-R074,CDS-800,MAY,"An organisation MAY declare different conformance levels or overlay profiles for different channels or business units, provided each claim's scope is explicit."
+CDS800-R075,CDS-800,MUST,"Assessment method MUST be stated using the CDS-1000 §20 vocabulary: **self-attestation**, **customer assessment** or **independent assessment** *(finding 800-5; replaces v0.1 ""self-assessed / partner-reviewed / independent"")*."
+CDS800-R076,CDS-800,MUST NOT,A certification mark or badge MUST NOT imply independent assessment when only self-attestation occurred.
+CDS800-R077,CDS-800,SHOULD,Material scope or control changes SHOULD trigger reassessment before a previous claim is reused.
+CDS800-R078,CDS-800,SHOULD,Review cadence SHOULD reflect the rate and risk of change in the governed domain.
+CDS800-R079,CDS-800,SHOULD,Review outcomes SHOULD create assigned actions rather than remain informational only.
+CDS900-R001,CDS-900,MUST,"Every implementation profile MUST identify its scope, mapping rules, platform constraints, publication behaviour, observation coverage and conformance tests."
+CDS900-R002,CDS-900,MUST,Every platform profile MUST carry a profile release identifier and MUST date every external platform reference it relies on (retrieved-on date).
+CDS900-R003,CDS-900,MUST NOT,A platform profile MUST NOT redefine canonical product truth merely because the target platform lacks a corresponding field.
+CDS900-R004,CDS-900,MUST+MAY,"An industry profile MAY require additional attributes and dictionaries, but MUST preserve the CDS core semantics."
+CDS900-R005,CDS-900,MUST+MAY,"An organisation profile MAY extend a platform or industry profile, but MUST document every divergence."
+CDS900-R006,CDS-900,MUST+MAY,"**Precedence rule:** more specific profiles (industry → platform → organisation) MAY add constraints; **CDS core semantics remain authoritative for every shared concept**. Where two profiles conflict, the implementation MUST preserve the core CDS meaning and MUST record the narrower profile decision explicitly. (This restates CDS-000 §6 CDS000-R011 in profile terms; a profile never weakens a core "
+CDS900-R007,CDS-900,MUST NOT+MAY,"A platform limitation MAY create an exception in the publication projection, but MUST NOT silently alter the canonical record."
+CDS900-R008,CDS-900,MUST,"Where a transformation is defined, verification MUST compare the expected channel representation with the observed channel representation, not raw PIM text. (Lifecycle, statuses and comparison semantics: CDS-500.)"
+CDS900-R009,CDS-900,MUST,A mapping MUST declare whether the channel value is observable. Missing and unobservable MUST remain different verification states (CDS-500 §17).
+CDS900-R010,CDS-900,MUST,"Where an MF_ attribute is published to a channel's native or standard field rather than a metafield-like structure, that is a mapping concern of the platform profile; the canonical prefix does not change (ADR-D2). A profile MUST document MF_→metafield, MF_→native-field and MF_→feed-column projections per mapping."
+CDS900-R011,CDS-900,SHOULD,PIM-owned product fields edited directly in Shopify SHOULD be considered downstream drift unless an approved override workflow exists (CDS-500 ownership modes).
+CDS900-R012,CDS-900,MUST,"The Shopify connector MUST know, per target field, whether an update replaces or merges the downstream value, and MUST declare this in the mapping's write semantics."
+CDS900-R013,CDS-900,MUST NOT+MUST,The connector MUST use the correct current mutation for each object class and MUST NOT assume one product mutation covers variants.
+CDS900-R014,CDS-900,MUST,The PIM internal category MUST remain separate from the Shopify product category and the Shopify product type.
+CDS900-R015,CDS-900,SHOULD,The PIM SHOULD map each final internal category to one Shopify Standard Product Taxonomy category identifier or breadcrumb.
+CDS900-R016,CDS-900,SHOULD,The mapping SHOULD be stored on the category entity and inherited by products unless a documented product-level exception is required.
+CDS900-R017,CDS-900,MUST NOT+SHOULD,The Shopify product type SHOULD contain a controlled merchant vocabulary and MUST NOT be a concatenation of descriptive attributes.
+CDS900-R018,CDS-900,SHOULD,"When an appropriate Shopify category metafield exists, the Shopify profile SHOULD map the corresponding canonical attribute to it."
+CDS900-R019,CDS-900,SHOULD,"A custom metafield SHOULD be used when the canonical attribute is not available as a category metafield, is store-specific, or requires a different type or lifecycle."
+CDS900-R020,CDS-900,MUST,"The choice of category metafield versus custom metafield MUST be recorded in the Attribute Definition mapping (CDS-200 §7), not decided independently for each product."
+CDS900-R021,CDS-900,MUST,A metafield used as a storefront filter MUST have an appropriate metafield definition and a supported data type.
+CDS900-R022,CDS-900,MAY,Only SKU-producing differences MAY become Shopify variant options under the CDS profile (variant boundary rule: CDS-200 §5).
+CDS900-R023,CDS-900,MUST,The connector MUST preflight the projected variant count and option count against the profile's declared platform limits before publication.
+CDS900-R024,CDS-900,MUST,A canonical product model requiring more options than Shopify supports MUST use a documented decomposition strategy rather than dropping information.
+CDS900-R025,CDS-900,SHOULD,Variant option values SHOULD be connected to reusable category metafield entries where that improves consistency and the target theme or channel supports them.
+CDS900-R026,CDS-900,SHOULD,Taxonomy collections SHOULD be generated from the PIM category tree or explicit category-to-collection projection rules.
+CDS900-R027,CDS-900,MUST+MAY,"Campaign and editorial collections MAY use merchandising rules or manual curation, but MUST have a declared owner and lifecycle."
+CDS900-R028,CDS-900,SHOULD,"Structured values such as material, colour family, dimensions and fit SHOULD be stored in metafields or standard attributes rather than duplicated as tags solely for filtering."
+CDS900-R029,CDS-900,MUST,"Every published tag MUST be generated, registered or explicitly approved. Uncontrolled tag creation MUST be rejected or quarantined."
+CDS900-R030,CDS-900,MUST,"Tag publication MUST be set-based: the connector MUST regenerate and write the complete governed tag set, or use an explicitly additive operation, and MUST declare which in the mapping's write semantics."
+CDS900-R031,CDS-900,MUST,Customer filters MUST use the CDS facet layer (CDS-600) rather than exposing every distinct source or display value.
+CDS900-R032,CDS-900,MUST,The Shopify profile MUST define one filter source per approved facet and MUST document its data source.
+CDS900-R033,CDS-900,SHOULD,A colour filter SHOULD expose broad colour families such as Blue rather than dozens of commercial shade names.
+CDS900-R034,CDS-900,MUST+MAY,"Filter value grouping MAY be used as a channel-level convenience, but the authoritative grouping MUST remain in the PIM facet dictionary."
+CDS900-R035,CDS-900,MUST,"Facet projections MUST be preflighted against the declared platform limits (values per group, store-wide group count, non-groupable filters) recorded in the profile's channel capability declaration."
+CDS900-R036,CDS-900,MUST,The connector MUST retain Shopify product and variant identifiers after creation.
+CDS900-R037,CDS-900,MUST,The connector MUST read back the PIM-owned fields required by the verification profile.
+CDS900-R038,CDS-900,MUST,Tags and list fields MUST be compared as sets unless order has declared meaning.
+CDS900-R039,CDS-900,MUST,Rich text and HTML MUST be compared using a declared canonicalisation method (normalisation registry: CDS-500 §16).
+CDS900-R040,CDS-900,SHOULD,Category and metafield references SHOULD be compared by stable identifiers or base values rather than display text alone.
+CDS900-R041,CDS-900,MUST NOT+MUST,Verification statuses and their traffic-light presentation are defined solely in **CDS-500 §17–§18**; this profile MUST use that enum and mapping and MUST NOT define its own.
+CDS900-R042,CDS-900,MUST,"CH_google_product_category MUST contain a valid Google taxonomy identifier or an accepted breadcrumb (one form, not both) when supplied."
+CDS900-R043,CDS-900,SHOULD,CH_google_product_type SHOULD be derived from the PIM internal category path from broad to specific.
+CDS900-R044,CDS-900,MUST,Google taxonomy and PIM taxonomy MUST remain separate mappings even where their text appears similar.
+CDS900-R045,CDS-900,MUST,The Google profile MUST preserve variant identity and item grouping consistently across updates.
+CDS900-R046,CDS-900,MUST,"The connector MUST validate required and conditional attributes against the current, dated Google product data specification before publication."
+CDS900-R047,CDS-900,SHOULD,"Disapprovals and diagnostics SHOULD be imported as observed channel quality events, not treated as canonical product values."
+CDS900-R048,CDS-900,SHOULD,"The Google connector SHOULD observe item status, diagnostics and accepted attribute values where the integration provides access."
+CDS900-R049,CDS-900,MUST NOT,"A product accepted into Merchant Center MUST NOT automatically be treated as fully verified if field-level observation is incomplete; unobserved fields carry UNOBSERVABLE, and coverage is reported per CDS-500."
+CDS900-R050,CDS-900,MUST NOT+MUST,Google-normalised or automatically inferred values MUST be stored as observed or inferred channel state and MUST NOT be silently copied into canonical fields.
+CDS900-R051,CDS-900,MUST,"The Meta profile MUST identify the exact ingestion mechanism in use, because write, update, read-back and diagnostic behaviour differ by source."
+CDS900-R052,CDS-900,MUST,"Meta category, gender, age group and other channel values MUST be mapped from canonical dictionaries or channel mappings."
+CDS900-R053,CDS-900,MUST,The PIM MUST remain authoritative even when Shopify or another partner platform forwards products to Meta.
+CDS900-R054,CDS-900,MUST+SHOULD,Multi-hop publication MUST record the immediate publication target and SHOULD record the final destination channel.
+CDS900-R055,CDS-900,MUST,"Where final Meta values cannot be read back, the verification status MUST be UNOBSERVABLE rather than MATCH."
+CDS900-R056,CDS-900,MUST,Raw supplier values MUST be preserved separately from canonical values.
+CDS900-R057,CDS-900,MUST,"Every supplier mapping MUST record source, field, transformation version and last acquisition time."
+CDS900-R058,CDS-900,MUST NOT+MUST,Unknown dictionary values MUST enter quarantine or review and MUST NOT silently create new canonical values (CDS-400 §17).
+CDS900-R059,CDS-900,MUST,"Supplier categories MUST be treated as source classifications and mapped to the internal taxonomy, not copied directly as canonical categories."
+CDS900-R060,CDS-900,MUST,"Apparel colour MUST support at least display shade, canonical shade and customer facet family (value layers: CDS-400)."
+CDS900-R061,CDS-900,MUST NOT+MUST,Apparel size MUST record its size system and MUST NOT rely on an unqualified label such as M or 10 alone when multiple systems are possible.
+CDS900-R062,CDS-900,MUST,Material composition MUST preserve percentages and component order where supplied.
+CDS900-R063,CDS-900,MUST,Fit and style MUST remain separate attributes; style is not a substitute for garment fit.
+CDS900-R064,CDS-900,MUST,Measurements MUST use structured numeric values and units; display strings alone are insufficient.
+CDS900-R065,CDS-900,MAY,"A material family facet MAY group detailed values, for example Tasmanian Oak -> Oak -> Wood."
+CDS900-R066,CDS-900,MUST NOT,Room is a merchandising/facet attribute and MUST NOT replace the product's primary category.
+CDS900-R067,CDS-900,MUST NOT+MUST,Safety and suitability claims MUST be backed by an admissible evidence class (CDS-700) and MUST NOT be generated solely from aesthetic inference.
+CDS900-R068,CDS-900,MUST,Migration MUST preserve historical source and observed values where they are required for audit or reconciliation.
+CDS900-R069,CDS-900,SHOULD+MAY,"Legacy DF_ names MAY remain as registered deprecated aliases during migration, but new channel mappings SHOULD use CH_. The DF_→CH_ transition is governed by the single consolidated **ADR-D24** (which supersedes CDS-ADR-900-002/003); DF_ is a deprecated legacy prefix in the CDS-300 registry."
+CDS900-R070,CDS-900,MUST NOT,"The migration MUST NOT collapse canonical, expected and observed values into one field."
+CDS1000-R001,CDS-1000,MUST,"A conformance claim MUST identify the CDS version, test-suite version, conformance level, applicable profiles, implementation scope, assessment method and assessment date."
+CDS1000-R002,CDS-1000,MUST NOT,An implementation MUST NOT claim general CDS conformance when only a subset of requirements has been tested.
+CDS1000-R003,CDS-1000,MUST,"Tests MUST evaluate observable system behaviour and evidence, not marketing descriptions or intended future capability."
+CDS1000-R004,CDS-1000,MUST NOT+MUST,Mandatory tests MUST be pass/fail. A score or maturity percentage MUST NOT convert a failed mandatory test into a conformant result.
+CDS1000-R005,CDS-1000,MUST+MAY,Informative quality metrics MAY accompany a conformance result but MUST be clearly separated from normative pass/fail status.
+CDS1000-R006,CDS-1000,MUST,"A claim MUST name the product, service, component or organisational process being assessed."
+CDS1000-R007,CDS-1000,MUST,"A claim MUST list every profile — platform, industry and overlay — included in the assessment."
+CDS1000-R008,CDS-1000,MUST,"A claim MUST state its assessment method as exactly one of the three canonical methods defined in §20: self-attestation, customer assessment or independent assessment."
+CDS1000-R009,CDS-1000,MUST,"A higher-level claim MUST satisfy all mandatory tests of every preceding level. No profile — platform, industry, overlay or organisational — may exempt an implementation from this rule or weaken any core requirement. There is no exception process for level cumulativity."
+CDS1000-R010,CDS-1000,MAY,An implementation MAY claim different levels for different components if the scope of each claim is explicit.
+CDS1000-R011,CDS-1000,MUST,Test identifiers MUST remain stable after publication. Substantive changes to test meaning require a new identifier or a new test-suite version.
+CDS1000-R012,CDS-1000,MUST,Every mandatory requirement in the CDS corpus MUST map to at least one test case or a documented inspection procedure.
+CDS1000-R013,CDS-1000,SHOULD,"A test suite SHOULD include positive, negative and boundary cases where the requirement can fail in materially different ways."
+CDS1000-R014,CDS-1000,MUST,Evidence MUST be retained for every mandatory test result included in a claim.
+CDS1000-R015,CDS-1000,MUST,Evidence MUST identify the implementation version and configuration that was tested.
+CDS1000-R016,CDS-1000,MUST NOT+MAY,"Sensitive evidence MAY be redacted, but the redaction MUST NOT remove information necessary to validate the result."
+CDS1000-R017,CDS-1000,declarative,CDS Foundation conformance requires every mandatory Foundation test to pass.
+CDS1000-R018,CDS-1000,declarative,"CDS Structured conformance requires Foundation conformance plus all mandatory Structured tests, including the Controlled Dictionary Test Suite (§15)."
+CDS1000-R019,CDS-1000,declarative,CDS Publisher conformance requires Structured conformance plus all mandatory Publisher tests.
+CDS1000-R020,CDS-1000,declarative,CDS Verified conformance requires Publisher conformance plus all mandatory Verified tests.
+CDS1000-R021,CDS-1000,declarative,CDS Governed conformance requires Verified conformance plus all mandatory Governed tests.
+CDS1000-R022,CDS-1000,MUST,"A dictionary test MUST verify identifiers and relationships, not only visible labels."
+CDS1000-R023,CDS-1000,MUST,"A customer-facing facet test MUST evaluate the published experience, not only the PIM configuration."
+CDS1000-R024,CDS-1000,MUST,"AI tests MUST assess the complete workflow, including validation and approval, rather than only model output quality. The controls under test are defined in CDS-700."
+CDS1000-R025,CDS-1000,MUST,A profile conformance claim MUST pass all mandatory core tests for the claimed level and all mandatory tests in that profile's version-pinned test matrix.
+CDS1000-R026,CDS-1000,MUST NOT,"A conformance claim MUST NOT be made for a level or profile while any of its mandatory tests has a result of FAIL, NOT_TESTED or INCONCLUSIVE."
+CDS1000-R027,CDS-1000,declarative,NOT_APPLICABLE requires a written scope-based justification and reviewer approval.
+CDS1000-R028,CDS-1000,MUST NOT,"An exception MUST NOT be used to claim conformance to a level or profile whose mandatory capability is absent. This rule is absolute; no CDS release, profile or exception class relaxes it."
+CDS1000-R029,CDS-1000,MUST,Corrected nonconformities MUST be retested using the same or a stronger test method.
+CDS1000-R030,CDS-1000,MUST,The assurance method MUST be disclosed wherever a conformance claim is presented.
+CDS1000-R031,CDS-1000,MUST,"Independent assessment MUST include evidence sampling, assessor independence and conflict-of-interest disclosure."
+CDS1000-R032,CDS-1000,MUST,"A certificate MUST identify its issuer, scope, CDS version, level, profiles, issue date, expiry date and public verification reference."
+CDS1000-R033,CDS-1000,MUST NOT,A certification mark MUST NOT imply endorsement of product quality beyond the assessed CDS conformance scope.
+CDS1000-R034,CDS-1000,MUST,A claim MUST be reviewed after any change that could alter a mandatory test outcome.
+CDS1000-R035,CDS-1000,SHOULD,A claim SHOULD include an expiry or reassessment date.
+CDS1000-R036,CDS-1000,MUST NOT,"The manifest MUST NOT report a conformant level or profile when any mandatory test for that level or profile has a result of FAIL, NOT_TESTED or INCONCLUSIVE."
+CDS1000-R037,CDS-1000,MUST,Public claims MUST be precise enough that a reader can determine what was assessed and what was excluded.
+CDS1000-R038,CDS-1000,MUST,"Expired, withdrawn or superseded claims MUST be removed or visibly marked."
+CDS1000-R039,CDS-1000,MUST,"An overlay profile claim MUST name the overlay, its version and the level alongside which it is claimed, and MUST pass every mandatory test in the bound suite in addition to all mandatory tests of the claimed level."
+CDS1000-R040,CDS-1000,MUST NOT,"The AI-Assured overlay MUST NOT be claimed below CDS Structured, because T-AI tests presuppose governed attribute definitions and dictionaries for AI output to conform to."
+CDS1000-R041,CDS-1000,MUST,A claim that includes customer-facing facet or navigation scope MUST bind the CX overlay for that scope; T-UX tests are mandatory only under this overlay.
+CDS1000-R042,CDS-1000,MUST,An implementation serving more than one organisation from shared infrastructure MUST bind the Multi-Tenant overlay before claiming any level for that shared deployment.
+CDS1000-R043,CDS-1000,MUST NOT,The Controlled Dictionary Test Suite is mandatory at CDS Structured and every higher level; a Structured claim MUST NOT omit it.
+CDS1000-R044,CDS-1000,MUST,"Any organisation offering CDS certification MUST publish its assessor-competence, impartiality, surveillance, complaint and certificate-withdrawal processes."
+CDS1000-R045,CDS-1000,MUST,"A claim and its machine-readable manifest (§26) MUST record the `test_suite_version` and `assessment_method` used, so that the result can be reproduced against the same test definitions."
+CDS1000-R046,CDS-1000,MUST,"A test dataset used to support a conformance assessment MUST include negative and non-happy-path cases, covering at minimum: an unknown supplier value requiring quarantine, a deprecated alias resolving to a current canonical value, and a deliberate downstream manual edit that must produce detected drift."
+CDS1100-R001,CDS-1100,MUST,"A CDS machine-readable document MUST declare its document type, schema identifier, corpus release version, document identifier and revision (the envelope, §5)."
+CDS1100-R002,CDS-1100,MUST,An implementation MUST validate externally exchanged CDS documents against the applicable schema and profile constraints before accepting them as authoritative input.
+CDS1100-R003,CDS-1100,MUST NOT,"A serialization or API transport MUST NOT alter the semantic meaning, type or precision of a CDS value."
+CDS1100-R004,CDS-1100,MUST,"A contract MUST distinguish absent, explicitly null, empty string, empty list and zero wherever those states have different business meaning."
+CDS1100-R005,CDS-1100,MUST,A list whose order is semantically significant MUST declare that significance in its Attribute Definition or contract documentation.
+CDS1100-R006,CDS-1100,MUST,"Exchanged JSON MUST be encoded as UTF-8, and reference schemas MUST declare the Draft 2020-12 dialect via `$schema`."
+CDS1100-R007,CDS-1100,MUST,"Timestamps MUST include a timezone (UTC `Z` or an explicit offset). *The shipped schemas enforce this doubly: every date-time property asserts both `format: date-time` and a pattern requiring the offset, so environments that skip format assertion still reject offset-less timestamps.*"
+CDS1100-R008,CDS-1100,MUST NOT,"JSON numbers MUST NOT be used for identifiers such as GTIN, SKU, MPN or postal codes; leading zeros and exact textual form are significant, so identifiers are strings."
+CDS1100-R009,CDS-1100,MUST NOT+MUST,Monetary values MUST be represented in a decimal-safe form that guarantees declared precision; binary floating-point rounding MUST NOT silently alter a published amount. The reference money contract is defined in §7.
+CDS1100-R010,CDS-1100,MUST NOT+MUST,Implicit YAML typing MUST NOT change CDS scalar values; YAML representations MUST be converted to the canonical JSON data model before schema validation (Appendix C).
+CDS1100-R011,CDS-1100,MUST,"Every published schema MUST have a stable, release-independent `$id` of the form `urn:cds:schema:<domain>:<name>`, independent of any file-system location."
+CDS1100-R012,CDS-1100,MUST,"Every published schema MUST declare its own semantic version in a `version` keyword, distinct from both the corpus release and any document revision."
+CDS1100-R013,CDS-1100,MUST,"A schema package release MUST publish a manifest listing schema identifiers, versions, per-file hashes, and a package-level hash. *(The shipped `package-manifest.json` carries a `schema_registry` inventory and a `package_hash`; its self-hash convention is documented in the CDS-1200 README.)*"
+CDS1100-R014,CDS-1100,MUST NOT+MAY,A profile schema MAY add constraints through composition but MUST NOT redefine the meaning of a core property (§20).
+CDS1100-R015,CDS-1100,MUST,"Every top-level CDS document MUST carry the envelope, with all envelope-required properties present."
+CDS1100-R016,CDS-1100,MUST,`document_id` MUST remain stable across revisions of the same logical record.
+CDS1100-R017,CDS-1100,MUST,`revision` MUST change whenever any property affecting canonical meaning or downstream projection changes.
+CDS1100-R018,CDS-1100,MUST,"A consumer MUST reject or quarantine a document whose `cds_schema` is unknown or unsupported, unless an explicitly configured forward-compatibility policy applies."
+CDS1100-R019,CDS-1100,MUST,`cds_schema` MUST equal the `$id` of the schema against which the document is validated. *(The reference validator cross-checks this on every fixture; a mismatch is a validation failure.)*
+CDS1100-R020,CDS-1100,MUST NOT+MUST,A channel identifier MUST be stored inside a channel identity or mapping structure and MUST NOT replace the canonical CDS entity ID.
+CDS1100-R021,CDS-1100,MUST+SHOULD,"Cross-document references MUST use stable IDs and MUST include the referenced document type. *(v0.1's SHOULD is upgraded: the entity-reference schema requires `document_type`, so the requirement is mechanically enforced.)*"
+CDS1100-R022,CDS-1100,MUST,"A multi-tenant implementation MUST prevent cross-document references from resolving across tenant boundaries unless a governed shared-reference mechanism is explicitly defined. This is an **implementation obligation**: it is not, and cannot be, a schema-level guarantee. Its test coverage is the mandatory T-TEN suite in CDS-1000 §18; the reference runner's SEM-004 check (all related fixture documen"
+CDS1100-R023,CDS-1100,MUST,A measurement MUST store the numeric value separately from its unit.
+CDS1100-R024,CDS-1100,MUST,A localised value MUST identify the language of each translation using the localised-text contract.
+CDS1100-R025,CDS-1100,MUST,"A canonical attribute value MUST use the typed-value shape (or an array of it), and an implementation MUST additionally validate each value against its Attribute Definition's declared type, cardinality and dictionary before accepting it as canonical."
+CDS1100-R026,CDS-1100,MUST,"Product attributes MUST be keyed by stable Attribute Definition identifiers conforming to the CDS-300 namespace grammar, never by mutable display labels."
+CDS1100-R027,CDS-1100,MUST NOT,A product contract MUST NOT embed observed channel values in its canonical attributes object.
+CDS1100-R028,CDS-1100,MUST,Variant references MUST resolve to sellable-unit records whose parent `product_id` matches the product. *(Executed as reference semantic test SEM-001; see §21.4.)*
+CDS1100-R029,CDS-1100,MUST,A variant MUST carry a stable SKU or an explicitly documented alternative sellable-unit key.
+CDS1100-R030,CDS-1100,MUST,Option values MUST reference controlled values (`value_id`) when a dictionary exists for that option; display strings are presentation only.
+CDS1100-R031,CDS-1100,MUST,"A barcode identifier MUST declare its scheme, MUST be represented as a string preserving leading zeros, and MUST satisfy the exact digit length of its scheme."
+CDS1100-R032,CDS-1100,SHOULD+MAY,Inventory quantity SHOULD remain owned by the declared inventory authority and MAY be referenced rather than duplicated into the canonical record (per-fact authority: CDS-200).
+CDS1100-R033,CDS-1100,MUST,"An Attribute Definition MUST declare scope, value type, cardinality and behaviour (including a comparison strategy for every attribute that participates in downstream verification)."
+CDS1100-R034,CDS-1100,MUST,An Attribute Definition whose `value_type` is `enum_reference` or `enum_reference_list` MUST declare `dictionary_id`. *(Mechanically enforced by if/then in the shipped schema; CDS1100-16.)*
+CDS1100-R035,CDS-1100,MAY,Attribute labels MAY change and be localised at the display layer without changing `attribute_id`.
+CDS1100-R036,CDS-1100,MUST NOT,Dictionary Value identity MUST NOT depend on the displayed label or array position.
+CDS1100-R037,CDS-1100,MUST NOT,Aliases MUST NOT be treated as additional canonical values (intake and quarantine rules: CDS-400 §17).
+CDS1100-R038,CDS-1100,MUST,"Facet memberships MUST reference governed facet values, never arbitrary strings. *(Executed as reference semantic test SEM-002; see §21.4.)*"
+CDS1100-R039,CDS-1100,SHOULD,Channel representations SHOULD be stored at dictionary or mapping level when they apply consistently across products.
+CDS1100-R040,CDS-1100,MUST,An external taxonomy mapping MUST identify the external taxonomy version where the publisher provides one.
+CDS1100-R041,CDS-1100,MUST NOT+MUST,"A category `path` MUST consist of stable category identifiers, and a category parent reference MUST NOT create a cycle. *(Acyclicity is graph-level and remains an implementation obligation — §21.4.)*"
+CDS1100-R042,CDS-1100,MUST NOT+MUST,A taxonomy remap MUST create a new mapping revision and MUST NOT rewrite historical publication evidence.
+CDS1100-R043,CDS-1100,MUST,"A customer facet MUST reference a controlled value set (or, for `range` mode, a declared numeric/date range model per CDS-600)."
+CDS1100-R044,CDS-1100,MUST NOT+MUST,Facet value order and selection logic MUST be explicit; raw supplier values MUST NOT be exposed as facet values without dictionary governance (CDS-400) and UX review (CDS-600).
+CDS1100-R045,CDS-1100,MUST,"A Field Mapping MUST identify source field, source value layer, target field, transformation and transformation version, write mode, read-back path (or its explicit absence) and comparison strategy."
+CDS1100-R046,CDS-1100,MUST,"A mapping target path MUST be interpreted within the named Channel Profile, not as a global CDS path."
+CDS1100-R047,CDS-1100,MUST,A channel capability declaration MUST distinguish unsupported fields from supported-but-currently-absent values (observation coverage model: CDS-500 §15; encoded in §16).
+CDS1100-R048,CDS-1100,MUST,A Publication Record MUST identify the exact canonical revision and mapping-set version used to produce the expected state. *(Revision pinning is executed as reference semantic test SEM-003; see §21.4.)*
+CDS1100-R049,CDS-1100,MUST,"Transport acknowledgement MUST remain distinct from preflight outcome and from field-level verification status (""acknowledgement is not proof"": CDS-500 §9)."
+CDS1100-R050,CDS-1100,MUST+MAY,The expected payload's immutable hash MUST be recorded; the full payload MAY be stored externally by reference provided the evidence location is retrievable under CDS-500 §24.
+CDS1100-R051,CDS-1100,MUST,Observation data MUST be stored separately from canonical state and from expected channel state.
+CDS1100-R052,CDS-1100,MUST,An Observation Record MUST declare its observation method and timestamp.
+CDS1100-R053,CDS-1100,MUST,"The coverage declaration MUST distinguish, per field, a missing value from a field that is unobservable through the selected method."
+CDS1100-R054,CDS-1100,MUST NOT+MUST,"The verification-result contract MUST encode the CDS-500 §17 status enum verbatim and MUST NOT introduce, remove or re-map statuses."
+CDS1100-R055,CDS-1100,MUST,"Every field-level result MUST identify its field by JSON Pointer, its comparison strategy and its core status."
+CDS1100-R056,CDS-1100,MUST,Every field-level result whose core status is not `MATCH` MUST carry a `reason_code` from the §21 registry (encodes CDS500-R063; mechanically enforced by the shipped schema and covered by a negative fixture).
+CDS1100-R057,CDS-1100,MUST NOT,"Traffic-light colour MUST NOT be stored as a verification status; it is presentation derived per CDS-500 §18. *(The package's ""uppercase GREEN rejected as a status"" negative fixture expresses this.)*"
+CDS1100-R058,CDS-1100,MUST,An AI Proposal MUST remain distinguishable from accepted canonical data until an authorised workflow accepts it.
+CDS1100-R059,CDS-1100,MUST,"A proposal MUST identify its evidence, calibrated confidence, model identifier and workflow version, and MUST carry its validation results in the §21 validation-output contract."
+CDS1100-R060,CDS-1100,MUST,"Acceptance MUST create an auditable link from the proposal to the canonical revision it affected (`accepted_revision`, plus the reviewing identity in `reviewer`)."
+CDS1100-R061,CDS-1100,MUST NOT+MUST,A Conformance Manifest MUST identify the implementation scope and MUST NOT imply conformance beyond that scope (claim rules: CDS-1000 §24).
+CDS1100-R062,CDS-1100,MUST,"The manifest MUST identify the exact test-suite version, the applicable profiles and the assessment method."
+CDS1100-R063,CDS-1100,MUST NOT+MUST,"Every executed test case MUST be counted in exactly one `test_summary` disposition; failed or not-executed mandatory tests MUST NOT be omitted. *(The v0.1 fixture that claimed ""Verified"" with a count contradicting its own evidence report is retired; the shipped fixture counts match the shipped evidence — CDS1100-6.)*"
+CDS1100-R064,CDS-1100,MUST,"An extension key MUST use the dotted-namespace grammar, and its namespace MUST be organisationally controlled with an identified owner."
+CDS1100-R065,CDS-1100,MUST NOT+MAY,"An extension MUST NOT reuse a core property name with a different meaning, and a profile MAY require additional properties, restrict enumerations or tighten validation but MUST NOT make a core mandatory property optional."
+CDS1100-R066,CDS-1100,SHOULD,Unknown governed extensions SHOULD be preserved during read-modify-write operations unless an explicit policy authorises removal.
+CDS1100-R067,CDS-1100,MUST,"A validation finding MUST identify the affected document, the instance location as a JSON Pointer, a registered reason code and a severity; severity MUST distinguish errors, warnings and informational findings."
+CDS1100-R068,CDS-1100,SHOULD,A rejected import SHOULD retain the original value and source provenance in quarantine rather than discarding it (quarantine model: CDS-400 §17).
+CDS1100-R069,CDS-1100,MUST,"Machine-readable reason codes MUST match `^CDS_[A-Z_]+$` and MUST be drawn from the CDS_* reason-code registry defined here. Additions, deprecations and semantics changes follow CDS-800 change control; a code, once registered, is never reused with a different meaning. Organisation-specific codes are not permitted in the `CDS_` namespace; organisations extend via their own prefix under the CDS-300 "
+CDS1100-R070,CDS-1100,MUST,"An implementation MUST enforce the cross-document integrity classes above before accepting a document as authoritative, whether or not a reference-runner check exists for them."
+CDS1100-R071,CDS-1100,MUST,A schema MUST declare its semantic version independently of the CDS corpus release and of any document revision.
+CDS1100-R072,CDS-1100,MUST NOT+MUST,A breaking contract change MUST publish migration guidance and a new major schema version; the schema `$id` MUST NOT change.
+CDS1100-R073,CDS-1100,MUST NOT+MUST,"Historical publication and verification records MUST retain the schema versions, `cds_version` and mapping-set versions under which they were created; a corpus release MUST NOT rewrite stored evidence."
+CDS1100-R074,CDS-1100,MUST NOT,"Secrets, API credentials and access tokens MUST NOT be embedded in CDS documents."
+CDS1100-R075,CDS-1100,MUST+SHOULD,A producer MUST publish only the fields required by the destination profile and approved organisation policy; cost and margin fields SHOULD be excluded from channel payloads unless the destination is explicitly authorised.
+CDS1100-R076,CDS-1100,MUST NOT+MUST,"Inbound documents MUST be treated as untrusted input and validated for size, recursion depth, markup, URLs and extension content; markup-bearing text MUST be sanitised before render. Schema validation MUST NOT be treated as sufficient security validation."
+CDS1100-R077,CDS-1100,MUST+SHOULD,"Personal reviewer identities SHOULD be represented by governed user IDs and exposed only as policy permits; logs and evidence packages MUST follow retention and access policies (CDS-500 §24, CDS-800)."
+CDS1200-R001,CDS-1200,MUST,"A CDS reference package MUST contain executable schemas, positive fixtures, negative fixtures, a machine-readable expected-results catalogue, a machine-readable semantic test catalogue and a repeatable validation procedure."
+CDS1200-R002,CDS-1200,MUST NOT,"A reference fixture MUST NOT depend on undocumented database state, a network service, the mutable current time or an external API response."
+CDS1200-R003,CDS-1200,declarative,"Where the reference package and the published specification conflict on **normative content** — contract meaning, requirement wording, enumerations, identifier and versioning rules — the specification governs and the package carries the defect. This precedence rule does NOT extend to execution evidence: test reports, result counts and environment records are informative snapshots of a recorded run"
+CDS1200-R004,CDS-1200,MUST,"The reference package MUST identify the CDS release its contracts implement: the envelope pins `cds_version` as a per-release constant (`""0.2""` for this release), and every schema carries its own semantic version (ADR-D5; details CDS-1100)."
+CDS1200-R005,CDS-1200,MUST NOT,A package release MUST NOT silently change the meaning of a schema without a corresponding specification change or schema version change.
+CDS1200-R006,CDS-1200,MUST,"A reference distribution MUST keep schemas, fixtures, test catalogues, tools and generated evidence logically separate."
+CDS1200-R007,CDS-1200,MUST,"A consumer MUST be able to identify which files are source artefacts and which are generated evidence. In the reference layout, everything under `evidence/` is generated; everything else is source."
+CDS1200-R008,CDS-1200,MUST,A reference package MUST declare its complete runtime dependencies with pinned versions in a machine-readable file distributed with the package.
+CDS1200-R009,CDS-1200,MUST NOT+MUST,"The reference runner MUST verify at startup that every validation capability the suite depends on (including the `date-time` format assertion) is actually enforced in the current environment, and MUST exit non-zero with an actionable message when one is not — it MUST NOT continue with silently weakened validation."
+CDS1200-R010,CDS-1200,MUST,"A released package MUST include a machine-readable file manifest with a cryptographic hash for each distributed file, and MUST state its self-exclusion convention."
+CDS1200-R011,CDS-1200,MUST,The manifest MUST include a single package-level hash derived deterministically from the per-file hashes.
+CDS1200-R012,CDS-1200,MUST,Generated evidence intended for assurance MUST embed the hash of the package manifest (or an equivalent package release identifier) so the evidence identifies the exact artefacts evaluated. *(Closes finding CDS1200-10: the v0.2 report records `manifest_sha256`.)*
+CDS1200-R013,CDS-1200,SHOULD,A validator or assurance process SHOULD verify package hashes before treating results as release evidence.
+CDS1200-R014,CDS-1200,MUST,"Every reference schema MUST declare the supported schema dialect, a release-independent `$id` and a per-schema semantic version, per the identifier policy in CDS-1100."
+CDS1200-R015,CDS-1200,MUST,"The package MUST include all referenced schemas required to validate the distributed fixtures without network access, and the manifest MUST inventory the registry (id, version, path)."
+CDS1200-R016,CDS-1200,MUST,A shared definition MUST have exactly one authoritative schema file within a package release.
+CDS1200-R017,CDS-1200,SHOULD,Entity schemas SHOULD close unevaluated top-level properties unless a governed extension point is explicitly provided.
+CDS1200-R018,CDS-1200,MUST,"The reference runner MUST cross-check each instance's declared `cds_schema` against the `$id` of the schema actually applied, and treat a mismatch as a validation error."
+CDS1200-R019,CDS-1200,MUST,Every fixture MUST have a declared expected validation outcome in the machine-readable catalogue.
+CDS1200-R020,CDS-1200,SHOULD,A negative fixture SHOULD isolate one principal violation so that a failed test remains diagnosable.
+CDS1200-R021,CDS-1200,MUST NOT+MUST,"Reference fixtures MUST be synthetic and MUST NOT contain live credentials, personal customer information or confidential supplier data."
+CDS1200-R022,CDS-1200,MUST,"All positive fixtures MUST validate under their declared schemas, and the package MUST include at least one complete canonical product-to-verification lifecycle fixture chain."
+CDS1200-R023,CDS-1200,MUST,"A package MUST contain negative fixtures for required fields, controlled enumerations, semantic identifier syntax, numerical ranges and standard formats where those constraints are normative."
+CDS1200-R024,CDS-1200,MUST,A validator run MUST be considered failed if a negative fixture unexpectedly validates.
+CDS1200-R025,CDS-1200,MUST,"Each negative catalogue entry MUST declare the intended error (as one or more expected error substrings or an equivalent machine-checkable assertion), and the runner MUST require the intended error to be present, excluding composition-cascade errors from counting as evidence."
+CDS1200-R026,CDS-1200,MUST NOT,An implementation MUST NOT represent cross-document or semantic integrity as established merely because each individual document passes structural schema validation. *(Applies equally to this chapter's own evidence: §17 reports structural and semantic counts separately.)*
+CDS1200-R027,CDS-1200,MUST,A semantic test MUST identify all documents or services required to evaluate the rule.
+CDS1200-R028,CDS-1200,MUST,"The reference runner MUST execute the packaged semantic catalogue, and a run MUST be considered failed when any semantic outcome differs from its declared expectation."
+CDS1200-R029,CDS-1200,MUST,"A publication assurance fixture MUST preserve the identifiers linking canonical revision, publication, observation and verification result, and MUST keep canonical, observed and verification values in distinct documents."
+CDS1200-R030,CDS-1200,MUST,A verification fixture MUST declare the comparison strategy used for each compared field.
+CDS1200-R031,CDS-1200,MUST,A reference fixture MUST be deterministic under the documented comparison and validation rules.
+CDS1200-R032,CDS-1200,MUST,"Where a test requires randomness or time simulation, the seed and clock MUST be explicitly controlled and recorded."
+CDS1200-R033,CDS-1200,MUST,The packaged validation suite MUST run without network access.
+CDS1200-R034,CDS-1200,MUST,A reference runner MUST return a non-zero process status when any actual outcome differs from the expected outcome or the package cannot be loaded and verified.
+CDS1200-R035,CDS-1200,MAY,An alternative implementation MAY replace the reference runner if it evaluates the same catalogues and produces equivalent outcomes.
+CDS1200-R036,CDS-1200,MUST,A validation report MUST distinguish instance validity from test-case outcome.
+CDS1200-R037,CDS-1200,MUST,"Generated evidence MUST identify fixture, schema, expected result, actual result, test outcome and the execution environment (language runtime and dependency versions)."
+CDS1200-R038,CDS-1200,MUST,Structural and semantic results MUST be separately identifiable in the report and its summary.
+CDS1200-R039,CDS-1200,MUST,"Every package release MUST publish a changelog, a manifest and a test report. *(The v0.2.0 release ships `CHANGELOG.md`, keyed to review finding IDs — resolves finding CDS1200-5, under which the v0.1 release failed its own rule.)*"
+CDS1200-R040,CDS-1200,MUST,"A fixture outcome change between releases MUST be explained as a standard correction, a test correction or an intentional compatibility change."
+CDS1200-R041,CDS-1200,MUST,"Conformance MUST be determined by documented outcomes against the packaged catalogues, not by use of a particular programming language or library. Python is used only for the initial informative runner; any language may host an equivalent implementation (CDS1200-R035)."
+CDS1300-R001,CDS-1300,MUST,"A migration MUST include an operational transition plan, not only a data-load procedure."
+CDS1300-R002,CDS-1300,MUST,"Business continuity, rollback and verification MUST be designed and approved before production cutover."
+CDS1300-R003,CDS-1300,MUST NOT+MUST+MAY,Every function named in this chapter MUST have a named owner. One person MAY hold any number of functions simultaneously. A conformance assessment MUST NOT require distinct individuals per function.
+CDS1300-R004,CDS-1300,SHOULD NOT+MUST,"Where staffing permits, the person who builds a migration artifact (mapping, transformation, load package) SHOULD NOT be the sole acceptor of that artifact. Where one person must do both, the acceptance record MUST note the dual role and the compensating control applied (for example: checklist-driven self-review against frozen criteria, evidence archived for later independent review). Segregation-"
+CDS1300-R005,CDS-1300,MAY,An organisation MAY adopt the **small-team profile** by declaring it in its conformance claim (claim rules: CDS-1000). Under that profile the requirements listed in Table 2-1 apply at the downgraded level shown; **all other requirements apply unchanged**.
+CDS1300-R006,CDS-1300,MUST NOT+MUST,The migration plan MUST identify the declared starting state and MUST NOT assume that a system is authoritative merely because it currently contains the most data.
+CDS1300-R007,CDS-1300,MUST NOT,"Production migration MUST NOT begin until every critical readiness risk has an owner, a treatment and an acceptance decision."
+CDS1300-R008,CDS-1300,MUST,"Every source that can change product information MUST appear in the source inventory, including manual spreadsheets and channel-admin edit practices."
+CDS1300-R009,CDS-1300,MUST,"Every inventoried source, field, mapping and rule MUST carry a `migration_disposition` — one of `migrate`, `transform`, `merge`, `quarantine`, `retire`, `out_of_scope` — with an evidence location. Nothing exits the migration without a recorded disposition."
+CDS1300-R010,CDS-1300,MUST,"The inventory MUST distinguish authoritative source data, reference data, derived data, channel projections and observed downstream data."
+CDS1300-R011,CDS-1300,MUST,Unknown fields MUST be classified (and receive a disposition) before they are transformed or discarded.
+CDS1300-R012,CDS-1300,MUST,Every migrated field MUST have exactly one declared target authority.
+CDS1300-R013,CDS-1300,MUST,Read-back and verification fields MUST remain separate from authoritative values throughout migration.
+CDS1300-R014,CDS-1300,MUST,"Each authority cutover MUST be evidenced by at least one of: **(a)** a permission or access change that prevents non-authoritative writes to the field; **(b)** drift detection armed on the field (observation plus comparison per CDS-500); or **(c)** a documented acceptance that enforcement is detection-only, naming the residual risk owner."
+CDS1300-R015,CDS-1300,MUST,The target model MUST be validated with representative products before full mapping begins.
+CDS1300-R016,CDS-1300,MUST NOT+MUST,Target fields MUST NOT be created solely to preserve accidental source-system implementation details; legitimate source provenance and business meaning MUST be preserved even when field names and storage mechanisms change.
+CDS1300-R017,CDS-1300,MUST NOT,"A channel's collections, tags or product types MUST NOT be assumed to be canonical categories."
+CDS1300-R018,CDS-1300,MUST+MAY,After migration each product MUST have one primary internal category; collections MAY remain many-to-many merchandising projections (rules: CDS-200 §6).
+CDS1300-R019,CDS-1300,MUST,External taxonomy mappings MUST retain the source taxonomy version and the mapping rationale.
+CDS1300-R020,CDS-1300,MUST,Distinct source values MUST be profiled before dictionary normalisation begins.
+CDS1300-R021,CDS-1300,MUST NOT+MUST,Ambiguous mappings MUST enter review; they MUST NOT be resolved by first-match or other arbitrary logic.
+CDS1300-R022,CDS-1300,MUST,"Every source value mapped during migration MUST be retained as an alias (an Alias Mapping Record, CDS-400) with provenance. *(v0.1's ""where useful"" qualifier is deleted: aliases are what future imports and read-back comparison match against — discarding them breaks verification later.)*"
+CDS1300-R023,CDS-1300,MUST,"Facet values MUST be designed for customer usability (CDS-600), not inferred solely from current distinct-value counts."
+CDS1300-R024,CDS-1300,MUST NOT,A migration MUST NOT create new SKU identities merely to fit a target platform unless a governed re-identification plan exists.
+CDS1300-R025,CDS-1300,MUST NOT+MUST,Every variant consolidation or split MUST be evidenced by an approved old-to-new cross-reference table. The cross-reference table is the **primary** control; mechanical reversibility of a restructure is rarely available on production channels and MUST NOT be assumed or claimed without test evidence.
+CDS1300-R026,CDS-1300,MUST,"The wave design MUST check migrated products against the declared structural limits of each target channel profile (variants per product, option count, value lengths — CDS-900) **at design time**, before mapping is finalised, not at load time."
+CDS1300-R027,CDS-1300,MUST,Asset migration MUST preserve available rights and provenance metadata.
+CDS1300-R028,CDS-1300,MUST NOT,Asset transfer success MUST NOT be treated as proof that the channel displays the correct asset in the correct order; media ordering and variant association are in verification scope (CDS-500).
+CDS1300-R029,CDS-1300,MUST,"Each migrated channel field MUST identify its canonical source, transformation, destination and comparison strategy."
+CDS1300-R030,CDS-1300,MUST,"Channel overrides MUST be explicit, attributable and bounded (override records: CDS-500 §21)."
+CDS1300-R031,CDS-1300,MUST+MAY,"New channel fields MUST use the `CH_` namespace (ADR-D24; registry: CDS-300). Legacy `DF_` names MAY persist during transition only as registered deprecated aliases with provenance. Per ADR-D24 §3, a field is a feed-layer projection **iff it is a literal serialized feed column**; such projections live under `CH_` and the feed artifact is verified end to end at the formatted-output layer."
+CDS1300-R032,CDS-1300,MUST NOT+MUST,"Generated tags, collections and feed outputs MUST be reproducible from governed source data or rules; they MUST NOT be imported as independent canonical truth."
+CDS1300-R033,CDS-1300,MUST,"A migration that changes customer-facing URLs, handles, slugs or channel identifiers MUST, for every existing customer-facing URL, either preserve the URL or serve a permanent redirect to its successor."
+CDS1300-R034,CDS-1300,MUST,"SEO-critical fields — page titles, meta descriptions, canonical URLs, and any structured-data fields declared in the channel profile — MUST be included in the pre-cutover baseline (§15) and in post-cutover verification scope."
+CDS1300-R035,CDS-1300,SHOULD,"Redirect coverage SHOULD be verified after cutover by sampling pre-cutover URLs, and index-status and organic-traffic signals SHOULD be monitored through the wave's proving period."
+CDS1300-R036,CDS-1300,MUST,"A downstream baseline MUST be captured and frozen before production cutover wherever read-back is technically available, and the frozen baseline MUST be retained at least until the wave passes its exit gates (it is also the rollback republication source — R042)."
+CDS1300-R037,CDS-1300,MUST,Pre-existing mismatches MUST be recorded and distinguished from mismatches introduced by migration.
+CDS1300-R038,CDS-1300,MUST NOT+MUST,"Fields that cannot be observed MUST be recorded with the `UNOBSERVABLE` status from the CDS-500 enum; they MUST NOT be reported as verified. Verification statuses, reason codes and traffic-light presentation are owned by CDS-500 §17–§18 and are not restated here."
+CDS1300-R039,CDS-1300,MUST,"The chosen strategy MUST define scope, entry criteria, exit criteria, rollback point and evidence package."
+CDS1300-R040,CDS-1300,MUST NOT+MUST,"At any moment, exactly **one** pipeline MUST be the declared writer for a given channel field-set. On a channel with a single write target, a ""dual run"" therefore MUST operate as shadow publication on the non-authoritative side: the non-authoritative pipeline generates expected output and compares, and MUST NOT write. Reconciliation happens on evidence, never by both pipelines writing."
+CDS1300-R041,CDS-1300,MUST,Each wave plan MUST declare its proving period (the post-cutover observation window that must elapse defect-free before exit) before cutover.
+CDS1300-R042,CDS-1300,MUST,"Every production migration wave MUST have a tested rollback or compensating recovery procedure. **Channel-side rollback is defined as republication of the frozen pre-cutover baseline (R036)** through the governed publication path, followed by observation and verification — not as restoration of channel-internal state, which most channels cannot provide."
+CDS1300-R043,CDS-1300,MUST NOT,"Rollback MUST NOT overwrite the evidence required to determine what changed and why (publication records, observations, verification results, decision log)."
+CDS1300-R044,CDS-1300,MUST+MAY,Project completion MUST include recorded acceptance by the named run-state owners (who MAY be the same people as the project team — §2).
+CDS1300-R045,CDS-1300,MUST,"Temporary migration scripts and credentials MUST be retired, governed, or incorporated into supported operations."
+CDS1300-R046,CDS-1300,MUST,Quality thresholds MUST be defined before acceptance testing begins.
+CDS1300-R047,CDS-1300,MUST+MAY,Quality and completeness denominators MUST include failed and quarantined records. A record MAY leave a denominator only through a disclosed `migration_disposition` (R009). Reporting completeness over a silently reduced population is non-conformant. *(This is the corpus's strongest anti-gaming control; see also CDS-1400 §6.)*
+CDS1300-R048,CDS-1300,MUST,"AI-generated migration values MUST carry the provenance CDS-700 requires (model/workflow version, evidence, confidence where available) and MUST pass the same schema and dictionary validation as any other input."
+CDS1300-R049,CDS-1300,MUST NOT+MUST,"AI MUST NOT silently resolve identifier conflicts, legal claims, safety attributes or other high-risk discrepancies; these MUST enter human review."
+CDS1300-R050,CDS-1300,SHOULD,"Human review samples SHOULD include both accepted and rejected proposals, to detect systematic error in either direction."
+CDS1300-R051,CDS-1300,MUST,"Training MUST cover authority, namespaces, dictionaries, publication states, verification and exception handling — and specifically **which channel-admin edits will be overwritten or treated as drift**."
+CDS1300-R052,CDS-1300,MUST,"Migration tooling MUST preserve tenant and organisation boundaries (no cross-organisation mixing of dictionary, publication or observation records)."
+CDS1300-R053,CDS-1300,MUST,"Migration credentials MUST follow least privilege, and read, write and approval credentials MUST be separated. *(Small-team profile: downgraded per Table 2-1 — combined credentials permitted with full attributable audit logging reviewed at wave exit.)*"
+CDS1300-R054,CDS-1300,MUST,Temporary extracts MUST have a retention and destruction decision; temporary credentials MUST be rotated or revoked after each phase.
+CDS1300-R055,CDS-1300,MUST,Acceptance thresholds MUST be approved before the migration wave executes.
+CDS1300-R056,CDS-1300,MUST NOT,"A wave MUST NOT exit merely because all jobs completed; quality, verification, SEO-continuity and operational gates also apply."
+CDS1300-R057,CDS-1300,MUST,"Operational readiness MUST be demonstrated by named operators completing representative workflows without project-team intervention, and the demonstration recorded. *(Small-team profile: intervention-free clause waived per Table 2-1.)*"
+CDS1300-R058,CDS-1300,MUST,Legacy formulas MUST be catalogued and tested before they are replaced by code or rules — hidden business rules must not be lost even where implementation details change.
+CDS1400-R001,CDS-1400,MUST,"A CDS operating model MUST monitor correctness, completeness, timeliness and downstream fidelity in addition to technical availability."
+CDS1400-R002,CDS-1400,MUST,"An organisation MUST define how product-data incidents are declared, owned, escalated, resolved and reviewed."
+CDS1400-R003,CDS-1400,MUST NOT+MUST,"Operational monitoring MUST use declared denominators and MUST NOT hide quarantined, failed or unobserved records (denominator rules: §6)."
+CDS1400-R004,CDS-1400,MUST NOT+MUST+MAY,"Every role, review and monitoring domain named in this chapter MUST have a named owner. One person MAY hold any number of roles simultaneously, including all incident-command roles. A conformance assessment MUST NOT require distinct individuals per role."
+CDS1400-R005,CDS-1400,SHOULD NOT+MUST,"Where staffing permits, the person coordinating an incident SHOULD NOT be the person performing the most complex repair, and the person who built a monitoring control or automation SHOULD NOT be its sole acceptor. Where one person must hold both hats, the incident or acceptance record MUST note the dual role and the compensating control applied (for example: checklist-driven self-review against th"
+CDS1400-R006,CDS-1400,MAY,An organisation MAY adopt the **small-team profile** by declaring it in its conformance claim (claim rules: CDS-1000). Under that profile the requirements listed in Table 2-1 apply at the downgraded level shown; **all other requirements apply unchanged**. Acceptance and evidence records are never waived — only the requirement for the people involved to be different individuals.
+CDS1400-R007,CDS-1400,MUST+SHOULD+MAY,"An organisation MAY declare the **enterprise operations profile** (an overlay profile under CDS-1000 §16). Under that profile: CDS1400-R016 (per-context service objectives) upgrades from SHOULD to MUST, and the minimum-roles column of Appendix B becomes applicable staffing guidance. Outside that profile the minimum-roles column is informative illustration only."
+CDS1400-R008,CDS-1400,MUST,Monitoring MUST distinguish data state from processing state. A completed job does not prove that the resulting data is correct.
+CDS1400-R009,CDS-1400,SHOULD,"Each material signal SHOULD be traceable to product, variant, field, channel, canonical revision and the relevant mapping or dictionary version."
+CDS1400-R010,CDS-1400,MUST NOT+MUST,"Where a downstream field cannot be observed, its verification state MUST be recorded as `UNOBSERVABLE` from the CDS-500 §17 enum. It MUST NOT be recorded or reported as `MATCH`. (Test executions that were never run use the CDS-1000 §21 outcome `NOT_TESTED`; verification statuses and test outcomes are distinct vocabularies.)"
+CDS1400-R011,CDS-1400,MUST+MAY,Every CDS operating profile MUST declare which monitoring domains are in scope and who owns each domain (one person MAY own all — §2).
+CDS1400-R012,CDS-1400,MUST,"A rate MUST name its numerator, denominator, eligibility rules, exclusions and measurement window."
+CDS1400-R013,CDS-1400,MUST+MAY,Quarantined or failed records MUST remain visible in relevant operational denominators unless the metric explicitly measures a different population. A record MAY leave a denominator only through a disclosed disposition. This applies the corpus's strongest anti-gaming control (CDS1300-R047; quarantine model: CDS-400 §17).
+CDS1400-R014,CDS-1400,MUST NOT+MUST,An organisation MUST NOT report a 100 percent match rate — or any match rate — over fields that were not observed. Observation coverage MUST be reported separately from verification match rate and MUST NOT be folded into it.
+CDS1400-R015,CDS-1400,MUST,"For every verified channel, the organisation MUST declare and monitor verification-health thresholds — at minimum: acceptable mismatch rate, acceptable missing rate, minimum observation coverage and maximum unresolved-mismatch age. These declared thresholds are the **base assurance mechanism** of this chapter. (Channel health aggregation: CDS-500 §23; migration exit thresholds: CDS-1300 §23.)"
+CDS1400-R016,CDS-1400,MUST+SHOULD,"Per-context service objectives (SLOs) with defined measurement windows SHOULD be defined over the reference indicators. Under the enterprise operations profile (R007) this requirement upgrades to MUST. Verification-health thresholds (R015) already deliver the core assurance; full SLO and error-budget apparatus is proportionate to multi-team operations, not a universal floor."
+CDS1400-R017,CDS-1400,MUST,"A breach of a declared threshold or a missed declared objective MUST trigger a review proportional to customer, commercial or compliance impact."
+CDS1400-R018,CDS-1400,MUST,"A composite health score MUST expose its component measures, weights and unavailable inputs."
+CDS1400-R019,CDS-1400,MUST NOT+MUST,"A green catalogue or channel score MUST NOT conceal a red condition on any field in the channel's **declared critical set**. The mechanism is CDS-500's: the organisation declares the critical field set per channel (CDS500-R013), and any critical-set field presenting RED caps the aggregate presentation at RED regardless of the numeric score (CDS500-R085). This chapter adds the operational obligatio"
+CDS1400-R020,CDS-1400,MUST NOT+MUST,Telemetry MUST preserve tenant boundaries and MUST NOT expose sensitive supplier or customer data to unauthorised monitoring users (isolation rules: CDS-800 §19).
+CDS1400-R021,CDS-1400,SHOULD,"Event types and reason codes SHOULD be versioned and governed as controlled reference data. Verification reason codes are drawn from the CDS_* registry (CDS-1100 §21; seed list CDS-500 Appendix B), not invented per dashboard."
+CDS1400-R022,CDS-1400,MUST,Every summary dashboard MUST support drill-down to affected populations or evidence references.
+CDS1400-R023,CDS-1400,MUST,Dashboard freshness and last-successful-update time MUST be visible on the dashboard itself.
+CDS1400-R024,CDS-1400,MUST NOT+MUST,"Colour MUST NOT be the only signal conveying state in any operational view; a text label, status or reason code MUST accompany colour, for accessibility and for diagnosis. Traffic-light colour semantics and the detailed-status accessibility rule for verification indicators are owned by CDS-500 §18 (CDS500-R069, CDS500-R072–R073); this requirement extends the same principle to every operational vie"
+CDS1400-R025,CDS-1400,MUST,Every production alert MUST have an accountable response owner and a documented first action. This is the normative floor for alert design.
+CDS1400-R026,CDS-1400,SHOULD,"Alerts SHOULD be deduplicated by condition, scope and time window to prevent notification storms."
+CDS1400-R027,CDS-1400,MUST+SHOULD,"An alert that repeatedly produces no action MUST be reviewed and SHOULD be redesigned, downgraded or retired. Alerting is self-limiting by design: an ignored alert is operational debt, not coverage."
+CDS1400-R028,CDS-1400,MUST,"Severity MUST be based on actual or credible impact, not only the number of affected records."
+CDS1400-R029,CDS-1400,MUST,"Security, safety, legal or tenant-isolation concerns MUST be allowed to raise severity even when the affected population is small."
+CDS1400-R030,CDS-1400,MUST+MAY,Severity MAY change as evidence improves; changes MUST be recorded with rationale.
+CDS1400-R031,CDS-1400,MUST+MAY,Every SEV-1 and SEV-2 incident MUST have a named incident commander. The commander MAY simultaneously hold any or all other incident roles (R004).
+CDS1400-R032,CDS-1400,SHOULD,"Where staffing permits, the person coordinating the incident SHOULD be distinct from the person performing the most complex repair; the sole-operator case is governed by R005 (dual role noted, compensating control recorded)."
+CDS1400-R033,CDS-1400,MUST+MAY,"Decision authority, escalation contacts and coverage hours MUST be declared per severity and incident class before an incident occurs. Declared after-hours coverage MAY be next-business-day for any incident class **except security and tenant-isolation classes, which MUST have a declared immediate escalation path at all times**."
+CDS1400-R034,CDS-1400,MUST,"An incident record MUST contain a declared start time, current severity, affected scope, owner and known evidence."
+CDS1400-R035,CDS-1400,MUST,"Triage MUST distinguish symptom, impact and suspected cause."
+CDS1400-R036,CDS-1400,MUST,"If continued automation can increase impact, the relevant automation MUST be paused or constrained (using the R040 mechanisms) until safe operation is demonstrated."
+CDS1400-R037,CDS-1400,MUST,Containment MUST prioritise prevention of additional incorrect propagation over speed of full repair.
+CDS1400-R038,CDS-1400,MUST,"Repair actions MUST identify whether they change canonical values, expected channel state, downstream channel state or verification records."
+CDS1400-R039,CDS-1400,MUST,"A bulk repair MUST support preview, bounded scope, evidence capture and post-repair verification."
+CDS1400-R040,CDS-1400,MUST,"For each automated pipeline stage operated in production — ingestion, enrichment, publication, automated repair and AI workflows — a mechanism to pause or constrain that stage MUST exist and be operable **before** the automation runs in production. Containment capability is a system requirement, not an improvisation during the first incident. *(Promotes the capability that v0.1 assumed implicitly "
+CDS1400-R041,CDS-1400,MUST NOT+MUST,"Repair policy MUST be selected from the diagnosed drift cause. **Republishing MUST NOT be assumed to be the correct repair**: republishing over an unauthorised external edit destroys the evidence of who changed what; republishing ""fixes"" a channel normalisation only until the next publish; republishing cannot repair a canonical defect, an observation defect or a transformation defect at all."
+CDS1400-R042,CDS-1400,MAY,"Automatic repair MAY be used only for explicitly authorised, deterministic and bounded drift conditions, within PIM-owned fields (CDS500-R078)."
+CDS1400-R043,CDS-1400,MUST,A repair MUST be followed by observation and verification before the incident or defect is closed (CDS500-R080).
+CDS1400-R044,CDS-1400,SHOULD,"Critical mappings, dictionaries, taxonomies and transformations SHOULD have a known rollback mechanism. Channel-side rollback is republication of known-good state through the governed publication path, not restoration of channel-internal state (definition and irreversibility classes: CDS-1300 §17)."
+CDS1400-R045,CDS-1400,MUST,Replay MUST be idempotent or otherwise protected against duplicate or destructive effects.
+CDS1400-R046,CDS-1400,MUST NOT+MUST,An incident MUST NOT be declared recovered solely because processing resumed; affected data MUST meet the defined verification exit criteria (declared thresholds per R015).
+CDS1400-R047,CDS-1400,MUST,Communication MUST distinguish confirmed facts from hypotheses.
+CDS1400-R048,CDS-1400,MUST,"External notification decisions MUST follow legal, contractual, security and channel obligations."
+CDS1400-R049,CDS-1400,MUST NOT,Sensitive evidence MUST NOT be copied into broad communication channels when a controlled reference is sufficient.
+CDS1400-R050,CDS-1400,MUST+SHOULD,"Every SEV-1 incident MUST receive a documented post-incident review (template: Appendix D.1). Every SEV-2 incident SHOULD receive at least a lightweight review (template: Appendix D.2). *(v0.1 mandated full PIRs for all SEV-2 incidents; under this chapter's SEV-2 definition that produces review-writing as a standing tax at small scale and reviews nobody reads at large scale. The SHOULD, with a tem"
+CDS1400-R051,CDS-1400,MUST,"The review MUST identify contributing conditions and control gaps, not merely the final triggering action."
+CDS1400-R052,CDS-1400,MUST,Corrective actions arising from a review MUST have named owners and tracked completion evidence.
+CDS1400-R053,CDS-1400,MUST,A SEV-1 review MUST include at least one participant who was not the primary incident responder. *(Small-team profile: waived per Table 2-1 with sole-operator note and archived evidence.)*
+CDS1400-R054,CDS-1400,SHOULD,Recurring incidents SHOULD be linked to a problem record with an accountable owner and a long-term remediation plan.
+CDS1400-R055,CDS-1400,MUST,"A temporary workaround MUST have an expiry date, review date or retirement condition recorded at the time the workaround is adopted."
+CDS1400-R056,CDS-1400,MUST,"Known operational debt MUST remain visible in operational reporting until it is accepted, remediated or explicitly retired."
+CDS1400-R057,CDS-1400,MUST,Material changes MUST be identifiable in operational telemetry (a change identifier linkable to affected events and records).
+CDS1400-R058,CDS-1400,SHOULD,"Dictionary, taxonomy, mapping and AI changes SHOULD receive the same regression discipline as code changes."
+CDS1400-R059,CDS-1400,MUST NOT,"A change MUST NOT be considered successful until its downstream effects have been observed and compared against the pre-change baseline within the declared observation window, with results inside the declared thresholds (R015)."
+CDS1400-R060,CDS-1400,SHOULD,"Improvement work SHOULD be prioritised using impact, recurrence, risk and effort rather than anecdote alone."
+CDS1400-R061,CDS-1400,SHOULD,Completed improvements SHOULD be measured against the outcome they were intended to change.
+CDS1400-R062,CDS-1400,MUST+SHOULD+MAY,"AI monitoring segmentation MUST scale with the declared autonomy level of each workflow, exactly as defined by CDS700-R081: segmented monitoring distinguishing AI-originated from human-originated values is MUST for A3/A4 workflows, SHOULD for A2, and MAY be limited to volume and sampled quality checks for A1. This chapter supplies the mechanics; CDS-700 owns the scaling rule."
+CDS1400-R063,CDS-1400,MUST,"AI quality MUST be measured against reviewed outcomes, not the model confidence value alone."
+CDS1400-R064,CDS-1400,MUST,"A material decline in quality or an increase in prohibited output MUST trigger containment proportional to the workflow's autonomy level (CDS-700), using the pause/constrain mechanisms required by R040."
+CDS1400-R065,CDS-1400,MUST,"Facet cardinality and zero-result **construction** (facet values whose product set is empty by construction) MUST be monitored. These are the minimum customer-experience signals: they are computable PIM-side from governed dictionaries, facet projections and product data, on every channel, with no storefront telemetry required (facet rules: CDS-600)."
+CDS1400-R066,CDS-1400,MUST,"Interaction-derived signals — search failure rates, zero-result filter *interactions*, navigation abandonment — are **conditionally observable**. Each channel profile MUST declare whether interaction telemetry is available; where it is not, customer-experience health MUST be reported as a declared monitoring gap for those signals, never assumed healthy."
+CDS1400-R067,CDS-1400,SHOULD+MAY,"Where interaction telemetry is available, it SHOULD be monitored. Interaction-metric monitoring is otherwise profile-optional and MAY be bound to the customer-experience overlay profile (CDS-1000)."
+CDS1400-R068,CDS-1400,MUST,Monitoring data MUST follow the same tenant-isolation and access-control principles as product data (CDS-800 §19).
+CDS1400-R069,CDS-1400,MUST NOT,"Secrets, authentication tokens and sensitive personal data MUST NOT be intentionally recorded in general operational telemetry."
+CDS1400-R070,CDS-1400,MUST,Incident evidence retention MUST be governed and documented.
+CDS1400-R071,CDS-1400,MUST,"The operating model MUST include, at minimum: **(a)** one recurring operational review, at a declared cadence, with recorded outcomes and tracked actions; and **(b)** a defined post-incident review path (§19). *(v0.1 mandated five governed review forums; that is enterprise practice, not a conformance floor. One honest recurring review that produces decisions beats five that produce minutes.)*"
+CDS1400-R072,CDS-1400,SHOULD,"A recurring review that repeatedly produces no decisions, ownership or follow-up SHOULD be redesigned or retired — the same self-limiting rule that governs alerts (R027). Reviews are for decisions, not attendance."
+CDS1500-R001,CDS-1500,MUST,"An implementation claiming the Apparel Profile MUST distinguish product identity, sellable variants, canonical attributes, display labels, customer facets and channel representations, per the value-layer model of CDS-400 and CDS-100 §3."
+CDS1500-R002,CDS-1500,MUST,"An implementation claiming the Homewares Profile MUST store dimensions, capacity and other measurable specifications as typed values with declared units rather than uncontrolled text."
+CDS1500-R003,CDS-1500,MUST NOT+MUST,An industry profile MUST NOT force every possible attribute onto every product. Requiredness MUST be defined per product family and category profile.
+CDS1500-R004,CDS-1500,MUST+MAY,"A retailer MAY extend the baseline dictionaries, but MUST preserve stable identifiers, aliases, mappings and deprecation history (change control per CDS-400 and CDS-800)."
+CDS1500-R005,CDS-1500,MUST,Every profile MUST identify which attributes are inherited common attributes and which are category-specific.
+CDS1500-R006,CDS-1500,MUST,A category profile MUST declare a requirement level (§4) for each attribute it governs.
+CDS1500-R007,CDS-1500,MUST,Attributes that create distinct sellable units MUST be modelled at variant scope; descriptive attributes MUST remain at product scope unless values genuinely differ by variant (variant boundary rule: CDS-200 §5).
+CDS1500-R008,CDS-1500,SHOULD,"A single product fact SHOULD be entered canonically once and reused across display, search, facets, collections and channel mappings."
+CDS1500-R009,CDS-1500,MUST,"Requiredness MUST be evaluated against the product family and category profile, not against a universal flat field list."
+CDS1500-R010,CDS-1500,MUST NOT,A value of unknown or not-supplied MUST NOT be fabricated to satisfy requiredness (quarantine per CDS-400 §17; abstention per CDS-700).
+CDS1500-R011,CDS-1500,MAY,"Where a requirement level applies to a dictionary-bound field, the requirement binds to **a governed dictionary conforming to CDS-400** (stable value_ids, lifecycle, provenance). The seed baselines in Appendices C–D and the companion CSV package are **informative starter data**: an organisation MAY adopt them verbatim as the initial content of its governed dictionaries, at which point they become "
+CDS1500-R012,CDS-1500,SHOULD,Size and sellable colour SHOULD be variant attributes when they identify distinct sellable units.
+CDS1500-R013,CDS-1500,MUST,"Where colour is variant-defining, the variant field MUST store the canonical value_id (e.g. `VAR_colour = colour_french_navy`); the product-scope display label and facet value are projections derived from the variants' canonical values, never independently authored parallel facts. *(Per ADR-D4; resolves CDS-1500-6.)*"
+CDS1500-R014,CDS-1500,MUST,"Display colour, canonical colour and facet colour MUST remain related but distinct values where the richer display name differs from the broad customer filter (layer model: CDS-400; retained from v0.1)."
+CDS1500-R015,CDS-1500,SHOULD NOT+MUST+MAY,"A product SHOULD NOT be split into separate products solely to obtain separate product pages. An organisational profile MAY declare a variants-as-products merchandising model, in which case it MUST preserve family relationships between the split products. *(Informative note: variants-as-products was deliberate legacy production architecture — a supported declared pattern, not an anti-pattern; see "
+CDS1500-R016,CDS-1500,MUST+MAY,"Profile attributes MAY be inherited from a parent family, but category-specific requirements MUST remain explicit in the category profile."
+CDS1500-R017,CDS-1500,MUST,"The customer colour facet MUST use a deliberately limited colour-family dictionary governed under CDS-400, not the full set of source or display values. (Seed baseline: Appendix C.)"
+CDS1500-R018,CDS-1500,SHOULD,"The canonical shade SHOULD remain more specific than the facet, because content, search, swatches and channel mappings need the specificity the facet deliberately discards."
+CDS1500-R019,CDS-1500,MAY,"A canonical shade MAY belong to more than one colour facet only where its governed dictionary entry declares an **ordered facet list, primary first** (e.g. teal → `green|blue`), per the facet-order rule as resolved in CDS-400 (D28). Facet membership is declared in the dictionary, never decided per product."
+CDS1500-R020,CDS-1500,MUST+MAY,"Facet membership MUST be deterministic at dictionary level. Shade names whose real-world appearance spans facet families MUST be split into distinct canonical shades, one per facet, with intake resolved through alias mappings (which MAY be supplier- or locale-scoped per ADR-D4). The seed baseline applies this split: **charcoal_grey** (facet grey) vs **charcoal_black** (facet black); **rust_orange*"
+CDS1500-R021,CDS-1500,MAY,"A product-level facet override (assigning a product a facet other than its canonical shade's dictionary mapping) MAY exist only as a governed override record with provenance, owner and reason, per the override model of CDS-500 §21. It never silently edits the dictionary mapping."
+CDS1500-R022,CDS-1500,MUST NOT+MAY,"A multi-colour product MUST NOT be assigned to every colour present in a complex print. The canonical layer records the dominant and/or component shades; **multicolour is a facet/status value only, never a canonical shade** (ADR-D4; resolves CDS-1500-4). An organisational profile MAY define a dominant-colour extraction rule for prints."
+CDS1500-R023,CDS-1500,MUST+SHOULD,Composition percentages MUST be numeric values associated with canonical material identifiers and SHOULD total 100 percent per component.
+CDS1500-R024,CDS-1500,MUST NOT,Fabric type MUST NOT replace fibre composition.
+CDS1500-R025,CDS-1500,MUST,"Marketing claims such as organic, recycled or certified MUST be stored separately from the underlying material identity (fields: §11) and MUST require supporting evidence. Consequences for facets *(resolves CDS-1500-2)*: - A **""Recycled"" customer facet is claim-driven**: it derives from `MF_recycled_content_percent` (and its evidence), never from a material family. `recycled_polyester` remains a c"
+CDS1500-R026,CDS-1500,MUST NOT,A size conversion MUST NOT be presented as exact unless a brand- or product-specific size chart supports it. *(Preserved — ADR-1500-007: no universal exact size conversion.)*
+CDS1500-R027,CDS-1500,MUST,Size labels MUST be sortable independently of alphabetical order (sort keys or an equivalent declared mechanism).
+CDS1500-R028,CDS-1500,MUST NOT,Fit describes intended silhouette relative to the size specification; it MUST NOT be used as a substitute for size.
+CDS1500-R029,CDS-1500,SHOULD+MAY,Style and occasion MAY be multi-value attributes but SHOULD enforce a declared maximum value count per product to prevent indiscriminate tagging.
+CDS1500-R030,CDS-1500,MUST NOT,Season relevance MUST NOT be conflated with a collection campaign or product lifecycle status.
+CDS1500-R031,CDS-1500,MUST NOT+MUST,Claims MUST remain distinct from descriptive attributes and MUST NOT be inferred from supplier marketing language without evidence (evidence classes: CDS-700 §7).
+CDS1500-R032,CDS-1500,MUST,The profile MUST support withdrawal or expiry of a claim without changing the canonical material identity.
+CDS1500-R033,CDS-1500,MUST NOT+MUST,Footwear size systems MUST be identified explicitly and MUST NOT be merged into a single unqualified number.
+CDS1500-R034,CDS-1500,MUST,"Dimensions, weight, capacity, power and other measures MUST be typed values with declared units."
+CDS1500-R035,CDS-1500,MUST,Material and finish MUST be separate attributes wherever the same material may appear in multiple finishes.
+CDS1500-R036,CDS-1500,MUST NOT,Room and style are merchandising attributes and MUST NOT replace functional product classification (CDS-200 §6).
+CDS1500-R037,CDS-1500,MUST NOT,A material-family facet MUST NOT erase the specific canonical material used for product display and channel mapping.
+CDS1500-R038,CDS-1500,SHOULD,"Component materials SHOULD identify the component wherever customer understanding, care, compliance or value depends on it."
+CDS1500-R039,CDS-1500,MUST,Canonical unit storage MUST be deterministic and conversion-safe.
+CDS1500-R040,CDS-1500,MUST NOT,Display conversions MUST NOT overwrite canonical values.
+CDS1500-R041,CDS-1500,MUST,A range used in filtering or comparison MUST store lower and upper bounds rather than a single text string.
+CDS1500-R042,CDS-1500,SHOULD+MAY,"Room MAY be multi-value, but every-room assignment SHOULD be prevented by a declared maximum room count per product."
+CDS1500-R043,CDS-1500,MUST NOT+SHOULD,Style SHOULD be curated from a limited organisational vocabulary and MUST NOT be inferred solely from colour.
+CDS1500-R044,CDS-1500,SHOULD,A store SHOULD expose one consistent colour-family filter vocabulary across apparel and homewares unless a documented usability finding supports divergence.
+CDS1500-R045,CDS-1500,MUST,"Transparent, metallic, natural and multi-colour appearances MUST be handled explicitly (as facet values or declared extensions, Appendix C) rather than forced into arbitrary hue families."
+CDS1500-R046,CDS-1500,MUST+MAY,"Wood species, stone type and metal finish MUST remain material or finish values; a canonical material MAY additionally map to a visual colour family where the product appearance warrants it (declared in the dictionary, per-product only via the R021 override)."
+CDS1500-R047,CDS-1500,MUST+MAY,"An organisation MAY add categories, attributes, values and aliases but MUST assign stable identifiers and owners (CDS-800)."
+CDS1500-R048,CDS-1500,SHOULD,A new colour shade SHOULD map to an existing colour facet; a new top-level family requires the evidence in R049.
+CDS1500-R049,CDS-1500,MUST,"A proposed new facet value MUST include evidence that it is distinct, understandable and sufficiently populated against declared thresholds in the organisation's facet governance record."
+CDS1500-R050,CDS-1500,MUST,Deprecated values MUST retain aliases and replacement mappings for migration and historical interpretation.
+CDS1500-R051,CDS-1500,SHOULD,"Industry-profile changes SHOULD be impact-assessed against storefront UX, supplier imports, channel mappings, saved filters, analytics and verification rules before adoption."
+CDS1500-R052,CDS-1500,MUST,"An implementation claiming the CDS Apparel Profile MUST: maintain product and variant scope correctly for size and sellable colour (R007, R012–R013); separate display shade, canonical shade and colour facet (R014); represent fibre composition separately from fabric type and claims (R023–R025); identify size system and deterministic size ordering (R026–R027); apply category-specific attribute requi"
+CDS1500-R053,CDS-1500,MUST,"An implementation claiming the CDS Homewares Profile MUST: store measurable specifications as typed values with units (R034, R039–R041); separate material, component material and finish (R035, R037–R038); apply category-specific requirements for dimensions, capacity, set contents and compatibility (R009); use governed room, style, shape and finish dictionaries where those facets are exposed (R011)"

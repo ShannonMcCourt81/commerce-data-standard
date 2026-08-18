@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:cds:schema:channel:field-mapping",
+  "version": "0.2.0",
+  "title": "CDS Channel Field Mapping",
+  "$comment": "Standalone field-mapping contract promised by CDS-1100 Appendix A (CDS1100-4, R040).",
+  "type": "object",
+  "properties": {
+    "source_field": {
+      "type": "string",
+      "minLength": 1
+    },
+    "target_field": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_layer": {
+      "type": "string",
+      "enum": [
+        "canonical",
+        "display",
+        "facet",
+        "search"
+      ],
+      "$comment": "Which value-layer projection feeds the channel (ADR-D4)."
+    },
+    "transformation": {
+      "type": "string",
+      "minLength": 1
+    },
+    "transformation_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "write_mode": {
+      "type": "string",
+      "enum": [
+        "replace",
+        "merge",
+        "append"
+      ]
+    },
+    "read_back_path": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "$comment": "Channel read path used for observation; null when the target is not readable."
+    },
+    "comparison_strategy": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "required": [
+    "source_field",
+    "target_field",
+    "source_layer",
+    "transformation",
+    "transformation_version",
+    "write_mode",
+    "read_back_path",
+    "comparison_strategy"
+  ],
+  "additionalProperties": false
+}

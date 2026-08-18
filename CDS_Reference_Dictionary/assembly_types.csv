@@ -1,0 +1,4 @@
+dictionary_key,row_type,value_id,label,maps_to,aliases,facet_ids,status,provenance,version,locale
+assembly_type,canonical,flat_pack,Flat Pack,,ready to assemble;RTA;self-assembly;assembly required;knock-down,,active,seed,0.5.0,en-GB
+assembly_type,canonical,partially_assembled,Partially Assembled,,part assembled;semi-assembled;minor assembly,,active,seed,0.5.0,en-GB
+assembly_type,canonical,fully_assembled,Fully Assembled,,no assembly required;pre-assembled;fully built,,active,seed,0.5.0,en-GB

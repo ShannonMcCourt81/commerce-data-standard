@@ -1,0 +1,4 @@
+dictionary_key,row_type,value_id,label,maps_to,aliases,facet_ids,definition,status,provenance,version,locale
+wetsuit_seam,canonical,flatlock,Flatlock,,flatlock stitched,,Flat stitched seams - comfortable but lets water through; warm-water suits,active,seed,0.7.0,en-GB
+wetsuit_seam,canonical,sealed,Sealed,,glued and blindstitched;GBS,,Glued and blind-stitched seams - minimal water entry; temperate suits,active,seed,0.7.0,en-GB
+wetsuit_seam,canonical,sealed_taped,Sealed & Taped,,taped seams;liquid taped;welded,,Glued blind-stitched and internally taped seams - cold-water suits,active,seed,0.7.0,en-GB

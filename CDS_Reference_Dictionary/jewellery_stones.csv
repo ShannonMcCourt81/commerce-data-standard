@@ -1,0 +1,25 @@
+dictionary_key,row_type,value_id,label,maps_to,aliases,facet_ids,status,provenance,version,locale
+jewellery_stone,canonical,diamond,Diamond,,,,active,seed,0.1.0,en-GB
+jewellery_stone,canonical,sapphire,Sapphire,,,,active,seed,0.1.0,en-GB
+jewellery_stone,canonical,ruby,Ruby,,,,active,seed,0.1.0,en-GB
+jewellery_stone,canonical,emerald,Emerald,,,,active,seed,0.1.0,en-GB
+jewellery_stone,canonical,pearl,Pearl,,,,active,seed,0.1.0,en-GB
+jewellery_stone,canonical,freshwater_pearl,Freshwater Pearl,,cultured pearl,,active,seed,0.1.0,en-GB
+jewellery_stone,canonical,opal,Opal,,,,active,seed,0.1.0,en-GB
+jewellery_stone,canonical,amethyst,Amethyst,,,,active,seed,0.1.0,en-GB
+jewellery_stone,canonical,topaz,Topaz,,,,active,seed,0.1.0,en-GB
+jewellery_stone,canonical,garnet,Garnet,,,,active,seed,0.1.0,en-GB
+jewellery_stone,canonical,turquoise,Turquoise,,,,active,seed,0.1.0,en-GB
+jewellery_stone,canonical,onyx,Onyx,,black onyx,,active,seed,0.1.0,en-GB
+jewellery_stone,canonical,cubic_zirconia,Cubic Zirconia,,cz;zirconia,,active,seed,0.1.0,en-GB
+jewellery_stone,canonical,crystal,Crystal,,rhinestone;glass crystal,,active,seed,0.1.0,en-GB
+jewellery_stone,canonical,moonstone,Moonstone,,,,active,seed,0.5.0,en-GB
+jewellery_stone,canonical,labradorite,Labradorite,,,,active,seed,0.5.0,en-GB
+jewellery_stone,canonical,citrine,Citrine,,,,active,seed,0.5.0,en-GB
+jewellery_stone,canonical,peridot,Peridot,,,,active,seed,0.5.0,en-GB
+jewellery_stone,canonical,aquamarine,Aquamarine,,,,active,seed,0.5.0,en-GB
+jewellery_stone,canonical,jade,Jade,,jadeite;nephrite,,active,seed,0.5.0,en-GB
+jewellery_stone,canonical,lapis_lazuli,Lapis Lazuli,,lapis,,active,seed,0.5.0,en-GB
+jewellery_stone,canonical,morganite,Morganite,,,,active,seed,0.5.0,en-GB
+jewellery_stone,canonical,rose_quartz,Rose Quartz,,,,active,seed,0.5.0,en-GB
+jewellery_stone,canonical,lab_grown_diamond,Lab-grown Diamond,,lab created diamond;lab diamond;created diamond,,active,seed,0.5.0,en-GB

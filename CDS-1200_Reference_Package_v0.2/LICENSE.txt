@@ -1,0 +1,19 @@
+CDS Reference Package — Licence Declaration (resolved [OPEN-D27], owner decision 2026-08-04)
+
+This package is licensed under a dual scheme, following prevailing open-standard
+practice (OpenAPI, AsyncAPI, CloudEvents, schema.org software — see
+REVIEW-006A research, accessed 2026-08-04):
+
+1. Machine-readable artifacts — schemas/, fixtures/, tests/, tools/, manifests:
+   SPDX-License-Identifier: Apache-2.0
+   (Apache License, Version 2.0 — includes an express patent grant for adopters.)
+
+2. Specification prose — the CDS chapter documents this package accompanies:
+   SPDX-License-Identifier: CC-BY-4.0
+   (Creative Commons Attribution 4.0 International.)
+
+Copyright (c) 2026 the CDS project owner.
+
+The full licence texts are included as LICENSE-CODE.md (Apache-2.0) and
+LICENSE-SPEC.md (CC-BY-4.0). Source files under tools/ carry Apache-2.0 SPDX
+identifiers.

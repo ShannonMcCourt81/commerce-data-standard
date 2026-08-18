@@ -1,0 +1,41 @@
+{
+  "cds_schema": "urn:cds:schema:automation:ai-proposal",
+  "cds_version": "0.2",
+  "document_type": "ai_proposal",
+  "document_id": "aiprop_colour_001",
+  "revision": 1,
+  "status": "draft",
+  "tenant_id": "org_reference",
+  "created_at": "2026-08-03T00:00:00Z",
+  "updated_at": "2026-08-03T00:00:00Z",
+  "source_system": "cds-reference-package",
+  "proposal_id": "aiprop_colour_001",
+  "target_document_id": "var_shirt_100_navy_m",
+  "target_field": "MF_colour",
+  "proposed_value": {
+    "dictionary_value_id": "colour_navy"
+  },
+  "confidence": 0.97,
+  "evidence": [
+    {
+      "source_type": "supplier_text",
+      "source_reference": "supplier-row-482",
+      "excerpt": "Colour: French Navy"
+    }
+  ],
+  "model_id": "example-extractor-1",
+  "workflow_version": "colour-map-0.2.0",
+  "review_state": "proposed",
+  "task_type": "mapping",
+  "reviewer": null,
+  "accepted_revision": null,
+  "validation_results": [
+    {
+      "document_id": "var_shirt_100_navy_m",
+      "field_path": "/MF_colour",
+      "reason_code": "CDS_VALUE_DIFFERS",
+      "severity": "info",
+      "message": "Proposed value differs from currently stored value (expected for a new proposal)."
+    }
+  ]
+}

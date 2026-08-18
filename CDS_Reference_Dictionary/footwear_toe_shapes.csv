@@ -1,0 +1,7 @@
+dictionary_key,row_type,value_id,label,maps_to,aliases,facet_ids,status,provenance,version,locale
+footwear_toe_shape,canonical,round,Round,,rounded toe,,active,seed,0.1.0,en-GB
+footwear_toe_shape,canonical,almond,Almond,,almond toe,,active,seed,0.1.0,en-GB
+footwear_toe_shape,canonical,pointed,Pointed,,pointy;point toe,,active,seed,0.1.0,en-GB
+footwear_toe_shape,canonical,square,Square,,square toe,,active,seed,0.1.0,en-GB
+footwear_toe_shape,canonical,open,Open,,open toe,,active,seed,0.1.0,en-GB
+footwear_toe_shape,canonical,peep,Peep,,peep toe,,active,seed,0.1.0,en-GB

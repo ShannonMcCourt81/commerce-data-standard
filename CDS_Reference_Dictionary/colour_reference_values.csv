@@ -1,0 +1,43 @@
+dictionary_key,row_type,value_id,label,maps_to,aliases,facet_ids,status,provenance,version,locale
+colour,canonical,navy,Navy,,navy blue;dark blue,blue,active,seed,0.2.0,en-GB
+colour,canonical,french_navy,French Navy,,french navy;dark navy,blue,active,seed,0.2.0,en-GB
+colour,canonical,royal_blue,Royal Blue,,cobalt blue;bright blue,blue,active,seed,0.2.0,en-GB
+colour,canonical,sky_blue,Sky Blue,,light_blue;light blue;powder blue,blue,active,seed,0.2.0,en-GB
+colour,canonical,denim_blue,Denim Blue,,washed blue;mid blue,blue,active,seed,0.2.0,en-GB
+colour,canonical,sage_green,Sage,,sage green;muted green,green,active,seed,0.2.0,en-GB
+colour,canonical,olive_green,Olive,,olive green;army green,green,active,seed,0.2.0,en-GB
+colour,canonical,teal,Teal,,blue green;petrol,green|blue,active,seed,0.2.0,en-GB
+colour,canonical,burgundy,Burgundy,,wine;oxblood;deep red,red,active,seed,0.2.0,en-GB
+colour,canonical,blush_pink,Blush,,pale pink;soft pink,pink,active,seed,0.2.0,en-GB
+colour,canonical,lilac,Lilac,,lavender;light purple,purple,active,seed,0.2.0,en-GB
+colour,canonical,ecru,Ecru,,off white;natural cream,cream,active,seed,0.2.0,en-GB
+colour,canonical,oatmeal,Oatmeal,,natural beige;warm neutral,beige,active,seed,0.2.0,en-GB
+colour,canonical,charcoal_grey,Charcoal Grey,,dark grey;graphite,grey,active,seed,0.2.0,en-GB
+colour,canonical,charcoal_black,Charcoal Black,,near black;off black,black,active,seed,0.2.0,en-GB
+colour,canonical,tan_beige,Tan Beige,,camel;light tan,beige,active,seed,0.2.0,en-GB
+colour,canonical,tan_brown,Tan Brown,,light brown;caramel,brown,active,seed,0.2.0,en-GB
+colour,canonical,rust_orange,Rust Orange,,burnt orange;terracotta,orange,active,seed,0.2.0,en-GB
+colour,canonical,rust_brown,Rust Brown,,russet;auburn,brown,active,seed,0.2.0,en-GB
+colour,canonical,rose_gold,Rose Gold,,pink gold;metallic blush,gold|pink,active,seed,0.2.0,en-GB
+colour,canonical,clear,Clear,,transparent;colourless,clear,active,seed,0.2.0,en-GB
+colour,alias,sage,Sage,sage_green,,,active,seed,0.2.0,en-GB
+colour,alias,olive,Olive,olive_green,,,active,seed,0.2.0,en-GB
+colour,alias,blush,Blush,blush_pink,,,active,seed,0.2.0,en-GB
+colour,alias,charcoal,Charcoal,charcoal_grey,,,active,seed,0.2.0,en-GB
+colour,alias,tan,Tan,tan_beige,,,active,seed,0.2.0,en-GB
+colour,alias,rust,Rust,rust_orange,,,active,seed,0.2.0,en-GB
+colour,canonical,mustard,Mustard,,mustard yellow;ochre,yellow,active,seed,0.5.0,en-GB
+colour,canonical,khaki,Khaki,,khaki green,green|beige,active,seed,0.5.0,en-GB
+colour,canonical,coral,Coral,,coral pink;salmon,orange|pink,active,seed,0.5.0,en-GB
+colour,canonical,mint,Mint,,mint green;pistachio,green,active,seed,0.5.0,en-GB
+colour,canonical,emerald,Emerald,,emerald green;jewel green,green,active,seed,0.5.0,en-GB
+colour,canonical,ivory,Ivory,,ivory white,cream,active,seed,0.5.0,en-GB
+colour,canonical,stone,Stone,,putty;light stone,beige|grey,active,seed,0.5.0,en-GB
+colour,canonical,mauve,Mauve,,dusty purple,purple|pink,active,seed,0.5.0,en-GB
+colour,canonical,fuchsia,Fuchsia,,hot pink;magenta,pink,active,seed,0.5.0,en-GB
+colour,canonical,turquoise,Turquoise,,aqua;aquamarine,blue|green,active,seed,0.5.0,en-GB
+colour,canonical,chocolate_brown,Chocolate Brown,,dark brown,brown,active,seed,0.5.0,en-GB
+colour,canonical,forest_green,Forest Green,,dark green;bottle green,green,active,seed,0.5.0,en-GB
+colour,canonical,lemon,Lemon,,lemon yellow;pale yellow,yellow,active,seed,0.5.0,en-GB
+colour,canonical,plum,Plum,,aubergine;deep purple,purple,active,seed,0.5.0,en-GB
+colour,alias,chocolate,Chocolate,chocolate_brown,,,active,seed,0.5.0,en-GB

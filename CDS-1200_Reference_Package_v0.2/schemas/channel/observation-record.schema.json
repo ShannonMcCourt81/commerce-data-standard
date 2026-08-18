@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:cds:schema:channel:observation-record",
+  "version": "0.2.0",
+  "title": "CDS Observation Record",
+  "allOf": [
+    {
+      "$ref": "urn:cds:schema:common:envelope"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "document_type": {
+          "const": "observation_record"
+        },
+        "observation_id": {
+          "type": "string",
+          "minLength": 3
+        },
+        "publication_id": {
+          "type": "string",
+          "minLength": 3
+        },
+        "product_id": {
+          "type": "string",
+          "minLength": 3
+        },
+        "channel_profile_id": {
+          "type": "string",
+          "minLength": 3
+        },
+        "observed_at": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[+-]\\d{2}:\\d{2})$"
+        },
+        "coverage": {
+          "type": "object",
+          "properties": {
+            "supported": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "pattern": "^(/([^/~]|~[01])*)*$"
+              }
+            },
+            "unobservable": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "pattern": "^(/([^/~]|~[01])*)*$"
+              }
+            }
+          },
+          "required": [
+            "supported",
+            "unobservable"
+          ],
+          "additionalProperties": false,
+          "$comment": "Per-field coverage replacing the v0.1 bare enum: distinguishes missing data from unobservable fields (CDS1100-2, CDS-500 §15)."
+        },
+        "observed_state": {
+          "type": "object"
+        },
+        "channel_revision": {
+          "type": [
+            "string",
+            "integer",
+            "null"
+          ]
+        },
+        "observation_method": {
+          "type": "string",
+          "enum": [
+            "api_read",
+            "feed_diagnostic",
+            "scrape",
+            "manual"
+          ]
+        },
+        "channel_entity_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "$comment": "Channel-native identifier of the observed entity."
+        }
+      },
+      "required": [
+        "observation_id",
+        "publication_id",
+        "product_id",
+        "channel_profile_id",
+        "observed_at",
+        "coverage",
+        "observed_state",
+        "channel_revision",
+        "observation_method"
+      ]
+    }
+  ],
+  "unevaluatedProperties": false
+}

@@ -1,0 +1,53 @@
+{
+  "cds_schema": "urn:cds:schema:channel:channel-profile",
+  "cds_version": "0.2",
+  "document_type": "channel_profile",
+  "document_id": "profile_shopify_2026q3",
+  "revision": 1,
+  "status": "active",
+  "tenant_id": "org_reference",
+  "created_at": "2026-08-03T00:00:00Z",
+  "updated_at": "2026-08-03T00:00:00Z",
+  "source_system": "cds-reference-package",
+  "channel_profile_id": "profile_shopify_2026q3",
+  "channel": "shopify",
+  "profile_version": "2026-Q3",
+  "capabilities": {
+    "supports_readback": true,
+    "supports_partial_update": true,
+    "supports_variant_attributes": true,
+    "supports_structured_metafields": true
+  },
+  "field_mappings": [
+    {
+      "source_field": "content.title[en-AU]",
+      "target_field": "product.title",
+      "source_layer": "canonical",
+      "transformation": "identity",
+      "transformation_version": "1.0.0",
+      "write_mode": "replace",
+      "read_back_path": "/title",
+      "comparison_strategy": "normalised_text"
+    },
+    {
+      "source_field": "variant.option_values[colour].display",
+      "target_field": "variant.option.colour",
+      "source_layer": "display",
+      "transformation": "identity",
+      "transformation_version": "1.0.0",
+      "write_mode": "replace",
+      "read_back_path": "/variants/option_colour",
+      "comparison_strategy": "normalised_text"
+    },
+    {
+      "source_field": "MF_material",
+      "target_field": "metafield.custom.material",
+      "source_layer": "canonical",
+      "transformation": "dictionary_labels",
+      "transformation_version": "1.1.0",
+      "write_mode": "replace",
+      "read_back_path": "/metafields/custom.material",
+      "comparison_strategy": "unordered_text_set"
+    }
+  ]
+}

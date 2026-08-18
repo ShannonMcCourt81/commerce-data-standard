@@ -1,0 +1,61 @@
+{
+  "cds_schema": "urn:cds:schema:channel:verification-result",
+  "cds_version": "0.2",
+  "document_type": "verification_result",
+  "document_id": "ver_shopify_shirt_100_001",
+  "revision": 1,
+  "status": "active",
+  "tenant_id": "org_reference",
+  "created_at": "2026-08-03T00:00:00Z",
+  "updated_at": "2026-08-03T00:00:00Z",
+  "source_system": "cds-reference-package",
+  "verification_id": "ver_shopify_shirt_100_001",
+  "publication_id": "pub_shopify_shirt_100_r42",
+  "observation_id": "obs_shopify_shirt_100_001",
+  "verified_at": "2026-08-03T00:12:05Z",
+  "overall_status": "MISMATCH",
+  "field_results": [
+    {
+      "field_path": "/title",
+      "expected": "Relaxed Linen Shirt",
+      "observed": "Relaxed Shirt",
+      "comparison_strategy": "normalised_text",
+      "status": "MISMATCH",
+      "detailed_status": "MISMATCH",
+      "message": "Observed title differs."
+    },
+    {
+      "field_path": "/material",
+      "expected": [
+        "Linen"
+      ],
+      "observed": [
+        "Linen"
+      ],
+      "comparison_strategy": "unordered_text_set",
+      "status": "MATCH",
+      "detailed_status": "MATCH",
+      "message": null
+    },
+    {
+      "field_path": "/tags",
+      "expected": [
+        "collection_Womens",
+        "collection_Tops",
+        "collection_Shirts"
+      ],
+      "observed": [
+        "collection_Shirts",
+        "collection_Tops",
+        "collection_Womens"
+      ],
+      "comparison_strategy": "unordered_text_set",
+      "status": "MATCH",
+      "detailed_status": "MATCH",
+      "message": null
+    }
+  ],
+  "coverage_ratio": 1.0,
+  "comparison_engine_version": "cds-ref-compare-0.2.0",
+  "presentation_status": "red"
+}

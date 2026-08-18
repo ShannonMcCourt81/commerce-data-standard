@@ -1,0 +1,26 @@
+{
+  "cds_schema": "urn:cds:schema:reference:category",
+  "cds_version": "0.2",
+  "document_type": "category",
+  "document_id": "cat_womens_shirts",
+  "revision": 1,
+  "status": "active",
+  "tenant_id": "org_reference",
+  "created_at": "2026-08-03T00:00:00Z",
+  "updated_at": "2026-08-03T00:00:00Z",
+  "source_system": "cds-reference-package",
+  "category_id": "cat_womens_shirts",
+  "parent_id": "cat_womens_tops",
+  "name": "Shirts",
+  "path": [
+    "cat_womens",
+    "cat_womens_tops",
+    "cat_womens_shirts"
+  ],
+  "product_family_id": "family_apparel",
+  "required_attribute_ids": [
+    "MF_material",
+    "MF_fit",
+    "MF_care_instructions"
+  ]
+}

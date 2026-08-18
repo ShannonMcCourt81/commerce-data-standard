@@ -1,0 +1,4 @@
+dictionary_key,row_type,value_id,label,maps_to,aliases,facet_ids,status,provenance,version,locale
+sun_exposure,canonical,full_sun,Full Sun,,sun,,active,seed,0.5.0,en-GB
+sun_exposure,canonical,part_shade,Part Shade,,part sun;partial shade;semi-shade;dappled shade,,active,seed,0.5.0,en-GB
+sun_exposure,canonical,full_shade,Full Shade,,shade;shade loving,,active,seed,0.5.0,en-GB

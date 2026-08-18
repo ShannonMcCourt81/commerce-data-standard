@@ -1,0 +1,7 @@
+dictionary_key,row_type,value_id,label,maps_to,aliases,facet_ids,status,provenance,version,locale
+garment_length,canonical,mini,Mini,,mini length,,active,seed,0.5.0,en-GB
+garment_length,canonical,knee_length,Knee Length,,on the knee,,active,seed,0.5.0,en-GB
+garment_length,canonical,midi,Midi,,mid length;calf length,,active,seed,0.5.0,en-GB
+garment_length,canonical,maxi,Maxi,,full length,,active,seed,0.5.0,en-GB
+garment_length,canonical,ankle_length,Ankle Length,,,,active,seed,0.5.0,en-GB
+garment_length,canonical,floor_length,Floor Length,,gown length,,active,seed,0.5.0,en-GB

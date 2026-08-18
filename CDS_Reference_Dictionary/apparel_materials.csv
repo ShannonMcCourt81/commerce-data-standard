@@ -1,0 +1,27 @@
+dictionary_key,row_type,value_id,label,maps_to,aliases,facet_ids,material_family,status,provenance,version,locale
+material_apparel,canonical,cotton,Cotton,,,cotton,plant_fibre,active,seed,0.2.0,en-GB
+material_apparel,canonical,organic_cotton,Organic Cotton,,,cotton,plant_fibre,active,seed,0.2.0,en-GB
+material_apparel,canonical,linen,Linen,,,linen,plant_fibre,active,seed,0.2.0,en-GB
+material_apparel,canonical,hemp,Hemp,,,hemp,plant_fibre,active,seed,0.2.0,en-GB
+material_apparel,canonical,wool,Wool,,lambswool,wool,animal_fibre,active,seed,0.5.0,en-GB
+material_apparel,canonical,merino_wool,Merino Wool,,,wool,animal_fibre,active,seed,0.2.0,en-GB
+material_apparel,canonical,cashmere,Cashmere,,,cashmere,animal_fibre,active,seed,0.2.0,en-GB
+material_apparel,canonical,silk,Silk,,,silk,animal_fibre,active,seed,0.2.0,en-GB
+material_apparel,canonical,viscose,Viscose,,rayon,viscose,regenerated_cellulose,active,seed,0.2.0,en-GB
+material_apparel,canonical,lyocell,Lyocell,,,lyocell,regenerated_cellulose,active,seed,0.2.0,en-GB
+material_apparel,canonical,modal,Modal,,,modal,regenerated_cellulose,active,seed,0.2.0,en-GB
+material_apparel,canonical,polyester,Polyester,,,polyester,synthetic,active,seed,0.2.0,en-GB
+material_apparel,canonical,recycled_polyester,Recycled Polyester,,,polyester,synthetic,active,seed,0.2.0,en-GB
+material_apparel,canonical,nylon,Nylon,,polyamide,nylon,synthetic,active,seed,0.2.0,en-GB
+material_apparel,canonical,acrylic,Acrylic,,,synthetic,synthetic,active,seed,0.2.0,en-GB
+material_apparel,canonical,elastane,Elastane,,spandex,,synthetic,active,seed,0.2.0,en-GB
+material_apparel,canonical,leather,Leather,,,leather,animal_material,active,seed,0.2.0,en-GB
+material_apparel,canonical,suede,Suede,,,leather,animal_material,active,seed,0.2.0,en-GB
+material_apparel,canonical,faux_leather,Faux Leather,,vegan leather,faux_leather,synthetic,active,seed,0.2.0,en-GB
+material_apparel,canonical,alpaca,Alpaca,,alpaca wool,wool,animal_fibre,active,seed,0.5.0,en-GB
+material_apparel,canonical,mohair,Mohair,,,wool,animal_fibre,active,seed,0.5.0,en-GB
+material_apparel,canonical,bamboo_viscose,Bamboo Viscose,,bamboo,viscose,regenerated_cellulose,active,seed,0.5.0,en-GB
+material_apparel,canonical,recycled_cotton,Recycled Cotton,,,cotton,plant_fibre,active,seed,0.5.0,en-GB
+material_apparel,canonical,recycled_wool,Recycled Wool,,,wool,animal_fibre,active,seed,0.5.0,en-GB
+material_apparel,canonical,down,Down,,down fill;feather and down,,animal_material,active,seed,0.5.0,en-GB
+material_apparel,canonical,shearling,Shearling,,sheepskin,leather,animal_material,active,seed,0.5.0,en-GB

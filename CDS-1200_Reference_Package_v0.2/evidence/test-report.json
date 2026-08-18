@@ -1,0 +1,420 @@
+{
+  "package_version": "0.2.1",
+  "generated_at": "2026-08-17T05:06:58Z",
+  "environment": {
+    "python": "3.14.7",
+    "platform": "macOS-26.5.2-arm64-arm-64bit-Mach-O",
+    "dependencies": {
+      "jsonschema": "4.26.0",
+      "referencing": "0.37.0",
+      "rfc3339-validator": "0.1.4"
+    }
+  },
+  "manifest_sha256": "8434fc49b9683550b3e3fe24cf12f79d4e20a623af3c3928bee7a15ee6efa631",
+  "summary": {
+    "structural_cases": 29,
+    "structural_passed": 29,
+    "structural_failed": 0,
+    "semantic_cases": 4,
+    "semantic_passed": 4,
+    "semantic_failed": 0,
+    "total_cases": 33,
+    "passed": 33,
+    "failed": 0
+  },
+  "results": [
+    {
+      "group": "positive",
+      "fixture": "fixtures/positive/attribute-definitions/MF_colour.json",
+      "schema_id": "urn:cds:schema:core:attribute-definition",
+      "expected": "PASS",
+      "actual": "PASS",
+      "outcome": "PASS",
+      "reason": null,
+      "detail": null,
+      "errors": []
+    },
+    {
+      "group": "positive",
+      "fixture": "fixtures/positive/attribute-definitions/MF_material.json",
+      "schema_id": "urn:cds:schema:core:attribute-definition",
+      "expected": "PASS",
+      "actual": "PASS",
+      "outcome": "PASS",
+      "reason": null,
+      "detail": null,
+      "errors": []
+    },
+    {
+      "group": "positive",
+      "fixture": "fixtures/positive/dictionaries/colour.dictionary.json",
+      "schema_id": "urn:cds:schema:reference:dictionary",
+      "expected": "PASS",
+      "actual": "PASS",
+      "outcome": "PASS",
+      "reason": null,
+      "detail": null,
+      "errors": []
+    },
+    {
+      "group": "positive",
+      "fixture": "fixtures/positive/dictionaries/colour_navy.value.json",
+      "schema_id": "urn:cds:schema:reference:dictionary-value",
+      "expected": "PASS",
+      "actual": "PASS",
+      "outcome": "PASS",
+      "reason": null,
+      "detail": null,
+      "errors": []
+    },
+    {
+      "group": "positive",
+      "fixture": "fixtures/positive/facets/colour-family.json",
+      "schema_id": "urn:cds:schema:reference:facet-definition",
+      "expected": "PASS",
+      "actual": "PASS",
+      "outcome": "PASS",
+      "reason": null,
+      "detail": null,
+      "errors": []
+    },
+    {
+      "group": "positive",
+      "fixture": "fixtures/positive/classification/womens-shirts.category.json",
+      "schema_id": "urn:cds:schema:reference:category",
+      "expected": "PASS",
+      "actual": "PASS",
+      "outcome": "PASS",
+      "reason": null,
+      "detail": null,
+      "errors": []
+    },
+    {
+      "group": "positive",
+      "fixture": "fixtures/positive/classification/womens-shirts.shopify-mapping.json",
+      "schema_id": "urn:cds:schema:reference:taxonomy-mapping",
+      "expected": "PASS",
+      "actual": "PASS",
+      "outcome": "PASS",
+      "reason": null,
+      "detail": null,
+      "errors": []
+    },
+    {
+      "group": "positive",
+      "fixture": "fixtures/positive/products/relaxed-linen-shirt.product.json",
+      "schema_id": "urn:cds:schema:core:product",
+      "expected": "PASS",
+      "actual": "PASS",
+      "outcome": "PASS",
+      "reason": null,
+      "detail": null,
+      "errors": []
+    },
+    {
+      "group": "positive",
+      "fixture": "fixtures/positive/variants/relaxed-linen-shirt-navy-m.variant.json",
+      "schema_id": "urn:cds:schema:core:variant",
+      "expected": "PASS",
+      "actual": "PASS",
+      "outcome": "PASS",
+      "reason": null,
+      "detail": null,
+      "errors": []
+    },
+    {
+      "group": "positive",
+      "fixture": "fixtures/positive/variants/relaxed-linen-shirt-navy-s.variant.json",
+      "schema_id": "urn:cds:schema:core:variant",
+      "expected": "PASS",
+      "actual": "PASS",
+      "outcome": "PASS",
+      "reason": null,
+      "detail": null,
+      "errors": []
+    },
+    {
+      "group": "positive",
+      "fixture": "fixtures/positive/channels/shopify.channel-profile.json",
+      "schema_id": "urn:cds:schema:channel:channel-profile",
+      "expected": "PASS",
+      "actual": "PASS",
+      "outcome": "PASS",
+      "reason": null,
+      "detail": null,
+      "errors": []
+    },
+    {
+      "group": "positive",
+      "fixture": "fixtures/positive/publication/shopify-shirt.publication.json",
+      "schema_id": "urn:cds:schema:channel:publication-record",
+      "expected": "PASS",
+      "actual": "PASS",
+      "outcome": "PASS",
+      "reason": null,
+      "detail": null,
+      "errors": []
+    },
+    {
+      "group": "positive",
+      "fixture": "fixtures/positive/observation/shopify-shirt.observation.json",
+      "schema_id": "urn:cds:schema:channel:observation-record",
+      "expected": "PASS",
+      "actual": "PASS",
+      "outcome": "PASS",
+      "reason": null,
+      "detail": null,
+      "errors": []
+    },
+    {
+      "group": "positive",
+      "fixture": "fixtures/positive/verification/shopify-shirt.verification.json",
+      "schema_id": "urn:cds:schema:channel:verification-result",
+      "expected": "PASS",
+      "actual": "PASS",
+      "outcome": "PASS",
+      "reason": null,
+      "detail": null,
+      "errors": []
+    },
+    {
+      "group": "positive",
+      "fixture": "fixtures/positive/ai/colour-mapping.ai-proposal.json",
+      "schema_id": "urn:cds:schema:automation:ai-proposal",
+      "expected": "PASS",
+      "actual": "PASS",
+      "outcome": "PASS",
+      "reason": null,
+      "detail": null,
+      "errors": []
+    },
+    {
+      "group": "positive",
+      "fixture": "fixtures/positive/assurance/reference.conformance-manifest.json",
+      "schema_id": "urn:cds:schema:assurance:conformance-manifest",
+      "expected": "PASS",
+      "actual": "PASS",
+      "outcome": "PASS",
+      "reason": null,
+      "detail": null,
+      "errors": []
+    },
+    {
+      "group": "negative",
+      "fixture": "fixtures/negative/product-missing-product-id.json",
+      "schema_id": "urn:cds:schema:core:product",
+      "expected": "FAIL",
+      "actual": "FAIL",
+      "outcome": "PASS",
+      "reason": "Missing required product_id",
+      "detail": null,
+      "errors": [
+        "'product_id' is a required property",
+        "Unevaluated properties are not allowed ('attributes', 'brand_id', 'business_key', 'classification', 'content', 'manufacturer_part_number', 'media', 'relationships', 'variant_ids' were unexpected)"
+      ]
+    },
+    {
+      "group": "negative",
+      "fixture": "fixtures/negative/variant-invalid-gtin.json",
+      "schema_id": "urn:cds:schema:core:variant",
+      "expected": "FAIL",
+      "actual": "FAIL",
+      "outcome": "PASS",
+      "reason": "Barcode contains a non-digit",
+      "detail": null,
+      "errors": [
+        "Unevaluated properties are not allowed ('barcode_identifiers', 'option_values', 'product_id', 'sellability', 'sku', 'variant_attributes', 'variant_id' were unexpected)",
+        "'93A8716007824' does not match '^\\\\d{8,14}$'",
+        "'93A8716007824' does not match '^\\\\d{13}$'"
+      ]
+    },
+    {
+      "group": "negative",
+      "fixture": "fixtures/negative/attribute-invalid-semantic-name.json",
+      "schema_id": "urn:cds:schema:core:attribute-definition",
+      "expected": "FAIL",
+      "actual": "FAIL",
+      "outcome": "PASS",
+      "reason": "Field identifier does not use CDS semantic prefix syntax",
+      "detail": null,
+      "errors": [
+        "Unevaluated properties are not allowed ('attribute_id', 'behaviour', 'cardinality', 'channel_mappings', 'description', 'dictionary_id', 'label', 'scope', 'value_type' were unexpected)",
+        "'attribute.colour' does not match '^[A-Z][A-Z0-9]*_[a-z0-9]+(?:_[a-z0-9]+)*$'"
+      ]
+    },
+    {
+      "group": "negative",
+      "fixture": "fixtures/negative/dictionary-value-invalid-code.json",
+      "schema_id": "urn:cds:schema:reference:dictionary-value",
+      "expected": "FAIL",
+      "actual": "FAIL",
+      "outcome": "PASS",
+      "reason": "Canonical code is not lowercase snake_case",
+      "detail": null,
+      "errors": [
+        "Unevaluated properties are not allowed ('aliases', 'canonical_code', 'canonical_label', 'channel_representations', 'dictionary_id', 'dictionary_value_id', 'facet_memberships', 'parent_value_id' were unexpected)",
+        "'Navy Blue' does not match '^[a-z0-9]+(?:_[a-z0-9]+)*$'"
+      ]
+    },
+    {
+      "group": "negative",
+      "fixture": "fixtures/negative/publication-invalid-status.json",
+      "schema_id": "urn:cds:schema:channel:publication-record",
+      "expected": "FAIL",
+      "actual": "FAIL",
+      "outcome": "PASS",
+      "reason": "Publication status is not in the controlled enumeration",
+      "detail": null,
+      "errors": [
+        "Unevaluated properties are not allowed ('canonical_revision', 'channel_profile_id', 'expected_state', 'mapping_set_version', 'payload_hash', 'preflight_result', 'product_id', 'publication_id', 'publication_status', 'published_at', 'transport_reference', 'transport_status' were unexpected)",
+        "'done' is not one of ['queued', 'preflight_failed', 'published', 'partially_published', 'failed']"
+      ]
+    },
+    {
+      "group": "negative",
+      "fixture": "fixtures/negative/observation-invalid-timestamp.json",
+      "schema_id": "urn:cds:schema:channel:observation-record",
+      "expected": "FAIL",
+      "actual": "FAIL",
+      "outcome": "PASS",
+      "reason": "Timestamp is not RFC 3339 date-time with timezone offset",
+      "detail": null,
+      "errors": [
+        "Unevaluated properties are not allowed ('channel_entity_id', 'channel_profile_id', 'channel_revision', 'coverage', 'observation_id', 'observation_method', 'observed_at', 'observed_state', 'product_id', 'publication_id' were unexpected)",
+        "'03/08/2026 10:12' is not a 'date-time'",
+        "'03/08/2026 10:12' does not match '^\\\\d{4}-\\\\d{2}-\\\\d{2}T\\\\d{2}:\\\\d{2}:\\\\d{2}(\\\\.\\\\d+)?(Z|[+-]\\\\d{2}:\\\\d{2})$'"
+      ]
+    },
+    {
+      "group": "negative",
+      "fixture": "fixtures/negative/verification-invalid-status.json",
+      "schema_id": "urn:cds:schema:channel:verification-result",
+      "expected": "FAIL",
+      "actual": "FAIL",
+      "outcome": "PASS",
+      "reason": "Traffic-light label is not a normative verification status",
+      "detail": null,
+      "errors": [
+        "Unevaluated properties are not allowed ('field_results', 'observation_id', 'overall_status', 'publication_id', 'verification_id', 'verified_at' were unexpected)",
+        "'GREEN' is not one of ['MATCH', 'MISSING', 'MISMATCH', 'PENDING', 'UNOBSERVABLE', 'NOT_APPLICABLE', 'OVERRIDDEN', 'ERROR']"
+      ]
+    },
+    {
+      "group": "negative",
+      "fixture": "fixtures/negative/ai-confidence-out-of-range.json",
+      "schema_id": "urn:cds:schema:automation:ai-proposal",
+      "expected": "FAIL",
+      "actual": "FAIL",
+      "outcome": "PASS",
+      "reason": "Confidence exceeds 1.0",
+      "detail": null,
+      "errors": [
+        "Unevaluated properties are not allowed ('accepted_revision', 'confidence', 'evidence', 'model_id', 'proposal_id', 'proposed_value', 'review_state', 'reviewer', 'target_document_id', 'target_field', 'task_type', 'validation_results', 'workflow_version' were unexpected)",
+        "1.25 is greater than the maximum of 1"
+      ]
+    },
+    {
+      "group": "negative",
+      "fixture": "fixtures/negative/envelope-bad-status.json",
+      "schema_id": "urn:cds:schema:common:envelope",
+      "expected": "FAIL",
+      "actual": "FAIL",
+      "outcome": "PASS",
+      "reason": "Envelope status is not in the controlled enumeration",
+      "detail": null,
+      "errors": [
+        "'live' is not one of ['draft', 'active', 'deprecated', 'archived']"
+      ]
+    },
+    {
+      "group": "negative",
+      "fixture": "fixtures/negative/envelope-missing-revision.json",
+      "schema_id": "urn:cds:schema:common:envelope",
+      "expected": "FAIL",
+      "actual": "FAIL",
+      "outcome": "PASS",
+      "reason": "Envelope revision is missing",
+      "detail": null,
+      "errors": [
+        "'revision' is a required property"
+      ]
+    },
+    {
+      "group": "negative",
+      "fixture": "fixtures/negative/timestamp-missing-offset.json",
+      "schema_id": "urn:cds:schema:channel:observation-record",
+      "expected": "FAIL",
+      "actual": "FAIL",
+      "outcome": "PASS",
+      "reason": "Timestamp lacks a timezone offset",
+      "detail": null,
+      "errors": [
+        "Unevaluated properties are not allowed ('channel_entity_id', 'channel_profile_id', 'channel_revision', 'coverage', 'observation_id', 'observation_method', 'observed_at', 'observed_state', 'product_id', 'publication_id' were unexpected)",
+        "'2026-08-03T10:12:00' is not a 'date-time'",
+        "'2026-08-03T10:12:00' does not match '^\\\\d{4}-\\\\d{2}-\\\\d{2}T\\\\d{2}:\\\\d{2}:\\\\d{2}(\\\\.\\\\d+)?(Z|[+-]\\\\d{2}:\\\\d{2})$'"
+      ]
+    },
+    {
+      "group": "negative",
+      "fixture": "fixtures/negative/product-attribute-wrong-type.json",
+      "schema_id": "urn:cds:schema:core:product",
+      "expected": "FAIL",
+      "actual": "FAIL",
+      "outcome": "PASS",
+      "reason": "Attribute value is a bare scalar, not a typed value",
+      "detail": null,
+      "errors": [
+        "Unevaluated properties are not allowed ('attributes', 'brand_id', 'business_key', 'classification', 'content', 'manufacturer_part_number', 'media', 'product_id', 'relationships', 'variant_ids' were unexpected)",
+        "42 is not valid under any of the given schemas"
+      ]
+    },
+    {
+      "group": "negative",
+      "fixture": "fixtures/negative/verification-missing-reason-code.json",
+      "schema_id": "urn:cds:schema:channel:verification-result",
+      "expected": "FAIL",
+      "actual": "FAIL",
+      "outcome": "PASS",
+      "reason": "Non-MATCH field result lacks the mandatory reason_code",
+      "detail": null,
+      "errors": [
+        "Unevaluated properties are not allowed ('comparison_engine_version', 'coverage_ratio', 'field_results', 'observation_id', 'overall_status', 'presentation_status', 'publication_id', 'verification_id', 'verified_at' were unexpected)",
+        "'reason_code' is a required property"
+      ]
+    }
+  ],
+  "semantic_results": [
+    {
+      "test_id": "SEM-001",
+      "description": "Product variant references resolve to variants whose product_id matches the product.",
+      "expected": "PASS",
+      "actual": "PASS",
+      "outcome": "PASS",
+      "error": null
+    },
+    {
+      "test_id": "SEM-002",
+      "description": "Dictionary value facet membership resolves to a configured facet value.",
+      "expected": "PASS",
+      "actual": "PASS",
+      "outcome": "PASS",
+      "error": null
+    },
+    {
+      "test_id": "SEM-003",
+      "description": "Publication canonical_revision equals the product revision used to calculate expected state.",
+      "expected": "PASS",
+      "actual": "PASS",
+      "outcome": "PASS",
+      "error": null
+    },
+    {
+      "test_id": "SEM-004",
+      "description": "All related documents remain within the same tenant boundary.",
+      "expected": "PASS",
+      "actual": "PASS",
+      "outcome": "PASS",
+      "error": null
+    }
+  ]
+}

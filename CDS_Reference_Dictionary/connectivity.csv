@@ -1,0 +1,17 @@
+dictionary_key,row_type,value_id,label,maps_to,aliases,facet_ids,status,provenance,version,locale
+connectivity,canonical,wifi,Wi-Fi,,wireless lan;wlan;wireless,,active,seed,0.4.0,en-GB
+connectivity,canonical,bluetooth,Bluetooth,,,,active,seed,0.4.0,en-GB
+connectivity,canonical,ethernet,Ethernet,,lan;wired network,,active,seed,0.4.0,en-GB
+connectivity,canonical,hdmi,HDMI,,,,active,seed,0.4.0,en-GB
+connectivity,canonical,usb_c,USB-C,,usb type c,,active,seed,0.4.0,en-GB
+connectivity,canonical,usb_a,USB-A,,usb type a,,active,seed,0.4.0,en-GB
+connectivity,canonical,aux_input,Aux Input,,3.5mm jack;headphone jack;aux,,active,seed,0.4.0,en-GB
+connectivity,canonical,optical_audio,Optical Audio,,toslink;spdif,,active,seed,0.4.0,en-GB
+connectivity,canonical,rca_input,RCA Input,,phono;composite,,active,seed,0.4.0,en-GB
+connectivity,canonical,nfc,NFC,,near field communication,,active,seed,0.4.0,en-GB
+connectivity,canonical,dab_radio,DAB Radio,,dab plus;digital radio,,active,seed,0.4.0,en-GB
+connectivity,canonical,sd_card_slot,SD Card Slot,,memory card slot,,active,seed,0.4.0,en-GB
+connectivity,canonical,displayport,DisplayPort,,dp;display port,,active,seed,0.5.0,en-GB
+connectivity,canonical,thunderbolt,Thunderbolt,,thunderbolt 3;thunderbolt 4,,active,seed,0.5.0,en-GB
+connectivity,canonical,usb_micro,Micro-USB,,micro usb;micro b,,active,seed,0.5.0,en-GB
+connectivity,canonical,antenna_input,Aerial Input,,antenna input;rf input;aerial,,active,seed,0.5.0,en-GB

@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:cds:schema:channel:channel-profile",
+  "version": "0.2.0",
+  "title": "CDS Channel Profile",
+  "allOf": [
+    {
+      "$ref": "urn:cds:schema:common:envelope"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "document_type": {
+          "const": "channel_profile"
+        },
+        "channel_profile_id": {
+          "type": "string",
+          "minLength": 3
+        },
+        "channel": {
+          "type": "string",
+          "minLength": 1
+        },
+        "profile_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "capabilities": {
+          "type": "object",
+          "properties": {
+            "supports_readback": {
+              "type": "boolean"
+            },
+            "supports_partial_update": {
+              "type": "boolean"
+            },
+            "supports_variant_attributes": {
+              "type": "boolean"
+            },
+            "supports_structured_metafields": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "supports_readback",
+            "supports_partial_update",
+            "supports_variant_attributes",
+            "supports_structured_metafields"
+          ],
+          "additionalProperties": false
+        },
+        "field_mappings": {
+          "type": "array",
+          "items": {
+            "$ref": "urn:cds:schema:channel:field-mapping"
+          }
+        }
+      },
+      "required": [
+        "channel_profile_id",
+        "channel",
+        "profile_version",
+        "capabilities",
+        "field_mappings"
+      ]
+    }
+  ],
+  "unevaluatedProperties": false
+}

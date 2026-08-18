@@ -1,0 +1,35 @@
+{
+  "cds_schema": "urn:cds:schema:core:variant",
+  "cds_version": "0.2",
+  "document_type": "variant",
+  "document_id": "var_shirt_100_navy_s",
+  "revision": 6,
+  "status": "active",
+  "tenant_id": "org_reference",
+  "created_at": "2026-08-03T00:00:00Z",
+  "updated_at": "2026-08-03T00:00:00Z",
+  "source_system": "cds-reference-package",
+  "variant_id": "var_shirt_100_navy_s",
+  "product_id": "prd_shirt_100",
+  "sku": "SHIRT-100-NVY-S",
+  "option_values": [
+    {
+      "option": "colour",
+      "value_id": "colour_navy",
+      "display": "French Navy"
+    },
+    {
+      "option": "size",
+      "value_id": "size_s",
+      "display": "S"
+    }
+  ],
+  "barcode_identifiers": [
+    {
+      "scheme": "gtin_13",
+      "value": "9338716007817"
+    }
+  ],
+  "variant_attributes": {},
+  "sellability": "sellable"
+}

@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:cds:schema:common:measurement",
+  "version": "0.2.0",
+  "title": "CDS Measurement",
+  "type": "object",
+  "properties": {
+    "value": {
+      "type": "string",
+      "pattern": "^-?\\d+(\\.\\d+)?$"
+    },
+    "unit": {
+      "type": "string",
+      "pattern": "^[a-zA-Z][a-zA-Z0-9_./-]*$"
+    }
+  },
+  "required": [
+    "value",
+    "unit"
+  ],
+  "additionalProperties": false
+}

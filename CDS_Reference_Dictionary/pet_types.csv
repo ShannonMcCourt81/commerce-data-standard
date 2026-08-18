@@ -1,0 +1,8 @@
+dictionary_key,row_type,value_id,label,maps_to,aliases,facet_ids,status,provenance,version,locale
+pet_type,canonical,dog,Dog,,canine,,active,seed,0.5.0,en-GB
+pet_type,canonical,cat,Cat,,feline,,active,seed,0.5.0,en-GB
+pet_type,canonical,bird,Bird,,aviary,,active,seed,0.5.0,en-GB
+pet_type,canonical,fish,Fish,,aquatic;aquarium,,active,seed,0.5.0,en-GB
+pet_type,canonical,reptile,Reptile,,lizard;snake;turtle,,active,seed,0.5.0,en-GB
+pet_type,canonical,small_animal,Small Animal,,small pet;rabbit;guinea pig;ferret;hamster,,active,seed,0.5.0,en-GB
+pet_type,canonical,horse,Horse,,equine;pony,,active,seed,0.5.0,en-GB

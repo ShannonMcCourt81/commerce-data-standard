@@ -1,0 +1,6 @@
+dictionary_key,row_type,value_id,label,maps_to,aliases,facet_ids,status,provenance,version,locale
+wetsuit_style,canonical,full_suit,Full Suit,,steamer;fullsuit;full wetsuit,,active,seed,0.7.0,en-GB
+wetsuit_style,canonical,shorty,Shorty,,springsuit;spring suit;springy,,active,seed,0.7.0,en-GB
+wetsuit_style,canonical,long_john,Long John,,sleeveless wetsuit;long jane,,active,seed,0.7.0,en-GB
+wetsuit_style,canonical,wetsuit_top,Wetsuit Top,,neoprene top;wetsuit jacket,,active,seed,0.7.0,en-GB
+wetsuit_style,canonical,wetsuit_vest,Wetsuit Vest,,neoprene vest,,active,seed,0.7.0,en-GB

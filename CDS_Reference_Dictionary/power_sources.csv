@@ -1,0 +1,11 @@
+dictionary_key,row_type,value_id,label,maps_to,aliases,facet_ids,status,provenance,version,locale
+power_source,canonical,mains,Mains Powered,,corded;plug in;ac power,,active,seed,0.4.0,en-GB
+power_source,canonical,rechargeable_battery,Rechargeable Battery,,built in battery;cordless,,active,seed,0.4.0,en-GB
+power_source,canonical,replaceable_battery,Replaceable Battery,,battery operated;aa battery;aaa battery,,active,seed,0.4.0,en-GB
+power_source,canonical,usb_powered,USB Powered,,,,active,seed,0.4.0,en-GB
+power_source,canonical,solar,Solar,,solar powered,,active,seed,0.4.0,en-GB
+power_source,canonical,gas,Gas,,lpg;natural gas,,active,seed,0.4.0,en-GB
+power_source,canonical,dual_fuel,Dual Fuel,,gas and electric,,active,seed,0.4.0,en-GB
+power_source,canonical,hand_powered,Hand Powered,,manual;wind up,,active,seed,0.4.0,en-GB
+power_source,canonical,petrol,Petrol,,gasoline;petrol powered,,active,seed,0.5.0,en-GB
+power_source,canonical,poe,Power over Ethernet,,poe,,active,seed,0.5.0,en-GB

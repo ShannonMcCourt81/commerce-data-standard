@@ -1,0 +1,16 @@
+dictionary_key,row_type,value_id,label,maps_to,aliases,facet_ids,status,provenance,version,locale
+neckline,canonical,crew_neck,Crew Neck,,round neck,,active,seed,0.5.0,en-GB
+neckline,canonical,v_neck,V-neck,,v neckline,,active,seed,0.5.0,en-GB
+neckline,canonical,scoop_neck,Scoop Neck,,,,active,seed,0.5.0,en-GB
+neckline,canonical,square_neck,Square Neck,,,,active,seed,0.5.0,en-GB
+neckline,canonical,high_neck,High Neck,,funnel neck,,active,seed,0.5.0,en-GB
+neckline,canonical,roll_neck,Roll Neck,,polo neck;turtleneck,,active,seed,0.5.0,en-GB
+neckline,canonical,cowl_neck,Cowl Neck,,,,active,seed,0.5.0,en-GB
+neckline,canonical,halter_neck,Halter Neck,,halterneck,,active,seed,0.5.0,en-GB
+neckline,canonical,off_shoulder,Off the Shoulder,,bardot,,active,seed,0.5.0,en-GB
+neckline,canonical,one_shoulder,One Shoulder,,asymmetric neckline,,active,seed,0.5.0,en-GB
+neckline,canonical,boat_neck,Boat Neck,,slash neck;bateau,,active,seed,0.5.0,en-GB
+neckline,canonical,sweetheart,Sweetheart,,,,active,seed,0.5.0,en-GB
+neckline,canonical,collared,Collared,,collar neck,,active,seed,0.5.0,en-GB
+neckline,canonical,plunge,Plunge,,plunging neckline,,active,seed,0.5.0,en-GB
+neckline,canonical,strapless,Strapless,,bandeau,,active,seed,0.5.0,en-GB

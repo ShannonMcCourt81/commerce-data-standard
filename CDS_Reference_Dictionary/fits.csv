@@ -1,0 +1,22 @@
+dictionary_key,row_type,value_id,label,maps_to,aliases,facet_ids,status,provenance,version,locale
+fit,canonical,skinny,Skinny,,,,active,seed,0.2.0,en-GB
+fit,canonical,slim,Slim,,,,active,seed,0.2.0,en-GB
+fit,canonical,regular,Regular,,,,active,seed,0.2.0,en-GB
+fit,canonical,relaxed,Relaxed,,,,active,seed,0.2.0,en-GB
+fit,canonical,oversized,Oversized,,,,active,seed,0.2.0,en-GB
+fit,canonical,tailored,Tailored,,,,active,seed,0.2.0,en-GB
+fit,canonical,straight,Straight,,,,active,seed,0.2.0,en-GB
+fit,canonical,tapered,Tapered,,,,active,seed,0.2.0,en-GB
+fit,canonical,wide_leg,Wide Leg,,,,active,seed,0.2.0,en-GB
+fit,canonical,bootcut,Bootcut,,,,active,seed,0.2.0,en-GB
+fit,canonical,cropped,Cropped,,,,active,seed,0.2.0,en-GB
+fit,canonical,longline,Longline,,,,active,seed,0.2.0,en-GB
+fit,canonical,fitted,Fitted,,,,active,seed,0.2.0,en-GB
+fit,canonical,loose,Loose,,,,active,seed,0.2.0,en-GB
+fit,canonical,flared,Flared,,flare leg,,active,seed,0.5.0,en-GB
+fit,canonical,high_rise,High Rise,,high waisted;high waist,,active,seed,0.5.0,en-GB
+fit,canonical,mid_rise,Mid Rise,,mid waist,,active,seed,0.5.0,en-GB
+fit,canonical,low_rise,Low Rise,,low waisted;low waist,,active,seed,0.5.0,en-GB
+fit,canonical,petite,Petite,,,,active,seed,0.5.0,en-GB
+fit,canonical,tall,Tall,,,,active,seed,0.5.0,en-GB
+fit,canonical,maternity,Maternity,,,,active,seed,0.5.0,en-GB

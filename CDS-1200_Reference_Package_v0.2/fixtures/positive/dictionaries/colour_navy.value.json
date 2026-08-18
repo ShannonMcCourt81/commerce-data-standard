@@ -1,0 +1,38 @@
+{
+  "cds_schema": "urn:cds:schema:reference:dictionary-value",
+  "cds_version": "0.2",
+  "document_type": "dictionary_value",
+  "document_id": "colour_navy",
+  "revision": 1,
+  "status": "active",
+  "tenant_id": "org_reference",
+  "created_at": "2026-08-03T00:00:00Z",
+  "updated_at": "2026-08-03T00:00:00Z",
+  "source_system": "cds-reference-package",
+  "dictionary_value_id": "colour_navy",
+  "dictionary_id": "dict_colour",
+  "canonical_code": "navy",
+  "canonical_label": [
+    {
+      "language": "en-AU",
+      "text": "Navy"
+    }
+  ],
+  "aliases": [
+    "navy blue",
+    "french navy",
+    "dark navy"
+  ],
+  "facet_memberships": [
+    {
+      "facet_id": "facet_colour_family",
+      "value_id": "facet_blue",
+      "primary": true
+    }
+  ],
+  "channel_representations": {
+    "google_merchant": "Blue",
+    "shopify_filter": "Blue"
+  },
+  "parent_value_id": null
+}

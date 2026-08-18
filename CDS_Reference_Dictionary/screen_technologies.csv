@@ -1,0 +1,12 @@
+dictionary_key,row_type,value_id,label,maps_to,aliases,facet_ids,status,provenance,version,locale
+screen_technology,canonical,led,LED,,led backlit,,active,seed,0.4.0,en-GB
+screen_technology,canonical,oled,OLED,,amoled,,active,seed,0.5.0,en-GB
+screen_technology,canonical,qled,QLED,,quantum dot,,active,seed,0.4.0,en-GB
+screen_technology,canonical,lcd,LCD,,,,active,seed,0.4.0,en-GB
+screen_technology,canonical,mini_led,Mini-LED,,mini led,,active,seed,0.4.0,en-GB
+screen_technology,canonical,micro_led,Micro-LED,,micro led,,active,seed,0.4.0,en-GB
+screen_technology,canonical,e_ink,E-Ink,,electronic paper;eink,,active,seed,0.4.0,en-GB
+screen_technology,canonical,laser_projection,Laser Projection,,laser projector,,active,seed,0.4.0,en-GB
+screen_technology,canonical,qd_oled,QD-OLED,,qd oled;quantum dot oled,,active,seed,0.5.0,en-GB
+screen_technology,canonical,ips,IPS,,in-plane switching;ips panel,,active,seed,0.5.0,en-GB
+screen_technology,canonical,va,VA,,vertical alignment;va panel,,active,seed,0.5.0,en-GB

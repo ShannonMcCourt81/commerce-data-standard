@@ -1,0 +1,47 @@
+{
+  "cds_schema": "urn:cds:schema:core:product",
+  "cds_version": "0.2",
+  "document_type": "product",
+  "document_id": "prd_shirt_100",
+  "revision": 42,
+  "status": "active",
+  "tenant_id": "org_reference",
+  "created_at": "2026-08-03T00:00:00Z",
+  "updated_at": "2026-08-03T00:00:00Z",
+  "source_system": "cds-reference-package",
+  "product_id": "prd_shirt_100",
+  "business_key": "SHIRT-100",
+  "brand_id": "brand_coastal",
+  "manufacturer_part_number": "CS-LS100",
+  "classification": {
+    "product_family_id": "family_apparel",
+    "product_type_id": "type_shirt",
+    "category_id": "cat_womens_shirts"
+  },
+  "content": {
+    "title": [
+      {
+        "language": "en-AU",
+        "text": "Relaxed Linen Shirt"
+      }
+    ],
+    "short_description": [
+      {
+        "language": "en-AU",
+        "text": "A relaxed long-sleeve shirt in breathable linen."
+      }
+    ]
+  },
+  "attributes": {
+    "MF_material": 42,
+    "MF_fit": {
+      "dictionary_value_id": "fit_relaxed"
+    }
+  },
+  "variant_ids": [
+    "var_shirt_100_navy_s",
+    "var_shirt_100_navy_m"
+  ],
+  "media": [],
+  "relationships": []
+}

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:cds:schema:common:localised-text",
+  "version": "0.2.0",
+  "title": "CDS Localised Text",
+  "type": "object",
+  "properties": {
+    "language": {
+      "type": "string",
+      "pattern": "^[A-Za-z]{2,3}(-[A-Za-z0-9]{2,8})*$"
+    },
+    "text": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "language",
+    "text"
+  ],
+  "additionalProperties": false
+}

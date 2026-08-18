@@ -1,0 +1,6 @@
+dictionary_key,row_type,value_id,label,maps_to,aliases,facet_ids,definition,status,provenance,version,locale
+footwear_heel_height,canonical,flat,Flat,,no heel,,Heel height under 1 cm,active,seed,0.1.0,en-GB
+footwear_heel_height,canonical,low,Low,,kitten heel;low heel,,Heel height roughly 1-4 cm,active,seed,0.1.0,en-GB
+footwear_heel_height,canonical,mid,Mid,,mid heel;medium heel,,Heel height roughly 4-7 cm,active,seed,0.1.0,en-GB
+footwear_heel_height,canonical,high,High,,high heel,,Heel height over 7 cm,active,seed,0.1.0,en-GB
+footwear_heel_height,canonical,platform,Platform,,platform sole,,Raised sole of roughly 2 cm or more under the forefoot,active,seed,0.1.0,en-GB

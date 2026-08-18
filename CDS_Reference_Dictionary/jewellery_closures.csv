@@ -1,0 +1,10 @@
+dictionary_key,row_type,value_id,label,maps_to,aliases,facet_ids,status,provenance,version,locale
+jewellery_closure,canonical,lobster_clasp,Lobster Clasp,,lobster claw;trigger clasp,,active,seed,0.1.0,en-GB
+jewellery_closure,canonical,spring_ring,Spring Ring,,bolt ring,,active,seed,0.1.0,en-GB
+jewellery_closure,canonical,toggle,Toggle,,t-bar,,active,seed,0.1.0,en-GB
+jewellery_closure,canonical,magnetic,Magnetic,,magnetic clasp,,active,seed,0.1.0,en-GB
+jewellery_closure,canonical,box_clasp,Box Clasp,,,,active,seed,0.1.0,en-GB
+jewellery_closure,canonical,hook_and_eye,Hook and Eye,,hook clasp,,active,seed,0.1.0,en-GB
+jewellery_closure,canonical,screw_back,Screw Back,,screw fitting,,active,seed,0.1.0,en-GB
+jewellery_closure,canonical,butterfly_back,Butterfly Back,,push back;friction back,,active,seed,0.1.0,en-GB
+jewellery_closure,canonical,adjustable_slider,Adjustable Slider,,slider;bolo,,active,seed,0.1.0,en-GB

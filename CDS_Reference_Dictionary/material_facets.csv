@@ -1,0 +1,27 @@
+dictionary_key,row_type,value_id,label,maps_to,aliases,facet_ids,scope,status,provenance,version,locale
+material_facet,canonical,cotton,Cotton,,,,shared,active,seed,0.2.0,en-GB
+material_facet,canonical,linen,Linen,,,,shared,active,seed,0.2.0,en-GB
+material_facet,canonical,wool,Wool,,,,shared,active,seed,0.2.0,en-GB
+material_facet,canonical,hemp,Hemp,,,,apparel,active,seed,0.2.0,en-GB
+material_facet,canonical,cashmere,Cashmere,,,,apparel,active,seed,0.2.0,en-GB
+material_facet,canonical,silk,Silk,,,,apparel,active,seed,0.2.0,en-GB
+material_facet,canonical,viscose,Viscose,,,,apparel,active,seed,0.2.0,en-GB
+material_facet,canonical,lyocell,Lyocell,,,,apparel,active,seed,0.2.0,en-GB
+material_facet,canonical,modal,Modal,,,,apparel,active,seed,0.2.0,en-GB
+material_facet,canonical,polyester,Polyester,,,,apparel,active,seed,0.2.0,en-GB
+material_facet,canonical,nylon,Nylon,,,,apparel,active,seed,0.2.0,en-GB
+material_facet,canonical,synthetic,Synthetic,,,,apparel,active,seed,0.2.0,en-GB
+material_facet,canonical,leather,Leather,,,,apparel,active,seed,0.2.0,en-GB
+material_facet,canonical,faux_leather,Faux Leather,,,,apparel,active,seed,0.2.0,en-GB
+material_facet,canonical,synthetic_textile,Synthetic Textile,,,,homewares,active,seed,0.2.0,en-GB
+material_facet,canonical,ceramic,Ceramic,,,,homewares,active,seed,0.2.0,en-GB
+material_facet,canonical,porcelain,Porcelain,,,,homewares,active,seed,0.2.0,en-GB
+material_facet,canonical,glass,Glass,,,,homewares,active,seed,0.2.0,en-GB
+material_facet,canonical,metal,Metal,,,,homewares,active,seed,0.2.0,en-GB
+material_facet,canonical,wood,Wood,,,,homewares,active,seed,0.2.0,en-GB
+material_facet,canonical,natural_fibre,Natural Fibre,,,,homewares,active,seed,0.2.0,en-GB
+material_facet,canonical,stone,Stone,,,,homewares,active,seed,0.2.0,en-GB
+material_facet,canonical,concrete,Concrete,,,,homewares,active,seed,0.2.0,en-GB
+material_facet,canonical,resin,Resin,,,,homewares,active,seed,0.2.0,en-GB
+material_facet,canonical,wax,Wax,,,,homewares,active,seed,0.2.0,en-GB
+material_facet,canonical,cork,Cork,,,,homewares,active,seed,0.5.0,en-GB

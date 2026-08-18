@@ -1,0 +1,33 @@
+dictionary_key,row_type,value_id,label,maps_to,aliases,facet_ids,status,provenance,version,locale
+fabric_type,canonical,denim,Denim,,jean fabric,,active,seed,0.1.0,en-GB
+fabric_type,canonical,jersey,Jersey,,single jersey;knit jersey,,active,seed,0.1.0,en-GB
+fabric_type,canonical,twill,Twill,,,,active,seed,0.1.0,en-GB
+fabric_type,canonical,satin,Satin,,,,active,seed,0.1.0,en-GB
+fabric_type,canonical,chiffon,Chiffon,,,,active,seed,0.1.0,en-GB
+fabric_type,canonical,poplin,Poplin,,broadcloth,,active,seed,0.1.0,en-GB
+fabric_type,canonical,oxford,Oxford,,oxford cloth,,active,seed,0.1.0,en-GB
+fabric_type,canonical,corduroy,Corduroy,,cord;needlecord,,active,seed,0.1.0,en-GB
+fabric_type,canonical,fleece,Fleece,,polar fleece,,active,seed,0.1.0,en-GB
+fabric_type,canonical,velvet,Velvet,,,,active,seed,0.1.0,en-GB
+fabric_type,canonical,canvas,Canvas,,duck cloth,,active,seed,0.1.0,en-GB
+fabric_type,canonical,boucle,Boucle,,boucle knit,,active,seed,0.1.0,en-GB
+fabric_type,canonical,rib_knit,Rib Knit,,ribbed;ribbed knit,,active,seed,0.1.0,en-GB
+fabric_type,canonical,cable_knit,Cable Knit,,cable,,active,seed,0.1.0,en-GB
+fabric_type,canonical,gauze,Gauze,,double gauze;cheesecloth,,active,seed,0.1.0,en-GB
+fabric_type,canonical,terry,Terry,,towelling;terry cloth,,active,seed,0.1.0,en-GB
+fabric_type,canonical,flannel,Flannel,,flannelette,,active,seed,0.1.0,en-GB
+fabric_type,canonical,lace,Lace,,,,active,seed,0.1.0,en-GB
+fabric_type,canonical,mesh,Mesh,,net;netting,,active,seed,0.1.0,en-GB
+fabric_type,canonical,tweed,Tweed,,,,active,seed,0.1.0,en-GB
+fabric_type,canonical,seersucker,Seersucker,,,,active,seed,0.5.0,en-GB
+fabric_type,canonical,muslin,Muslin,,,,active,seed,0.5.0,en-GB
+fabric_type,canonical,organza,Organza,,,,active,seed,0.5.0,en-GB
+fabric_type,canonical,tulle,Tulle,,,,active,seed,0.5.0,en-GB
+fabric_type,canonical,herringbone,Herringbone,,,,active,seed,0.5.0,en-GB
+fabric_type,canonical,waffle,Waffle,,waffle knit;honeycomb,,active,seed,0.5.0,en-GB
+fabric_type,canonical,jacquard,Jacquard,,,,active,seed,0.5.0,en-GB
+fabric_type,canonical,chambray,Chambray,,,,active,seed,0.5.0,en-GB
+fabric_type,canonical,crepe,Crepe,,crepe de chine,,active,seed,0.5.0,en-GB
+fabric_type,canonical,ponte,Ponte,,ponte di roma;ponte roma,,active,seed,0.5.0,en-GB
+fabric_type,canonical,broderie_anglaise,Broderie Anglaise,,broderie;eyelet,,active,seed,0.5.0,en-GB
+fabric_type,canonical,crochet,Crochet,,crochet knit,,active,seed,0.5.0,en-GB

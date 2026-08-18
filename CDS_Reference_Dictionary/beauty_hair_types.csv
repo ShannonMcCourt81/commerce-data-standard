@@ -1,0 +1,11 @@
+dictionary_key,row_type,value_id,label,maps_to,aliases,facet_ids,status,provenance,version,locale
+beauty_hair_type,canonical,straight,Straight,,,,active,seed,0.1.0,en-GB
+beauty_hair_type,canonical,wavy,Wavy,,,,active,seed,0.1.0,en-GB
+beauty_hair_type,canonical,curly,Curly,,,,active,seed,0.1.0,en-GB
+beauty_hair_type,canonical,coily,Coily,,kinky;afro-textured,,active,seed,0.1.0,en-GB
+beauty_hair_type,canonical,fine,Fine,,,,active,seed,0.1.0,en-GB
+beauty_hair_type,canonical,thick,Thick,,coarse,,active,seed,0.1.0,en-GB
+beauty_hair_type,canonical,all_hair_types,All Hair Types,,all hair,,active,seed,0.1.0,en-GB
+beauty_hair_type,canonical,colour_treated,Colour-treated,,coloured;color-treated;dyed,,active,seed,0.5.0,en-GB
+beauty_hair_type,canonical,dry,Dry,,,,active,seed,0.5.0,en-GB
+beauty_hair_type,canonical,damaged,Damaged,,,,active,seed,0.5.0,en-GB

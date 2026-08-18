@@ -1,0 +1,17 @@
+dictionary_key,row_type,value_id,label,maps_to,aliases,facet_ids,status,provenance,version,locale
+beauty_formulation,canonical,cream,Cream,,,,active,seed,0.1.0,en-GB
+beauty_formulation,canonical,lotion,Lotion,,,,active,seed,0.1.0,en-GB
+beauty_formulation,canonical,gel,Gel,,,,active,seed,0.1.0,en-GB
+beauty_formulation,canonical,serum,Serum,,,,active,seed,0.1.0,en-GB
+beauty_formulation,canonical,oil,Oil,,,,active,seed,0.1.0,en-GB
+beauty_formulation,canonical,balm,Balm,,salve,,active,seed,0.1.0,en-GB
+beauty_formulation,canonical,mist_spray,Mist,,spray;face mist,,active,seed,0.1.0,en-GB
+beauty_formulation,canonical,foam,Foam,,mousse,,active,seed,0.1.0,en-GB
+beauty_formulation,canonical,powder,Powder,,,,active,seed,0.1.0,en-GB
+beauty_formulation,canonical,stick,Stick,,,,active,seed,0.1.0,en-GB
+beauty_formulation,canonical,bar,Bar,,soap bar,,active,seed,0.1.0,en-GB
+beauty_formulation,canonical,liquid,Liquid,,,,active,seed,0.1.0,en-GB
+beauty_formulation,canonical,clay,Clay,,mud,,active,seed,0.5.0,en-GB
+beauty_formulation,canonical,sheet_mask,Sheet Mask,,sheet,,active,seed,0.5.0,en-GB
+beauty_formulation,canonical,wax,Wax,,styling wax,,active,seed,0.5.0,en-GB
+beauty_formulation,canonical,paste,Paste,,pomade;putty,,active,seed,0.5.0,en-GB

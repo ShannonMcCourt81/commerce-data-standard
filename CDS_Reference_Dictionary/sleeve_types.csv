@@ -1,0 +1,8 @@
+dictionary_key,row_type,value_id,label,maps_to,aliases,facet_ids,status,provenance,version,locale
+sleeve_type,canonical,sleeveless,Sleeveless,,no sleeve,,active,seed,0.5.0,en-GB
+sleeve_type,canonical,strappy,Strappy,,cami straps;thin straps,,active,seed,0.5.0,en-GB
+sleeve_type,canonical,short_sleeve,Short Sleeve,,short sleeved,,active,seed,0.5.0,en-GB
+sleeve_type,canonical,three_quarter_sleeve,Three-quarter Sleeve,,3/4 sleeve;three quarter,,active,seed,0.5.0,en-GB
+sleeve_type,canonical,long_sleeve,Long Sleeve,,long sleeved,,active,seed,0.5.0,en-GB
+sleeve_type,canonical,cap_sleeve,Cap Sleeve,,,,active,seed,0.5.0,en-GB
+sleeve_type,canonical,puff_sleeve,Puff Sleeve,,balloon sleeve,,active,seed,0.5.0,en-GB

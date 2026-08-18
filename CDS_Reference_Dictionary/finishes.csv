@@ -1,0 +1,23 @@
+dictionary_key,row_type,value_id,label,maps_to,aliases,facet_ids,status,provenance,version,locale
+finish,canonical,matte,Matte,,,,active,seed,0.2.0,en-GB
+finish,canonical,gloss,Gloss,,high gloss,,active,seed,0.5.0,en-GB
+finish,canonical,satin,Satin,,,,active,seed,0.2.0,en-GB
+finish,canonical,polished,Polished,,,,active,seed,0.2.0,en-GB
+finish,canonical,brushed,Brushed,,,,active,seed,0.2.0,en-GB
+finish,canonical,hammered,Hammered,,,,active,seed,0.2.0,en-GB
+finish,canonical,distressed,Distressed,,,,active,seed,0.2.0,en-GB
+finish,canonical,weathered,Weathered,,,,active,seed,0.2.0,en-GB
+finish,canonical,painted,Painted,,,,active,seed,0.2.0,en-GB
+finish,canonical,powder_coated,Powder-coated,,,,active,seed,0.2.0,en-GB
+finish,canonical,natural_oil,Natural Oil,,,,active,seed,0.2.0,en-GB
+finish,canonical,lacquered,Lacquered,,,,active,seed,0.2.0,en-GB
+finish,canonical,glazed,Glazed,,,,active,seed,0.2.0,en-GB
+finish,canonical,unglazed,Unglazed,,,,active,seed,0.2.0,en-GB
+finish,canonical,antique,Antique,,aged,,active,seed,0.2.0,en-GB
+finish,canonical,textured,Textured,,,,active,seed,0.2.0,en-GB
+finish,canonical,marbled,Marbled,,,,active,seed,0.2.0,en-GB
+finish,canonical,whitewashed,Whitewashed,,limewashed,,active,seed,0.5.0,en-GB
+finish,canonical,galvanised,Galvanised,,galvanized,,active,seed,0.5.0,en-GB
+finish,canonical,enamelled,Enamelled,,enamel;enameled,,active,seed,0.5.0,en-GB
+finish,canonical,mirrored,Mirrored,,,,active,seed,0.5.0,en-GB
+finish,canonical,fluted,Fluted,,ribbed;reeded,,active,seed,0.5.0,en-GB

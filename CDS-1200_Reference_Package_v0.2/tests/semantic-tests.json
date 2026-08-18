@@ -1,0 +1,40 @@
+[
+  {
+    "test_id": "SEM-001",
+    "description": "Product variant references resolve to variants whose product_id matches the product.",
+    "documents": [
+      "fixtures/positive/products/relaxed-linen-shirt.product.json",
+      "fixtures/positive/variants/relaxed-linen-shirt-navy-s.variant.json",
+      "fixtures/positive/variants/relaxed-linen-shirt-navy-m.variant.json"
+    ],
+    "expected": "PASS"
+  },
+  {
+    "test_id": "SEM-002",
+    "description": "Dictionary value facet membership resolves to a configured facet value.",
+    "documents": [
+      "fixtures/positive/dictionaries/colour_navy.value.json",
+      "fixtures/positive/facets/colour-family.json"
+    ],
+    "expected": "PASS"
+  },
+  {
+    "test_id": "SEM-003",
+    "description": "Publication canonical_revision equals the product revision used to calculate expected state.",
+    "documents": [
+      "fixtures/positive/products/relaxed-linen-shirt.product.json",
+      "fixtures/positive/publication/shopify-shirt.publication.json"
+    ],
+    "expected": "PASS"
+  },
+  {
+    "test_id": "SEM-004",
+    "description": "All related documents remain within the same tenant boundary.",
+    "documents": [
+      "fixtures/positive/products/relaxed-linen-shirt.product.json",
+      "fixtures/positive/publication/shopify-shirt.publication.json",
+      "fixtures/positive/observation/shopify-shirt.observation.json"
+    ],
+    "expected": "PASS"
+  }
+]

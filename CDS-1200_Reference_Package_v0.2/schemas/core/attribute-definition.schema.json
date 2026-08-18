@@ -1,0 +1,142 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:cds:schema:core:attribute-definition",
+  "version": "0.2.0",
+  "title": "CDS Attribute Definition",
+  "allOf": [
+    {
+      "$ref": "urn:cds:schema:common:envelope"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "document_type": {
+          "const": "attribute_definition"
+        },
+        "attribute_id": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9]*_[a-z0-9]+(?:_[a-z0-9]+)*$"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string"
+        },
+        "scope": {
+          "type": "string",
+          "enum": [
+            "product",
+            "variant",
+            "category",
+            "channel",
+            "system"
+          ]
+        },
+        "value_type": {
+          "type": "string",
+          "enum": [
+            "text",
+            "boolean",
+            "integer",
+            "decimal",
+            "date",
+            "date_time",
+            "identifier",
+            "enum_reference",
+            "enum_reference_list",
+            "measurement",
+            "money",
+            "localised_text",
+            "composition_list",
+            "object"
+          ]
+        },
+        "cardinality": {
+          "type": "object",
+          "properties": {
+            "minimum": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "maximum": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 1
+            }
+          },
+          "required": [
+            "minimum",
+            "maximum"
+          ],
+          "additionalProperties": false
+        },
+        "dictionary_id": {
+          "type": "string"
+        },
+        "behaviour": {
+          "type": "object",
+          "properties": {
+            "filterable": {
+              "type": "boolean"
+            },
+            "searchable": {
+              "type": "boolean"
+            },
+            "displayable": {
+              "type": "boolean"
+            },
+            "comparison_strategy": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "filterable",
+            "searchable",
+            "displayable",
+            "comparison_strategy"
+          ],
+          "additionalProperties": false
+        },
+        "channel_mappings": {
+          "type": "array",
+          "items": {
+            "$ref": "urn:cds:schema:common:entity-reference"
+          }
+        }
+      },
+      "required": [
+        "attribute_id",
+        "label",
+        "scope",
+        "value_type",
+        "cardinality",
+        "behaviour"
+      ],
+      "if": {
+        "properties": {
+          "value_type": {
+            "enum": [
+              "enum_reference",
+              "enum_reference_list"
+            ]
+          }
+        },
+        "required": [
+          "value_type"
+        ]
+      },
+      "then": {
+        "required": [
+          "dictionary_id"
+        ]
+      },
+      "$comment": "dictionary_id is required whenever value_type is enum_reference or enum_reference_list (CDS1100-16)."
+    }
+  ],
+  "unevaluatedProperties": false
+}

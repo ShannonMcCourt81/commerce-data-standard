@@ -1,0 +1,9 @@
+dictionary_key,row_type,value_id,label,maps_to,aliases,facet_ids,status,provenance,version,locale
+swim_style,canonical,one_piece,One-piece,,swimsuit;bathing suit;maillot,,active,seed,0.6.0,en-GB
+swim_style,canonical,bikini,Bikini,,two piece;two-piece,,active,seed,0.6.0,en-GB
+swim_style,canonical,tankini,Tankini,,,,active,seed,0.6.0,en-GB
+swim_style,canonical,boardshorts,Boardshorts,,board shorts;boardies,,active,seed,0.6.0,en-GB
+swim_style,canonical,swim_shorts,Swim Shorts,,swim trunks;trunks,,active,seed,0.6.0,en-GB
+swim_style,canonical,swim_briefs,Swim Briefs,,racing briefs;speedos,,active,seed,0.6.0,en-GB
+swim_style,canonical,rash_vest,Rash Vest,,rashie;rash guard;swim shirt,,active,seed,0.6.0,en-GB
+swim_style,canonical,cover_up,Cover-up,,beach cover up;sarong;kaftan,,active,seed,0.6.0,en-GB

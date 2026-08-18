@@ -1,0 +1,30 @@
+{
+  "cds_schema": "urn:cds:schema:reference:facet-definition",
+  "cds_version": "0.2",
+  "document_type": "facet_definition",
+  "document_id": "facet_colour_family",
+  "revision": 1,
+  "status": "active",
+  "tenant_id": "org_reference",
+  "created_at": "2026-08-03T00:00:00Z",
+  "updated_at": "2026-08-03T00:00:00Z",
+  "source_system": "cds-reference-package",
+  "facet_id": "facet_colour_family",
+  "label": [
+    {
+      "language": "en-AU",
+      "text": "Colour"
+    }
+  ],
+  "source_attribute_id": "MF_colour",
+  "selection_mode": "multi_or",
+  "sort_mode": "configured",
+  "value_ids": [
+    "facet_black",
+    "facet_white",
+    "facet_blue",
+    "facet_green",
+    "facet_red",
+    "facet_neutral"
+  ]
+}

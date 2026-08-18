@@ -1,0 +1,168 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:cds:schema:channel:verification-result",
+  "version": "0.2.0",
+  "title": "CDS Verification Result",
+  "allOf": [
+    {
+      "$ref": "urn:cds:schema:common:envelope"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "document_type": {
+          "const": "verification_result"
+        },
+        "verification_id": {
+          "type": "string",
+          "minLength": 3
+        },
+        "publication_id": {
+          "type": "string",
+          "minLength": 3
+        },
+        "observation_id": {
+          "type": "string",
+          "minLength": 3
+        },
+        "verified_at": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[+-]\\d{2}:\\d{2})$"
+        },
+        "overall_status": {
+          "type": "string",
+          "enum": [
+            "MATCH",
+            "MISSING",
+            "MISMATCH",
+            "PENDING",
+            "UNOBSERVABLE",
+            "NOT_APPLICABLE",
+            "OVERRIDDEN",
+            "ERROR"
+          ]
+        },
+        "field_results": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "field_path": {
+                "type": "string",
+                "pattern": "^(/([^/~]|~[01])*)*$",
+                "$comment": "JSON Pointer into the expected/observed state (CDS-1100 R062)."
+              },
+              "expected": {},
+              "observed": {},
+              "comparison_strategy": {
+                "type": "string"
+              },
+              "status": {
+                "type": "string",
+                "enum": [
+                  "MATCH",
+                  "MISSING",
+                  "MISMATCH",
+                  "PENDING",
+                  "UNOBSERVABLE",
+                  "NOT_APPLICABLE",
+                  "OVERRIDDEN",
+                  "ERROR"
+                ]
+              },
+              "detailed_status": {
+                "type": "string",
+                "enum": [
+                  "MATCH",
+                  "MISSING_DOWNSTREAM",
+                  "MISMATCH",
+                  "UNEXPECTED_DOWNSTREAM",
+                  "PENDING",
+                  "STALE_EXPECTED",
+                  "UNOBSERVABLE",
+                  "NOT_APPLICABLE",
+                  "WAIVED",
+                  "TRANSFORMATION_ERROR",
+                  "PUBLICATION_ERROR",
+                  "OBSERVATION_ERROR",
+                  "COMPARISON_ERROR"
+                ],
+                "$comment": "Detailed status per CDS-500 §17.2; rollup to the core status is deterministic."
+              },
+              "reason_code": {
+                "type": "string",
+                "pattern": "^CDS_[A-Z_]+$"
+              },
+              "repair_action": {
+                "type": "string",
+                "minLength": 1
+              },
+              "message": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "field_path",
+              "expected",
+              "observed",
+              "comparison_strategy",
+              "status"
+            ],
+            "if": {
+              "properties": {
+                "status": {
+                  "not": {
+                    "const": "MATCH"
+                  }
+                }
+              },
+              "required": [
+                "status"
+              ]
+            },
+            "then": {
+              "required": [
+                "reason_code"
+              ]
+            },
+            "additionalProperties": false,
+            "$comment": "reason_code is REQUIRED on every non-MATCH result (ADR-D3, CDS500-R063)."
+          }
+        },
+        "coverage_ratio": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "$comment": "Fraction of contracted fields that were observable in this verification run (CDS-500 §17.6)."
+        },
+        "comparison_engine_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "presentation_status": {
+          "type": "string",
+          "enum": [
+            "green",
+            "amber",
+            "red",
+            "grey"
+          ],
+          "$comment": "Informative presentation colour derived per CDS-500 §18; never a stored status (CDS500-R073)."
+        }
+      },
+      "required": [
+        "verification_id",
+        "publication_id",
+        "observation_id",
+        "verified_at",
+        "overall_status",
+        "field_results"
+      ]
+    }
+  ],
+  "unevaluatedProperties": false
+}

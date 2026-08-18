@@ -1,0 +1,203 @@
+{
+  "positive": [
+    {
+      "path": "fixtures/positive/attribute-definitions/MF_colour.json",
+      "schema_id": "urn:cds:schema:core:attribute-definition",
+      "expected": "PASS"
+    },
+    {
+      "path": "fixtures/positive/attribute-definitions/MF_material.json",
+      "schema_id": "urn:cds:schema:core:attribute-definition",
+      "expected": "PASS"
+    },
+    {
+      "path": "fixtures/positive/dictionaries/colour.dictionary.json",
+      "schema_id": "urn:cds:schema:reference:dictionary",
+      "expected": "PASS"
+    },
+    {
+      "path": "fixtures/positive/dictionaries/colour_navy.value.json",
+      "schema_id": "urn:cds:schema:reference:dictionary-value",
+      "expected": "PASS"
+    },
+    {
+      "path": "fixtures/positive/facets/colour-family.json",
+      "schema_id": "urn:cds:schema:reference:facet-definition",
+      "expected": "PASS"
+    },
+    {
+      "path": "fixtures/positive/classification/womens-shirts.category.json",
+      "schema_id": "urn:cds:schema:reference:category",
+      "expected": "PASS"
+    },
+    {
+      "path": "fixtures/positive/classification/womens-shirts.shopify-mapping.json",
+      "schema_id": "urn:cds:schema:reference:taxonomy-mapping",
+      "expected": "PASS"
+    },
+    {
+      "path": "fixtures/positive/products/relaxed-linen-shirt.product.json",
+      "schema_id": "urn:cds:schema:core:product",
+      "expected": "PASS"
+    },
+    {
+      "path": "fixtures/positive/variants/relaxed-linen-shirt-navy-m.variant.json",
+      "schema_id": "urn:cds:schema:core:variant",
+      "expected": "PASS"
+    },
+    {
+      "path": "fixtures/positive/variants/relaxed-linen-shirt-navy-s.variant.json",
+      "schema_id": "urn:cds:schema:core:variant",
+      "expected": "PASS"
+    },
+    {
+      "path": "fixtures/positive/channels/shopify.channel-profile.json",
+      "schema_id": "urn:cds:schema:channel:channel-profile",
+      "expected": "PASS"
+    },
+    {
+      "path": "fixtures/positive/publication/shopify-shirt.publication.json",
+      "schema_id": "urn:cds:schema:channel:publication-record",
+      "expected": "PASS"
+    },
+    {
+      "path": "fixtures/positive/observation/shopify-shirt.observation.json",
+      "schema_id": "urn:cds:schema:channel:observation-record",
+      "expected": "PASS"
+    },
+    {
+      "path": "fixtures/positive/verification/shopify-shirt.verification.json",
+      "schema_id": "urn:cds:schema:channel:verification-result",
+      "expected": "PASS"
+    },
+    {
+      "path": "fixtures/positive/ai/colour-mapping.ai-proposal.json",
+      "schema_id": "urn:cds:schema:automation:ai-proposal",
+      "expected": "PASS"
+    },
+    {
+      "path": "fixtures/positive/assurance/reference.conformance-manifest.json",
+      "schema_id": "urn:cds:schema:assurance:conformance-manifest",
+      "expected": "PASS"
+    }
+  ],
+  "negative": [
+    {
+      "path": "fixtures/negative/product-missing-product-id.json",
+      "schema_id": "urn:cds:schema:core:product",
+      "expected": "FAIL",
+      "reason": "Missing required product_id",
+      "expected_error_substrings": [
+        "'product_id' is a required property"
+      ]
+    },
+    {
+      "path": "fixtures/negative/variant-invalid-gtin.json",
+      "schema_id": "urn:cds:schema:core:variant",
+      "expected": "FAIL",
+      "reason": "Barcode contains a non-digit",
+      "expected_error_substrings": [
+        "'93A8716007824' does not match"
+      ]
+    },
+    {
+      "path": "fixtures/negative/attribute-invalid-semantic-name.json",
+      "schema_id": "urn:cds:schema:core:attribute-definition",
+      "expected": "FAIL",
+      "reason": "Field identifier does not use CDS semantic prefix syntax",
+      "expected_error_substrings": [
+        "'attribute.colour' does not match"
+      ]
+    },
+    {
+      "path": "fixtures/negative/dictionary-value-invalid-code.json",
+      "schema_id": "urn:cds:schema:reference:dictionary-value",
+      "expected": "FAIL",
+      "reason": "Canonical code is not lowercase snake_case",
+      "expected_error_substrings": [
+        "'Navy Blue' does not match"
+      ]
+    },
+    {
+      "path": "fixtures/negative/publication-invalid-status.json",
+      "schema_id": "urn:cds:schema:channel:publication-record",
+      "expected": "FAIL",
+      "reason": "Publication status is not in the controlled enumeration",
+      "expected_error_substrings": [
+        "'done' is not one of"
+      ]
+    },
+    {
+      "path": "fixtures/negative/observation-invalid-timestamp.json",
+      "schema_id": "urn:cds:schema:channel:observation-record",
+      "expected": "FAIL",
+      "reason": "Timestamp is not RFC 3339 date-time with timezone offset",
+      "expected_error_substrings": [
+        "'03/08/2026 10:12'"
+      ]
+    },
+    {
+      "path": "fixtures/negative/verification-invalid-status.json",
+      "schema_id": "urn:cds:schema:channel:verification-result",
+      "expected": "FAIL",
+      "reason": "Traffic-light label is not a normative verification status",
+      "expected_error_substrings": [
+        "'GREEN' is not one of"
+      ]
+    },
+    {
+      "path": "fixtures/negative/ai-confidence-out-of-range.json",
+      "schema_id": "urn:cds:schema:automation:ai-proposal",
+      "expected": "FAIL",
+      "reason": "Confidence exceeds 1.0",
+      "expected_error_substrings": [
+        "1.25 is greater than the maximum of 1"
+      ]
+    },
+    {
+      "path": "fixtures/negative/envelope-bad-status.json",
+      "schema_id": "urn:cds:schema:common:envelope",
+      "expected": "FAIL",
+      "reason": "Envelope status is not in the controlled enumeration",
+      "expected_error_substrings": [
+        "'live' is not one of"
+      ]
+    },
+    {
+      "path": "fixtures/negative/envelope-missing-revision.json",
+      "schema_id": "urn:cds:schema:common:envelope",
+      "expected": "FAIL",
+      "reason": "Envelope revision is missing",
+      "expected_error_substrings": [
+        "'revision' is a required property"
+      ]
+    },
+    {
+      "path": "fixtures/negative/timestamp-missing-offset.json",
+      "schema_id": "urn:cds:schema:channel:observation-record",
+      "expected": "FAIL",
+      "reason": "Timestamp lacks a timezone offset",
+      "expected_error_substrings": [
+        "'2026-08-03T10:12:00'"
+      ]
+    },
+    {
+      "path": "fixtures/negative/product-attribute-wrong-type.json",
+      "schema_id": "urn:cds:schema:core:product",
+      "expected": "FAIL",
+      "reason": "Attribute value is a bare scalar, not a typed value",
+      "expected_error_substrings": [
+        "42 is not valid under any of the given schemas"
+      ]
+    },
+    {
+      "path": "fixtures/negative/verification-missing-reason-code.json",
+      "schema_id": "urn:cds:schema:channel:verification-result",
+      "expected": "FAIL",
+      "reason": "Non-MATCH field result lacks the mandatory reason_code",
+      "expected_error_substrings": [
+        "'reason_code' is a required property"
+      ]
+    }
+  ]
+}

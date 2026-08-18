@@ -1,0 +1,423 @@
+{
+  "package": "CDS Reference Dictionary",
+  "version": "0.7.2",
+  "status": "informative-starter-data",
+  "locale": "en-GB",
+  "supersedes": [
+    "CDS Reference Dictionary 0.4.0",
+    "CDS-1500_Starter_Reference_Dictionaries_v0.2 (0.2.0)",
+    "CDS_Dictionary_Expansion_Packs_v0.1 (0.1.0)"
+  ],
+  "chapters": {
+    "1": {
+      "title": "Colours",
+      "description": "Shades and the broad families they file under. A shade belongs to one or two families (first listed = primary).",
+      "dictionaries": [
+        "colour_facets",
+        "colour_reference_values"
+      ]
+    },
+    "2": {
+      "title": "Materials",
+      "description": "What things are made of - fibres and substances (cotton, wool, oak, ceramic). How a textile is constructed lives in Chapter 3.",
+      "dictionaries": [
+        "apparel_materials",
+        "homewares_materials",
+        "material_facets"
+      ]
+    },
+    "3": {
+      "title": "Fabrics & Construction",
+      "description": "How a textile is made - weaves, knits and constructions (denim, jersey, tulle). Fibres such as cotton and wool live in Chapter 2, Materials: a cotton jersey tee is Material: Cotton + Fabric: Jersey.",
+      "dictionaries": [
+        "fabric_types"
+      ]
+    },
+    "4": {
+      "title": "Care",
+      "description": "Descriptive care values (deliberately not the trademarked care-symbol set).",
+      "dictionaries": [
+        "care_instructions"
+      ]
+    },
+    "5": {
+      "title": "Sizing",
+      "description": "Sizing systems, not sizes - a size value only means something with its system declared (AU 12, US bra, EU kids height).",
+      "dictionaries": [
+        "size_systems"
+      ]
+    },
+    "6": {
+      "title": "Apparel Attributes",
+      "description": "Fit, style, occasion, pattern, neckline, sleeve and length vocabularies. The style vocabulary is shared across fashion and interiors.",
+      "dictionaries": [
+        "fits",
+        "styles",
+        "occasions",
+        "patterns",
+        "necklines",
+        "sleeve_types",
+        "garment_lengths",
+        "swim_styles"
+      ]
+    },
+    "7": {
+      "title": "Homewares Attributes",
+      "description": "Rooms, surface finishes and shapes.",
+      "dictionaries": [
+        "rooms",
+        "finishes",
+        "shapes"
+      ]
+    },
+    "8": {
+      "title": "Footwear",
+      "description": "Styles, heel heights, closures, toe shapes and width fittings. Upper materials reuse Chapter 2.",
+      "dictionaries": [
+        "footwear_styles",
+        "footwear_heel_heights",
+        "footwear_closures",
+        "footwear_toe_shapes",
+        "footwear_width_fittings"
+      ]
+    },
+    "9": {
+      "title": "Jewellery & Accessories",
+      "description": "Metals, stones, closures and piece styles.",
+      "dictionaries": [
+        "jewellery_metals",
+        "jewellery_stones",
+        "jewellery_closures",
+        "jewellery_styles"
+      ]
+    },
+    "10": {
+      "title": "Beauty & Personal Care",
+      "description": "Skin and hair states, scent families, formulations and finishes. Benefit claims (anti-ageing, hypoallergenic) are excluded by design - they need evidence, not filters.",
+      "dictionaries": [
+        "beauty_skin_types",
+        "beauty_hair_types",
+        "beauty_scent_families",
+        "beauty_formulations",
+        "beauty_makeup_finishes"
+      ]
+    },
+    "11": {
+      "title": "Electronics & Appliances",
+      "description": "Brown and white goods: connections, screen technologies, power, mounting and energy-label schemes. Compliance marks and vendor ecosystems excluded.",
+      "dictionaries": [
+        "connectivity",
+        "screen_technologies",
+        "power_sources",
+        "installation_types",
+        "energy_rating_systems"
+      ]
+    },
+    "12": {
+      "title": "Sports & Outdoor",
+      "description": "The shop-by-sport facet, plus surf wetsuit attributes (style, thickness, zip entry, seam construction). Performance claims, skill levels and vendor fin systems excluded.",
+      "dictionaries": [
+        "sport_activities",
+        "wetsuit_styles",
+        "wetsuit_thicknesses",
+        "wetsuit_zips",
+        "wetsuit_seams"
+      ]
+    },
+    "13": {
+      "title": "Toys & Games",
+      "description": "Play types and retail age bands. The packaging safety mark (3+) is a compliance label, not filter vocabulary.",
+      "dictionaries": [
+        "play_types",
+        "toy_age_ranges"
+      ]
+    },
+    "14": {
+      "title": "Pet Supplies",
+      "description": "Pet types, species-neutral life stages (puppy/kitten are display mappings) and animal sizes. Breed lists and health claims excluded.",
+      "dictionaries": [
+        "pet_types",
+        "pet_life_stages",
+        "pet_sizes"
+      ]
+    },
+    "15": {
+      "title": "Furniture",
+      "description": "Assembly forms. Furniture styles live in the Chapter 6 style vocabulary; upholstery reuses Fabrics and Materials.",
+      "dictionaries": [
+        "assembly_types"
+      ]
+    },
+    "16": {
+      "title": "Garden & Outdoor",
+      "description": "Sun exposure - a grower-declared growing condition. Plant taxonomies and watering claims deliberately excluded.",
+      "dictionaries": [
+        "sun_exposure"
+      ]
+    }
+  },
+  "note": "Canonical meanings are never silently redefined; changes go through deprecation with replacement mappings. Folder is unversioned by design; this manifest is the version authority.",
+  "package_hash": "34c8a01b6a4b2631f9b6e86dffb5d61a246223782d45f03c302698d27246971c",
+  "files": [
+    {
+      "path": "apparel_materials.csv",
+      "sha256": "fef6e47f3d9437ad4f0e0ec8f229d6d6cac1500785e91da18d704542f0494bea",
+      "bytes": 2631
+    },
+    {
+      "path": "assembly_types.csv",
+      "sha256": "023b27cf7cc3b63dda0a9cd5a41cc0e94f465a0026a3a470b23138086347f93e",
+      "bytes": 501
+    },
+    {
+      "path": "beauty_formulations.csv",
+      "sha256": "56ba646c76c5a2dc1390ed497d31b92e2c5513c18f068af2848b6f0a8bad320d",
+      "bytes": 1266
+    },
+    {
+      "path": "beauty_hair_types.csv",
+      "sha256": "083c9c52645879dd963bcd900c2516f37239a652237ef0126168ad9f1ca05dd5",
+      "bytes": 867
+    },
+    {
+      "path": "beauty_makeup_finishes.csv",
+      "sha256": "d899aee5542bb4c7da5d4a467eb9d424f6b7be6e37d218a781ab9db767f9f238",
+      "bytes": 573
+    },
+    {
+      "path": "beauty_scent_families.csv",
+      "sha256": "0c941150f13d5a804c25f84770325d99f81e6aae95271865109c8631b474a898",
+      "bytes": 1203
+    },
+    {
+      "path": "beauty_skin_types.csv",
+      "sha256": "40ee63f8efdc8e39c494aaa937079bfbb818ec62a9a7c3dbf118a2d8c1452737",
+      "bytes": 722
+    },
+    {
+      "path": "care_instructions.csv",
+      "sha256": "7250329bdda5de15a4b00b97b0130d9400db9575acc21d4bb561b416127af642",
+      "bytes": 2515
+    },
+    {
+      "path": "colour_facets.csv",
+      "sha256": "7dcda4fb84190496b5b361f6e915bb9f99e83c60f8882b24f33d3fa546d33e8e",
+      "bytes": 1686
+    },
+    {
+      "path": "colour_reference_values.csv",
+      "sha256": "ce49c4f4f09482ca45aefc1bc96089f6da5653a88fd2fd9c89bc5c612138cc64",
+      "bytes": 3627
+    },
+    {
+      "path": "connectivity.csv",
+      "sha256": "a6947655dbacc7d7b99dcd6a614eec5e498672fef3423f9f26d1f787a14f674c",
+      "bytes": 1485
+    },
+    {
+      "path": "energy_rating_systems.csv",
+      "sha256": "ece0456b255ef6d9e2cb1456185e8225717a23170fe7d9e84d4b794ade64ccad",
+      "bytes": 1585
+    },
+    {
+      "path": "fabric_types.csv",
+      "sha256": "6f05c082b6d3abae0a03d62a7b5c366e716155e2d108b33293f0f530b50fee76",
+      "bytes": 2475
+    },
+    {
+      "path": "finishes.csv",
+      "sha256": "57bf0c77e376801b27da3435dc2d731050f99841037893c707974be3be9e68d0",
+      "bytes": 1549
+    },
+    {
+      "path": "fits.csv",
+      "sha256": "b89c1431a80cb0ace62f1ab6a105009e6c9e318628f65c3f24be8f4f3eed82f3",
+      "bytes": 1379
+    },
+    {
+      "path": "footwear_closures.csv",
+      "sha256": "a9f559b9b378bbcdd12c29088c82a300de06cff248ff22f42038eda8b49e8fea",
+      "bytes": 643
+    },
+    {
+      "path": "footwear_heel_heights.csv",
+      "sha256": "eba9b55b1aa7252d6510f570aed7a9470297bcbd41c2ed75ce2a3a55511acd14",
+      "bytes": 676
+    },
+    {
+      "path": "footwear_styles.csv",
+      "sha256": "1194e1a377db7c5cc9e63764b9e2a470ec6103a9d17743e57edb8f312b977972",
+      "bytes": 1855
+    },
+    {
+      "path": "footwear_toe_shapes.csv",
+      "sha256": "5cd6735d2a6fae812e2698e1d9c37098d0f5f1b2bc7e67ea00cf9fc57f87e424",
+      "bytes": 573
+    },
+    {
+      "path": "footwear_width_fittings.csv",
+      "sha256": "1e908fa6e9fb599dfc501d31a8d04acd87ed40f305065631828c6813b9146e43",
+      "bytes": 449
+    },
+    {
+      "path": "garment_lengths.csv",
+      "sha256": "368c33a8bd1496741bb29342a51d005a0131a1ae38d98de74197dc8c9217ae48",
+      "bytes": 589
+    },
+    {
+      "path": "homewares_materials.csv",
+      "sha256": "cb54e798594474bab1b6475360ce2b9a593c96af5aa82298db1e1f6ad500ba04",
+      "bytes": 3104
+    },
+    {
+      "path": "installation_types.csv",
+      "sha256": "cfd997452d4ad2ac1eddeda9b77e4070758ff7ecd326d7efe3d5f84d1d20713b",
+      "bytes": 1225
+    },
+    {
+      "path": "jewellery_closures.csv",
+      "sha256": "e349d1ea37d96fc9154fb03cbeffc727f89ba763dc77db66d1dca44d3f36feed",
+      "bytes": 922
+    },
+    {
+      "path": "jewellery_metals.csv",
+      "sha256": "2bfbb6d91f25606ddf3e7a518938b246bc72c6e663ddd303a74bea75bc495847",
+      "bytes": 1348
+    },
+    {
+      "path": "jewellery_stones.csv",
+      "sha256": "2c9bb601a51dd1e8f9c2b071ae81b1d206bff1088cdf223a55c6b83fcd673a05",
+      "bytes": 1972
+    },
+    {
+      "path": "jewellery_styles.csv",
+      "sha256": "696199884dc65d9b5cab2014a5a38d38c8723d6a45030a5992506ae9a777a4d6",
+      "bytes": 991
+    },
+    {
+      "path": "material_facets.csv",
+      "sha256": "3ba7a3bd26dbbca20711d6c828b8dbbe9e075c320054ba8990787179a35ac7a1",
+      "bytes": 2118
+    },
+    {
+      "path": "necklines.csv",
+      "sha256": "5f1e9fd9ce31e08b30211ca105fdabd7b0c0da9a74495bca5c756e9a58e67b29",
+      "bytes": 1256
+    },
+    {
+      "path": "occasions.csv",
+      "sha256": "11a765e13475d1c2eb5e653324723bc6e877af164a229c69527b0c081e0fc9a0",
+      "bytes": 1157
+    },
+    {
+      "path": "patterns.csv",
+      "sha256": "4000cf48afc8aa5f3788458c441737c50ac2ae5f09ffa49f379fde6c045345cf",
+      "bytes": 1291
+    },
+    {
+      "path": "pet_life_stages.csv",
+      "sha256": "975cb46a92ab34bec154757ff0924725ff1999665003947c1e93ecc789b9624e",
+      "bytes": 561
+    },
+    {
+      "path": "pet_sizes.csv",
+      "sha256": "d41a6c1db6f8d3328ab5ec4c990ea454c3c2167112ffad497831afa3cc98a52f",
+      "bytes": 412
+    },
+    {
+      "path": "pet_types.csv",
+      "sha256": "4ebe41d60593aac272ea2b4a647d03d970cd4269bf5bfcbbb0c87e26e53f5e62",
+      "bytes": 624
+    },
+    {
+      "path": "play_types.csv",
+      "sha256": "0ccc59aa00082f3048ce09d13a6885b241f7c34ddf6801455f1ab232f8670adc",
+      "bytes": 1117
+    },
+    {
+      "path": "power_sources.csv",
+      "sha256": "76abfe1fbc1dcf49f367798ccd1f65fc710c7b5a47eb33c8c3dcaf5b2083cb7a",
+      "bytes": 1010
+    },
+    {
+      "path": "rooms.csv",
+      "sha256": "fe477a783fc645e27fd627cff1cd8081b8cf7ed08cd7e0911f3f79e9067ec379",
+      "bytes": 1044
+    },
+    {
+      "path": "screen_technologies.csv",
+      "sha256": "1c2b4f299e223148074dbe5a7de97dcb9c96efe634543f3adc4255d42252744c",
+      "bytes": 1025
+    },
+    {
+      "path": "shapes.csv",
+      "sha256": "e1789ae3d513556e9a2c560ff014681bafbe5fd3937dbda8d23955fc328d9c46",
+      "bytes": 1004
+    },
+    {
+      "path": "size_systems.csv",
+      "sha256": "01dc058e70d1021116bc25351308494827bc2b18dbcc8a6468c3a32815df7742",
+      "bytes": 1775
+    },
+    {
+      "path": "sleeve_types.csv",
+      "sha256": "aac85c30f789b46179728ec4bd7ff9c08caec1f7cee125ebeec29ab657ec0b33",
+      "bytes": 720
+    },
+    {
+      "path": "sport_activities.csv",
+      "sha256": "602e31567e407020be1f8c559f7e90674cb129979a9f81ab7aefaae4400c8e39",
+      "bytes": 1730
+    },
+    {
+      "path": "styles.csv",
+      "sha256": "b657e5dc0eb38ca39ff46de488ae7a0d77cf47c8f3d8ac1cf6397c9f817f0e05",
+      "bytes": 1905
+    },
+    {
+      "path": "sun_exposure.csv",
+      "sha256": "c5fbc499aba35738b37bbe274b161ef1f1ec8b50f8bed9f2fb9f26bef3c81f0e",
+      "bytes": 382
+    },
+    {
+      "path": "swim_styles.csv",
+      "sha256": "9c2f75bc71e560c59fb14fa674e40b11db6b9f1f24fc2cefb9fcaba24e1f67cc",
+      "bytes": 806
+    },
+    {
+      "path": "toy_age_ranges.csv",
+      "sha256": "8e14be2b3fabe65167d2a557724e8636262e1e1afb4c9e9d2ddfdf146a537aae",
+      "bytes": 519
+    },
+    {
+      "path": "wetsuit_seams.csv",
+      "sha256": "218c0a7b0cd4cc8ad1531c4fcdd35f01e14190a1d5608dfab2d4dd886142d395",
+      "bytes": 606
+    },
+    {
+      "path": "wetsuit_styles.csv",
+      "sha256": "047d0bde4d700676e8f98d62faf50870fce01b1786e25a95fc00274a42a0d92f",
+      "bytes": 584
+    },
+    {
+      "path": "wetsuit_thicknesses.csv",
+      "sha256": "18200748082d752036abbe4989ea5fa9a8f7c0a3b68064a3f1151de0b99206c5",
+      "bytes": 801
+    },
+    {
+      "path": "wetsuit_zips.csv",
+      "sha256": "fefc61ce9893a9515a89d26a82308f1417755db773fec6d846ded50f15a703bf",
+      "bytes": 359
+    },
+    {
+      "path": "README.md",
+      "sha256": "a512cbbf1b28bd795902335f3295f91e56d7ab2f426233bf648075e3d3417669",
+      "bytes": 7853
+    },
+    {
+      "path": "SHA256SUMS.txt",
+      "sha256": "8348043a1041d670aba175088cb5cf384762a592d684914e9ba546fad57b4611",
+      "bytes": 4344
+    }
+  ]
+}

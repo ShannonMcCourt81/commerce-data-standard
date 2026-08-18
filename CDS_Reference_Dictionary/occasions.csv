@@ -1,0 +1,17 @@
+dictionary_key,row_type,value_id,label,maps_to,aliases,facet_ids,status,provenance,version,locale
+occasion,canonical,everyday,Everyday,,,,active,seed,0.2.0,en-GB
+occasion,canonical,work,Work,,,,active,seed,0.2.0,en-GB
+occasion,canonical,casual,Casual,,,,active,seed,0.2.0,en-GB
+occasion,canonical,formal,Formal,,,,active,seed,0.2.0,en-GB
+occasion,canonical,party,Party,,,,active,seed,0.2.0,en-GB
+occasion,canonical,wedding_guest,Wedding Guest,,,,active,seed,0.2.0,en-GB
+occasion,canonical,travel,Travel,,,,active,seed,0.2.0,en-GB
+occasion,canonical,holiday,Holiday,,,,active,seed,0.2.0,en-GB
+occasion,canonical,beach,Beach,,,,active,seed,0.2.0,en-GB
+occasion,canonical,active,Active,,,,active,seed,0.2.0,en-GB
+occasion,canonical,outdoor,Outdoor,,,,active,seed,0.2.0,en-GB
+occasion,canonical,lounge,Lounge,,,,active,seed,0.2.0,en-GB
+occasion,canonical,evening,Evening,,night out;going out,,active,seed,0.5.0,en-GB
+occasion,canonical,festival,Festival,,,,active,seed,0.5.0,en-GB
+occasion,canonical,race_day,Race Day,,races;racing carnival,,active,seed,0.5.0,en-GB
+occasion,canonical,bridal,Bridal,,bride;bridal party,,active,seed,0.5.0,en-GB

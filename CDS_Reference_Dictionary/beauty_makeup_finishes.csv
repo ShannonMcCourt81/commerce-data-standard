@@ -1,0 +1,7 @@
+dictionary_key,row_type,value_id,label,maps_to,aliases,facet_ids,status,provenance,version,locale
+beauty_makeup_finish,canonical,matte,Matte,,matt,,active,seed,0.1.0,en-GB
+beauty_makeup_finish,canonical,dewy,Dewy,,glowy,,active,seed,0.1.0,en-GB
+beauty_makeup_finish,canonical,satin,Satin,,,,active,seed,0.1.0,en-GB
+beauty_makeup_finish,canonical,shimmer,Shimmer,,shimmery,,active,seed,0.1.0,en-GB
+beauty_makeup_finish,canonical,glossy,Glossy,,gloss;high shine,,active,seed,0.1.0,en-GB
+beauty_makeup_finish,canonical,natural,Natural,,natural finish,,active,seed,0.1.0,en-GB

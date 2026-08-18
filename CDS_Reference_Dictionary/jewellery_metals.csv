@@ -1,0 +1,16 @@
+dictionary_key,row_type,value_id,label,maps_to,aliases,facet_ids,status,provenance,version,locale
+jewellery_metal,canonical,gold,Gold,,yellow gold,,active,seed,0.1.0,en-GB
+jewellery_metal,canonical,white_gold,White Gold,,,,active,seed,0.1.0,en-GB
+jewellery_metal,canonical,rose_gold,Rose Gold,,pink gold,,active,seed,0.1.0,en-GB
+jewellery_metal,canonical,gold_plated,Gold Plated,,gold plate,,active,seed,0.1.0,en-GB
+jewellery_metal,canonical,gold_vermeil,Gold Vermeil,,vermeil,,active,seed,0.1.0,en-GB
+jewellery_metal,canonical,sterling_silver,Sterling Silver,,925;925 silver;sterling,,active,seed,0.1.0,en-GB
+jewellery_metal,canonical,silver_plated,Silver Plated,,silver plate,,active,seed,0.1.0,en-GB
+jewellery_metal,canonical,stainless_steel,Stainless Steel,,steel;316l,,active,seed,0.1.0,en-GB
+jewellery_metal,canonical,titanium,Titanium,,,,active,seed,0.1.0,en-GB
+jewellery_metal,canonical,brass,Brass,,,,active,seed,0.1.0,en-GB
+jewellery_metal,canonical,copper,Copper,,,,active,seed,0.1.0,en-GB
+jewellery_metal,canonical,platinum,Platinum,,950;pt950,,active,seed,0.1.0,en-GB
+jewellery_metal,canonical,palladium,Palladium,,,,active,seed,0.5.0,en-GB
+jewellery_metal,canonical,tungsten,Tungsten,,tungsten carbide,,active,seed,0.5.0,en-GB
+jewellery_metal,canonical,two_tone,Two-tone,,two tone;mixed metal,,active,seed,0.5.0,en-GB

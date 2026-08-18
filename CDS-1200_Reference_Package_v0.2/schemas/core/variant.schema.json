@@ -1,0 +1,189 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:cds:schema:core:variant",
+  "version": "0.2.0",
+  "title": "CDS Variant",
+  "allOf": [
+    {
+      "$ref": "urn:cds:schema:common:envelope"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "document_type": {
+          "const": "variant"
+        },
+        "variant_id": {
+          "type": "string",
+          "minLength": 3
+        },
+        "product_id": {
+          "type": "string",
+          "minLength": 3
+        },
+        "sku": {
+          "type": "string",
+          "minLength": 1
+        },
+        "option_values": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "properties": {
+              "option": {
+                "type": "string",
+                "minLength": 1
+              },
+              "value_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "display": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "option",
+              "value_id"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "barcode_identifiers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "scheme": {
+                "type": "string",
+                "enum": [
+                  "gtin_8",
+                  "gtin_12",
+                  "gtin_13",
+                  "gtin_14",
+                  "ean",
+                  "upc"
+                ]
+              },
+              "value": {
+                "type": "string",
+                "pattern": "^\\d{8,14}$"
+              }
+            },
+            "required": [
+              "scheme",
+              "value"
+            ],
+            "additionalProperties": false,
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "scheme": {
+                      "const": "gtin_8"
+                    }
+                  },
+                  "required": [
+                    "scheme"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "value": {
+                      "pattern": "^\\d{8}$"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "scheme": {
+                      "enum": [
+                        "gtin_12",
+                        "upc"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "scheme"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "value": {
+                      "pattern": "^\\d{12}$"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "scheme": {
+                      "enum": [
+                        "gtin_13",
+                        "ean"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "scheme"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "value": {
+                      "pattern": "^\\d{13}$"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "scheme": {
+                      "const": "gtin_14"
+                    }
+                  },
+                  "required": [
+                    "scheme"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "value": {
+                      "pattern": "^\\d{14}$"
+                    }
+                  }
+                }
+              }
+            ],
+            "$comment": "Values are strings so leading zeros are preserved; per-scheme exact lengths enforced (CDS1100-21)."
+          }
+        },
+        "variant_attributes": {
+          "type": "object"
+        },
+        "sellability": {
+          "type": "string",
+          "enum": [
+            "sellable",
+            "preorder",
+            "unavailable",
+            "retired"
+          ]
+        }
+      },
+      "required": [
+        "variant_id",
+        "product_id",
+        "sku",
+        "option_values",
+        "sellability"
+      ]
+    }
+  ],
+  "unevaluatedProperties": false
+}

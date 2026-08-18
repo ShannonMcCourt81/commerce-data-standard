@@ -1,0 +1,19 @@
+dictionary_key,row_type,value_id,label,maps_to,aliases,facet_ids,status,provenance,version,locale
+sport_activity,canonical,running,Running,,jogging;trail running,,active,seed,0.5.0,en-GB
+sport_activity,canonical,gym_fitness,Gym & Fitness,,gym;fitness;training;strength training,,active,seed,0.5.0,en-GB
+sport_activity,canonical,yoga_pilates,Yoga & Pilates,,yoga;pilates,,active,seed,0.5.0,en-GB
+sport_activity,canonical,cycling,Cycling,,bike riding;biking,,active,seed,0.5.0,en-GB
+sport_activity,canonical,swimming,Swimming,,swim,,active,seed,0.5.0,en-GB
+sport_activity,canonical,hiking,Hiking,,bushwalking;trekking;walking,,active,seed,0.5.0,en-GB
+sport_activity,canonical,camping,Camping,,,,active,seed,0.5.0,en-GB
+sport_activity,canonical,tennis,Tennis,,,,active,seed,0.5.0,en-GB
+sport_activity,canonical,golf,Golf,,,,active,seed,0.5.0,en-GB
+sport_activity,canonical,basketball,Basketball,,,,active,seed,0.5.0,en-GB
+sport_activity,canonical,football_soccer,Football (Soccer),,soccer;football,,active,seed,0.5.0,en-GB
+sport_activity,canonical,afl,Australian Rules Football,,AFL;aussie rules;footy,,active,seed,0.5.0,en-GB
+sport_activity,canonical,rugby,Rugby,,rugby league;rugby union;league;union,,active,seed,0.5.0,en-GB
+sport_activity,canonical,netball,Netball,,,,active,seed,0.5.0,en-GB
+sport_activity,canonical,cricket,Cricket,,,,active,seed,0.5.0,en-GB
+sport_activity,canonical,boxing_martial_arts,Boxing & Martial Arts,,boxing;martial arts;MMA;karate,,active,seed,0.5.0,en-GB
+sport_activity,canonical,surfing_watersports,Surfing & Watersports,,surf;bodyboarding;stand up paddle,,active,seed,0.5.0,en-GB
+sport_activity,canonical,snow_sports,Snow Sports,,skiing;snowboarding;ski,,active,seed,0.5.0,en-GB

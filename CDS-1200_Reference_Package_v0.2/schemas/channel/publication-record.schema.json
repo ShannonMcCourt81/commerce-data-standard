@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:cds:schema:channel:publication-record",
+  "version": "0.2.0",
+  "title": "CDS Publication Record",
+  "allOf": [
+    {
+      "$ref": "urn:cds:schema:common:envelope"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "document_type": {
+          "const": "publication_record"
+        },
+        "publication_id": {
+          "type": "string",
+          "minLength": 3
+        },
+        "product_id": {
+          "type": "string",
+          "minLength": 3
+        },
+        "channel_profile_id": {
+          "type": "string",
+          "minLength": 3
+        },
+        "canonical_revision": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 1
+            },
+            {
+              "type": "string"
+            }
+          ]
+        },
+        "expected_state": {
+          "type": "object"
+        },
+        "publication_status": {
+          "type": "string",
+          "enum": [
+            "queued",
+            "preflight_failed",
+            "published",
+            "partially_published",
+            "failed"
+          ]
+        },
+        "published_at": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[+-]\\d{2}:\\d{2})$"
+        },
+        "transport_reference": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "mapping_set_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "payload_hash": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "preflight_result": {
+          "type": "string",
+          "enum": [
+            "passed",
+            "failed",
+            "not_run"
+          ],
+          "$comment": "Preflight outcome separated from transport per CDS-1100 R044 (CDS1100-3)."
+        },
+        "transport_status": {
+          "type": "string",
+          "enum": [
+            "queued",
+            "sent",
+            "acknowledged",
+            "rejected",
+            "failed"
+          ]
+        }
+      },
+      "required": [
+        "publication_id",
+        "product_id",
+        "channel_profile_id",
+        "canonical_revision",
+        "expected_state",
+        "publication_status",
+        "published_at",
+        "transport_reference",
+        "mapping_set_version",
+        "payload_hash",
+        "preflight_result",
+        "transport_status"
+      ]
+    }
+  ],
+  "unevaluatedProperties": false
+}

@@ -1,0 +1,35 @@
+dictionary_key,row_type,value_id,label,maps_to,aliases,facet_ids,material_family,status,provenance,version,locale
+material_homewares,canonical,cotton,Cotton,,,cotton,textile,active,seed,0.2.0,en-GB
+material_homewares,canonical,linen,Linen,,,linen,textile,active,seed,0.2.0,en-GB
+material_homewares,canonical,wool,Wool,,,wool,textile,active,seed,0.2.0,en-GB
+material_homewares,canonical,polyester,Polyester,,,synthetic_textile,textile_synthetic,active,seed,0.2.0,en-GB
+material_homewares,canonical,ceramic,Ceramic,,,ceramic,ceramic,active,seed,0.2.0,en-GB
+material_homewares,canonical,stoneware,Stoneware,,,ceramic,ceramic,active,seed,0.2.0,en-GB
+material_homewares,canonical,porcelain,Porcelain,,,porcelain,ceramic,active,seed,0.2.0,en-GB
+material_homewares,canonical,glass,Glass,,,glass,glass,active,seed,0.2.0,en-GB
+material_homewares,canonical,crystal,Crystal,,,glass,glass,active,seed,0.2.0,en-GB
+material_homewares,canonical,stainless_steel,Stainless Steel,,,metal,metal,active,seed,0.2.0,en-GB
+material_homewares,canonical,aluminium,Aluminium,,,metal,metal,active,seed,0.2.0,en-GB
+material_homewares,canonical,brass,Brass,,,metal,metal,active,seed,0.2.0,en-GB
+material_homewares,canonical,iron,Iron,,,metal,metal,active,seed,0.2.0,en-GB
+material_homewares,canonical,oak,Oak,,,wood,wood,active,seed,0.2.0,en-GB
+material_homewares,canonical,pine,Pine,,,wood,wood,active,seed,0.2.0,en-GB
+material_homewares,canonical,teak,Teak,,,wood,wood,active,seed,0.2.0,en-GB
+material_homewares,canonical,rattan,Rattan,,,natural_fibre,natural_fibre,active,seed,0.2.0,en-GB
+material_homewares,canonical,bamboo,Bamboo,,,natural_fibre,natural_fibre,active,seed,0.2.0,en-GB
+material_homewares,canonical,marble,Marble,,,stone,stone,active,seed,0.2.0,en-GB
+material_homewares,canonical,travertine,Travertine,,,stone,stone,active,seed,0.2.0,en-GB
+material_homewares,canonical,concrete,Concrete,,,concrete,mineral,active,seed,0.2.0,en-GB
+material_homewares,canonical,resin,Resin,,,resin,synthetic,active,seed,0.2.0,en-GB
+material_homewares,canonical,soy_wax,Soy Wax,,,wax,wax,active,seed,0.2.0,en-GB
+material_homewares,canonical,paraffin_wax,Paraffin Wax,,,wax,wax,active,seed,0.2.0,en-GB
+material_homewares,canonical,terrazzo,Terrazzo,,,stone,stone,active,seed,0.5.0,en-GB
+material_homewares,canonical,jute,Jute,,,natural_fibre,natural_fibre,active,seed,0.5.0,en-GB
+material_homewares,canonical,seagrass,Seagrass,,,natural_fibre,natural_fibre,active,seed,0.5.0,en-GB
+material_homewares,canonical,cane,Cane,,,natural_fibre,natural_fibre,active,seed,0.5.0,en-GB
+material_homewares,canonical,acacia,Acacia,,,wood,wood,active,seed,0.5.0,en-GB
+material_homewares,canonical,mango_wood,Mango Wood,,mango,wood,wood,active,seed,0.5.0,en-GB
+material_homewares,canonical,walnut,Walnut,,,wood,wood,active,seed,0.5.0,en-GB
+material_homewares,canonical,cork,Cork,,,cork,wood,active,seed,0.5.0,en-GB
+material_homewares,canonical,bone_china,Bone China,,fine bone china,ceramic,ceramic,active,seed,0.5.0,en-GB
+material_homewares,canonical,terracotta,Terracotta,,,ceramic,ceramic,active,seed,0.5.0,en-GB

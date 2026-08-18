@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:cds:schema:assurance:conformance-manifest",
+  "version": "0.2.0",
+  "title": "CDS Conformance Manifest",
+  "allOf": [
+    {
+      "$ref": "urn:cds:schema:common:envelope"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "document_type": {
+          "const": "conformance_manifest"
+        },
+        "manifest_id": {
+          "type": "string",
+          "minLength": 3
+        },
+        "implementation_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "implementation_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "claimed_level": {
+          "type": "string",
+          "enum": [
+            "Foundation",
+            "Structured",
+            "Publisher",
+            "Verified",
+            "Governed"
+          ]
+        },
+        "profiles": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string"
+          }
+        },
+        "test_summary": {
+          "type": "object",
+          "properties": {
+            "passed": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "failed": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "not_tested": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "inconclusive": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "passed",
+            "failed",
+            "not_tested",
+            "inconclusive"
+          ],
+          "additionalProperties": false,
+          "$comment": "All executed-case dispositions are counted; no case may be silently dropped (CDS1100-6)."
+        },
+        "evidence_uri": {
+          "type": "string"
+        },
+        "test_suite_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "assessment_method": {
+          "type": "string",
+          "enum": [
+            "self-attestation",
+            "customer-assessment",
+            "independent-assessment"
+          ]
+        }
+      },
+      "required": [
+        "manifest_id",
+        "implementation_name",
+        "implementation_version",
+        "claimed_level",
+        "profiles",
+        "test_summary",
+        "evidence_uri",
+        "test_suite_version",
+        "assessment_method"
+      ]
+    }
+  ],
+  "unevaluatedProperties": false
+}

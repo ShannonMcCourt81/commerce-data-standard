@@ -1,0 +1,96 @@
+<!doctype html><html><head><meta charset="utf-8"><title>CDS in Plain English</title><style>body{font-family:Georgia,serif;font-size:10.5pt;line-height:1.45;color:#1a1a1a;max-width:100%;margin:0 24px}
+h1{font-size:20pt;border-bottom:2px solid #333;padding-bottom:4px;margin-top:28px}
+h2{font-size:15pt;margin-top:22px} h3{font-size:12pt} h4{font-size:10.5pt}
+table{border-collapse:collapse;width:100%;font-size:9pt;margin:8px 0}
+th,td{border:1px solid #999;padding:3px 6px;text-align:left;vertical-align:top}
+th{background:#eee} code{font-family:Menlo,monospace;font-size:8.5pt;background:#f4f4f4;padding:0 2px}
+pre{background:#f4f4f4;padding:8px;font-size:8.5pt;overflow-x:hidden;white-space:pre-wrap}
+blockquote{border-left:3px solid #bbb;margin-left:0;padding-left:10px;color:#444}
+div.chapter{page-break-before:always}
+@page{margin:18mm 15mm}</style></head><body><h1>CDS in Plain English</h1>
+<p><em>The whole system explained without jargon. If you read nothing else, read this. (v0.2, 2026-08-17)</em></p>
+<hr />
+<h2>What this project actually is</h2>
+<p>This started as one practical question: <strong>how should a Shopify store set up its tags, filters, categories and product data properly, so it doesn't turn into a mess?</strong></p>
+<p>Answering that properly meant writing down the rules — what makes a good category tree, which words are allowed in a colour filter, when a tag is the right tool and when it isn't, and how to <em>check</em> the store actually shows what you intended. Written down carefully, those rules became a reusable rulebook that would work for any store, not just this one. That rulebook is the Commerce Data Standard.</p>
+<p><strong>So: CDS is still the answer to the original question.</strong> It just comes in layers now, and you only need the top one day-to-day.</p>
+<h2>The three layers (and who they're for)</h2>
+<ol>
+<li><strong>The Runbook</strong> — <em>for you.</em> "Do this, then this" for setting up the store. This is the practical document the project was always meant to produce. Use the companion Adoption Workbook to record decisions and evidence as you go.</li>
+<li><strong>The Standard</strong> — <em>for looking things up.</em> Every rule the runbook follows, with its reasoning. You never read it cover to cover; you open it when a runbook step cites a rule and you want the why.</li>
+<li><strong>The machine files</strong> (schemas + dictionaries) — <em>for the software.</em> The allowed vocabulary (the dictionary CSVs) and the technical contracts that let the PIM software check its own work automatically. You'll never open these; the PIM uses them.</li>
+</ol>
+<h2>The whole idea in one story</h2>
+<p>A supplier sends you a shirt in "French Navy".</p>
+<ul>
+<li>The PIM looks up "French Navy" in the <strong>colour dictionary</strong>. It's a known name → it's filed under the official colour <code>french_navy</code>, which belongs to the broad family <strong>Blue</strong>. (If it were some unknown name like "Moonlit Harbour", it would wait in a queue for you to decide — the system never invents vocabulary on its own.)</li>
+<li>The product page shows <strong>"French Navy"</strong> (the nice name customers should see).</li>
+<li>The storefront <strong>filter</strong> shows <strong>"Blue"</strong> (because nobody wants a colour filter with 200 near-identical shades).</li>
+<li>Google gets <strong>"French Navy"</strong> (Google's rules require the name shown on the page).</li>
+<li>The category tree — decided once, on paper, with a logbook for the tricky calls — automatically generates the <strong>tags</strong> that drive collections. Nobody hand-types tags, and tags are never used as filters.</li>
+<li>After publishing, the PIM <strong>reads the store back</strong> and compares: does Shopify actually show what we sent? Every field gets a light: <strong>Green</strong> (matches), <strong>Amber</strong> (missing or waiting), <strong>Red</strong> (contradicts). If a staff member edits a product directly in Shopify, that shows up as a Red/Amber difference with a reason — you find out, instead of the store quietly drifting away from your data.</li>
+</ul>
+<p>That's the entire system. Everything in the standard is that story, made precise enough that software can enforce it and any future store or developer can follow it without asking you.</p>
+<p><strong>Want this story with the exact names you'd actually type — the dictionary row, the PIM field, the Shopify metafields, the verification result? That's Appendix A of the Setup Runbook ("One Attribute End-to-End") — the same French Navy story, told on a single-colour cushion with every field name spelled out.</strong></p>
+<h2>The ten bits of jargon, translated</h2>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Plain meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prose</td>
+<td>Normal sentences for humans (the chapters), as opposed to code for machines.</td>
+</tr>
+<tr>
+<td>Canonical</td>
+<td>The one official version of a fact. Canonical colour = the official filed colour, whatever the supplier called it.</td>
+</tr>
+<tr>
+<td>Dictionary</td>
+<td>The list of allowed words for one thing (colours, materials, fits) plus their spellings/aliases.</td>
+</tr>
+<tr>
+<td>Facet</td>
+<td>A filter customers use, with deliberately few, broad options ("Blue", not 40 shades).</td>
+</tr>
+<tr>
+<td>Alias</td>
+<td>A known alternative name that maps to an official one ("rayon" → Viscose).</td>
+</tr>
+<tr>
+<td>Projection</td>
+<td>A copy generated <em>from</em> the master data for one purpose (the page label, the filter value, the Google feed) — never edited directly.</td>
+</tr>
+<tr>
+<td>Drift</td>
+<td>The store showing something different from what the PIM says it should — detected, not silently accepted.</td>
+</tr>
+<tr>
+<td>Provenance</td>
+<td>Where a value came from and who/what set it (supplier file, you, a formula, AI).</td>
+</tr>
+<tr>
+<td>Schema</td>
+<td>A machine-readable form template — software uses it to auto-reject malformed data.</td>
+</tr>
+<tr>
+<td>Namespace / prefix</td>
+<td>The label at the front of a field name (<code>MF_colour_family</code>) that tells you at a glance what kind of field it is.</td>
+</tr>
+<tr>
+<td>Conformance</td>
+<td>How much of the standard an implementation genuinely follows — with proof, not vibes.</td>
+</tr>
+</tbody>
+</table>
+<h2>What you actually do next</h2>
+<ol>
+<li>Read the <strong>runbook's first page (the TL;DR)</strong> — five minutes.</li>
+<li>When you're ready to build the store, follow the runbook phase by phase. It stops and asks you for six decisions along the way; everything else is procedure.</li>
+<li>Ignore everything else in the folder until something sends you there.</li>
+</ol>
+<p><em>Why keep the heavyweight layers at all? Because they're what make the practical layer trustworthy: every runbook instruction traces to a written rule, every rule traces to evidence, and the software can prove the store matches the plan. You get the simple experience precisely because the complicated part is nailed down underneath.</em></p></body></html>

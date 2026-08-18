@@ -1,0 +1,43 @@
+{
+  "cds_schema": "urn:cds:schema:channel:observation-record",
+  "cds_version": "0.2",
+  "document_type": "observation_record",
+  "document_id": "obs_shopify_shirt_100_001",
+  "revision": 1,
+  "status": "active",
+  "tenant_id": "org_reference",
+  "created_at": "2026-08-03T00:00:00Z",
+  "updated_at": "2026-08-03T00:00:00Z",
+  "source_system": "cds-reference-package",
+  "observation_id": "obs_shopify_shirt_100_001",
+  "publication_id": "pub_shopify_shirt_100_r42",
+  "product_id": "prd_shirt_100",
+  "channel_profile_id": "profile_shopify_2026q3",
+  "observed_at": "2026-08-03T10:12:00",
+  "coverage": {
+    "supported": [
+      "/title",
+      "/product_category",
+      "/material",
+      "/tags"
+    ],
+    "unobservable": [
+      "/search_synonyms"
+    ]
+  },
+  "observed_state": {
+    "title": "Relaxed Linen Shirt",
+    "product_category": "aa-1-2-3",
+    "material": [
+      "Linen"
+    ],
+    "tags": [
+      "collection_Shirts",
+      "collection_Tops",
+      "collection_Womens"
+    ]
+  },
+  "channel_revision": "shopify-2026-08-03T00:11:59Z",
+  "observation_method": "api_read",
+  "channel_entity_id": "gid://shopify/Product/100"
+}

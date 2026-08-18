@@ -1,0 +1,6 @@
+dictionary_key,row_type,value_id,label,maps_to,aliases,facet_ids,definition,status,provenance,version,locale
+wetsuit_thickness,canonical,thickness_1mm,1mm,,1 mm,,Single 1 mm neoprene - tops and vests for warm water,active,seed,0.7.0,en-GB
+wetsuit_thickness,canonical,thickness_2mm,2mm,,2 mm;2/2mm,,Single 2 mm neoprene - warm-water suits and shorties,active,seed,0.7.0,en-GB
+wetsuit_thickness,canonical,thickness_3_2mm,3-2mm,,3/2mm;3/2;3-2,,3 mm torso with 2 mm limbs - the all-round temperate suit,active,seed,0.7.0,en-GB
+wetsuit_thickness,canonical,thickness_4_3mm,4-3mm,,4/3mm;4/3;4-3,,4 mm torso with 3 mm limbs - cool-water suit,active,seed,0.7.0,en-GB
+wetsuit_thickness,canonical,thickness_5_4mm,5-4mm,,5/4mm;5/4;5-4;5/4/3mm,,5 mm torso with 4 mm limbs - cold-water suit,active,seed,0.7.0,en-GB

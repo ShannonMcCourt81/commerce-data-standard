@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:cds:schema:assurance:validation-output",
+  "version": "0.2.0",
+  "title": "CDS Validation Output",
+  "$comment": "Machine-readable validation finding carrying a CDS_* reason code (ADR-D3, CDS1100-1).",
+  "type": "object",
+  "properties": {
+    "document_id": {
+      "type": "string",
+      "minLength": 3
+    },
+    "field_path": {
+      "type": "string",
+      "pattern": "^(/([^/~]|~[01])*)*$"
+    },
+    "reason_code": {
+      "type": "string",
+      "pattern": "^CDS_[A-Z_]+$"
+    },
+    "severity": {
+      "type": "string",
+      "enum": [
+        "error",
+        "warning",
+        "info"
+      ]
+    },
+    "message": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "document_id",
+    "field_path",
+    "reason_code",
+    "severity"
+  ],
+  "additionalProperties": false
+}
