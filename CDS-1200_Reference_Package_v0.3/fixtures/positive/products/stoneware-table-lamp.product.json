@@ -1,0 +1,83 @@
+{
+  "cds_schema": "urn:cds:schema:core:product",
+  "cds_version": "0.3",
+  "document_type": "product",
+  "document_id": "prd_lamp_200",
+  "revision": 3,
+  "status": "active",
+  "tenant_id": "org_reference",
+  "created_at": "2026-09-20T00:00:00Z",
+  "updated_at": "2026-09-20T00:00:00Z",
+  "source_system": "cds-reference-package",
+  "product_id": "prd_lamp_200",
+  "business_key": "LAMP-200",
+  "brand_id": "brand_coastal",
+  "manufacturer_part_number": "CS-TL200",
+  "classification": {
+    "product_family_id": "family_homewares",
+    "product_type_id": "type_table_lamp",
+    "category_id": "cat_lighting_table_lamps"
+  },
+  "content": {
+    "title": [
+      {
+        "language": "en-AU",
+        "text": "Stoneware Table Lamp"
+      }
+    ]
+  },
+  "attributes": {
+    "MF_material": {
+      "dictionary_value_id": "material_stoneware"
+    },
+    "MF_height_mm": {
+      "number": 420,
+      "unit": "mm"
+    }
+  },
+  "variant_ids": [],
+  "media": [],
+  "relationships": [
+    {
+      "relationship_id": "rel_lamp_200_base",
+      "relationship_type": "requires",
+      "direction": "directed",
+      "target_kind": "standard",
+      "target": {
+        "scheme": "lamp_base",
+        "value_id": "e27",
+        "label": "E27 screw base"
+      },
+      "quantity": 1,
+      "status": "active",
+      "provenance": {
+        "source_type": "manufacturer_specification",
+        "source_reference": "lamp-spec-2026-09",
+        "evidence_class": "E1",
+        "actor": "steward_reference",
+        "acquired_at": "2026-09-20T00:00:00Z"
+      },
+      "version": 1
+    },
+    {
+      "relationship_id": "rel_lamp_200_superseded",
+      "relationship_type": "superseded_by",
+      "direction": "directed",
+      "target_kind": "product",
+      "target": {
+        "document_type": "product",
+        "document_id": "prd_lamp_201"
+      },
+      "effective_from": "2026-09-01",
+      "status": "active",
+      "provenance": {
+        "source_type": "manufacturer_specification",
+        "source_reference": "lamp-spec-2026-09",
+        "evidence_class": "E1",
+        "actor": "steward_reference",
+        "acquired_at": "2026-09-20T00:00:00Z"
+      },
+      "version": 1
+    }
+  ]
+}

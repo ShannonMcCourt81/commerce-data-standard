@@ -1,0 +1,86 @@
+{
+  "cds_schema": "urn:cds:schema:core:product",
+  "cds_version": "0.3",
+  "document_type": "product",
+  "document_id": "prd_lamp_201",
+  "revision": 1,
+  "status": "active",
+  "tenant_id": "org_reference",
+  "created_at": "2026-09-20T00:00:00Z",
+  "updated_at": "2026-09-20T00:00:00Z",
+  "source_system": "cds-reference-package",
+  "product_id": "prd_lamp_201",
+  "business_key": "LAMP-201",
+  "brand_id": "brand_coastal",
+  "manufacturer_part_number": "CS-TL201",
+  "classification": {
+    "product_family_id": "family_homewares",
+    "product_type_id": "type_table_lamp",
+    "category_id": "cat_lighting_table_lamps"
+  },
+  "content": {
+    "title": [
+      {
+        "language": "en-AU",
+        "text": "Stoneware Table Lamp (2026 edition)"
+      }
+    ]
+  },
+  "attributes": {
+    "MF_material": {
+      "dictionary_value_id": "material_stoneware"
+    },
+    "MF_height_mm": {
+      "number": 430,
+      "unit": "mm"
+    }
+  },
+  "variant_ids": [],
+  "media": [],
+  "relationships": [
+    {
+      "relationship_id": "rel_lamp_201_replaces",
+      "relationship_type": "replaces",
+      "direction": "directed",
+      "target_kind": "product",
+      "target": {
+        "document_type": "product",
+        "document_id": "prd_lamp_200"
+      },
+      "effective_from": "2026-09-01",
+      "status": "active",
+      "provenance": {
+        "source_type": "manufacturer_specification",
+        "source_reference": "lamp-spec-2026-09",
+        "evidence_class": "E1",
+        "actor": "steward_reference",
+        "acquired_at": "2026-09-20T00:00:00Z"
+      },
+      "version": 1
+    },
+    {
+      "relationship_id": "rel_lamp_201_shade",
+      "relationship_type": "compatible_with",
+      "direction": "symmetric",
+      "target_kind": "external_product",
+      "target": {
+        "issuer": "Example Shades",
+        "scheme": "manufacturer_part_number",
+        "identifier": "ES-DRUM-30",
+        "label": "30 cm drum shade"
+      },
+      "qualifiers": {
+        "basis": "manufacturer_declared"
+      },
+      "status": "active",
+      "provenance": {
+        "source_type": "manufacturer_specification",
+        "source_reference": "lamp-spec-2026-09",
+        "evidence_class": "E1",
+        "actor": "steward_reference",
+        "acquired_at": "2026-09-20T00:00:00Z"
+      },
+      "version": 1
+    }
+  ]
+}

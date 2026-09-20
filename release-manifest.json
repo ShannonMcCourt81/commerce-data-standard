@@ -1,16 +1,16 @@
 {
-  "release": "CDS v0.2 Review Draft",
+  "release": "CDS v0.3 Review Draft",
   "release_date": "2026-09-20",
-  "status": "content-complete-internally-verified-controlled-pilot",
-  "reference_package_version": "0.2.1",
+  "status": "content-complete-internally-verified-owner-dispositions-applied",
+  "reference_package_version": "0.3.0",
   "dictionary_version": "0.8.0",
   "hash_algorithm": "SHA-256",
   "artifact_count": 43,
   "artifacts": [
     {
       "path": "README.md",
-      "bytes": 5679,
-      "sha256": "cb464fd0e33e6ea54e8e4208c3920dde24a536f092c48946ceb7119d645d0120"
+      "bytes": 5699,
+      "sha256": "7ea403f8c378640a8f374763cbbba64ceaf65408c5e73e8b9cbd891a2c45e3a7"
     },
     {
       "path": "CDS_Start_Here.pdf",
@@ -23,204 +23,204 @@
       "sha256": "987eadf3777c33e548deed1d92093539e000d149234a640a45a27e6f109602d9"
     },
     {
-      "path": "CDS_Shopify_Setup_Runbook_v0.2.pdf",
-      "bytes": 537939,
-      "sha256": "0bd0607cccce4416e32bd5165faf194ece924fbbe33c34928477278371c46332"
+      "path": "CDS_Shopify_Setup_Runbook_v0.3.pdf",
+      "bytes": 538530,
+      "sha256": "e65343931d5806eb1207cdfdf08ce2095ffb121f352e1cffdfa86391699adea5"
     },
     {
-      "path": "Commerce_Data_Standard_v0.2.pdf",
-      "bytes": 6808064,
-      "sha256": "6d3e8d523c7c0415c80aa4664fa92a16325dd65bc5c4401e62be2b09f035895e"
+      "path": "Commerce_Data_Standard_v0.3.pdf",
+      "bytes": 6974138,
+      "sha256": "026b4f397ecfd4d5e80cf0b8c7142fd4048dc772dc8cd474e69df853e726b00f"
     },
     {
       "path": "CDS_Dictionary.pdf",
-      "bytes": 1362021,
-      "sha256": "41c0ddd8ddabfe4428c769867ab0039a79b8397716891962cfaf83b9e0fcae8e"
+      "bytes": 1365092,
+      "sha256": "91371882dd08fe0f7e673baed7670dbf095bb3482d2e731174833bf15fea38b7"
     },
     {
-      "path": "v0.2/CDS-000_Foundations_and_Principles_v0.2_Review_Draft.md",
-      "bytes": 9936,
-      "sha256": "aeb3a27dc240837cf6bbb9f221af492e2792e578844557adf531a6f0b228dad6"
+      "path": "v0.3/CDS-000_Foundations_and_Principles_v0.3_Review_Draft.md",
+      "bytes": 10044,
+      "sha256": "ddbe24cc65314613e371a7af493b02d4b83722bb06d8f30864acad7e0a2c0ba7"
     },
     {
-      "path": "v0.2/CDS-1000_Conformance_Testing_and_Assurance_v0.2_Review_Draft.md",
-      "bytes": 38882,
-      "sha256": "67dd0fbcf189bbf06d8f145cc42530164f5a473c5bcfbcd09f1169b64d7f45d7"
+      "path": "v0.3/CDS-1000_Conformance_Testing_and_Assurance_v0.3_Review_Draft.md",
+      "bytes": 38972,
+      "sha256": "9e89ae735339a5b145bd7987f37158759ec997911f9c5b03214118ddc186e592"
     },
     {
-      "path": "v0.2/CDS-100_Terminology_v0.2_Review_Draft.md",
-      "bytes": 19268,
-      "sha256": "8c1341d7baf77fde8b5b3d006b810eadfa51fe3d03d0e260175b0c8ae81491ba"
+      "path": "v0.3/CDS-100_Terminology_v0.3_Review_Draft.md",
+      "bytes": 19359,
+      "sha256": "a9047307df9fddd89490da799b16e8cd5db60832e873c807d881b34a9de02cc4"
     },
     {
-      "path": "v0.2/CDS-1100_Reference_Schemas_and_Machine_Readable_Contracts_v0.2_Review_Draft.md",
-      "bytes": 61397,
-      "sha256": "76e21fee4d1c337e820be73da59a6618dcdf506f63f091a2549c9dc5ee876b3a"
+      "path": "v0.3/CDS-1100_Reference_Schemas_and_Machine_Readable_Contracts_v0.3_Review_Draft.md",
+      "bytes": 61678,
+      "sha256": "c41b98e2bdbf6305a7081f54490db4568c8dc62b3892968e3cdbe2433700c121"
     },
     {
-      "path": "v0.2/CDS-1200_Reference_Implementation_Schema_Package_and_Test_Fixtures_v0.2_Review_Draft.md",
-      "bytes": 36765,
-      "sha256": "a4e6ed5880a3785a1b2013a4aa221ac0bfd17e71126b33436748d8b44926fed6"
+      "path": "v0.3/CDS-1200_Reference_Implementation_Schema_Package_and_Test_Fixtures_v0.3_Review_Draft.md",
+      "bytes": 37130,
+      "sha256": "e7c9fdf0bcc2a5773d4bc130b6723f39ed1cf01b790197a506ae98426dcc4964"
     },
     {
-      "path": "v0.2/CDS-1300_Migration_Adoption_and_Operational_Rollout_v0.2_Review_Draft.md",
-      "bytes": 39280,
-      "sha256": "f82606048818b5d0e9c118ec65dd423ad99658c855388962ae81edf63fc43d7f"
+      "path": "v0.3/CDS-1300_Migration_Adoption_and_Operational_Rollout_v0.3_Review_Draft.md",
+      "bytes": 39337,
+      "sha256": "4a9670707e85068d8dd5d00ad3e1858d7e84de0bda443b9d75c0ee2746e131ef"
     },
     {
-      "path": "v0.2/CDS-1400_Monitoring_Incident_Management_and_Continuous_Improvement_v0.2_Review_Draft.md",
-      "bytes": 49378,
-      "sha256": "3bc74a8dafdb3a945856d931191243e253a6b92e4c640c0a48922dd525dd770c"
+      "path": "v0.3/CDS-1400_Monitoring_Incident_Management_and_Continuous_Improvement_v0.3_Review_Draft.md",
+      "bytes": 49435,
+      "sha256": "3bcc11a9b2d5142c367337900350db4418fb54ce594c5b530006b465ade553f0"
     },
     {
-      "path": "v0.2/CDS-1500_Apparel_and_Homewares_Industry_Profiles_v0.2_Review_Draft.md",
-      "bytes": 104038,
-      "sha256": "0574900bbfdfc459b5a7418cc92a7feb02c1fe354fc72ed8388b88719f8a4e8a"
+      "path": "v0.3/CDS-1500_Apparel_and_Homewares_Industry_Profiles_v0.3_Review_Draft.md",
+      "bytes": 108655,
+      "sha256": "0dd17144ceb31f82c3accaaa5faaab9baf0de9d3decd8c6b78d92bbd7a841a08"
     },
     {
-      "path": "v0.2/CDS-200_Commerce_Information_Architecture_v0.2_Review_Draft.md",
-      "bytes": 25084,
-      "sha256": "0bbf697dbf6b5b9104eb5e56ffc5a6264f32604ba79b685523051b3696f6e943"
+      "path": "v0.3/CDS-200_Commerce_Information_Architecture_v0.3_Review_Draft.md",
+      "bytes": 32162,
+      "sha256": "3f4608dd5ae0d449a7551cb865b2cfbd8f1c320ff75062ba683105ae078a3205"
     },
     {
-      "path": "v0.2/CDS-300_Semantic_Namespaces_and_Field_Naming_v0.2_Review_Draft.md",
-      "bytes": 31097,
-      "sha256": "18dad3c043588ce849a8d9b91c0a870976ee8265a46f09bc9a293f34af1c44f3"
+      "path": "v0.3/CDS-300_Semantic_Namespaces_and_Field_Naming_v0.3_Review_Draft.md",
+      "bytes": 31187,
+      "sha256": "0508b16513b118f6d725996e5bc5bf39ac2079aef4389a26af7998adddbcd810"
     },
     {
-      "path": "v0.2/CDS-400_Controlled_Dictionaries_and_Reference_Data_v0.2_Review_Draft.md",
-      "bytes": 45655,
-      "sha256": "989ba19970310604d5cc65fee127cd25da382d397867fa6496510a5610bc0f7d"
+      "path": "v0.3/CDS-400_Controlled_Dictionaries_and_Reference_Data_v0.3_Review_Draft.md",
+      "bytes": 45712,
+      "sha256": "00043f9f52ab2b8a72bb29550da0ddbe79f4c7b0250d825b765d8fdcef0f704a"
     },
     {
-      "path": "v0.2/CDS-500_Publication_Observation_and_Verification_v0.2_Review_Draft.md",
-      "bytes": 51441,
-      "sha256": "a0b303b03c15cfeacbd34bc6c5ae40b8f6ee562da689a3c8e83363b156625d25"
+      "path": "v0.3/CDS-500_Publication_Observation_and_Verification_v0.3_Review_Draft.md",
+      "bytes": 51531,
+      "sha256": "cb587a597c8211b2609cd8375cf876b262899e21139c25464977a190df4117f9"
     },
     {
-      "path": "v0.2/CDS-600_Customer_Experience_Facets_and_Navigation_v0.2_Review_Draft.md",
-      "bytes": 36930,
-      "sha256": "0f0b3f71548fcd01c033402b549783093b83a8e3a982d05b48e8c44df8833c49"
+      "path": "v0.3/CDS-600_Customer_Experience_Facets_and_Navigation_v0.3_Review_Draft.md",
+      "bytes": 36987,
+      "sha256": "d1e978edb20445f5c090abc4a1cb63686a98b504bf8bc26629549609be174582"
     },
     {
-      "path": "v0.2/CDS-700_AI_Enrichment_Automation_and_Human_Oversight_v0.2_Review_Draft.md",
-      "bytes": 43829,
-      "sha256": "f2c2aaed78a62bff0c7037e3f6f5e7b77c2c9f8cefd0b51a69de377e9cbb3f1a"
+      "path": "v0.3/CDS-700_AI_Enrichment_Automation_and_Human_Oversight_v0.3_Review_Draft.md",
+      "bytes": 43886,
+      "sha256": "50d7c60fd0502d9dafd136c19a610045272b506bc8fafb261a6703ab9e9bcd8e"
     },
     {
-      "path": "v0.2/CDS-800_Governance_Ownership_and_Change_Control_v0.2_Review_Draft.md",
-      "bytes": 40620,
-      "sha256": "4935d3ef315ad99d249eaa6eb554a8a65b03002ab1171d1ebf8de9a26c00164a"
+      "path": "v0.3/CDS-800_Governance_Ownership_and_Change_Control_v0.3_Review_Draft.md",
+      "bytes": 40677,
+      "sha256": "5579ed3279630ce4df4c576ee9b27e52a92a53f2a2246c68afe900ef5f52e00b"
     },
     {
-      "path": "v0.2/CDS-900_Implementation_Profiles_and_Platform_Mappings_v0.2_Review_Draft.md",
-      "bytes": 52079,
-      "sha256": "bdb36c387f55d0b1ae4c3244ac7ba477fd9d7d146cc0ee8f86f883ff5f128c01"
+      "path": "v0.3/CDS-900_Implementation_Profiles_and_Platform_Mappings_v0.3_Review_Draft.md",
+      "bytes": 53192,
+      "sha256": "4e2420d0e3fff76a3df8b6eb11d88f67e27f6bb80b31ba0c4f2506a5cc249ad1"
     },
     {
-      "path": "v0.2/CDS_Adoption_Workbook_v0.2.md",
-      "bytes": 7478,
-      "sha256": "8b1610b682a634295d232e1b38572ad8e68501bf823f9f3aff96d86e17944bd6"
+      "path": "v0.3/CDS_Adoption_Workbook_v0.3.md",
+      "bytes": 7611,
+      "sha256": "3f3a03bcd00c6972edd65a4427caefe3a9c7a8d2a6cd2f1afaf21489708fe261"
     },
     {
-      "path": "v0.2/CDS_Plain_English_Guide.md",
-      "bytes": 5374,
-      "sha256": "575d573e1d0b77f19011d3c452ce5c5c1d58067a2a7f6bcd69aefbccebb5d45e"
+      "path": "v0.3/CDS_Plain_English_Guide.md",
+      "bytes": 5538,
+      "sha256": "7d4c4e8a7d6b7340317c09d1f5dde99149074634f04a7464a7ced6b146e27dbd"
     },
     {
-      "path": "v0.2/CDS_Start_Here.md",
+      "path": "v0.3/CDS_Start_Here.md",
       "bytes": 1609,
-      "sha256": "5eab4361c3617433d8757ac72d996beffa44402973b92a1975b0307d05df9998"
+      "sha256": "7c6d574aebab98e5dd41f0abcaa1cdfe7e1f8519c083497d1b2711951e59ffb0"
     },
     {
-      "path": "v0.2/Commerce_Data_Standard_v0.2.md",
-      "bytes": 1008666,
-      "sha256": "793f01cf670da4ad0833c48a1a619104343fa600d1149b138a6a58b87aabbdb1"
+      "path": "v0.3/Commerce_Data_Standard_v0.3.md",
+      "bytes": 1032663,
+      "sha256": "2b8e3f27a37591037471c63cffec91a3eb78fe873025667cea1689995df1bde6"
     },
     {
-      "path": "v0.2/HOWTO-Shopify-Store-Setup-Runbook-CDS-v0.2.md",
-      "bytes": 62078,
-      "sha256": "294fb204ff48d5d63d549f33253719278150be75f9890ae61addbf98070caf86"
+      "path": "v0.3/HOWTO-Shopify-Store-Setup-Runbook-CDS-v0.3.md",
+      "bytes": 62546,
+      "sha256": "3de7f1af296297f62895fcb830ccfa615678dcd87d287bb813620d9f89b74c4e"
     },
     {
-      "path": "v0.2/CDS_Dictionary.html",
-      "bytes": 167450,
-      "sha256": "b8cad0c342a53d44575486a454343607112b934f8cc32e21e4560a538e9e0e3f"
+      "path": "v0.3/CDS_Dictionary.html",
+      "bytes": 172564,
+      "sha256": "4233af2abd730971946b6b45f04b0744b510293143ec36c1430c929414e1bb0c"
     },
     {
-      "path": "v0.2/CDS_Plain_English_Guide.html",
+      "path": "v0.3/CDS_Plain_English_Guide.html",
       "bytes": 7065,
       "sha256": "bc6a653fbfbf59b9758aec77e157bccb44c197bab1c14956876e581befdd8358"
     },
     {
-      "path": "v0.2/CDS_Shopify_Setup_Runbook_v0.2.html",
-      "bytes": 70830,
-      "sha256": "bfc446036a0e6a44c63d2428909dfee236e7fa9fb764845fea1fa5b828969c23"
+      "path": "v0.3/CDS_Shopify_Setup_Runbook_v0.3.html",
+      "bytes": 71298,
+      "sha256": "6f74408ce8cf73b2a8e1a7fa6be9d93a0f88c983e0a48971d996e311f078a31c"
     },
     {
-      "path": "v0.2/Commerce_Data_Standard_v0.2.html",
-      "bytes": 1183772,
-      "sha256": "517ce7412b36360db58ff2001e4537e3cc01d0e08db638dbe9cba3e539ab3c87"
+      "path": "v0.3/Commerce_Data_Standard_v0.3.html",
+      "bytes": 1211753,
+      "sha256": "7a4fcebf9806cadc5a6704b5e9331c86d2291d27e39fa865c120480a6412ccab"
     },
     {
       "path": "requirements-index.csv",
-      "bytes": 267378,
-      "sha256": "5bae6380fcf3df0bc26b96d0364a9f818223960dd2b476a3e8ae75ec5781c062"
+      "bytes": 271169,
+      "sha256": "2c6ee6306bcd83c44e1e8a41e295e1199d372a74be0a24341131172f679e55ad"
     },
     {
       "path": "CDS_Reference_Dictionary/manifest.json",
-      "bytes": 17532,
-      "sha256": "1fa08442eb5b030713519b00fa78e0d159b97bfca09d7cd336a421630da16217"
+      "bytes": 17607,
+      "sha256": "17014ba21437bafcf4d29da5a6f53b056e56348bfd83d96eec80128522c1e443"
     },
     {
       "path": "CDS_Reference_Dictionary/SHA256SUMS.txt",
       "bytes": 5582,
-      "sha256": "c4ea7c1ecb2dce067ff5a57118115a9e13288b773263567d11bff0e2645f77e2"
+      "sha256": "22e68926c2fc529cc74539fdb68f39f22943570a9a90e77e2aa2aa530f47bfc4"
     },
     {
-      "path": "CDS-1200_Reference_Package_v0.2/package-manifest.json",
-      "bytes": 14266,
-      "sha256": "8434fc49b9683550b3e3fe24cf12f79d4e20a623af3c3928bee7a15ee6efa631"
+      "path": "CDS-1200_Reference_Package_v0.3/package-manifest.json",
+      "bytes": 15190,
+      "sha256": "4fbab2f374fc25bd6e32d5fe6f1fbfcffafcd368c67a3dc9300be46db8566d62"
     },
     {
-      "path": "CDS-1200_Reference_Package_v0.2/evidence/test-report.json",
-      "bytes": 15056,
-      "sha256": "b1038f3d0a1c49eacb9a722fa3f391304e5d5e76da0a6213e0efb60b48128802"
+      "path": "CDS-1200_Reference_Package_v0.3/evidence/test-report.json",
+      "bytes": 16764,
+      "sha256": "181007411dd319e6ef351a2f77d8ea56ed3f8a38c1ffcbce3fddd20f956d67d0"
     },
     {
-      "path": "CDS-1200_Reference_Package_v0.2/LICENSE-CODE.md",
+      "path": "CDS-1200_Reference_Package_v0.3/LICENSE-CODE.md",
       "bytes": 11358,
       "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
     },
     {
-      "path": "CDS-1200_Reference_Package_v0.2/LICENSE-SPEC.md",
+      "path": "CDS-1200_Reference_Package_v0.3/LICENSE-SPEC.md",
       "bytes": 18657,
       "sha256": "9ba9550ad48438d0836ddab3da480b3b69ffa0aac7b7878b5a0039e7ab429411"
     },
     {
-      "path": "v0.2/CDS-1600_Beauty_Health_and_Personal_Care_Industry_Profile_v0.2_Review_Draft.md",
-      "bytes": 64758,
-      "sha256": "1b25634c1a482075c3a6c6329af469292306966491a9eb128dd29dd29681da0f"
+      "path": "v0.3/CDS-1600_Beauty_Health_and_Personal_Care_Industry_Profile_v0.3_Review_Draft.md",
+      "bytes": 67354,
+      "sha256": "e119a12978c6c3bdae720796474b11db9f88f3a76cf5e0a05e32c76b3296af86"
     },
     {
-      "path": "v0.2/CDS-1700_Food_Beverage_and_Grocery_Industry_Profile_v0.2_Review_Draft.md",
-      "bytes": 61622,
-      "sha256": "d2703c0ea8e17a05c3e041ca4ae285628a2a1e22f08770aaa98d154db4e62810"
+      "path": "v0.3/CDS-1700_Food_Beverage_and_Grocery_Industry_Profile_v0.3_Review_Draft.md",
+      "bytes": 63789,
+      "sha256": "940f2b199724b2a4049faad0991acdbaf8b5f7a67b69865ad3def43f6cb8d16e"
     },
     {
-      "path": "v0.2/CDS-1800_Consumer_Electronics_Appliances_and_Technical_Goods_Industry_Profile_v0.2_Review_Draft.md",
-      "bytes": 68959,
-      "sha256": "a2de7efd19f806b158cd089fd862b316a920496d68a2969e8b567668b66258ed"
+      "path": "v0.3/CDS-1800_Consumer_Electronics_Appliances_and_Technical_Goods_Industry_Profile_v0.3_Review_Draft.md",
+      "bytes": 71433,
+      "sha256": "b78dd6c113ec88907db668d79e61f2ac1d06c628cf2fee306943dbb70f8f5fe2"
     },
     {
-      "path": "v0.2/CDS-1900_Parts_Automotive_Industrial_and_Fitment_Industry_Profile_v0.2_Review_Draft.md",
-      "bytes": 62340,
-      "sha256": "e28dc3d7307ae2267299ae35729e47cf5430c7f50bc089214dc2574b05eac6ff"
+      "path": "v0.3/CDS-1900_Parts_Automotive_Industrial_and_Fitment_Industry_Profile_v0.3_Review_Draft.md",
+      "bytes": 61784,
+      "sha256": "3f639bc49a9f90e27e115d4658f71f0581a8cb24832b349ebb1aaa8005688c4e"
     },
     {
-      "path": "v0.2/CDS-2000_Sports_Outdoor_Toys_Games_and_Pet_Supplies_Industry_Profiles_v0.2_Review_Draft.md",
-      "bytes": 58830,
-      "sha256": "ad8903eb3dcecec1d257948a2b2fca5cd82f49667a1ed9f9ba99764859e28b8b"
+      "path": "v0.3/CDS-2000_Sports_Outdoor_Toys_Games_and_Pet_Supplies_Industry_Profiles_v0.3_Review_Draft.md",
+      "bytes": 60901,
+      "sha256": "472ed1fac0b55424215703fa7d71f3822fd4862c524d18399b8169c90b1d37ed"
     }
   ]
 }

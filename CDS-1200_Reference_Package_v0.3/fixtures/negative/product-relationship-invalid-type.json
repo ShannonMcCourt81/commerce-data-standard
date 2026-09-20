@@ -1,0 +1,54 @@
+{
+  "cds_schema": "urn:cds:schema:core:product",
+  "cds_version": "0.3",
+  "document_type": "product",
+  "document_id": "prd_lamp_bad",
+  "revision": 3,
+  "status": "active",
+  "tenant_id": "org_reference",
+  "created_at": "2026-09-20T00:00:00Z",
+  "updated_at": "2026-09-20T00:00:00Z",
+  "source_system": "cds-reference-package",
+  "product_id": "prd_lamp_bad",
+  "business_key": "LAMP-BAD",
+  "brand_id": "brand_coastal",
+  "manufacturer_part_number": "CS-TL200",
+  "classification": {
+    "product_family_id": "family_homewares",
+    "product_type_id": "type_table_lamp",
+    "category_id": "cat_lighting_table_lamps"
+  },
+  "content": {
+    "title": [
+      {
+        "language": "en-AU",
+        "text": "Stoneware Table Lamp"
+      }
+    ]
+  },
+  "attributes": {
+    "MF_material": {
+      "dictionary_value_id": "material_stoneware"
+    },
+    "MF_height_mm": {
+      "number": 420,
+      "unit": "mm"
+    }
+  },
+  "variant_ids": [],
+  "media": [],
+  "relationships": [
+    {
+      "relationship_id": "rel_bad_1",
+      "relationship_type": "Compatible With",
+      "direction": "directed",
+      "target_kind": "product",
+      "target": {
+        "document_type": "product",
+        "document_id": "prd_lamp_201"
+      },
+      "status": "active",
+      "version": 1
+    }
+  ]
+}

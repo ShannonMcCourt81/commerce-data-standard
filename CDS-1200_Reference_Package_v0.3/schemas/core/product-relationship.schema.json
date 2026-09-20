@@ -1,0 +1,279 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:cds:schema:core:product-relationship",
+  "version": "0.3.0",
+  "title": "CDS Product Relationship Record",
+  "$comment": "CDS-200 \u00a77A.1 (ADR-D6). Embedded in a product's or variant's `relationships` collection; the source is the enclosing document. Target shape depends on target_kind.",
+  "type": "object",
+  "properties": {
+    "relationship_id": {
+      "type": "string",
+      "minLength": 3
+    },
+    "relationship_type": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9]*(?:_[a-z0-9]+)*$",
+      "$comment": "value_id of the governed relationship_type dictionary (CDS200-R038)"
+    },
+    "direction": {
+      "type": "string",
+      "enum": [
+        "directed",
+        "symmetric"
+      ]
+    },
+    "target_kind": {
+      "type": "string",
+      "enum": [
+        "product",
+        "variant",
+        "model_family",
+        "standard",
+        "application",
+        "external_part",
+        "external_product"
+      ]
+    },
+    "target": {
+      "type": "object"
+    },
+    "quantity": {
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "qualifiers": {
+      "type": "object",
+      "additionalProperties": {
+        "type": [
+          "string",
+          "number",
+          "boolean"
+        ]
+      }
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "proposed",
+        "active",
+        "deprecated",
+        "retired",
+        "rejected"
+      ]
+    },
+    "effective_from": {
+      "type": "string",
+      "format": "date",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+    },
+    "effective_to": {
+      "type": "string",
+      "format": "date",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+    },
+    "provenance": {
+      "type": "object",
+      "properties": {
+        "source_type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_reference": {
+          "type": "string",
+          "minLength": 1
+        },
+        "evidence_class": {
+          "type": "string",
+          "enum": [
+            "E1",
+            "E2",
+            "E3",
+            "E4"
+          ]
+        },
+        "actor": {
+          "type": "string",
+          "minLength": 1
+        },
+        "acquired_at": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[+-]\\d{2}:\\d{2})$"
+        }
+      },
+      "required": [
+        "source_type",
+        "evidence_class",
+        "acquired_at"
+      ],
+      "additionalProperties": false
+    },
+    "version": {
+      "type": "integer",
+      "minimum": 1
+    }
+  },
+  "required": [
+    "relationship_id",
+    "relationship_type",
+    "direction",
+    "target_kind",
+    "target",
+    "status",
+    "provenance",
+    "version"
+  ],
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "target_kind": {
+            "enum": [
+              "product",
+              "variant"
+            ]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "target": {
+            "$ref": "urn:cds:schema:common:entity-reference"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "target_kind": {
+            "const": "standard"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "target": {
+            "properties": {
+              "scheme": {
+                "type": "string",
+                "minLength": 1
+              },
+              "value_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "label": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "scheme",
+              "value_id"
+            ],
+            "additionalProperties": false
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "target_kind": {
+            "const": "model_family"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "target": {
+            "properties": {
+              "brand_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "family_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "label": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "brand_id",
+              "family_id"
+            ],
+            "additionalProperties": false
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "target_kind": {
+            "const": "application"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "target": {
+            "properties": {
+              "vocabulary_source": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "vocabulary_source"
+            ],
+            "$comment": "Remaining application properties are governed by the declared vocabulary (CDS-1900 \u00a76)."
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "target_kind": {
+            "enum": [
+              "external_part",
+              "external_product"
+            ]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "target": {
+            "properties": {
+              "issuer": {
+                "type": "string",
+                "minLength": 1
+              },
+              "scheme": {
+                "type": "string",
+                "minLength": 1
+              },
+              "identifier": {
+                "type": "string",
+                "minLength": 1
+              },
+              "label": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "issuer",
+              "identifier"
+            ],
+            "additionalProperties": false
+          }
+        }
+      }
+    }
+  ]
+}

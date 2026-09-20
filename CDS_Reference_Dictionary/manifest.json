@@ -172,7 +172,7 @@
     },
     "18": {
       "title": "Parts, Automotive & Industrial",
-      "description": "Relationship types (with their direction), part origin types, product conditions and the UN dangerous-goods classes and divisions. Vehicle and equipment application vocabularies (ACES VCdb and the like) are licensed and never shipped; the full UN dangerous-goods list is regime-published.",
+      "description": "Relationship types (with their direction, bound through CDS-200 §7A), part origin types, product conditions and the UN dangerous-goods classes and divisions. Vehicle and equipment application vocabularies (ACES VCdb and the like) are licensed and never shipped; the full UN dangerous-goods list is regime-published.",
       "dictionaries": [
         "relationship_types",
         "part_origin_types",
@@ -182,7 +182,7 @@
     },
     "19": {
       "title": "Jurisdictions & Regulatory Schemes",
-      "description": "Country and sub-national codes, and the regulatory scheme codes used as keys into an organisation's jurisdiction requirement register (CDS-1500 §2.2). A scheme code names an instrument; it is never itself a compliance claim. Entries carry the chapters that seeded them; the organisation verifies before adoption.",
+      "description": "Country and sub-national codes, and the regulatory scheme codes used as keys into an organisation's jurisdiction requirement register (CDS-1500 §2.2). A scheme code names an instrument; it is never itself a compliance claim. Codes seeded only by research-candidate register entries are `proposed` until the organisation verifies the instrument (CDS1500-R086).",
       "dictionaries": [
         "jurisdictions",
         "regulatory_schemes"
@@ -190,7 +190,7 @@
     }
   },
   "note": "Canonical meanings are never silently redefined; changes go through deprecation with replacement mappings. Folder is unversioned by design; this manifest is the version authority.",
-  "package_hash": "6d07aa0501c563a3f76a74f9ffe4376ba6d773e78e2a564b51c5c15d509377e4",
+  "package_hash": "a736cadcbc4b7fb8c097232c1f2a043a8638f0229a0248e8c148c7fad54c67fa",
   "files": [
     {
       "path": "allergen_facets.csv",
@@ -429,8 +429,8 @@
     },
     {
       "path": "regulatory_schemes.csv",
-      "sha256": "33dba4158af59449cf129c901e68eb190a0257df91dcd877f105be2d134f99ac",
-      "bytes": 48858
+      "sha256": "6e1442324b67905e7db2c6473378dda813eb3415cd506172367008546c6a0839",
+      "bytes": 53968
     },
     {
       "path": "relationship_types.csv",
@@ -514,12 +514,12 @@
     },
     {
       "path": "README.md",
-      "sha256": "3d003aa717110f33ea2a95802081d690f49b2ffeef537d69220cd742befc8e8b",
-      "bytes": 11386
+      "sha256": "f6897c6546236b2c6c5481f0f84c530b3a5b3fdbba16ee9960eeafb20fa29ba3",
+      "bytes": 11690
     },
     {
       "path": "SHA256SUMS.txt",
-      "sha256": "c4ea7c1ecb2dce067ff5a57118115a9e13288b773263567d11bff0e2645f77e2",
+      "sha256": "22e68926c2fc529cc74539fdb68f39f22943570a9a90e77e2aa2aa530f47bfc4",
       "bytes": 5582
     }
   ]
