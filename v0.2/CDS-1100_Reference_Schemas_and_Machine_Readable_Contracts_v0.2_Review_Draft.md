@@ -88,7 +88,7 @@ schemas/
   assurance/  conformance-manifest, validation-output
 ```
 
-Platform and industry profiles are not schema directories in v0.2: platform-specific constraints live in CDS-900 profiles and industry constraints in CDS-1500, applied by composition (§20). The v0.1 `profiles/` directory sketch is withdrawn.
+Platform and industry profiles are not schema directories in v0.2: platform-specific constraints live in CDS-900 profiles and industry constraints in CDS-1500 through CDS-2000 (register: CDS-1500 §2.1), applied by composition (§20). The product relationship record (CDS-1900 §5) is carried in the canonical product contract's `relationships` collection (§8); its typed record shape is a candidate component schema for the next package release. The v0.1 `profiles/` directory sketch is withdrawn.
 
 Three identity layers, per ADR-D5:
 

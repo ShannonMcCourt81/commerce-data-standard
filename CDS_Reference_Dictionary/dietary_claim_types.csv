@@ -1,0 +1,23 @@
+dictionary_key,row_type,value_id,label,maps_to,aliases,facet_ids,definition,status,provenance,version,locale
+dietary_claim_type,canonical,gluten_free,Gluten Free,,gluten-free;no gluten,,"Regulated definition in AU/NZ (no detectable gluten), EU/UK (≤20 mg/kg, Reg. 828/2014), US (<20 ppm, 21 CFR 101.91); evidence class E1 test or certification",active,seed,0.8.0,en-GB
+dietary_claim_type,canonical,vegan,Vegan,,plant-based (no animal ingredients),,No regulated definition in the seeded markets; certification (E2) or manufacturer declaration (E3) with ingredient consistency check,active,seed,0.8.0,en-GB
+dietary_claim_type,canonical,vegetarian,Vegetarian,,suitable for vegetarians,,No regulated definition in the seeded markets; declaration with ingredient consistency check,active,seed,0.8.0,en-GB
+dietary_claim_type,canonical,dairy_free,Dairy Free,,dairy-free;no dairy;milk free,,Free-from claim; must be consistent with allergen declarations (CDS-1700 §8),active,seed,0.8.0,en-GB
+dietary_claim_type,canonical,lactose_free,Lactose Free,,lactose-free,,Regulated thresholds in some markets (EU national rules); declaration with evidence,active,seed,0.8.0,en-GB
+dietary_claim_type,canonical,nut_free,Nut Free,,nut-free;no nuts,,Free-from claim; must be consistent with allergen declarations and precautionary statements,active,seed,0.8.0,en-GB
+dietary_claim_type,canonical,egg_free,Egg Free,,egg-free,,Free-from claim; consistency with allergen declarations required,active,seed,0.8.0,en-GB
+dietary_claim_type,canonical,soy_free,Soy Free,,soy-free;soya free,,Free-from claim; consistency with allergen declarations required,active,seed,0.8.0,en-GB
+dietary_claim_type,canonical,halal,Halal,,halal certified,,Certification claim (E2) naming the certifying body,active,seed,0.8.0,en-GB
+dietary_claim_type,canonical,kosher,Kosher,,kosher certified;pareve,,Certification claim (E2) naming the certifying agency,active,seed,0.8.0,en-GB
+dietary_claim_type,canonical,organic,Organic,,certified organic,,"Regulated in AU (ACO/NASAA under export standard), EU (Reg. 2018/848), US (USDA NOP), Canada (COR); certification required",active,seed,0.8.0,en-GB
+dietary_claim_type,canonical,non_gmo,Non-GMO,,gmo free;non gmo;no genetically modified ingredients,,Certification or declaration; regulated GM labelling rules apply separately,active,seed,0.8.0,en-GB
+dietary_claim_type,canonical,no_added_sugar,No Added Sugar,,no sugar added;unsweetened,,Nutrition content claim with regulated conditions (FSANZ 1.2.7; EU 1924/2006; 21 CFR 101.60),active,seed,0.8.0,en-GB
+dietary_claim_type,canonical,sugar_free,Sugar Free,,sugar-free;zero sugar,,Nutrition content claim with regulated thresholds,active,seed,0.8.0,en-GB
+dietary_claim_type,canonical,low_sugar,Low Sugar,,reduced sugar (distinct comparative claim),,Nutrition content claim with regulated thresholds,active,seed,0.8.0,en-GB
+dietary_claim_type,canonical,low_fat,Low Fat,,low-fat,,Nutrition content claim with regulated thresholds,active,seed,0.8.0,en-GB
+dietary_claim_type,canonical,low_sodium,Low Sodium,,low salt;low-sodium,,Nutrition content claim with regulated thresholds,active,seed,0.8.0,en-GB
+dietary_claim_type,canonical,high_protein,High Protein,,protein rich;source of protein (distinct claim),,Nutrition content claim with regulated thresholds,active,seed,0.8.0,en-GB
+dietary_claim_type,canonical,high_fibre,High Fibre,,high fiber;source of fibre (distinct claim),,Nutrition content claim with regulated thresholds,active,seed,0.8.0,en-GB
+dietary_claim_type,canonical,keto,Keto,,ketogenic;keto friendly,,No regulated definition; manufacturer declaration (E3) only,active,seed,0.8.0,en-GB
+dietary_claim_type,canonical,paleo,Paleo,,paleo friendly,,No regulated definition; manufacturer declaration (E3) only,active,seed,0.8.0,en-GB
+dietary_claim_type,canonical,low_fodmap,Low FODMAP,,fodmap friendly,,Certification programmes exist (E2); otherwise declaration,active,seed,0.8.0,en-GB

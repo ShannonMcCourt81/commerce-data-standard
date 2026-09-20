@@ -1,0 +1,7 @@
+dictionary_key,row_type,value_id,label,maps_to,aliases,facet_ids,status,provenance,version,locale
+mattress_firmness,canonical,soft,Soft,,plush;ultra plush;extra soft,,active,seed,0.8.0,en-GB
+mattress_firmness,canonical,medium_soft,Medium Soft,,medium plush;plush medium,,active,seed,0.8.0,en-GB
+mattress_firmness,canonical,medium,Medium,,universal comfort;medium feel,,active,seed,0.8.0,en-GB
+mattress_firmness,canonical,medium_firm,Medium Firm,,firm medium;luxury firm,,active,seed,0.8.0,en-GB
+mattress_firmness,canonical,firm,Firm,,extra support;orthopaedic feel,,active,seed,0.8.0,en-GB
+mattress_firmness,canonical,extra_firm,Extra Firm,,ultra firm;very firm,,active,seed,0.8.0,en-GB

@@ -1,16 +1,16 @@
 {
   "release": "CDS v0.2 Review Draft",
-  "release_date": "2026-08-17",
+  "release_date": "2026-09-20",
   "status": "content-complete-internally-verified-controlled-pilot",
   "reference_package_version": "0.2.1",
-  "dictionary_version": "0.7.2",
+  "dictionary_version": "0.8.0",
   "hash_algorithm": "SHA-256",
-  "artifact_count": 38,
+  "artifact_count": 43,
   "artifacts": [
     {
       "path": "README.md",
-      "bytes": 5032,
-      "sha256": "5e49a61d6211a93cf4ce5265a70bf90c237e8183053814f76f301455230f4ac3"
+      "bytes": 5679,
+      "sha256": "cb464fd0e33e6ea54e8e4208c3920dde24a536f092c48946ceb7119d645d0120"
     },
     {
       "path": "CDS_Start_Here.pdf",
@@ -24,38 +24,38 @@
     },
     {
       "path": "CDS_Shopify_Setup_Runbook_v0.2.pdf",
-      "bytes": 539597,
-      "sha256": "45c3d092546f87890840016867e865746dedd72d21793bab8baeff53d4abc62a"
+      "bytes": 537939,
+      "sha256": "0bd0607cccce4416e32bd5165faf194ece924fbbe33c34928477278371c46332"
     },
     {
       "path": "Commerce_Data_Standard_v0.2.pdf",
-      "bytes": 4601369,
-      "sha256": "1c82a31d9954c2b0b3ce6259b24040ca2b81fd049d67ebe4ca5a57a486fc2a6c"
+      "bytes": 6808064,
+      "sha256": "6d3e8d523c7c0415c80aa4664fa92a16325dd65bc5c4401e62be2b09f035895e"
     },
     {
       "path": "CDS_Dictionary.pdf",
-      "bytes": 963831,
-      "sha256": "af25dcd590a1c11f3a3f2955e99c29f4ac6e56121d42148bb9597f22b0b29b2a"
+      "bytes": 1362021,
+      "sha256": "41c0ddd8ddabfe4428c769867ab0039a79b8397716891962cfaf83b9e0fcae8e"
     },
     {
       "path": "v0.2/CDS-000_Foundations_and_Principles_v0.2_Review_Draft.md",
-      "bytes": 9636,
-      "sha256": "17332717537877097461efa13e604e93307999168db7edca37726b5dab659e34"
+      "bytes": 9936,
+      "sha256": "aeb3a27dc240837cf6bbb9f221af492e2792e578844557adf531a6f0b228dad6"
     },
     {
       "path": "v0.2/CDS-1000_Conformance_Testing_and_Assurance_v0.2_Review_Draft.md",
-      "bytes": 38034,
-      "sha256": "2cf7d397315aea9257c84bedad2b8410b2e1dd2ea776b292543e11beaea0761e"
+      "bytes": 38882,
+      "sha256": "67dd0fbcf189bbf06d8f145cc42530164f5a473c5bcfbcd09f1169b64d7f45d7"
     },
     {
       "path": "v0.2/CDS-100_Terminology_v0.2_Review_Draft.md",
-      "bytes": 17286,
-      "sha256": "93be77816daba00f79065f0b7b662d0e725a0457ad99ffdccd868d1d2c79ff02"
+      "bytes": 19268,
+      "sha256": "8c1341d7baf77fde8b5b3d006b810eadfa51fe3d03d0e260175b0c8ae81491ba"
     },
     {
       "path": "v0.2/CDS-1100_Reference_Schemas_and_Machine_Readable_Contracts_v0.2_Review_Draft.md",
-      "bytes": 61140,
-      "sha256": "b1b3b58a0afca73c32b38ef5ee0d22060880f429f666e90694e49ce01955250a"
+      "bytes": 61397,
+      "sha256": "76e21fee4d1c337e820be73da59a6618dcdf506f63f091a2549c9dc5ee876b3a"
     },
     {
       "path": "v0.2/CDS-1200_Reference_Implementation_Schema_Package_and_Test_Fixtures_v0.2_Review_Draft.md",
@@ -74,8 +74,8 @@
     },
     {
       "path": "v0.2/CDS-1500_Apparel_and_Homewares_Industry_Profiles_v0.2_Review_Draft.md",
-      "bytes": 56208,
-      "sha256": "72aec5a897eb09c9a95a9e1841984b632884f580c0d05561b96907fe7ce59976"
+      "bytes": 104038,
+      "sha256": "0574900bbfdfc459b5a7418cc92a7feb02c1fe354fc72ed8388b88719f8a4e8a"
     },
     {
       "path": "v0.2/CDS-200_Commerce_Information_Architecture_v0.2_Review_Draft.md",
@@ -114,13 +114,13 @@
     },
     {
       "path": "v0.2/CDS-900_Implementation_Profiles_and_Platform_Mappings_v0.2_Review_Draft.md",
-      "bytes": 50798,
-      "sha256": "6c66aea36d11ae2ac781f77b8d35525e2911882ef53d1aadb40ad1def265b86e"
+      "bytes": 52079,
+      "sha256": "bdb36c387f55d0b1ae4c3244ac7ba477fd9d7d146cc0ee8f86f883ff5f128c01"
     },
     {
       "path": "v0.2/CDS_Adoption_Workbook_v0.2.md",
-      "bytes": 7075,
-      "sha256": "df790254202eb272a15c946e3ea7e24243724bc53bc76faa8adb6c5d04fec2e1"
+      "bytes": 7478,
+      "sha256": "8b1610b682a634295d232e1b38572ad8e68501bf823f9f3aff96d86e17944bd6"
     },
     {
       "path": "v0.2/CDS_Plain_English_Guide.md",
@@ -134,18 +134,18 @@
     },
     {
       "path": "v0.2/Commerce_Data_Standard_v0.2.md",
-      "bytes": 637570,
-      "sha256": "098a0857784f4268e6c72b71ddba7b1fbca640ea536a2100944146cbde0c0f21"
+      "bytes": 1008666,
+      "sha256": "793f01cf670da4ad0833c48a1a619104343fa600d1149b138a6a58b87aabbdb1"
     },
     {
       "path": "v0.2/HOWTO-Shopify-Store-Setup-Runbook-CDS-v0.2.md",
-      "bytes": 61656,
-      "sha256": "ac45c3ea7b7b1cb925f3d6fc5a0bba98cd070652b9e22ca2dad92d638bf64258"
+      "bytes": 62078,
+      "sha256": "294fb204ff48d5d63d549f33253719278150be75f9890ae61addbf98070caf86"
     },
     {
       "path": "v0.2/CDS_Dictionary.html",
-      "bytes": 80999,
-      "sha256": "909b858a823da488bf71b5716cca12f2f4c7341f182cd77c845804e224a7c9d9"
+      "bytes": 167450,
+      "sha256": "b8cad0c342a53d44575486a454343607112b934f8cc32e21e4560a538e9e0e3f"
     },
     {
       "path": "v0.2/CDS_Plain_English_Guide.html",
@@ -154,28 +154,28 @@
     },
     {
       "path": "v0.2/CDS_Shopify_Setup_Runbook_v0.2.html",
-      "bytes": 70463,
-      "sha256": "7fb326fb0e3ec4f836f09924a1d8d1f16d5d1cdaf986dfbf9be900a9ea66eed0"
+      "bytes": 70830,
+      "sha256": "bfc446036a0e6a44c63d2428909dfee236e7fa9fb764845fea1fa5b828969c23"
     },
     {
       "path": "v0.2/Commerce_Data_Standard_v0.2.html",
-      "bytes": 756647,
-      "sha256": "9b0086caba625a19154838a42b530f3a21ebe954c9fc59952edc6e35b474c742"
+      "bytes": 1183772,
+      "sha256": "517ce7412b36360db58ff2001e4537e3cc01d0e08db638dbe9cba3e539ab3c87"
     },
     {
       "path": "requirements-index.csv",
-      "bytes": 187133,
-      "sha256": "be8bcf3f92d376524db0013c84cdb860ea3e1cc13e1fcdcaf39a02df2721d57e"
+      "bytes": 267378,
+      "sha256": "5bae6380fcf3df0bc26b96d0364a9f818223960dd2b476a3e8ae75ec5781c062"
     },
     {
       "path": "CDS_Reference_Dictionary/manifest.json",
-      "bytes": 13475,
-      "sha256": "6d5c05e2b7632c9beced6cf057a91453b9845483da00e27412499511ddc91477"
+      "bytes": 17532,
+      "sha256": "1fa08442eb5b030713519b00fa78e0d159b97bfca09d7cd336a421630da16217"
     },
     {
       "path": "CDS_Reference_Dictionary/SHA256SUMS.txt",
-      "bytes": 4344,
-      "sha256": "8348043a1041d670aba175088cb5cf384762a592d684914e9ba546fad57b4611"
+      "bytes": 5582,
+      "sha256": "c4ea7c1ecb2dce067ff5a57118115a9e13288b773263567d11bff0e2645f77e2"
     },
     {
       "path": "CDS-1200_Reference_Package_v0.2/package-manifest.json",
@@ -196,6 +196,31 @@
       "path": "CDS-1200_Reference_Package_v0.2/LICENSE-SPEC.md",
       "bytes": 18657,
       "sha256": "9ba9550ad48438d0836ddab3da480b3b69ffa0aac7b7878b5a0039e7ab429411"
+    },
+    {
+      "path": "v0.2/CDS-1600_Beauty_Health_and_Personal_Care_Industry_Profile_v0.2_Review_Draft.md",
+      "bytes": 64758,
+      "sha256": "1b25634c1a482075c3a6c6329af469292306966491a9eb128dd29dd29681da0f"
+    },
+    {
+      "path": "v0.2/CDS-1700_Food_Beverage_and_Grocery_Industry_Profile_v0.2_Review_Draft.md",
+      "bytes": 61622,
+      "sha256": "d2703c0ea8e17a05c3e041ca4ae285628a2a1e22f08770aaa98d154db4e62810"
+    },
+    {
+      "path": "v0.2/CDS-1800_Consumer_Electronics_Appliances_and_Technical_Goods_Industry_Profile_v0.2_Review_Draft.md",
+      "bytes": 68959,
+      "sha256": "a2de7efd19f806b158cd089fd862b316a920496d68a2969e8b567668b66258ed"
+    },
+    {
+      "path": "v0.2/CDS-1900_Parts_Automotive_Industrial_and_Fitment_Industry_Profile_v0.2_Review_Draft.md",
+      "bytes": 62340,
+      "sha256": "e28dc3d7307ae2267299ae35729e47cf5430c7f50bc089214dc2574b05eac6ff"
+    },
+    {
+      "path": "v0.2/CDS-2000_Sports_Outdoor_Toys_Games_and_Pet_Supplies_Industry_Profiles_v0.2_Review_Draft.md",
+      "bytes": 58830,
+      "sha256": "ad8903eb3dcecec1d257948a2b2fca5cd82f49667a1ed9f9ba99764859e28b8b"
     }
   ]
 }

@@ -19,3 +19,13 @@ size_system,canonical,au_bra,AU Bra,,au bra size;australian bra sizing,,active,s
 size_system,canonical,kids_age,Kids Age,,age sizing;years,,active,seed,0.5.0,en-GB
 size_system,canonical,kids_height,Kids Height,,height in cm;cm sizing,,active,seed,0.5.0,en-GB
 size_system,canonical,us_kids,US Kids,,us toddler sizes;us children's sizes,,active,seed,0.5.0,en-GB
+size_system,canonical,au_bedding,AU Bedding,,australian bed sizes;au mattress size;single;king single;double;queen;king (au),,active,seed,0.8.0,en-GB
+size_system,canonical,us_bedding,US Bedding,,american bed sizes;twin;twin xl;full;queen;king;california king,,active,seed,0.8.0,en-GB
+size_system,canonical,uk_bedding,UK Bedding,,british bed sizes;small single;single;small double;double;king;super king (uk),,active,seed,0.8.0,en-GB
+size_system,canonical,eu_bedding,EU Bedding,,european bed sizes;90x200;140x200;160x200;180x200,,active,seed,0.8.0,en-GB
+size_system,canonical,au_ring,AU Ring,,australian ring size;uk ring letters (au uses the same letter scale),,active,seed,0.8.0,en-GB
+size_system,canonical,us_ring,US Ring,,american ring size;us ring numeric,,active,seed,0.8.0,en-GB
+size_system,canonical,uk_ring,UK Ring,,british ring size;ring letter size,,active,seed,0.8.0,en-GB
+size_system,canonical,eu_ring,EU Ring,,european ring size;iso 8653 circumference mm,,active,seed,0.8.0,en-GB
+size_system,canonical,bike_frame_cm,Bike Frame (cm),,frame size cm;seat tube length,,active,seed,0.8.0,en-GB
+size_system,canonical,head_circumference_cm,Head Circumference (cm),,hat size cm;helmet size cm,,active,seed,0.8.0,en-GB

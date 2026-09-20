@@ -1,0 +1,12 @@
+dictionary_key,row_type,value_id,label,maps_to,aliases,facet_ids,status,provenance,version,locale
+pet_food_form,canonical,dry_kibble,Dry (Kibble),,dry food;kibble;biscuits;dry,,active,seed,0.8.0,en-GB
+pet_food_form,canonical,wet,Wet,,canned;tinned;pouch;tray;wet food;loaf;chunks in gravy,,active,seed,0.8.0,en-GB
+pet_food_form,canonical,semi_moist,Semi-Moist,,soft dry;semi moist,,active,seed,0.8.0,en-GB
+pet_food_form,canonical,raw_frozen,Raw (Frozen),,raw;barf;frozen raw;fresh frozen,,active,seed,0.8.0,en-GB
+pet_food_form,canonical,freeze_dried,Freeze-Dried,,freeze dried;fd,,active,seed,0.8.0,en-GB
+pet_food_form,canonical,air_dried,Air-Dried,,air dried;dehydrated;gently cooked dehydrated,,active,seed,0.8.0,en-GB
+pet_food_form,canonical,fresh_cooked,Fresh Cooked,,fresh;gently cooked;refrigerated fresh,,active,seed,0.8.0,en-GB
+pet_food_form,canonical,treat,Treat,,treats;snack;biscuit treat;training treat,,active,seed,0.8.0,en-GB
+pet_food_form,canonical,chew,Chew,,dental chew;rawhide;bully stick;chews,,active,seed,0.8.0,en-GB
+pet_food_form,canonical,topper,Topper or Mixer,,topper;mixer;meal topper;gravy;broth,,active,seed,0.8.0,en-GB
+pet_food_form,canonical,milk_replacer,Milk Replacer,,formula;kitten milk;puppy milk,,active,seed,0.8.0,en-GB

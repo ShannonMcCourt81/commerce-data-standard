@@ -1,9 +1,10 @@
 {
   "package": "CDS Reference Dictionary",
-  "version": "0.7.2",
+  "version": "0.8.0",
   "status": "informative-starter-data",
   "locale": "en-GB",
   "supersedes": [
+    "CDS Reference Dictionary 0.7.2",
     "CDS Reference Dictionary 0.4.0",
     "CDS-1500_Starter_Reference_Dictionaries_v0.2 (0.2.0)",
     "CDS_Dictionary_Expansion_Packs_v0.1 (0.1.0)"
@@ -99,18 +100,20 @@
         "beauty_hair_types",
         "beauty_scent_families",
         "beauty_formulations",
-        "beauty_makeup_finishes"
+        "beauty_makeup_finishes",
+        "fragrance_concentrations"
       ]
     },
     "11": {
       "title": "Electronics & Appliances",
-      "description": "Brown and white goods: connections, screen technologies, power, mounting and energy-label schemes. Compliance marks and vendor ecosystems excluded.",
+      "description": "Brown and white goods: connections, screen technologies, power, mounting, energy-label schemes and battery chemistries. Compliance marks and vendor ecosystems excluded; the regulated compliance scheme codes live in Chapter 19.",
       "dictionaries": [
         "connectivity",
         "screen_technologies",
         "power_sources",
         "installation_types",
-        "energy_rating_systems"
+        "energy_rating_systems",
+        "battery_chemistries"
       ]
     },
     "12": {
@@ -134,18 +137,20 @@
     },
     "14": {
       "title": "Pet Supplies",
-      "description": "Pet types, species-neutral life stages (puppy/kitten are display mappings) and animal sizes. Breed lists and health claims excluded.",
+      "description": "Pet types, life stages, size classes and food forms. Breed lists, health claims and nutrient profiles excluded.",
       "dictionaries": [
         "pet_types",
         "pet_life_stages",
-        "pet_sizes"
+        "pet_sizes",
+        "pet_food_forms"
       ]
     },
     "15": {
       "title": "Furniture",
-      "description": "Assembly forms. Furniture styles live in the Chapter 6 style vocabulary; upholstery reuses Fabrics and Materials.",
+      "description": "Assembly types and mattress firmness. Styles live in the Chapter 6 style vocabulary; upholstery reuses Fabrics/Materials; bedding size systems live in Chapter 5.",
       "dictionaries": [
-        "assembly_types"
+        "assembly_types",
+        "mattress_firmnesses"
       ]
     },
     "16": {
@@ -154,11 +159,49 @@
       "dictionaries": [
         "sun_exposure"
       ]
+    },
+    "17": {
+      "title": "Food & Beverage",
+      "description": "Allergens as the regulated required names of the seeded jurisdictions (each filing under one of the fourteen EU groups as its facet), dietary claim types (claim vocabulary - every value is evidence-gated, never a bare filter), and storage conditions. Nutrition schemes, ingredient names and country-of-origin statements are declared per organisation.",
+      "dictionaries": [
+        "allergens",
+        "allergen_facets",
+        "dietary_claim_types",
+        "storage_conditions"
+      ]
+    },
+    "18": {
+      "title": "Parts, Automotive & Industrial",
+      "description": "Relationship types (with their direction), part origin types, product conditions and the UN dangerous-goods classes and divisions. Vehicle and equipment application vocabularies (ACES VCdb and the like) are licensed and never shipped; the full UN dangerous-goods list is regime-published.",
+      "dictionaries": [
+        "relationship_types",
+        "part_origin_types",
+        "product_conditions",
+        "dangerous_goods_classes"
+      ]
+    },
+    "19": {
+      "title": "Jurisdictions & Regulatory Schemes",
+      "description": "Country and sub-national codes, and the regulatory scheme codes used as keys into an organisation's jurisdiction requirement register (CDS-1500 §2.2). A scheme code names an instrument; it is never itself a compliance claim. Entries carry the chapters that seeded them; the organisation verifies before adoption.",
+      "dictionaries": [
+        "jurisdictions",
+        "regulatory_schemes"
+      ]
     }
   },
   "note": "Canonical meanings are never silently redefined; changes go through deprecation with replacement mappings. Folder is unversioned by design; this manifest is the version authority.",
-  "package_hash": "34c8a01b6a4b2631f9b6e86dffb5d61a246223782d45f03c302698d27246971c",
+  "package_hash": "6d07aa0501c563a3f76a74f9ffe4376ba6d773e78e2a564b51c5c15d509377e4",
   "files": [
+    {
+      "path": "allergen_facets.csv",
+      "sha256": "a951cdf0a3f6ca149ef4fb8cab26e8880c2e2465d34c689a35c9de5025aa7fd7",
+      "bytes": 2397
+    },
+    {
+      "path": "allergens.csv",
+      "sha256": "6f0b1a6fcf92aa0281c509bd614ddb646b00573c5ef2532552f7dc39afa65774",
+      "bytes": 2719
+    },
     {
       "path": "apparel_materials.csv",
       "sha256": "fef6e47f3d9437ad4f0e0ec8f229d6d6cac1500785e91da18d704542f0494bea",
@@ -168,6 +211,11 @@
       "path": "assembly_types.csv",
       "sha256": "023b27cf7cc3b63dda0a9cd5a41cc0e94f465a0026a3a470b23138086347f93e",
       "bytes": 501
+    },
+    {
+      "path": "battery_chemistries.csv",
+      "sha256": "0d2f8a0d8b7e134830f50ec344213278ffa4ebdff8507e11dc8efe9f6348f046",
+      "bytes": 2401
     },
     {
       "path": "beauty_formulations.csv",
@@ -215,6 +263,16 @@
       "bytes": 1485
     },
     {
+      "path": "dangerous_goods_classes.csv",
+      "sha256": "9bce88bf3bc319c44c516f8ff860d2c429428684ba41b3cb51f9e981b7c363cc",
+      "bytes": 3003
+    },
+    {
+      "path": "dietary_claim_types.csv",
+      "sha256": "39775a9516721c63e5ede4b68e9d8c001db563f5db62154ebca48aaf9c07f65d",
+      "bytes": 3938
+    },
+    {
       "path": "energy_rating_systems.csv",
       "sha256": "ece0456b255ef6d9e2cb1456185e8225717a23170fe7d9e84d4b794ade64ccad",
       "bytes": 1585
@@ -260,6 +318,11 @@
       "bytes": 449
     },
     {
+      "path": "fragrance_concentrations.csv",
+      "sha256": "7576057c38a14862242a601dfc2420294c6fab8d806aa0e71c54d6a879446c67",
+      "bytes": 964
+    },
+    {
       "path": "garment_lengths.csv",
       "sha256": "368c33a8bd1496741bb29342a51d005a0131a1ae38d98de74197dc8c9217ae48",
       "bytes": 589
@@ -295,9 +358,19 @@
       "bytes": 991
     },
     {
+      "path": "jurisdictions.csv",
+      "sha256": "0f363dff8f9d1b7beaf83a2e558b9bcf3d41146fc7381d29bf22d01d4ca3b78d",
+      "bytes": 1877
+    },
+    {
       "path": "material_facets.csv",
       "sha256": "3ba7a3bd26dbbca20711d6c828b8dbbe9e075c320054ba8990787179a35ac7a1",
       "bytes": 2118
+    },
+    {
+      "path": "mattress_firmnesses.csv",
+      "sha256": "cd4d63b4ff6bed6295ccb6839218b4ac676392ba31a31d99ed0b01b379ad86bf",
+      "bytes": 687
     },
     {
       "path": "necklines.csv",
@@ -310,9 +383,19 @@
       "bytes": 1157
     },
     {
+      "path": "part_origin_types.csv",
+      "sha256": "7f6bfe6396bd8f6c2473ee2af4ed815bc80fdbe99b8c49d42da82bea44611eb2",
+      "bytes": 745
+    },
+    {
       "path": "patterns.csv",
       "sha256": "4000cf48afc8aa5f3788458c441737c50ac2ae5f09ffa49f379fde6c045345cf",
       "bytes": 1291
+    },
+    {
+      "path": "pet_food_forms.csv",
+      "sha256": "8a45734b44c24db0640351636dc69dd31550e01350c7421ef76c3bc29baace4c",
+      "bytes": 1257
     },
     {
       "path": "pet_life_stages.csv",
@@ -340,6 +423,21 @@
       "bytes": 1010
     },
     {
+      "path": "product_conditions.csv",
+      "sha256": "212f84a16490f3a2c559060dd620985b6d47ab8594d51fa1ac4a35cd05b20239",
+      "bytes": 1026
+    },
+    {
+      "path": "regulatory_schemes.csv",
+      "sha256": "33dba4158af59449cf129c901e68eb190a0257df91dcd877f105be2d134f99ac",
+      "bytes": 48858
+    },
+    {
+      "path": "relationship_types.csv",
+      "sha256": "cb3f70a1a1a300b4f7a4eba7a609bc49aa668f9e83dcc8ec67c095765058aaa7",
+      "bytes": 2493
+    },
+    {
       "path": "rooms.csv",
       "sha256": "fe477a783fc645e27fd627cff1cd8081b8cf7ed08cd7e0911f3f79e9067ec379",
       "bytes": 1044
@@ -356,8 +454,8 @@
     },
     {
       "path": "size_systems.csv",
-      "sha256": "01dc058e70d1021116bc25351308494827bc2b18dbcc8a6468c3a32815df7742",
-      "bytes": 1775
+      "sha256": "670d95fb954655aee76a6c7e34022bf0184d3269fb3099f2d6429aea9f007bb9",
+      "bytes": 2998
     },
     {
       "path": "sleeve_types.csv",
@@ -368,6 +466,11 @@
       "path": "sport_activities.csv",
       "sha256": "602e31567e407020be1f8c559f7e90674cb129979a9f81ab7aefaae4400c8e39",
       "bytes": 1730
+    },
+    {
+      "path": "storage_conditions.csv",
+      "sha256": "6e808d5bc6cb568f3bb2a0648c3be2023326c2e7bc54e59116d7262659a9679b",
+      "bytes": 1338
     },
     {
       "path": "styles.csv",
@@ -411,13 +514,13 @@
     },
     {
       "path": "README.md",
-      "sha256": "a512cbbf1b28bd795902335f3295f91e56d7ab2f426233bf648075e3d3417669",
-      "bytes": 7853
+      "sha256": "3d003aa717110f33ea2a95802081d690f49b2ffeef537d69220cd742befc8e8b",
+      "bytes": 11386
     },
     {
       "path": "SHA256SUMS.txt",
-      "sha256": "8348043a1041d670aba175088cb5cf384762a592d684914e9ba546fad57b4611",
-      "bytes": 4344
+      "sha256": "c4ea7c1ecb2dce067ff5a57118115a9e13288b773263567d11bff0e2645f77e2",
+      "bytes": 5582
     }
   ]
 }

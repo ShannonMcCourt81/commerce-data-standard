@@ -1,0 +1,28 @@
+dictionary_key,row_type,value_id,label,maps_to,aliases,facet_ids,status,provenance,version,locale
+allergen,canonical,wheat,Wheat,,wheat flour;durum;semolina;spelt (see spelt),gluten_containing_cereals,active,seed,0.8.0,en-GB
+allergen,canonical,spelt,Spelt,,dinkel,gluten_containing_cereals,active,seed,0.8.0,en-GB
+allergen,canonical,kamut,Kamut,,khorasan wheat,gluten_containing_cereals,active,seed,0.8.0,en-GB
+allergen,canonical,rye,Rye,,,gluten_containing_cereals,active,seed,0.8.0,en-GB
+allergen,canonical,barley,Barley,,malt (barley);malted barley,gluten_containing_cereals,active,seed,0.8.0,en-GB
+allergen,canonical,oats,Oats,,oat,gluten_containing_cereals,active,seed,0.8.0,en-GB
+allergen,canonical,crustacea,Crustacea,,prawn;shrimp;crab;lobster;crayfish;crustacean,crustaceans,active,seed,0.8.0,en-GB
+allergen,canonical,egg,Egg,,eggs;egg white;egg yolk;albumen,eggs,active,seed,0.8.0,en-GB
+allergen,canonical,fish,Fish,,anchovy;salmon;tuna;cod (declare species where required),fish,active,seed,0.8.0,en-GB
+allergen,canonical,peanut,Peanut,,peanuts;groundnut;arachis,peanuts,active,seed,0.8.0,en-GB
+allergen,canonical,soy,Soy,,soya;soybean;soybeans;soy lecithin (where declared),soybeans,active,seed,0.8.0,en-GB
+allergen,canonical,milk,Milk,,dairy;whey;casein;lactose,milk,active,seed,0.8.0,en-GB
+allergen,canonical,almond,Almond,,almonds,tree_nuts,active,seed,0.8.0,en-GB
+allergen,canonical,brazil_nut,Brazil Nut,,brazil nuts,tree_nuts,active,seed,0.8.0,en-GB
+allergen,canonical,cashew,Cashew,,cashews;cashew nut,tree_nuts,active,seed,0.8.0,en-GB
+allergen,canonical,hazelnut,Hazelnut,,hazelnuts;filbert,tree_nuts,active,seed,0.8.0,en-GB
+allergen,canonical,macadamia,Macadamia,,macadamia nut;queensland nut,tree_nuts,active,seed,0.8.0,en-GB
+allergen,canonical,pecan,Pecan,,pecans,tree_nuts,active,seed,0.8.0,en-GB
+allergen,canonical,pine_nut,Pine Nut,,pine nuts;pignoli,tree_nuts,active,seed,0.8.0,en-GB
+allergen,canonical,pistachio,Pistachio,,pistachios,tree_nuts,active,seed,0.8.0,en-GB
+allergen,canonical,walnut,Walnut,,walnuts,tree_nuts,active,seed,0.8.0,en-GB
+allergen,canonical,celery,Celery,,celeriac;celery seed,celery,active,seed,0.8.0,en-GB
+allergen,canonical,mustard,Mustard,,mustard seed;mustard flour,mustard,active,seed,0.8.0,en-GB
+allergen,canonical,sesame,Sesame,,sesame seed;sesame seeds;tahini,sesame,active,seed,0.8.0,en-GB
+allergen,canonical,sulphites,Sulphites,,sulfites;sulphur dioxide;sulfur dioxide;e220;e221;e222;e223;e224;e226;e227;e228,sulphites,active,seed,0.8.0,en-GB
+allergen,canonical,lupin,Lupin,,lupine;lupin flour,lupin,active,seed,0.8.0,en-GB
+allergen,canonical,mollusc,Mollusc,,molluscs;mollusk;oyster;mussel;clam;squid;octopus;scallop;abalone,molluscs,active,seed,0.8.0,en-GB

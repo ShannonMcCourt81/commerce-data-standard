@@ -1,0 +1,13 @@
+dictionary_key,row_type,value_id,label,maps_to,aliases,facet_ids,definition,status,provenance,version,locale
+battery_chemistry,canonical,lithium_ion,Lithium-ion,,li-ion;liion;lithium ion,,"Rechargeable lithium-ion cells and batteries (UN 3480 alone, UN 3481 in or with equipment); watt-hour rating required for transport",active,seed,0.8.0,en-GB
+battery_chemistry,canonical,lithium_polymer,Lithium Polymer,,li-po;lipo;lithium-ion polymer,,Rechargeable lithium-ion polymer cells; transport as lithium-ion (UN 3480/3481),active,seed,0.8.0,en-GB
+battery_chemistry,canonical,lithium_iron_phosphate,Lithium Iron Phosphate,,lifepo4;lfp,,Rechargeable lithium-ion chemistry used in power stations and e-mobility; transport as lithium-ion,active,seed,0.8.0,en-GB
+battery_chemistry,canonical,lithium_metal,Lithium Metal,,primary lithium;lithium primary;licoin;cr2032 type,,"Non-rechargeable lithium metal cells including coin cells (UN 3090 alone, UN 3091 in or with equipment); lithium content required for transport",active,seed,0.8.0,en-GB
+battery_chemistry,canonical,nickel_metal_hydride,Nickel-Metal Hydride,,nimh;ni-mh,,Rechargeable NiMH cells (UN 3496 for sea transport rules),active,seed,0.8.0,en-GB
+battery_chemistry,canonical,nickel_cadmium,Nickel-Cadmium,,nicd;ni-cd,,Rechargeable NiCd cells; cadmium content restricted in several markets,active,seed,0.8.0,en-GB
+battery_chemistry,canonical,alkaline,Alkaline,,alkaline manganese;zinc-manganese dioxide,,"Non-rechargeable alkaline cells (AA, AAA, C, D, 9V and button formats)",active,seed,0.8.0,en-GB
+battery_chemistry,canonical,zinc_carbon,Zinc-Carbon,,carbon zinc;heavy duty,,Non-rechargeable zinc-carbon cells,active,seed,0.8.0,en-GB
+battery_chemistry,canonical,silver_oxide,Silver Oxide,,silver oxide button cell;sr type,,"Non-rechargeable silver oxide button cells (watches, hearing aids)",active,seed,0.8.0,en-GB
+battery_chemistry,canonical,zinc_air,Zinc-Air,,hearing aid battery,,Non-rechargeable zinc-air button cells,active,seed,0.8.0,en-GB
+battery_chemistry,canonical,lead_acid,Lead-Acid,,sla;agm;gel;vrla;sealed lead acid,,"Rechargeable lead-acid batteries including sealed, AGM and gel (UN 2794/2795/2800 as applicable)",active,seed,0.8.0,en-GB
+battery_chemistry,canonical,sodium_ion,Sodium-ion,,na-ion;naion,,"Rechargeable sodium-ion cells (UN 3551 alone, UN 3552 in or with equipment, from the 2025 regulations)",active,seed,0.8.0,en-GB

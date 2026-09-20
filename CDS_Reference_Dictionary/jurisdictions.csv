@@ -1,0 +1,14 @@
+dictionary_key,row_type,value_id,label,maps_to,aliases,facet_ids,definition,status,provenance,version,locale
+jurisdiction,canonical,au,Australia,,AU;AUS;australia,,,active,seed,0.8.0,en-GB
+jurisdiction,canonical,nz,New Zealand,,NZ;NZL;new zealand;aotearoa,,,active,seed,0.8.0,en-GB
+jurisdiction,canonical,us,United States,,US;USA;united states;america,,Federal obligations; sub-national entries use us_xx codes,active,seed,0.8.0,en-GB
+jurisdiction,canonical,us_ca,United States — California,,US-CA;california;CA (US state),,"California state obligations (Proposition 65, TB 117-2013, SB 244, CARB)",active,seed,0.8.0,en-GB
+jurisdiction,canonical,eu,European Union,,EU;european union;eea (where extended),,Union-level instruments; member-state language and national rules are organisation entries,active,seed,0.8.0,en-GB
+jurisdiction,canonical,gb,United Kingdom (Great Britain),,GB;UK;united kingdom;great britain;england;scotland;wales,,Great Britain regime (Northern Ireland follows EU rules for goods under the Windsor Framework),active,seed,0.8.0,en-GB
+jurisdiction,canonical,ca,Canada,,CA;CAN;canada,,Federal obligations; bilingual labelling; provincial entries use ca_xx codes,active,seed,0.8.0,en-GB
+jurisdiction,canonical,jp,Japan,,JP;JPN;japan,,Not seeded in the v0.2 registers,active,seed,0.8.0,en-GB
+jurisdiction,canonical,cn,China,,CN;CHN;china;prc,,Not seeded in the v0.2 registers,active,seed,0.8.0,en-GB
+jurisdiction,canonical,sg,Singapore,,SG;SGP;singapore,,Not seeded in the v0.2 registers,active,seed,0.8.0,en-GB
+jurisdiction,canonical,kr,Republic of Korea,,KR;KOR;south korea;korea,,Not seeded in the v0.2 registers,active,seed,0.8.0,en-GB
+jurisdiction,canonical,in,India,,IN;IND;india,,Not seeded in the v0.2 registers,active,seed,0.8.0,en-GB
+jurisdiction,canonical,br,Brazil,,BR;BRA;brazil;brasil,,Not seeded in the v0.2 registers,active,seed,0.8.0,en-GB

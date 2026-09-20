@@ -1,0 +1,9 @@
+dictionary_key,row_type,value_id,label,maps_to,aliases,facet_ids,status,provenance,version,locale
+fragrance_concentration,canonical,parfum,Parfum,,extrait;extrait de parfum;pure perfume;perfume extract,,active,seed,0.8.0,en-GB
+fragrance_concentration,canonical,eau_de_parfum,Eau de Parfum,,edp,,active,seed,0.8.0,en-GB
+fragrance_concentration,canonical,eau_de_toilette,Eau de Toilette,,edt,,active,seed,0.8.0,en-GB
+fragrance_concentration,canonical,eau_de_cologne,Eau de Cologne,,edc;cologne,,active,seed,0.8.0,en-GB
+fragrance_concentration,canonical,eau_fraiche,Eau Fraîche,,eau fraiche,,active,seed,0.8.0,en-GB
+fragrance_concentration,canonical,body_mist,Body Mist,,body spray;fragrance mist;hair mist,,active,seed,0.8.0,en-GB
+fragrance_concentration,canonical,perfume_oil,Perfume Oil,,fragrance oil;roll-on perfume;attar,,active,seed,0.8.0,en-GB
+fragrance_concentration,canonical,solid_perfume,Solid Perfume,,balm perfume;perfume balm,,active,seed,0.8.0,en-GB

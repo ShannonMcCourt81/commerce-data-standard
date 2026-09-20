@@ -1,0 +1,4 @@
+dictionary_key,row_type,value_id,label,maps_to,aliases,facet_ids,definition,status,provenance,version,locale
+part_origin_type,canonical,genuine,Genuine,,oem;oe;original equipment;genuine part;factory part,,Original equipment part as supplied by the vehicle or equipment maker under its brand; a claim requiring evidence,active,seed,0.8.0,en-GB
+part_origin_type,canonical,oes,Original Equipment Supplier,,oes;oe supplier;original equipment supplier,,Part made by the supplier of the original equipment part and sold under the supplier's own brand,active,seed,0.8.0,en-GB
+part_origin_type,canonical,aftermarket,Aftermarket,,replacement;non-genuine;pattern part;compatible,,Part made by a third party to fit the application,active,seed,0.8.0,en-GB

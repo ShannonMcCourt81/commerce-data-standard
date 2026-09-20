@@ -1,0 +1,13 @@
+dictionary_key,row_type,value_id,label,maps_to,aliases,facet_ids,scope,definition,status,provenance,version,locale
+relationship_type,canonical,fits,Fits,,fitment;application;fits vehicle;fits model,,directed,"Source part is applicable to the target host (vehicle, machine, appliance model) described by an application record",active,seed,0.8.0,en-GB
+relationship_type,canonical,compatible_with,Compatible With,,works with;compatibility,,symmetric,"Source and target work together; stored once, evaluated both ways",active,seed,0.8.0,en-GB
+relationship_type,canonical,accessory_for,Accessory For,,accessory of;add-on for,,directed,Source is an accessory for the target product or model family,active,seed,0.8.0,en-GB
+relationship_type,canonical,requires,Requires,,needs;required but not included,,directed,"Source needs the target to function (batteries, hub, base unit); quantity may be stated",active,seed,0.8.0,en-GB
+relationship_type,canonical,includes,Includes,,contains;in the box;component of kit,,directed,"Source kit or package includes the target as a component, with quantity",active,seed,0.8.0,en-GB
+relationship_type,canonical,part_of_set,Part of Set,,matches;coordinates with;set member,,symmetric,Source and target belong to the same set or collection,active,seed,0.8.0,en-GB
+relationship_type,canonical,replaces,Replaces,,replacement for;replaces part,,directed,Source replaces the target (inverse of superseded_by),active,seed,0.8.0,en-GB
+relationship_type,canonical,superseded_by,Superseded By,,supersession;replaced by,,directed,Source is superseded by the target from an effective date; chains must be acyclic,active,seed,0.8.0,en-GB
+relationship_type,canonical,alternative_to,Alternative To,,equivalent;interchange;interchangeable with,,symmetric,"Source and target are equivalent under a stated basis (form-fit-function, functional, manufacturer-declared)",active,seed,0.8.0,en-GB
+relationship_type,canonical,cross_reference,Cross-Reference,,oem number;competitor number;xref,,directed,Source corresponds to an external part number under another brand or issuer,active,seed,0.8.0,en-GB
+relationship_type,canonical,successor_of,Successor Of,,next generation of;newer model of,,directed,Source is the successor model to the target (model families and generations),active,seed,0.8.0,en-GB
+relationship_type,canonical,variant_family_of,Variant Family Of,,same family;series member,,symmetric,Source and target belong to the same model family or series,active,seed,0.8.0,en-GB

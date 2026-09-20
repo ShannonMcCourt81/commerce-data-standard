@@ -42,6 +42,24 @@
 
 **Tag** — A governed, flat channel signal generated from canonical data (e.g. `collection_*` projections). Tags are integration outputs, never the primary store for structured product facts. *Home: CDS-400 (governance), CDS-500 (publication merge semantics).*
 
+### 2.1 Industry Profile Terms *(normative — added in the 2026-09-20 industry-profile expansion)*
+
+**Industry Profile** — A named, versioned set of product-family and category rules, attribute baselines and dictionary bindings that refines the CDS core for a commerce vertical; listed in the Industry Profile Register. *Home: CDS-1500 §2; the profiles themselves in CDS-1500 through CDS-2000.*
+
+**Extension Profile** — An Industry Profile that refines a parent (base) profile for a product family and is claimed only together with it (for example footwear under apparel). *Home: CDS-1500 §2.1.*
+
+**Jurisdiction Requirement Register** — An organisation's governed record of the per-market regulatory obligations that bear on product data, each mapped to the CDS fields that carry the data and evaluated at publication preflight for the target market. *Home: CDS-1500 §2.2.*
+
+**Product Relationship** — A governed, directed or symmetric, typed link from a Product or Variant to another product, model family, standard, application or external part, carried in the product's `relationships` collection with provenance and lifecycle. *Home: CDS-1900 §5.*
+
+**Fitment** — A Product Relationship of type `fits` whose target is an application record describing a host (vehicle, machine, appliance model) drawn from a declared vocabulary. *Home: CDS-1900 §6.*
+
+**Kit** — A Product whose sellable content is composed of other Products through `includes` relationships; stocked kits, virtual bundles and assemblies are its declared kinds. *Home: CDS-1900 §11.*
+
+**Dangerous-Goods Declaration** — The product-level record stating whether, and under which regime and classification, a product is regulated for transport, with an explicit value for every product. *Home: CDS-1900 §12.*
+
+**Market Registration** — A per-jurisdiction record of a product's regulatory status (registered, listed, notified, exempt, out of scope) under a named scheme. *Home: CDS-1600 §12.*
+
 ## 3. Value Layers and Dictionaries *(normative — per ADR-D4)*
 
 **Source Value** — The raw value exactly as received from a supplier, import or channel, preserved verbatim with provenance. *(Replaces the former term "Reference Value" — see §8.)* *Home: CDS-400.*

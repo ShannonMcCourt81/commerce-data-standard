@@ -1,0 +1,11 @@
+dictionary_key,row_type,value_id,label,maps_to,aliases,facet_ids,status,provenance,version,locale
+storage_condition,canonical,ambient,Ambient,,room temperature;shelf stable;store at room temperature,,active,seed,0.8.0,en-GB
+storage_condition,canonical,cool_dry,"Store in a Cool, Dry Place",,cool dry place;keep cool and dry,,active,seed,0.8.0,en-GB
+storage_condition,canonical,store_below_25c,Store Below 25 °C,,below 25 degrees;store below 25°c,,active,seed,0.8.0,en-GB
+storage_condition,canonical,store_below_30c,Store Below 30 °C,,below 30 degrees;store below 30°c,,active,seed,0.8.0,en-GB
+storage_condition,canonical,refrigerate,Refrigerate,,keep refrigerated;chilled;store in refrigerator;keep chilled;0-4°c,,active,seed,0.8.0,en-GB
+storage_condition,canonical,refrigerate_after_opening,Refrigerate After Opening,,once opened keep refrigerated;refrigerate once opened,,active,seed,0.8.0,en-GB
+storage_condition,canonical,frozen,Keep Frozen,,frozen;store frozen;-18°c,,active,seed,0.8.0,en-GB
+storage_condition,canonical,protect_from_light,Protect From Light,,store away from light;keep out of direct sunlight,,active,seed,0.8.0,en-GB
+storage_condition,canonical,keep_dry,Keep Dry,,store dry;avoid moisture,,active,seed,0.8.0,en-GB
+storage_condition,canonical,live,Live Product,,keep alive;live storage,,active,seed,0.8.0,en-GB

@@ -1,0 +1,6 @@
+dictionary_key,row_type,value_id,label,maps_to,aliases,facet_ids,definition,status,provenance,version,locale
+product_condition,canonical,new,New,,brand new;bnib,,"Unused, in original condition",active,seed,0.8.0,en-GB
+product_condition,canonical,open_box,Open Box,,ex-display;opened;customer return unused,,"Unused or lightly handled, packaging opened; channels lacking the value map it per the Attribute Definition",active,seed,0.8.0,en-GB
+product_condition,canonical,refurbished,Refurbished,,renewed;reconditioned;certified refurbished,,Restored to working order and tested; grade is an organisation-governed attribute,active,seed,0.8.0,en-GB
+product_condition,canonical,remanufactured,Remanufactured,,reman;rebuilt;exchange unit,,Rebuilt to original specification with worn components replaced; distinct from refurbished,active,seed,0.8.0,en-GB
+product_condition,canonical,used,Used,,pre-owned;second hand;secondhand;pre-loved,,Previously used; condition grade is an organisation-governed attribute,active,seed,0.8.0,en-GB

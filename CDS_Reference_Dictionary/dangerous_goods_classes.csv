@@ -1,0 +1,17 @@
+dictionary_key,row_type,value_id,label,maps_to,aliases,facet_ids,definition,status,provenance,version,locale
+dangerous_goods_class,canonical,class_1,Class 1 Explosives,,explosives;1.1;1.2;1.3;1.4;1.5;1.6,,Explosive substances and articles (divisions 1.1–1.6 recorded as subsidiary detail),active,seed,0.8.0,en-GB
+dangerous_goods_class,canonical,class_2_1,Division 2.1 Flammable Gas,,flammable gas;2.1;aerosols flammable,,Flammable gases including many aerosols and gas cartridges,active,seed,0.8.0,en-GB
+dangerous_goods_class,canonical,class_2_2,"Division 2.2 Non-Flammable, Non-Toxic Gas",,non-flammable gas;2.2;compressed gas,,"Non-flammable, non-toxic gases including non-flammable aerosols",active,seed,0.8.0,en-GB
+dangerous_goods_class,canonical,class_2_3,Division 2.3 Toxic Gas,,toxic gas;2.3,,Toxic gases,active,seed,0.8.0,en-GB
+dangerous_goods_class,canonical,class_3,Class 3 Flammable Liquid,,flammable liquid;3;perfume (flammable);nail polish,,"Flammable liquids including alcohol-based fragrances, solvents and fuels",active,seed,0.8.0,en-GB
+dangerous_goods_class,canonical,class_4_1,Division 4.1 Flammable Solid,,flammable solid;4.1,,"Flammable solids, self-reactive substances and desensitised explosives",active,seed,0.8.0,en-GB
+dangerous_goods_class,canonical,class_4_2,Division 4.2 Spontaneously Combustible,,spontaneously combustible;4.2,,Substances liable to spontaneous combustion,active,seed,0.8.0,en-GB
+dangerous_goods_class,canonical,class_4_3,Division 4.3 Dangerous When Wet,,dangerous when wet;4.3,,Substances which emit flammable gases in contact with water,active,seed,0.8.0,en-GB
+dangerous_goods_class,canonical,class_5_1,Division 5.1 Oxidiser,,oxidiser;oxidizer;5.1;pool chlorine,,Oxidising substances,active,seed,0.8.0,en-GB
+dangerous_goods_class,canonical,class_5_2,Division 5.2 Organic Peroxide,,organic peroxide;5.2,,Organic peroxides,active,seed,0.8.0,en-GB
+dangerous_goods_class,canonical,class_6_1,Division 6.1 Toxic Substance,,toxic;poison;6.1,,Toxic substances,active,seed,0.8.0,en-GB
+dangerous_goods_class,canonical,class_6_2,Division 6.2 Infectious Substance,,infectious;6.2,,Infectious substances,active,seed,0.8.0,en-GB
+dangerous_goods_class,canonical,class_7,Class 7 Radioactive Material,,radioactive;7,,Radioactive material,active,seed,0.8.0,en-GB
+dangerous_goods_class,canonical,class_8,Class 8 Corrosive,,corrosive;8;lead acid battery (wet),,Corrosive substances,active,seed,0.8.0,en-GB
+dangerous_goods_class,canonical,class_9,Class 9 Miscellaneous,,miscellaneous;9;lithium batteries;lithium battery mark;environmentally hazardous,,"Miscellaneous dangerous substances and articles including lithium and sodium-ion batteries, magnetised material and environmentally hazardous substances",active,seed,0.8.0,en-GB
+dangerous_goods_class,canonical,not_regulated,Not Regulated,,non-dangerous;not dg;exempt,,"Explicit declaration that the product is not regulated for transport in the evaluated modes (an explicit value, never a default)",active,seed,0.8.0,en-GB

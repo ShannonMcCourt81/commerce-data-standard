@@ -9,7 +9,8 @@ Use this single document as the organisation profile required by the Shopify Set
 | Workbook owner | |
 | CDS release | v0.2 Review Draft |
 | Shopify profile | CDS-SHOPIFY-0.2 |
-| Industry profiles | `cds.profile.apparel.v0_2`, `cds.profile.homewares.v0_2` |
+| Industry profiles | `cds.profile.apparel.v0_2`, `cds.profile.homewares.v0_2` (add any others claimed from the CDS-1500 §2.1 register, for example `cds.profile.footwear.v0_2` or `cds.profile.beauty_health.v0_2`; an extension profile requires its parent) |
+| Jurisdiction requirement register | Markets covered: AU (add others); register location: ; seed entries adopted from CDS-1500 Appendix G and the Appendix D tables of any other claimed profile chapters; verification owner: |
 | Workbook version | |
 | Last updated | |
 | Status | Draft / Pilot / Accepted / Superseded |

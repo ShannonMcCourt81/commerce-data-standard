@@ -40,8 +40,12 @@ CDS Core Standard
       |               +-- Organisation Profile: Example Store
       |
       +-- Industry Profile: Homewares
-              |
-              +-- Platform Profile: Google Merchant Center (CDS-GMC-0.2)
+      |       |
+      |       +-- Platform Profile: Google Merchant Center (CDS-GMC-0.2)
+      |
+      +-- Industry Profiles: Beauty & Health (CDS-1600), Food & Beverage (CDS-1700),
+              Electronics (CDS-1800), Parts & Fitment (CDS-1900),
+              Sports, Toys, Pets (CDS-2000) — register: CDS-1500 §2.1
 ```
 
 ## 2. Profile Hierarchy and Precedence *(normative)*
@@ -51,7 +55,7 @@ Profiles are applied in layers.
 | Layer | Purpose | Example |
 |---|---|---|
 | CDS Core | Vendor-neutral semantics and architecture | Canonical colour, facet colour, channel mapping |
-| Industry Profile | Domain-specific fields and rules | Apparel fit, garment size; homewares room and finish |
+| Industry Profile | Domain-specific fields and rules (register: CDS-1500 §2.1) | Apparel fit, garment size; homewares room and finish; cosmetic ingredient lists; food allergens; electronics specifications; parts fitment; toy age warnings |
 | Platform Profile | Platform storage and delivery mapping | Shopify product category, Google product_type |
 | Organisation Profile | Store-specific vocabularies and policies | Brand colour names, collection hierarchy |
 | Product Record | Actual values and permitted overrides | French Navy shirt in size M |
@@ -466,6 +470,10 @@ The homewares profile adds room, product form, material, finish, dimensions, sha
 **CDS900-R066** Room is a merchandising/facet attribute and MUST NOT replace the product's primary category.
 
 **CDS900-R067** Safety and suitability claims MUST be backed by an admissible evidence class (CDS-700) and MUST NOT be generated solely from aesthetic inference.
+
+## 9A. Other Industry Profiles *(informative pointer)*
+
+The industry profiles added in the 2026-09-20 expansion are defined in their own chapters and registered in CDS-1500 §2.1: beauty, health and personal care (CDS-1600), food, beverage and grocery (CDS-1700), consumer electronics, appliances and technical goods (CDS-1800), parts, automotive, industrial and fitment (CDS-1900), and sports and outdoor, toys and games, and pet supplies (CDS-2000). Each carries its own channel projection guidance for the platform profiles in this chapter and a per-jurisdiction requirement register seed (CDS-1500 §2.2). Platform-specific facts those chapters rely on (for example which countries accept `energy_efficiency_class`, or that the seeded feed channels define no fitment attributes) are dated in the chapters that state them and are candidates for the next revision of the CDS-GMC and CDS-META profiles in §5–§6.
 
 ## 10. Cross-Channel Mapping Matrix *(informative)*
 

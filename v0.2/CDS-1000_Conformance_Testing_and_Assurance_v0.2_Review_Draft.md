@@ -348,7 +348,7 @@ Each test maps to one of the four tenant-isolation requirements of CDS-800 §22 
 
 A platform or industry profile adds profile-specific tests to the applicable core level. It may constrain mappings, capability declarations and observation methods; it cannot weaken core requirements (CDS1000-R009, CDS000-R011).
 
-Profile test content — including test matrices, expected platform outputs and observation methods — lives with the versioned, dated profile definitions in CDS-900 (platform) and CDS-1500 (industry), not in this chapter (see Appendix A).
+Profile test content — including test matrices, expected platform outputs and observation methods — lives with the versioned, dated profile definitions in CDS-900 (platform) and CDS-1500 through CDS-2000 (industry; register in CDS-1500 §2.1), not in this chapter (see Appendix A).
 
 **CDS1000-R025** A profile conformance claim MUST pass all mandatory core tests for the claimed level and all mandatory tests in that profile's version-pinned test matrix.
 
@@ -538,7 +538,7 @@ Architecture decisions are held in the single global ADR register (CDS000-R006).
 
 ## Appendix A — Profile Test Matrices *(informative)*
 
-Version-pinned profile test matrices — including all platform-specific expected outputs formerly embedded in this chapter's reference vectors and Shopify appendix — are published alongside each profile definition (CDS-900 for platforms, CDS-1500 for industries). Each matrix pins: the profile version, the platform API version and date verified, the registered test prefix, the mandatory test list, and the profile-specific expected outputs for the shared core reference vectors (§20). A representative matrix covers: product identity mapping, taxonomy mapping, structured metadata definitions, variant boundaries, tag/collection safety, storefront filter exposure, observation method, verification comparison and drift handling.
+Version-pinned profile test matrices — including all platform-specific expected outputs formerly embedded in this chapter's reference vectors and Shopify appendix — are published alongside each profile definition (CDS-900 for platforms, CDS-1500 through CDS-2000 for industries). Each industry chapter added in the 2026-09-20 expansion ends with a "Reference Validation Cases" section listing the negative cases its profile contributes to the cross-industry validation set (REVIEW-020). Each matrix pins: the profile version, the platform API version and date verified, the registered test prefix, the mandatory test list, and the profile-specific expected outputs for the shared core reference vectors (§20). A representative matrix covers: product identity mapping, taxonomy mapping, structured metadata definitions, variant boundaries, tag/collection safety, storefront filter exposure, observation method, verification comparison and drift handling.
 
 ## Appendix B — Apparel and Homewares Reference Dataset *(normative)*
 
@@ -555,6 +555,8 @@ The reference dataset SHOULD additionally contain:
 - a homewares product with multiple materials and one dominant display material
 - a product whose internal category maps differently to two external taxonomies
 - a product with a deliberate channel title override
+
+Implementations claiming an industry profile from CDS-1600 through CDS-2000 SHOULD extend the dataset with that chapter's reference validation cases (for example a cosmetic with a free-from claim contradicted by its ingredient list, a food with an allergen declared only in text, a lithium-battery product without a dangerous-goods declaration, a part with fitment held only in a tag, a toy whose safety age warning is derived from its retail age band) and, for every market claimed, a product that fails a `block` entry of the jurisdiction requirement register (CDS1500-R057).
 
 ## Appendix C — Example Evidence Package *(informative)*
 

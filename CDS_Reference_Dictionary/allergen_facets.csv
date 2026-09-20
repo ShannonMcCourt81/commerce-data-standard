@@ -1,0 +1,15 @@
+dictionary_key,row_type,value_id,label,maps_to,aliases,facet_ids,definition,status,provenance,version,locale
+allergen_facet,canonical,gluten_containing_cereals,Cereals Containing Gluten,,gluten;gluten-containing cereals;wheat and gluten,,"EU FIC Annex II group 1; covers wheat, rye, barley, oats and their hybridised strains",active,seed,0.8.0,en-GB
+allergen_facet,canonical,crustaceans,Crustaceans,,shellfish (crustacea);crustacea;prawn;shrimp;crab;lobster,,EU FIC Annex II group 2; US and Canada: crustacean shellfish,active,seed,0.8.0,en-GB
+allergen_facet,canonical,eggs,Eggs,,egg,,EU FIC Annex II group 3,active,seed,0.8.0,en-GB
+allergen_facet,canonical,fish,Fish,,,,EU FIC Annex II group 4; US and Canada require the species,active,seed,0.8.0,en-GB
+allergen_facet,canonical,peanuts,Peanuts,,peanut;groundnut,,EU FIC Annex II group 5,active,seed,0.8.0,en-GB
+allergen_facet,canonical,soybeans,Soybeans,,soy;soya;soybean,,EU FIC Annex II group 6,active,seed,0.8.0,en-GB
+allergen_facet,canonical,milk,Milk,,dairy;lactose (milk),,EU FIC Annex II group 7 (including lactose),active,seed,0.8.0,en-GB
+allergen_facet,canonical,tree_nuts,Tree Nuts,,nuts;tree nut,,"EU FIC Annex II group 8 (almond, hazelnut, walnut, cashew, pecan, Brazil nut, pistachio, macadamia); AU/NZ and US require the individual nut",active,seed,0.8.0,en-GB
+allergen_facet,canonical,celery,Celery,,celeriac,,"EU FIC Annex II group 9; not a regulated allergen in AU/NZ, US or Canada",active,seed,0.8.0,en-GB
+allergen_facet,canonical,mustard,Mustard,,,,EU FIC Annex II group 10; also a Canadian priority allergen,active,seed,0.8.0,en-GB
+allergen_facet,canonical,sesame,Sesame,,sesame seeds;sesame seed,,EU FIC Annex II group 11; US ninth major allergen from 1 January 2023,active,seed,0.8.0,en-GB
+allergen_facet,canonical,sulphites,Sulphites,,sulfites;sulphur dioxide;sulfur dioxide;sulphur dioxide and sulphites,,EU FIC Annex II group 12 (sulphur dioxide and sulphites at more than 10 mg/kg or 10 mg/litre); AU/NZ and Canada thresholds differ,active,seed,0.8.0,en-GB
+allergen_facet,canonical,lupin,Lupin,,lupine;lupin flour,,EU FIC Annex II group 13; also regulated in AU/NZ,active,seed,0.8.0,en-GB
+allergen_facet,canonical,molluscs,Molluscs,,shellfish (mollusc);mollusc;mollusk;oyster;mussel;squid,,EU FIC Annex II group 14; Canada lists molluscs; AU/NZ list molluscs; US does not list molluscs federally,active,seed,0.8.0,en-GB

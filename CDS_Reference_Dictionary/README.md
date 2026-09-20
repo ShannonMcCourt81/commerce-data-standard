@@ -17,17 +17,20 @@ This package **unifies and supersedes** the former `CDS-1500_Starter_Reference_D
 | 5 | Sizing | size_systems | Bound (fills E.3; apparel + footwear systems) |
 | 6 | Apparel Attributes | fits, styles, occasions, patterns, necklines, sleeve_types, garment_lengths, swim_styles | Bound (CDS-1500); the style vocabulary is shared across fashion and furniture/homewares |
 | 7 | Homewares Attributes | rooms, finishes, shapes | Bound (CDS-1500) |
-| 8 | Footwear | footwear_styles, footwear_heel_heights, footwear_closures, footwear_toe_shapes, footwear_width_fittings | Vocabulary ahead of profile — no published CDS profile binds these yet |
-| 9 | Jewellery & Accessories | jewellery_metals, jewellery_stones, jewellery_closures, jewellery_styles | Vocabulary ahead of profile |
-| 10 | Beauty & Personal Care | beauty_skin_types, beauty_hair_types, beauty_scent_families, beauty_formulations, beauty_makeup_finishes | Vocabulary ahead of profile |
-| 11 | Electronics & Appliances | connectivity, screen_technologies, power_sources, installation_types, energy_rating_systems | Vocabulary ahead of profile (brown + white goods) |
-| 12 | Sports & Outdoor | sport_activities, wetsuit_styles, wetsuit_thicknesses, wetsuit_zips, wetsuit_seams | Vocabulary ahead of profile ("shop by sport" + surf wetsuit attributes) |
-| 13 | Toys & Games | play_types, toy_age_ranges | Vocabulary ahead of profile (retail age bands, not safety marks) |
-| 14 | Pet Supplies | pet_types, pet_life_stages, pet_sizes | Vocabulary ahead of profile |
-| 15 | Furniture | assembly_types | Vocabulary ahead of profile (styles live in the Chapter 6 style vocabulary; upholstery reuses Fabrics/Materials) |
-| 16 | Garden & Outdoor | sun_exposure | Vocabulary ahead of profile (deliberately narrow — plant taxonomies and watering claims excluded) |
+| 8 | Footwear | footwear_styles, footwear_heel_heights, footwear_closures, footwear_toe_shapes, footwear_width_fittings | Bound (CDS-1500 §12.1 footwear extension profile) |
+| 9 | Jewellery & Accessories | jewellery_metals, jewellery_stones, jewellery_closures, jewellery_styles | Bound (CDS-1500 §12.2 jewellery and accessories extension profile) |
+| 10 | Beauty & Personal Care | beauty_skin_types, beauty_hair_types, beauty_scent_families, beauty_formulations, beauty_makeup_finishes, fragrance_concentrations | Bound (CDS-1600) |
+| 11 | Electronics & Appliances | connectivity, screen_technologies, power_sources, installation_types, energy_rating_systems, battery_chemistries | Bound (CDS-1800; brown + white goods) |
+| 12 | Sports & Outdoor | sport_activities, wetsuit_styles, wetsuit_thicknesses, wetsuit_zips, wetsuit_seams | Bound (CDS-2000 §5; "shop by sport" + surf wetsuit attributes) |
+| 13 | Toys & Games | play_types, toy_age_ranges | Bound (CDS-2000 §6; retail age bands, never the regulated safety age warning) |
+| 14 | Pet Supplies | pet_types, pet_life_stages, pet_sizes, pet_food_forms | Bound (CDS-2000 §7) |
+| 15 | Furniture | assembly_types, mattress_firmnesses | Bound (CDS-1500 §14A furniture extension profile; styles live in the Chapter 6 style vocabulary; upholstery reuses Fabrics/Materials; bedding sizes in Chapter 5) |
+| 16 | Garden & Outdoor | sun_exposure | Bound (CDS-1500 §14B garden extension profile; deliberately narrow — plant taxonomies and watering claims excluded) |
+| 17 | Food & Beverage | allergens, allergen_facets, dietary_claim_types, storage_conditions | Bound (CDS-1700; also CDS-1600 §14 ingestibles and CDS-2000 §7 pet food). Allergens are the regulated required names of the seeded markets filing under the fourteen EU groups; dietary claim types are evidence-gated claim vocabulary, never bare filters |
+| 18 | Parts, Automotive & Industrial | relationship_types, part_origin_types, product_conditions, dangerous_goods_classes | Bound (CDS-1900; relationship types and dangerous-goods classes are corpus-wide via CDS-1900 §5 and §12; product conditions shared with CDS-1800) |
+| 19 | Jurisdictions & Regulatory Schemes | jurisdictions, regulatory_schemes | Bound (CDS-1500 §2.2 jurisdiction requirement register). A scheme code names an instrument as a key into the organisation's register; it is never itself a compliance claim. Entries record the chapter that seeded them and must be verified before adoption (CDS1500-R060) |
 
-"Bound" chapters can carry requirement levels under CDS1500-R011 once adopted as governed data. "Ahead of profile" chapters are ready vocabulary; no requirement level may bind to them until an industry profile chapter exists.
+"Bound" chapters can carry requirement levels under CDS1500-R011 once adopted as governed data. Since package 0.8.0 (2026-09-20) every chapter is bound to a published profile chapter (CDS-1500 through CDS-2000); a chapter marked "ahead of profile" in an earlier release was ready vocabulary to which no requirement level could bind.
 
 ## Key vs value, in one example
 
@@ -35,7 +38,7 @@ Every CSV is one **vocabulary** answering one question about a product. `diction
 
 ## Column contract (CDS-1500 Appendix E.1)
 
-Every row: `dictionary_key, row_type (canonical|alias), value_id, label, maps_to, aliases, facet_ids, status, provenance, version, locale`. Declared extra columns: `definition` (colour_facets, footwear_heel_heights, energy_rating_systems, pet_life_stages, wetsuit_thicknesses, wetsuit_seams), `material_family` + `scope` (materials files), `care_group` (care_instructions), `scope` (material_facets).
+Every row: `dictionary_key, row_type (canonical|alias), value_id, label, maps_to, aliases, facet_ids, status, provenance, version, locale`. Declared extra columns: `definition` (colour_facets, footwear_heel_heights, energy_rating_systems, pet_life_stages, wetsuit_thicknesses, wetsuit_seams, battery_chemistries, allergen_facets, dietary_claim_types, relationship_types, part_origin_types, product_conditions, dangerous_goods_classes, jurisdictions, regulatory_schemes), `material_family` + `scope` (materials files), `care_group` (care_instructions), `scope` (material_facets; relationship_types, where it carries the relationship direction `directed` or `symmetric`), `jurisdiction` (regulatory_schemes; a `jurisdiction` value_id).
 
 - Delimiters: `;` between aliases, `|` between ordered facet_ids (first = primary).
 - Matching: aliases match case-insensitively; codes match exactly.
@@ -51,7 +54,10 @@ Every row: `dictionary_key, row_type (canonical|alias), value_id, label, maps_to
 - **Swimwear exclusions (0.6.0):** UPF sun-protection ratings are tested claims under AS/NZS 4399 (evidence-gated, numeric — a candidate rating-scheme entry for a profile, not facet vocabulary); "chlorine-resistant" is a durability claim. Swim styles themselves (one-piece, bikini, rash vest) are within-category style facets, same pattern as footwear styles.
 - **Research-round exclusions (0.5.0):** toy safety marks and "educational/STEM" benefit terms; pet health claims and breed taxonomies; sports performance claims (moisture-wicking, quick-dry) and skill levels; furniture numeric specs (seating capacity); plant taxonomies and watering/maintenance claims; age-state claims ("mature" skin); trademarked fibres (Tencel, Lycra, Gore-Tex — generic names used instead); "bamboo" alone as a TEXTILE fibre name (prohibited under fibre-labelling rules — apparel uses Bamboo Viscose with bamboo as an alias). Bamboo the plant material remains a valid homewares canonical (furniture, boards, blinds) — the rule is textile-scoped.
 - **Electronics exclusions:** compliance marks (CE, RCM) and efficiency *claims* ("energy efficient") are evidence-gated, never filter vocabulary — the regulated rating value under a declared scheme is the filterable fact. Vendor ecosystems (Alexa, HomeKit, Chromecast) and per-category configuration sets (top- vs front-loader; french-door vs side-by-side) are left for an electronics profile chapter. Appliance finishes reuse the Colours/Materials chapters.
-- **Country of origin** is deliberately not shipped: generate from the current ISO 3166 list at adoption time.
+- **Food & beverage rules (0.8.0):** `allergens` ships the individual regulated names (almond, walnut, wheat, oats…) because AU/NZ and US labelling require the specific nut or cereal; each files under one EU Annex II group via `facet_ids`. Declaration type (contains / may contain / free-from claimed) is a property of the product's allergen record, not a value here. `dietary_claim_types` is claim vocabulary: every value needs evidence of the class its definition states (CDS-1700 §8); none may be projected as a facet without an accepted claim record. Nutrition schemes (NIP, Nutrition Facts, analytical constituents) and characterising-ingredient names are organisation-declared, not shipped.
+- **Parts & fitment rules (0.8.0):** `relationship_types` carries the direction of each type in `scope`; a symmetric type is stored once and read both ways. Vehicle and equipment application vocabularies are licensed (ACES VCdb) or manufacturer-published and are never shipped. `dangerous_goods_classes` is the UN class and division vocabulary only, with `not_regulated` as an explicit value because CDS-1900 §12 forbids a default; UN numbers and proper shipping names come from the transport regime in force.
+- **Jurisdiction rules (0.8.0):** `jurisdictions` uses ISO 3166 alpha-2 codes lower-cased, with sub-national codes as `us_ca`; `gb` is the code for the United Kingdom (Great Britain) although instrument codes use the `uk_` prefix. A `regulatory_schemes` value names an instrument and records the chapter that seeded it; labels write instrument numbers with a hyphen in place of the slash (Regulation (EU) 2023-1542) under the label rule, with the slash citation kept as an alias; adopting the row does not assert compliance — the organisation's jurisdiction requirement register (CDS-1500 §2.2) holds the obligation, its verification status and the fields it binds.
+- **Country of origin** is deliberately not shipped: generate from the current ISO 3166 list at adoption time (the Chapter 19 `jurisdictions` list is the register's market list, not an origin list).
 - Channel mappings are out of scope for seed data; add per-value channel mappings under CDS-400 §11 as needed.
 
 ## Integrity

@@ -5,11 +5,11 @@
 |---|---|
 | Status | v0.2 Review Draft — for review; not an approved standard |
 | Release | CDS v0.2 (single corpus release, ADR-D5) |
-| Date | 2026-08-17 |
-| Requirements | 1,034 identified (REVIEW-004 index) |
+| Date | 2026-09-20 (industry-profile expansion revision of the 2026-08-17 draft; changelog: REVIEW-021) |
+| Requirements | 1,320 identified (REVIEW-004 index; 1,034 in the 2026-08-17 draft plus 286 added by the industry-profile expansion) |
 | Companion package | CDS-1200_Reference_Package_v0.2 (v0.2.1; verified 33/33 clean-environment) |
 | Licence | Prose CC-BY 4.0 · machine-readable artifacts Apache-2.0 |
-| Supersedes | CDS v0.1 Working Corpus (16 chapter PDFs + package v0.1) — changelog: REVIEW-012 |
+| Supersedes | CDS v0.1 Working Corpus (16 chapter PDFs + package v0.1) — changelog: REVIEW-012; the 2026-08-17 sixteen-chapter v0.2 Review Draft — changelog: REVIEW-021 |
 
 ## Master Table of Contents
 
@@ -28,12 +28,16 @@
 13. CDS-1200 — Reference Implementation, Schema Package and Test Fixtures
 14. CDS-1300 — Migration, Adoption and Operational Rollout
 15. CDS-1400 — Monitoring, Incident Management and Continuous Improvement
-16. CDS-1500 — Apparel and Homewares Industry Profiles and Reference Dictionaries
+16. CDS-1500 — Apparel and Homewares Industry Profiles and Reference Dictionaries (with the Industry Profile Register and Jurisdiction Requirement Register)
+17. CDS-1600 — Beauty, Health and Personal Care Industry Profile
+18. CDS-1700 — Food, Beverage and Grocery Industry Profile
+19. CDS-1800 — Consumer Electronics, Appliances and Technical Goods Industry Profile
+20. CDS-1900 — Parts, Automotive, Industrial and Fitment Industry Profile
+21. CDS-2000 — Sports and Outdoor, Toys and Games, and Pet Supplies Industry Profiles
 
 Closing matter: A. ADR Register · B. Requirements Index summary · C. Bibliography
 
 *Reading conventions: RFC 2119/8174 keywords are normative only in upper case within requirement sentences (CDS000-R001). Every section is marked normative or informative. Requirement IDs are stable (CDSnnn-Rmmm).*
-
 
 <div class="chapter"></div>
 
@@ -81,7 +85,7 @@ CDS is vendor-neutral. Platform-specific behaviour lives only in versioned, date
 
 **CDS000-R004** Every section is explicitly marked normative or informative. Examples, worked scenarios and platform observations are informative unless individually marked otherwise.
 
-**CDS000-R005** Each defined term has exactly one authoritative definition, in CDS-100. Each normative topic has exactly one authoritative home chapter; other chapters cite it and MUST NOT restate its requirements. The authoritative homes are: terminology — CDS-100; entity and authority model — CDS-200; namespaces and naming — CDS-300; dictionaries and value layers — CDS-400; publication, observation, verification and statuses — CDS-500; facets and customer experience — CDS-600; AI — CDS-700; governance roles and change control — CDS-800; platform profiles — CDS-900; conformance levels, tests and claims — CDS-1000; machine-readable contracts — CDS-1100.
+**CDS000-R005** Each defined term has exactly one authoritative definition, in CDS-100. Each normative topic has exactly one authoritative home chapter; other chapters cite it and MUST NOT restate its requirements. The authoritative homes are: terminology — CDS-100; entity and authority model — CDS-200; namespaces and naming — CDS-300; dictionaries and value layers — CDS-400; publication, observation, verification and statuses — CDS-500; facets and customer experience — CDS-600; AI — CDS-700; governance roles and change control — CDS-800; platform profiles — CDS-900; conformance levels, tests and claims — CDS-1000; machine-readable contracts — CDS-1100; the industry profile model, industry profile register and jurisdiction requirement register — CDS-1500 (each industry profile chapter, CDS-1500 through CDS-2000, is the home of the profiles it defines); product relationship records, kits and bundles, and dangerous-goods declarations — CDS-1900.
 
 **CDS000-R006** Architecture decisions are recorded as ADRs in a single global register, one ADR per decision. A superseded ADR is marked superseded and cross-referenced; the same decision MUST NOT be recorded in multiple ADRs.
 
@@ -121,7 +125,6 @@ CDS is vendor-neutral. Platform-specific behaviour lives only in versioned, date
 ## 7. Relationship to Evidence *(informative)*
 
 CDS's requirements trace to: explicit owner decisions and proven production behaviour (highest weight — the legacy Airtable/Shopify pipeline with per-field round-trip verification and traffic-light health); current official platform documentation, verified and dated in profiles; established PIM literature (Abraham 2014 — which supports the canonical model, taxonomy separation and controlled vocabularies, and whose silence on post-publication verification marks Publish → Observe → Verify as a CDS contribution); and reasoned architecture decisions recorded as ADRs. Working-draft prose is never self-evidencing.
-
 
 <div class="chapter"></div>
 
@@ -168,6 +171,24 @@ CDS's requirements trace to: explicit owner decisions and proven production beha
 **Collection** — A merchandising grouping presented to customers, derived from rules, classification or curation. Collections never redefine product identity or replace classification. *Home: CDS-600 §6 (rule: CDS-200).*
 
 **Tag** — A governed, flat channel signal generated from canonical data (e.g. `collection_*` projections). Tags are integration outputs, never the primary store for structured product facts. *Home: CDS-400 (governance), CDS-500 (publication merge semantics).*
+
+### 2.1 Industry Profile Terms *(normative — added in the 2026-09-20 industry-profile expansion)*
+
+**Industry Profile** — A named, versioned set of product-family and category rules, attribute baselines and dictionary bindings that refines the CDS core for a commerce vertical; listed in the Industry Profile Register. *Home: CDS-1500 §2; the profiles themselves in CDS-1500 through CDS-2000.*
+
+**Extension Profile** — An Industry Profile that refines a parent (base) profile for a product family and is claimed only together with it (for example footwear under apparel). *Home: CDS-1500 §2.1.*
+
+**Jurisdiction Requirement Register** — An organisation's governed record of the per-market regulatory obligations that bear on product data, each mapped to the CDS fields that carry the data and evaluated at publication preflight for the target market. *Home: CDS-1500 §2.2.*
+
+**Product Relationship** — A governed, directed or symmetric, typed link from a Product or Variant to another product, model family, standard, application or external part, carried in the product's `relationships` collection with provenance and lifecycle. *Home: CDS-1900 §5.*
+
+**Fitment** — A Product Relationship of type `fits` whose target is an application record describing a host (vehicle, machine, appliance model) drawn from a declared vocabulary. *Home: CDS-1900 §6.*
+
+**Kit** — A Product whose sellable content is composed of other Products through `includes` relationships; stocked kits, virtual bundles and assemblies are its declared kinds. *Home: CDS-1900 §11.*
+
+**Dangerous-Goods Declaration** — The product-level record stating whether, and under which regime and classification, a product is regulated for transport, with an explicit value for every product. *Home: CDS-1900 §12.*
+
+**Market Registration** — A per-jurisdiction record of a product's regulatory status (registered, listed, notified, exempt, out of scope) under a named scheme. *Home: CDS-1600 §12.*
 
 ## 3. Value Layers and Dictionaries *(normative — per ADR-D4)*
 
@@ -307,7 +328,6 @@ Projections branch **in parallel** from the canonical value; channels are fed fr
 ## 9. Design Principles Supported *(informative)*
 
 One concept, one definition (CDS100-R001). Canonical information precedes publication (CDS-P-01/02). Customer experience and internal data are separate concerns (CDS-P-08). Semantic clarity benefits humans, software and governed AI equally (CDS-P-04/05).
-
 
 <div class="chapter"></div>
 
@@ -653,7 +673,6 @@ The conformance criteria for this chapter are its requirement identifiers CDS200
 *Platform notes:* Shopify-specific implementation guidance formerly in Appendix A (taxonomy mapping targets, metafield publication, Search & Discovery facet consumption, read-back population) lives in the CDS-900 Shopify profile. The tags rule formerly there is now normative as R007.
 
 *Legacy alignment:* the legacy Airtable PIM prefix mapping tables and migration alignment formerly in Appendix B live in the migration annex (CDS-1300).
-
 
 <div class="chapter"></div>
 
@@ -1133,7 +1152,6 @@ Platform-specific naming behaviour (metafield projections, taxonomy mapping, tag
 ## 25. Architecture Decisions *(informative)*
 
 Decisions live in the global ADR register (CDS000-R006). Affecting this chapter: **ADR-D2** (MF_ retained and redefined mechanism-neutral; STD_/MF_ boundary by closed enumeration; supersedes CDS-ADR-008), **ADR-D24** (DF_→CH_, one consolidated ADR superseding the four parallel v0.1 ADRs; DF_ registered deprecated). Upheld from v0.1: uppercase prefixes with underscore separator (ADR-007); identifier/label/key separation (ADR-010); rejection of colon, equals and dot separators (ADR-011); schema metadata excluded from identifiers (ADR-012).
-
 
 <div class="chapter"></div>
 
@@ -1866,7 +1884,6 @@ Platform-specific mappings and constraints live in the versioned, dated profiles
 
 END OF CDS-400 v0.2 REVIEW DRAFT
 
-
 <div class="chapter"></div>
 
 # Commerce Data Standard (CDS)
@@ -2577,7 +2594,6 @@ The reason-code registry (identifiers, governance, additions) is owned by CDS-11
 10. Classify drift; execute the governed repair or exception policy; re-verify.
 11. Retain payload, response, observation, comparison and actor evidence.
 
-
 <div class="chapter"></div>
 
 # Commerce Data Standard (CDS)
@@ -3200,7 +3216,6 @@ Platform-specific guidance (including the former Shopify implementation notes) l
 - Are facet analytics stable across display-label changes?
 - Are customer-facing values verified after publication (CDS-500)?
 - Is the declared response-time target being monitored?
-
 
 <div class="chapter"></div>
 
@@ -3890,7 +3905,6 @@ Platform-specific guidance for AI-assisted publication (including the Shopify pr
 - Are quality, correction rate and downstream mismatch monitored at the level the autonomy class requires?
 - Can a new operator understand the AI fields and statuses without separate notes?
 
-
 <div class="chapter"></div>
 
 # Commerce Data Standard (CDS)
@@ -4454,7 +4468,6 @@ This annex records how one adopting organisation's pre-CDS artefacts map to this
 
 *END OF CDS-800 v0.2 REVIEW DRAFT*
 
-
 <div class="chapter"></div>
 
 # Commerce Data Standard (CDS)
@@ -4499,8 +4512,12 @@ CDS Core Standard
       |               +-- Organisation Profile: Example Store
       |
       +-- Industry Profile: Homewares
-              |
-              +-- Platform Profile: Google Merchant Center (CDS-GMC-0.2)
+      |       |
+      |       +-- Platform Profile: Google Merchant Center (CDS-GMC-0.2)
+      |
+      +-- Industry Profiles: Beauty & Health (CDS-1600), Food & Beverage (CDS-1700),
+              Electronics (CDS-1800), Parts & Fitment (CDS-1900),
+              Sports, Toys, Pets (CDS-2000) — register: CDS-1500 §2.1
 ```
 
 ## 2. Profile Hierarchy and Precedence *(normative)*
@@ -4510,7 +4527,7 @@ Profiles are applied in layers.
 | Layer | Purpose | Example |
 |---|---|---|
 | CDS Core | Vendor-neutral semantics and architecture | Canonical colour, facet colour, channel mapping |
-| Industry Profile | Domain-specific fields and rules | Apparel fit, garment size; homewares room and finish |
+| Industry Profile | Domain-specific fields and rules (register: CDS-1500 §2.1) | Apparel fit, garment size; homewares room and finish; cosmetic ingredient lists; food allergens; electronics specifications; parts fitment; toy age warnings |
 | Platform Profile | Platform storage and delivery mapping | Shopify product category, Google product_type |
 | Organisation Profile | Store-specific vocabularies and policies | Brand colour names, collection hierarchy |
 | Product Record | Actual values and permitted overrides | French Navy shirt in size M |
@@ -4926,6 +4943,10 @@ The homewares profile adds room, product form, material, finish, dimensions, sha
 
 **CDS900-R067** Safety and suitability claims MUST be backed by an admissible evidence class (CDS-700) and MUST NOT be generated solely from aesthetic inference.
 
+## 9A. Other Industry Profiles *(informative pointer)*
+
+The industry profiles added in the 2026-09-20 expansion are defined in their own chapters and registered in CDS-1500 §2.1: beauty, health and personal care (CDS-1600), food, beverage and grocery (CDS-1700), consumer electronics, appliances and technical goods (CDS-1800), parts, automotive, industrial and fitment (CDS-1900), and sports and outdoor, toys and games, and pet supplies (CDS-2000). Each carries its own channel projection guidance for the platform profiles in this chapter and a per-jurisdiction requirement register seed (CDS-1500 §2.2). Platform-specific facts those chapters rely on (for example which countries accept `energy_efficiency_class`, or that the seeded feed channels define no fitment attributes) are dated in the chapters that state them and are candidates for the next revision of the CDS-GMC and CDS-META profiles in §5–§6.
+
 ## 10. Cross-Channel Mapping Matrix *(informative)*
 
 | Canonical Concept | Shopify | Google | Meta | PIM Authority |
@@ -5110,7 +5131,6 @@ QA_shopify_dimensions      = MATCH
 | [M3] | Meta Business Help Center, About catalog data sources (incl. pixel) | facebook.com/business/help/125074381480892 | Retrieved 2026-08-03 |
 
 END OF CDS-900 v0.2 REVIEW DRAFT
-
 
 <div class="chapter"></div>
 
@@ -5464,7 +5484,7 @@ Each test maps to one of the four tenant-isolation requirements of CDS-800 §22 
 
 A platform or industry profile adds profile-specific tests to the applicable core level. It may constrain mappings, capability declarations and observation methods; it cannot weaken core requirements (CDS1000-R009, CDS000-R011).
 
-Profile test content — including test matrices, expected platform outputs and observation methods — lives with the versioned, dated profile definitions in CDS-900 (platform) and CDS-1500 (industry), not in this chapter (see Appendix A).
+Profile test content — including test matrices, expected platform outputs and observation methods — lives with the versioned, dated profile definitions in CDS-900 (platform) and CDS-1500 through CDS-2000 (industry; register in CDS-1500 §2.1), not in this chapter (see Appendix A).
 
 **CDS1000-R025** A profile conformance claim MUST pass all mandatory core tests for the claimed level and all mandatory tests in that profile's version-pinned test matrix.
 
@@ -5654,7 +5674,7 @@ Architecture decisions are held in the single global ADR register (CDS000-R006).
 
 ## Appendix A — Profile Test Matrices *(informative)*
 
-Version-pinned profile test matrices — including all platform-specific expected outputs formerly embedded in this chapter's reference vectors and Shopify appendix — are published alongside each profile definition (CDS-900 for platforms, CDS-1500 for industries). Each matrix pins: the profile version, the platform API version and date verified, the registered test prefix, the mandatory test list, and the profile-specific expected outputs for the shared core reference vectors (§20). A representative matrix covers: product identity mapping, taxonomy mapping, structured metadata definitions, variant boundaries, tag/collection safety, storefront filter exposure, observation method, verification comparison and drift handling.
+Version-pinned profile test matrices — including all platform-specific expected outputs formerly embedded in this chapter's reference vectors and Shopify appendix — are published alongside each profile definition (CDS-900 for platforms, CDS-1500 through CDS-2000 for industries). Each industry chapter added in the 2026-09-20 expansion ends with a "Reference Validation Cases" section listing the negative cases its profile contributes to the cross-industry validation set (REVIEW-020). Each matrix pins: the profile version, the platform API version and date verified, the registered test prefix, the mandatory test list, and the profile-specific expected outputs for the shared core reference vectors (§20). A representative matrix covers: product identity mapping, taxonomy mapping, structured metadata definitions, variant boundaries, tag/collection safety, storefront filter exposure, observation method, verification comparison and drift handling.
 
 ## Appendix B — Apparel and Homewares Reference Dataset *(normative)*
 
@@ -5671,6 +5691,8 @@ The reference dataset SHOULD additionally contain:
 - a homewares product with multiple materials and one dominant display material
 - a product whose internal category maps differently to two external taxonomies
 - a product with a deliberate channel title override
+
+Implementations claiming an industry profile from CDS-1600 through CDS-2000 SHOULD extend the dataset with that chapter's reference validation cases (for example a cosmetic with a free-from claim contradicted by its ingredient list, a food with an allergen declared only in text, a lithium-battery product without a dangerous-goods declaration, a part with fitment held only in a tag, a toy whose safety age warning is derived from its retail age band) and, for every market claimed, a product that fails a `block` entry of the jurisdiction requirement register (CDS1500-R057).
 
 ## Appendix C — Example Evidence Package *(informative)*
 
@@ -5708,7 +5730,6 @@ assessment-184/
 ---
 
 *End of CDS-1000 v0.2 Review Draft.*
-
 
 <div class="chapter"></div>
 
@@ -5802,7 +5823,7 @@ schemas/
   assurance/  conformance-manifest, validation-output
 ```
 
-Platform and industry profiles are not schema directories in v0.2: platform-specific constraints live in CDS-900 profiles and industry constraints in CDS-1500, applied by composition (§20). The v0.1 `profiles/` directory sketch is withdrawn.
+Platform and industry profiles are not schema directories in v0.2: platform-specific constraints live in CDS-900 profiles and industry constraints in CDS-1500 through CDS-2000 (register: CDS-1500 §2.1), applied by composition (§20). The product relationship record (CDS-1900 §5) is carried in the canonical product contract's `relationships` collection (§8); its typed record shape is a candidate component schema for the next package release. The v0.1 `profiles/` directory sketch is withdrawn.
 
 Three identity layers, per ADR-D5:
 
@@ -6554,7 +6575,6 @@ barcode_identifiers:
 
 END OF CDS-1100 v0.2 REVIEW DRAFT
 
-
 <div class="chapter"></div>
 
 # Commerce Data Standard (CDS)
@@ -7005,7 +7025,6 @@ python3 -m venv .venv
 ---
 
 *End of CDS-1200 v0.2 Review Draft.*
-
 
 <div class="chapter"></div>
 
@@ -7516,7 +7535,6 @@ The single conformance ladder is owned by CDS-1000 (ADR-D1): Foundation → Stru
 | Level 5 — Governed | Governed |
 
 END OF CDS-1300 v0.2 REVIEW DRAFT
-
 
 <div class="chapter"></div>
 
@@ -8043,7 +8061,6 @@ Recurrence of:   <link to problem record, or "first occurrence">
 
 END OF CDS-1400 v0.2 REVIEW DRAFT
 
-
 <div class="chapter"></div>
 
 # Commerce Data Standard (CDS)
@@ -8053,13 +8070,13 @@ END OF CDS-1400 v0.2 REVIEW DRAFT
 |---|---|
 | Status | **v0.2 Review Draft** (working source; not an approved standard) |
 | Release | CDS v0.2 (single corpus release per ADR-D5) |
-| Date | 2026-08-04 |
+| Date | 2026-09-20 (revision of the 2026-08-04 draft: industry profile register, jurisdiction requirement register and extension profiles added in the industry-profile expansion) |
 | Supersedes | CDS-1500 Working Draft v0.1 and the CDS-1500 Starter Reference Dictionaries v0.1 package structure (data content carried forward, restructured per Appendix E) |
-| Normative status | §1, §2, §4, §5, §7–§13, §15–§18, §23, §24 and Appendices A–B are normative. §3, §6, §14, §19–§22, §25, §26 and Appendices C–F are informative. Every table is individually marked. |
+| Normative status | §1, §2 (including §2.1 and §2.2), §4, §5, §7–§13, §14A, §14B, §15–§18, §23, §24 and Appendices A–B (including A.1, A.2, B.1, B.2) are normative. §3, §6, §14, §19–§22, §25, §26 and Appendices C–G are informative; Appendix G seeds the jurisdiction requirement register whose record structure and obligations are normative in §2.2. Every table is individually marked. |
 | Primary audience | Merchandisers, data stewards, ecommerce operators, PIM architects, catalogue managers, UX teams, developers and AI enrichment designers |
-| Depends on | CDS-000 through CDS-1400, especially CDS-200, CDS-300, CDS-400, CDS-500, CDS-600, CDS-900 and CDS-1100 |
-| Companion package | CDS Reference Dictionary (unified informative starter data; column contract in Appendix E) |
-| Profile identifiers | `cds.profile.apparel.v0_2` and `cds.profile.homewares.v0_2` |
+| Depends on | CDS-000 through CDS-1400, especially CDS-200, CDS-300, CDS-400, CDS-500, CDS-600, CDS-900 and CDS-1100. Cited by CDS-1600 through CDS-2000, which apply the profile model (§2), requirement levels (§4), industry profile register (§2.1) and jurisdiction requirement register (§2.2) homed here |
+| Companion package | CDS Reference Dictionary (unified informative starter data; column contract in Appendix E): Chapters 1–9 and 15–16 for the profiles in this chapter; Chapter 19 (Jurisdictions & Regulatory Schemes) for §2.2 |
+| Profile identifiers | Base profiles `cds.profile.apparel.v0_2` and `cds.profile.homewares.v0_2`; extension profiles `cds.profile.footwear.v0_2`, `cds.profile.jewellery.v0_2` (§12), `cds.profile.furniture.v0_2`, `cds.profile.garden.v0_2` (§14A–§14B). All profile identifiers in the corpus are registered in §2.1 |
 | Findings addressed | CDS-1500-1..8; CDS-400-3 and DICT-2 (colour-baseline ownership, D11); CDS-600-3 (zero-result rule re-homed); DICT-1..17; Matrix 2 and Matrix 5 deduplication; ADR-D3, ADR-D4, ADR-D24; D12 (partial — see OPEN flag), D28 (as resolved in CDS-400) |
 
 Terminology in this chapter follows CDS-100. In particular, the v0.1 term "reference value" is retired (CDS100-R003); this chapter uses **Source Value → Alias Mapping Record → Canonical Value → Projections** per ADR-D4.
@@ -8077,6 +8094,8 @@ CDS-1500 defines two interoperable industry profiles for a commerce catalogue wh
 **CDS1500-R003** An industry profile MUST NOT force every possible attribute onto every product. Requiredness MUST be defined per product family and category profile.
 
 **CDS1500-R004** A retailer MAY extend the baseline dictionaries, but MUST preserve stable identifiers, aliases, mappings and deprecation history (change control per CDS-400 and CDS-800).
+
+CDS-1500 is also the owning chapter (CDS000-R005) for two mechanisms shared by every industry profile in the corpus: the **Industry Profile Register** (§2.1), which lists every profile identifier, its home chapter and its parent profile, and the **Jurisdiction Requirement Register** (§2.2), which defines how an organisation records the per-country regulatory obligations that bear on product data. The industry profile chapters CDS-1600 (beauty, health and personal care), CDS-1700 (food, beverage and grocery), CDS-1800 (consumer electronics, appliances and technical goods), CDS-1900 (parts, automotive, industrial and fitment) and CDS-2000 (sports and outdoor, toys and games, pet supplies) apply both without restatement; each carries its own seed of the register in its Appendix D, and this chapter's seed for apparel, footwear, jewellery, furniture and garden goods is Appendix G. The selection of profiles follows the global commerce vertical research recorded in REVIEW-020.
 
 ## 2. Industry Profile Model *(normative)*
 
@@ -8097,6 +8116,65 @@ CDS Core
 **CDS1500-R006** A category profile MUST declare a requirement level (§4) for each attribute it governs.
 
 **CDS1500-R007** Attributes that create distinct sellable units MUST be modelled at variant scope; descriptive attributes MUST remain at product scope unless values genuinely differ by variant (variant boundary rule: CDS-200 §5).
+
+### 2.1 Industry Profile Register *(normative)*
+
+The register is the single list of industry profiles defined by the corpus. A **base profile** stands alone. An **extension profile** refines a base profile for a product family (footwear refines apparel) and is claimed only together with its parent. A conformance claim (CDS-1000) names profile identifiers from this register.
+
+| Profile identifier | Profile | Home chapter | Kind | Requires | Dictionary chapters bound |
+|---|---|---|---|---|---|
+| `cds.profile.apparel.v0_2` | Apparel | CDS-1500 §5–§11 | Base | — | 1, 2, 3, 4, 5, 6 |
+| `cds.profile.footwear.v0_2` | Footwear | CDS-1500 §12.1 | Extension | `cds.profile.apparel.v0_2` | 2, 5, 8 |
+| `cds.profile.jewellery.v0_2` | Jewellery and accessories | CDS-1500 §12.2 | Extension | `cds.profile.apparel.v0_2` | 1, 9 |
+| `cds.profile.homewares.v0_2` | Homewares | CDS-1500 §13–§17 | Base | — | 1, 2, 3, 4, 6 (styles), 7 |
+| `cds.profile.furniture.v0_2` | Furniture | CDS-1500 §14A | Extension | `cds.profile.homewares.v0_2` | 2, 3, 5 (bedding sizes), 7, 15 |
+| `cds.profile.garden.v0_2` | Garden and outdoor living | CDS-1500 §14B | Extension | `cds.profile.homewares.v0_2` | 2, 7, 16 |
+| `cds.profile.beauty_health.v0_2` | Beauty, health and personal care | CDS-1600 | Base | — | 10, 17 (ingestibles), 18, 19 |
+| `cds.profile.food_beverage.v0_2` | Food, beverage and grocery | CDS-1700 | Base | — | 17, 18, 19 |
+| `cds.profile.electronics.v0_2` | Consumer electronics, appliances and technical goods | CDS-1800 | Base | — | 11, 18, 19 |
+| `cds.profile.parts_fitment.v0_2` | Parts, automotive, industrial and fitment | CDS-1900 | Base | — | 18, 19 (11 where relevant) |
+| `cds.profile.sports_outdoor.v0_2` | Sports and outdoor | CDS-2000 §5 | Base | — | 12, 5, 19 |
+| `cds.profile.toys_games.v0_2` | Toys and games | CDS-2000 §6 | Base | — | 13, 19 |
+| `cds.profile.pets.v0_2` | Pet supplies | CDS-2000 §7 | Base | — | 14, 17, 19 |
+
+Cross-industry mechanisms homed in one chapter and cited by the others: the product relationship record, kits and bundles, and the dangerous-goods declaration (CDS-1900 §5, §11, §12); market registration and responsible-person records (CDS-1600 §12); ingredient, allergen, nutrition and net-quantity patterns (CDS-1700 §5–§9); typed technical specifications and per-market compliance records (CDS-1800 §6, §12); the jurisdiction requirement register (§2.2 below).
+
+**CDS1500-R054** Every industry profile defined by the corpus MUST appear in the register above with a stable identifier following the CDS-1100 §20 grammar, a home chapter, a kind (base or extension) and, for an extension, the profile it requires; a conformance claim MUST name profile identifiers from this register.
+
+**CDS1500-R055** A claim of an extension profile MUST include a claim of the profile it requires; the extension's requirements add to, and MUST NOT weaken, the parent's.
+
+### 2.2 Jurisdiction Requirement Register *(normative; the seed tables in each chapter's Appendix D and this chapter's Appendix G are informative)*
+
+Much of what a product record must contain is decided by law, market by market: what must appear on the label, what must be shown online before purchase, what must be registered before sale, what must be declared for transport and what may not be sold at all. The corpus does not embed those rules in the requirement levels of §4, because they change by jurisdiction and over time. Instead every organisation maintains a **jurisdiction requirement register**: a governed record of the obligations that bear on its product data for each market it publishes to, mapped to the CDS fields that carry the data. The industry profile chapters seed the register with the obligations known at the release date; the organisation verifies, extends and reviews it.
+
+| Register entry property | Meaning | Requirement |
+|---|---|---|
+| entry_id | Stable identifier | Required |
+| jurisdiction | Governed value from the `jurisdiction` dictionary (package Chapter 19; ISO 3166 country codes with sub-national codes where a state or province regulates separately, for example US-CA) | Required |
+| regulatory_scheme | Governed value from the `regulatory_scheme` dictionary (package Chapter 19) or a governed organisation extension, naming the instrument | Required |
+| regulator | The authority administering the scheme | Required |
+| instrument | Citation of the instrument and provision (act, regulation, standard, article or section) | Required |
+| product_scope | Product families, categories or attribute conditions the entry applies to (a governed expression over CAT_ and MF_ attributes) | Required |
+| obligation_type | One or more of: `pre_market` (registration, notification, listing, approval or certification before sale), `labelling_element` (a data element that must appear on the product or packaging), `listing_element` (a data element or artefact that must appear in the online offer before purchase), `warning_statement` (a mandated warning), `rating_label` (an energy, water, efficiency or similar rating label or class), `restricted_content` (a restriction on what may be claimed, shown or sold, including age and channel restrictions), `transport` (a dangerous-goods or carriage obligation), `documentation` (a document that must exist or be available on request), `post_market` (a producer-responsibility, recall, take-back or repair obligation) | Required |
+| data_elements | The data elements the obligation requires, each mapped to the CDS field (namespace and attribute, or record) that carries it, or to a declared organisation extension where no CDS field exists | Required |
+| trigger | The condition under which the obligation applies (category, attribute value, quantity, sale channel, customer type) | Required |
+| effective_from / effective_to | Dates the obligation applies, including transition periods | Required where dated |
+| publication_consequence | What preflight does for the target market when the obligation is unmet: `block`, `warn` or `record` | Required |
+| verification_status / verified_on / verified_against | Whether the entry was verified against the primary instrument or a regulator publication, when, and against what | Required |
+| owner / review_due | Accountable owner (CDS-800) and next review date | Required |
+| notes | Interpretation notes, exemptions relied on | Optional |
+
+**CDS1500-R056** An implementation claiming any industry profile MUST maintain a jurisdiction requirement register conforming to the record structure above for every market it publishes products to, with each entry carrying jurisdiction, scheme, instrument, product scope, obligation types, data elements mapped to CDS fields, trigger, dates, publication consequence, verification status and owner.
+
+**CDS1500-R057** Publication preflight for a target market (CDS-500 §8) MUST evaluate every register entry whose jurisdiction and product scope match the product and channel, and MUST apply the entry's publication consequence: a `block` entry with unmet data elements blocks publication to that market, a `warn` entry records a warning, and a `record` entry records the evaluation; the evaluation result MUST be retained as an observation (CDS-500) with the entry identifier and version.
+
+**CDS1500-R058** Every register entry MUST carry a verification status and date; an entry that is unverified, past its review date or seeded but not yet adopted MUST be visible as such in the register and in preflight results, and an implementation MUST NOT present an unverified entry as a verified legal obligation.
+
+**CDS1500-R059** Where an obligation requires a data element for which the corpus defines no field, the organisation MUST declare an extension attribute or record (CDS-300 §21 grammar; CDS-1100 §20) and map the entry to it; the obligation MUST NOT be recorded as satisfied by free text in a description.
+
+**CDS1500-R060** The seed tables in the industry profile chapters are informative starter content, dated and marked with their verification status: an organisation MAY adopt them as the initial content of its register, at which point they become governed records under that organisation's control and change through CDS-800 governance; an organisation MUST NOT rely on a seed entry marked "retrieved", "unverified" or "not seeded" without verifying it against the primary instrument.
+
+**CDS1500-R061** Register entries whose obligation type is `listing_element`, `warning_statement` or `rating_label` MUST have their required elements projected in the channel representation for the target market and verified under CDS-500 where read-back exists; where the channel exposes no read-back for the element, the verification status MUST be UNOBSERVABLE, not MATCH.
 
 ## 3. Shared Product Information Layers *(informative)*
 
@@ -8314,7 +8392,7 @@ Seed occasion dictionary *(informative)*: everyday, work, casual, formal, party,
 
 **CDS1500-R032** The profile MUST support withdrawal or expiry of a claim without changing the canonical material identity.
 
-## 12. Footwear and Accessories Extension *(informative baseline; R033 normative)*
+## 12. Footwear and Accessories Extension Profiles *(informative baseline; R033 and §12.1–§12.2 normative)*
 
 | Category | Required | Recommended | Variant options |
 |---|---|---|---|
@@ -8325,6 +8403,28 @@ Seed occasion dictionary *(informative)*: everyday, work, casual, formal, party,
 | Hats | size or adjustable status; sellable colour; material | brim, crown, fit, care | size, colour |
 
 **CDS1500-R033** Footwear size systems MUST be identified explicitly and MUST NOT be merged into a single unqualified number.
+
+### 12.1 Footwear Extension Profile *(normative; `cds.profile.footwear.v0_2`, requires `cds.profile.apparel.v0_2`)*
+
+The footwear profile binds the Chapter 8 vocabularies (styles, heel heights, closures, toe shapes, width fittings) and the footwear size systems of Chapter 5, and adds the attributes that distinguish footwear from garments: upper, lining, sole and insole materials as component materials; width fitting as a variant option where offered; and measured fit (internal length) as the basis for size guidance.
+
+**CDS1500-R062** Footwear MUST model size and, where offered, width fitting as variant options with an explicit size system (R033) and MUST store the size system's sort order (R027); internal length in millimetres SHOULD be stored per size where the brand publishes it, and a size conversion MUST follow R026.
+
+**CDS1500-R063** Upper, lining, sole and insole materials MUST be component materials (the R035 pattern: canonical material per component role) rather than a single material field; the primary material facet derives from the upper unless the category profile declares otherwise.
+
+**CDS1500-R064** Footwear style, heel height, closure, toe shape and width fitting MUST bind to governed dictionaries conforming to CDS-400 where those facets are exposed (R011); heel height MUST be stored as a typed measurement in millimetres with the governed band derived, never authored.
+
+### 12.2 Jewellery and Accessories Extension Profile *(normative; `cds.profile.jewellery.v0_2`, requires `cds.profile.apparel.v0_2`)*
+
+The jewellery and accessories profile binds the Chapter 9 vocabularies (metals, stones, closures, piece styles) and covers jewellery, watches, bags, belts, hats, eyewear and small leather goods. Its distinctive facts are material composition with purity and plating, stone identity with treatment and origin claims, and sizes measured in ring, chain-length and circumference systems.
+
+**CDS1500-R065** Metal, purity or fineness, plating and stone MUST be separate governed attributes: the metal (a `jewellery_metal` value) with its fineness as a typed value (karat or parts per thousand) and the plating or coating as a distinct value; a plated item MUST NOT be described by the plating metal alone.
+
+**CDS1500-R066** Stone identity MUST be a governed `jewellery_stone` value; natural, laboratory-grown, treated and simulated status MUST be an explicit governed attribute per stone, and origin, carat weight and grading are claims or typed values with evidence (R031), never inferred.
+
+**CDS1500-R067** Ring, chain, bracelet and hat sizes MUST identify their size system (`size_system` values such as `au_ring`, `us_ring`, `eu_ring`, `head_circumference_cm`) and store the measured basis (inside circumference or diameter, length, head circumference) as typed measurements where the brand publishes it.
+
+**CDS1500-R068** Precious-metal marking, nickel-release and lead or cadmium content obligations that a market imposes (Appendix G) MUST be evaluated at preflight for that market through the jurisdiction requirement register (§2.2).
 
 ## 13. Homewares Product Model *(normative)*
 
@@ -8369,6 +8469,53 @@ Product: Stoneware Table Lamp           (informative example)
 | Storage and baskets | dimensions/capacity; material | lid; handle; stackability; room; load guidance | colour, size |
 | Lighting | type; dimensions; electrical compatibility | material; finish; bulb base; max wattage; dimmable; cable length | colour/finish, plug type |
 | Outdoor lifestyle | dimensions; material; outdoor suitability | UV/water resistance; storage; care; assembly | colour, size |
+
+## 14A. Furniture Extension Profile *(normative; `cds.profile.furniture.v0_2`, requires `cds.profile.homewares.v0_2`)*
+
+Furniture (seating, tables, storage, beds, mattresses, desks, outdoor furniture) is the highest-value and most logistics-intensive homewares family. The profile binds Chapter 15 (assembly types) and the bedding size systems of Chapter 5, reuses the Chapter 6 style vocabulary and Chapter 2–3 materials and fabrics for upholstery, and adds the attributes that furniture retail and regulation demand: assembled and packaged dimensions, weight and load ratings, assembly type and time, seat and bed dimensions, mattress firmness and construction, and stability, flammability and toppling obligations that differ by market.
+
+| Field | Meaning | Type |
+|---|---|---|
+| MF_assembly_type | Governed value (`assembly_type`: fully assembled, partial, flat-pack, professional installation) | Product |
+| MF_assembly_time_min / MF_assembly_person_count | Assembly guidance | Integers |
+| MF_dimensions_assembled / MF_dimensions_packaged (per package) | Typed dimensions with unit (R039) | Product / Variant |
+| MF_weight_kg / MF_packaged_weight_kg / MF_package_count | Weights and package count | Typed measurements; integer |
+| MF_load_rating_kg / MF_seat_height_mm / MF_seat_depth_mm / MF_arm_height_mm | Ergonomic and load measurements | Typed measurements |
+| MF_bed_size_system + VAR_bed_size | Bedding size (`size_system` values `au_bedding`, `us_bedding`, `uk_bedding`, `eu_bedding`) with the mattress dimensions the size denotes | Variant |
+| MF_mattress_firmness / MF_mattress_construction / MF_mattress_depth_mm | Governed firmness (`mattress_firmness`), construction as governed organisation value, depth | Product / Variant |
+| MF_upholstery_material / MF_upholstery_fabric / MF_frame_material / MF_fill_material | Component materials per R035 | Product |
+| MF_material_components | Component list with roles | Product |
+| MF_delivery_class | Governed logistics class (parcel, oversized, two-person, white-glove) derived under governed rules | Product / Variant |
+| MF_warning_statements / CMP_compliance_declarations | Stability, toppling, flammability and general-safety obligations per market (§2.2; Appendix G) | Per market |
+| Relationship records | Modular and sectional configurations, matching pieces, replacement parts (CDS-1900 §5) | Product |
+
+**CDS1500-R069** Furniture MUST store assembled dimensions and, per package, packaged dimensions and weight as typed measurements (R039), with package count; a product shipped in several packages MUST NOT report a single packaged dimension.
+
+**CDS1500-R070** Assembly type MUST be a governed `assembly_type` value; delivery class MUST derive from packaged measurements and category rules under governed logic, not be authored per product.
+
+**CDS1500-R071** Bed and mattress sizes MUST identify their size system and MUST store the mattress dimensions the size denotes in that system; a size label such as "Queen" MUST NOT be published without its system where the organisation sells into more than one market.
+
+**CDS1500-R072** Mattress firmness MUST bind to a governed `mattress_firmness` dictionary where the facet is exposed; a brand's numeric firmness scale MUST be mapped to the governed value through an alias mapping with its basis recorded, and the mapping MUST NOT be presented as a measured property.
+
+**CDS1500-R073** Upholstery fabric, frame and fill MUST be component materials (R035) with fibre composition for textile covers (R023 pattern); flammability and chemical-content statements that a market requires (Appendix G) MUST be structured records evaluated at preflight, and MUST NOT be projected as claims or facets.
+
+**CDS1500-R074** Toppling, stability and anchoring warnings that a market requires on the product, its packaging or in the online description (Appendix G) MUST be structured warning records evaluated per market at preflight and projected to the market's listing where the market requires it; presence MUST be verified under CDS-500 (R061).
+
+**CDS1500-R075** Modular and sectional furniture MUST express configurations, matching pieces and replacement parts through relationship records per CDS-1900 §5; a configurator's output MUST be traceable to those records.
+
+## 14B. Garden and Outdoor Living Extension Profile *(normative; `cds.profile.garden.v0_2`, requires `cds.profile.homewares.v0_2`)*
+
+Garden and outdoor living covers outdoor furniture and shade, planters and garden decor, garden tools and equipment, live plants and seeds, growing media, fertilisers and pest control, and barbecue and outdoor cooking. The profile binds Chapter 16 (sun exposure) and reuses the homewares baseline; powered equipment applies CDS-1800, chemicals and gas products apply CDS-1900 §12, and live plants are an organisation extension.
+
+**CDS1500-R076** Outdoor suitability MUST be an explicit governed attribute (indoor, covered outdoor, full outdoor) with the weather-resistance basis recorded; "outdoor" MUST NOT be inferred from category placement.
+
+**CDS1500-R077** Plants, seeds and bulbs MUST be identified by governed botanical and common names as separate attributes, with sun exposure bound to the governed `sun_exposure` dictionary where the facet is exposed; growth, hardiness and climate suitability MUST carry the scheme they are stated in (a hardiness-zone or climate-zone system) and are region-specific; the package deliberately ships no plant taxonomy.
+
+**CDS1500-R078** Fertilisers, pesticides, herbicides, pool chemicals, fuels and gas products MUST carry dangerous-goods declarations and safety data sheet references per CDS-1900 §12 and per-market registration or restricted-sale records where a market regulates them (Appendix G); they MUST NOT be published to a market whose registration is absent.
+
+**CDS1500-R079** Live plants, seeds and growing media MUST carry per-market biosecurity and movement restrictions as governed restricted-sale attributes evaluated at preflight, including sub-national restrictions where they exist (for example interstate plant movement controls).
+
+**CDS1500-R080** Barbecues, heaters and gas appliances MUST apply CDS-1800 §12 for gas and electrical compliance records and CDS-1800 §8 for energy and power facts.
 
 ## 15. Homewares Material and Construction *(normative; seed table informative)*
 
@@ -8554,6 +8701,16 @@ AI selects from governed dictionaries or returns an unmapped proposal for review
 
 **CDS1500-R053** An implementation claiming the CDS Homewares Profile MUST: store measurable specifications as typed values with units (R034, R039–R041); separate material, component material and finish (R035, R037–R038); apply category-specific requirements for dimensions, capacity, set contents and compatibility (R009); use governed room, style, shape and finish dictionaries where those facets are exposed (R011); project broad customer facets without losing canonical specificity (R037, R046); and publish and verify channel representations under CDS-500.
 
+**CDS1500-R081** An implementation claiming any industry profile (this chapter or CDS-1600 through CDS-2000) MUST additionally: name profile identifiers from the register (R054) and claim the parent of every extension profile claimed (R055); maintain a jurisdiction requirement register for every market it publishes to (R056); evaluate the register at preflight per market with the declared publication consequences and retain the results (R057); keep verification status visible and never present unverified entries as verified (R058); map unmapped obligations to declared extensions (R059); and project and verify listing elements, warnings and rating labels for each market (R061).
+
+**CDS1500-R082** An implementation claiming the CDS Footwear Profile MUST satisfy the Apparel Profile (R052) and R033, R062–R064 (size system and width as variant options with sort order, component materials, governed footwear dictionaries).
+
+**CDS1500-R083** An implementation claiming the CDS Jewellery and Accessories Profile MUST satisfy the Apparel Profile (R052) and R065–R068 (metal, fineness, plating and stone as separate governed attributes; stone status; size systems; market marking and content obligations evaluated through the register).
+
+**CDS1500-R084** An implementation claiming the CDS Furniture Profile MUST satisfy the Homewares Profile (R053) and R069–R075 (assembled and per-package dimensions, governed assembly and delivery classes, bedding size systems, governed mattress firmness, component materials with flammability and chemical statements as records, toppling warnings projected and verified, configurations as relationship records).
+
+**CDS1500-R085** An implementation claiming the CDS Garden and Outdoor Living Profile MUST satisfy the Homewares Profile (R053) and R076–R080 (explicit outdoor suitability, governed plant naming and sun exposure with region-specific schemes, dangerous-goods and registration records for chemicals and gas products, biosecurity restrictions at preflight, CDS-1800 compliance for gas and electrical appliances).
+
 ## 25. Worked Product Examples *(informative)*
 
 ### 25.1 Apparel — Relaxed Linen Shirt
@@ -8635,6 +8792,9 @@ VAR_insert_option = cover_only | feather_insert
 | CDS-ADR-1500-006 | Starter dictionaries published as extensible informative baselines; requirements bind to governed dictionaries (R011) | Accepted (amended v0.2) |
 | CDS-ADR-1500-007 | No universal exact size conversion claim | Accepted |
 | CDS-ADR-1500-008 | Facet-ambiguous shade names split into distinct canonical shades (charcoal, rust, tan), intake via scoped alias mappings; product-level facet override only as governed record with provenance | Accepted (v0.2; applies ADR-D4/D12; see resolved D12 note at §7) |
+| CDS-ADR-1500-009 | One corpus-wide industry profile register (§2.1); extension profiles require their parent; new verticals get their own chapters (CDS-1600 through CDS-2000) selected by global market research (REVIEW-020) rather than being appended to this chapter | Accepted (2026-09-20 revision; open flag IP1, IP8) |
+| CDS-ADR-1500-010 | Regulatory obligations are not encoded in requirement levels; each organisation maintains a jurisdiction requirement register (§2.2) evaluated at preflight per market, seeded per chapter with dated, verification-marked entries for AU, NZ, US, EU, GB and CA | Accepted (2026-09-20 revision; open flag IP9) |
+| CDS-ADR-1500-011 | The product relationship record, kits and bundles, and the dangerous-goods declaration are homed in CDS-1900 and cited by every other profile; promotion of the relationship record into CDS-200 is deferred to v0.3 | Accepted (2026-09-20 revision; open flag IP3) |
 
 ---
 
@@ -8660,6 +8820,33 @@ VAR_insert_option = cover_only | feather_insert
 
 *The v0.1 type "Text from dictionary" for MF_colour_display is corrected: display labels are free text linked to a canonical value, per CDS-400 §9 (resolves CDS-1500-7).*
 
+### A.1 Footwear Extension Baseline *(normative; adds to Appendix A)*
+
+| Field | Scope | Type | Baseline requirement |
+|---|---|---|---|
+| VAR_size_label / VAR_size_system | Variant | Text; governed dictionary reference (`size_system`, footwear systems) | R |
+| VAR_width_fitting | Variant | Governed dictionary reference (`footwear_width_fitting`) | C — R where width is offered |
+| MF_internal_length_mm | Variant | Typed measurement | REC |
+| MF_material_components (upper, lining, sole, insole) | Product | Structured component list with canonical material ids | R |
+| MF_footwear_style | Product | Governed dictionary reference | REC |
+| MF_heel_height_mm / MF_heel_height_band | Product | Typed measurement; derived governed band | C — R for heeled footwear |
+| MF_footwear_closure / MF_toe_shape | Product | Governed dictionary references | REC |
+| MF_care_instructions / MF_country_of_origin | Product | Per Appendix A | Per Appendix A |
+
+### A.2 Jewellery and Accessories Extension Baseline *(normative; adds to Appendix A)*
+
+| Field | Scope | Type | Baseline requirement |
+|---|---|---|---|
+| MF_jewellery_metal | Product | Governed dictionary reference | R for jewellery and watches |
+| MF_metal_fineness | Product | Typed value with scale (karat or parts per thousand) | C — R where fineness is claimed or a market requires marking |
+| MF_plating | Product | Governed dictionary reference (`jewellery_metal`) or none | R (explicit none) |
+| MF_jewellery_stone / MF_stone_status | Product | Governed dictionary reference; governed status (natural, laboratory-grown, treated, simulated) | C — R where a stone is present |
+| MF_stone_carat_weight / MF_stone_grading | Product | Typed value; claim record with evidence | C |
+| MF_jewellery_closure / MF_jewellery_style | Product | Governed dictionary references | REC |
+| VAR_size_label / VAR_size_system / measured basis | Variant | Text; governed reference (`au_ring`, `us_ring`, `eu_ring`, `head_circumference_cm`, chain length); typed measurement | C — R for sized pieces |
+| MF_dimensions / MF_weight_g | Product / Variant | Typed measurements | REC |
+| MF_warning_statements / CMP_compliance_declarations | Product (per market) | Structured records (nickel release, lead and cadmium content, hallmarking) | C — per §2.2 |
+
 ## Appendix B. Homewares Attribute Baseline *(normative — dictionary bindings per CDS1500-R011)*
 
 | Field | Scope | Type | Baseline requirement |
@@ -8677,6 +8864,35 @@ VAR_insert_option = cover_only | feather_insert
 | MF_room | Product | Governed dictionary list | REC |
 | MF_shape | Product | Governed dictionary reference | REC |
 | MF_care_instructions | Product | Structured/text | REC |
+
+### B.1 Furniture Extension Baseline *(normative; adds to Appendix B)*
+
+| Field | Scope | Type | Baseline requirement |
+|---|---|---|---|
+| MF_assembly_type | Product | Governed dictionary reference (`assembly_type`) | R |
+| MF_dimensions_assembled | Product / Variant | Typed dimensions | R |
+| MF_dimensions_packaged / MF_packaged_weight_kg / MF_package_count | Product / Variant | Typed dimensions and weight per package; integer | R where the organisation ships |
+| MF_weight_kg / MF_load_rating_kg | Product / Variant | Typed measurements | R / C |
+| MF_seat_height_mm / MF_seat_depth_mm / MF_arm_height_mm | Product | Typed measurements | C — R for seating |
+| MF_bed_size_system / VAR_bed_size / mattress dimensions | Variant | Governed reference; text; typed measurements | R for beds and mattresses |
+| MF_mattress_firmness / MF_mattress_depth_mm | Product / Variant | Governed dictionary reference (`mattress_firmness`); typed measurement | R for mattresses where the facet is exposed |
+| MF_material_components (upholstery, frame, fill) | Product | Structured component list | R |
+| MF_delivery_class | Product / Variant | Governed logistics class (derived) | R where the organisation ships |
+| MF_warning_statements / CMP_compliance_declarations | Product (per market) | Structured records (toppling, flammability, chemical content) | C — per §2.2 |
+| Relationship records (configurations, matching pieces, parts) | Product | Records per CDS-1900 §5 | C |
+
+### B.2 Garden and Outdoor Living Extension Baseline *(normative; adds to Appendix B)*
+
+| Field | Scope | Type | Baseline requirement |
+|---|---|---|---|
+| MF_outdoor_suitability | Product | Governed value (indoor, covered outdoor, full outdoor) with basis | R |
+| MF_botanical_name / MF_common_name | Product | Governed organisation dictionary values | R for plants, seeds and bulbs |
+| MF_sun_exposure | Product | Governed dictionary reference (`sun_exposure`) | REC; R for plants where the facet is exposed |
+| MF_hardiness_or_climate_zone | Product | Typed value with scheme | C |
+| CMP_dangerous_goods / MED_technical_documents (SDS) | Product / Variant | Per CDS-1900 §12 | R (explicit value) |
+| CMP_market_registrations / CMP_restricted_sale | Product (per market) | Governed records | R for regulated chemicals, seeds and live plants |
+| Gas and electrical compliance records | Product (per market) | Per CDS-1800 §12 | R for appliances |
+| Homewares baseline | — | Per Appendix B | R |
 
 ## Appendix C. Colour Facet Baseline *(informative seed — owned by CDS-1500; CDS-400 and CDS-600 cite this table (D11); becomes governed data on adoption per CDS1500-R011)*
 
@@ -8786,12 +9002,2552 @@ Package documentation states column semantics, list delimiters (`;` for aliases,
 
 ### E.3 Known-missing referenced dictionaries (DICT-12)
 
-Referenced by this chapter but not shipped as seed files; organisations supply governed content or adopt future package releases: **fabric types** (MF_fabric_type), **size systems** (VAR_size_system), **care instructions** (MF_care_instructions symbols), **country of origin** (MF_country_of_origin), **component roles** (MF_material_components), **weather/season relevance**, **use environment**. Listing here is disclosure, not endorsement of free text: until governed, these fields cannot satisfy R-level requirements (R011).
+Referenced by this chapter but not shipped as seed files; organisations supply governed content or adopt future package releases: **country of origin** (MF_country_of_origin), **component roles** (MF_material_components), **weather/season relevance**, **use environment**, **plant naming** (§14B), **mattress construction** (§14A), **licensed properties and skill levels** (CDS-2000). Since package 0.4.0 the **fabric types**, **size systems** and **care instructions** dictionaries listed here in the 2026-08-04 draft are shipped (Chapters 3, 5 and 4); package 0.8.0 adds bedding, ring, bike-frame and head-circumference size systems, mattress firmness (Chapter 15) and the Chapter 17–19 vocabularies bound by CDS-1700 through CDS-2000. Listing here is disclosure, not endorsement of free text: until governed, these fields cannot satisfy R-level requirements (R011).
 
 ## Appendix F. Source Acknowledgements *(informative)*
 
 The profile applies the product classification, attribute, value, unit and distribution concepts described in Jorij Abraham, *Product Information Management: Theory and Practice* (Springer, 2014), together with the project-documented PIM-first pipeline, tag governance and store-sequencing practices. CDS extends those foundations with explicit facet dictionaries, channel read-back verification, AI governance and human-readable semantic namespaces. Verification statuses, traffic lights and reason codes are defined solely in CDS-500 (ADR-D3); this chapter states none of its own.
 
+## Appendix G. Jurisdiction Requirement Register — Seed for Apparel, Footwear, Jewellery, Furniture and Garden Goods *(informative seed of the normative register defined in §2.2)*
+
+Conventions: obligation types are those of §2.2. "Verified" means the primary instrument or regulator page was read on 2026-09-20; "retrieved" means a regulator page was retrieved but the instrument text was not read; "unverified" means the entry is seeded from general knowledge for completeness and MUST be verified before adoption (R060); "not seeded" means the organisation supplies the entry. Jurisdiction codes are those of the `jurisdiction` dictionary (package Chapter 19); scheme codes are those of `regulatory_scheme`. Cosmetics-like goods (fragrance, jewellery cleaners) follow CDS-1600 Appendix D; electrical and battery-powered goods (heated apparel, smart watches, powered furniture) follow CDS-1800 Appendix D; chemicals and gas products follow CDS-1900 Appendix D.
+
+### G.1 Australia (AU)
+
+| Ref | Instrument / regulator | Applies to | Obligation | Required data elements → CDS field | Trigger / dates | Verification |
+|---|---|---|---|---|---|---|
+| G-AU-1 | Consumer Goods (Care Labelling for Clothing and Textile Products) Information Standard 2023 (AS/NZS 1957 with ISO 3758 symbols permitted) — ACCC (`au_care_labelling_2023`) | Clothing, household textiles, furnishings, piece goods and yarns, plastic-coated fabrics, suede skins, leathers and furs | labelling_element (permanent care label with care instructions in English, ISO symbols optionally alongside) | Care instructions as structured values → MF_care_instructions (Chapter 4 values with declared symbol set), fibre composition where used to derive care → MF_fibre_composition | Standard commenced 2023 replacing the 2010 standard; transition ended | Verified 2026-09-20 (ACCC mandatory standard page) |
+| G-AU-2 | Consumer Goods (Children's Nightwear and Limited Daywear and Paper Patterns for Children's Nightwear) Safety Standard 2017 (AS/NZS 1249) — ACCC (`au_childrens_nightwear_2017`) | Children's nightwear and limited daywear sizes 00–14 | pre_market (fire-hazard category testing); labelling_element (category 1–4 label: "Low fire danger" or "Warning: High fire danger. Keep away from fire") | Fire-hazard category and label text → MF_warning_statements (scheme `au_childrens_nightwear_2017`), CMP_compliance_declarations (test evidence) | Ongoing | Verified 2026-09-20 (ACCC mandatory standard page) |
+| G-AU-3 | Consumer Goods (Toppling Furniture) Information Standard 2024 — ACCC (`au_toppling_furniture_2024`) | Clothing storage units, bookcases, hall tables, display cabinets, buffets, entertainment units and similar free-standing furniture ≥ 686 mm high (as defined) | warning_statement (safety warning on the product and packaging); listing_element (warning in the online product description); labelling_element (anchoring instructions and information at point of sale) | Warning text, anchor supply status, online description warning → MF_warning_statements (scheme `au_toppling_furniture_2024`, includes online warning text), MF_anchor_kit_included, listing projection and verification (R074) | Mandatory from 4 May 2025 | Verified 2026-09-20 (ACCC toppling furniture guidance) |
+| G-AU-4 | Australian Consumer Law s 29 and s 33 (country of origin and safe-harbour rules), Competition and Consumer Act; no mandatory fibre-content labelling standard for clothing (AS/NZS 2622 voluntary) — ACCC | Country of origin claims on apparel and homewares | restricted_content (origin claims must meet the safe-harbour tests) | Claim records with evidence → MF_country_of_origin, claims per R031 | Ongoing | Retrieved (not spot-verified) |
+| G-AU-5 | Trade Practices (Consumer Product Information Standards) — jewellery: no mandatory hallmarking; lead and cadmium limits for children's jewellery under the Consumer Goods (Lead and Other Elements in Children's Toys) and related standards; Consumer Goods (Products Containing Button/Coin Batteries) standards for jewellery and accessories with batteries | Jewellery and accessories | restricted_content; labelling_element | Content limits and battery warnings → CMP_compliance_declarations, MF_warning_statements (per CDS-1800 D-AU-5) | Ongoing | Unverified — organisation to confirm the applicable children's jewellery instrument |
+| G-AU-6 | Agricultural and Veterinary Chemicals Code (APVMA registration of garden pesticides and fertiliser-pesticide products); state biosecurity acts (plant movement and prohibited species, for example interstate quarantine); Consumer Goods (Portable Ladders / Trampolines) standards — APVMA, state departments, ACCC | Garden chemicals, seeds and live plants, outdoor equipment | pre_market (APVMA registration and approved label); restricted_content (biosecurity); labelling_element | APVMA number and label → CMP_market_registrations (scheme `au_apvma_agvet_code`); movement restrictions → CMP_restricted_sale per state | Ongoing | Retrieved (APVMA); biosecurity entries unverified |
+
+### G.2 New Zealand (NZ)
+
+| Ref | Instrument / regulator | Applies to | Obligation | Required data elements → CDS field | Trigger / dates | Verification |
+|---|---|---|---|---|---|---|
+| G-NZ-1 | Consumer Information Standards (Fibre Content Labelling) Regulations 2000; (Care Labelling) Regulations 2000; (Country of Origin (Clothing and Footwear) Labelling) Regulations 1992 — Commerce Commission (`nz_consumer_information_standards_textiles`) | Clothing, footwear, textile goods | labelling_element (fibre content, care instructions, country of origin for clothing and footwear) | → MF_fibre_composition, MF_care_instructions, MF_country_of_origin | Ongoing | Unverified — seeded from general knowledge; confirm current consolidation |
+| G-NZ-2 | Product Safety Standards (Children's Nightwear and Limited Daywear Having Reduced Fire Hazard) Regulations 2016 (AS/NZS 1249) — MBIE (`nz_childrens_nightwear_2016`) | Children's nightwear | pre_market; labelling_element (fire-hazard label) | → MF_warning_statements (scheme `nz_childrens_nightwear_2016`) | Ongoing | Unverified — organisation to confirm |
+
+### G.3 United States (US, with California noted)
+
+| Ref | Instrument / regulator | Applies to | Obligation | Required data elements → CDS field | Trigger / dates | Verification |
+|---|---|---|---|---|---|---|
+| G-US-1 | Textile Fiber Products Identification Act and 16 CFR Part 303; Wool Products Labeling Act and 16 CFR Part 300 — FTC (`us_ftc_textile_wool_labelling`) | Textile and wool apparel and household textiles | labelling_element (generic fibre names and percentages in order of predominance; country of origin; manufacturer or dealer identity by name or Registered Identification Number (RN)); restricted_content (fibre and origin claims in advertising, including online, must be consistent with the label) | → MF_fibre_composition (generic fibre names per 16 CFR 303.7), MF_country_of_origin, CMP_responsible_person (RN or name), claims per R031 | Ongoing | Verified 2026-09-20 (eCFR 16 CFR 303) |
+| G-US-2 | Care Labeling Rule, 16 CFR Part 423 — FTC (`us_ftc_care_labeling_423`) | Textile wearing apparel and certain piece goods | labelling_element (permanent care label with washing or dry-cleaning instructions and warnings; ASTM symbols permitted) | → MF_care_instructions with declared symbol set | Ongoing | Verified 2026-09-20 (eCFR 16 CFR 423) |
+| G-US-3 | Flammable Fabrics Act; 16 CFR 1610 (general wearing apparel), 16 CFR 1615 and 1616 (children's sleepwear sizes 0–6X and 7–14), 16 CFR 1632 and 1633 (mattresses) — CPSC (`us_cpsc_flammable_fabrics`) | Apparel, children's sleepwear, mattresses and mattress pads | pre_market (testing and certification); labelling_element (sleepwear: flame-resistant or snug-fitting labelling; mattresses: permanent label and manufacturer identification) | → CMP_compliance_declarations (scheme `us_cpsc_flammable_fabrics`, test evidence), MF_warning_statements (sleepwear "wear snug-fitting" hang tag where applicable) | Ongoing | Retrieved (not spot-verified) |
+| G-US-4 | STURDY Act; 16 CFR Part 1261 Safety Standard for Clothing Storage Units — CPSC (`us_cpsc_sturdy_16_cfr_1261`) | Clothing storage units (dressers, chests, armoires) ≥ 27 inches high manufactured after 1 September 2023 | pre_market (stability testing; certificate); labelling_element (permanent warning label and product identification; tip-over restraint supplied) | → CMP_compliance_declarations (scheme `us_cpsc_sturdy_16_cfr_1261`), MF_warning_statements, MF_anchor_kit_included | Products manufactured after 1 September 2023 | Verified 2026-09-20 (CPSC STURDY business guidance) |
+| G-US-5 | California Technical Bulletin 117-2013 (upholstered furniture flammability; label stating compliance and whether flame-retardant chemicals were added) and SB 1019 (Business and Professions Code 19094) — Bureau of Household Goods and Services (`us_ca_tb117_2013`) | Upholstered furniture sold in California (de facto national labelling) | labelling_element (TB 117-2013 compliance label with flame-retardant chemical statement) | → CMP_compliance_declarations (scheme `us_ca_tb117_2013`), MF_flame_retardant_added (boolean) | SB 1019 labels from 1 January 2015 | Retrieved (not spot-verified) |
+| G-US-6 | Proposition 65 (California) — OEHHA (`us_ca_prop65_warning`) | Apparel, jewellery (lead, cadmium), furniture (flame retardants, formaldehyde), garden chemicals | warning_statement; listing_element | Per CDS-1800 D-US-3 | Effective 1 January 2025 | Verified 2026-09-20 (CDS-1800 [E7]) |
+| G-US-7 | Consumer Product Safety Improvement Act (lead content and lead paint limits for children's products; children's jewellery); California Metal-Containing Jewelry Law (Health and Safety Code 25214.1–25214.4.2); 16 CFR 1500.19 for accessories with small parts — CPSC, DTSC | Children's jewellery and accessories; jewellery sold in California | restricted_content (content limits); pre_market (children's product certificate); documentation | → CMP_compliance_declarations, MF_metal_fineness and plating facts, CPC reference | Ongoing | Unverified — organisation to confirm current limits |
+| G-US-8 | Federal Seed Act (7 CFR 201), state seed laws, state noxious-weed lists; FIFRA (pesticide registration and labelling); state fertiliser registration laws — USDA, EPA, state departments | Seeds, pesticides, fertilisers | pre_market (registration per state and EPA registration number); labelling_element; restricted_content (state prohibited species; restricted-use pesticides) | → CMP_market_registrations (EPA Reg. No., state registrations), CMP_restricted_sale per state | Ongoing | Unverified — organisation to confirm |
+
+### G.4 European Union (EU)
+
+| Ref | Instrument / regulator | Applies to | Obligation | Required data elements → CDS field | Trigger / dates | Verification |
+|---|---|---|---|---|---|---|
+| G-EU-1 | Regulation (EU) No 1007/2011 on textile fibre names and related labelling and marking of the fibre composition of textile products (`eu_textile_labelling_1007_2011`) | Textile products (≥ 80% textile fibres by weight), including apparel, home textiles and upholstery covers | labelling_element (fibre composition using Annex I names in the official language of the member state; non-textile parts of animal origin stated); listing_element (Article 16: the fibre composition must be indicated in a clear, legible and uniform manner and, where products are offered for sale to the consumer, including by electronic means, the information must be visible before purchase) | → MF_fibre_composition (Annex I fibre names, percentages), MF_animal_material ("Contains non-textile parts of animal origin"), localisation per market, listing projection and verification (R061) | Ongoing | Verified 2026-09-20 (EUR-Lex consolidated text) |
+| G-EU-2 | Regulation (EU) 2023/988 General Product Safety Regulation (`eu_gpsr_2023_988`) | Apparel, footwear, jewellery, furniture, garden goods (non-harmonised) | listing_element; labelling_element; pre_market (responsible economic operator in the EU) | Per CDS-1800 D-EU-6 → CMP_responsible_person, CMP_product_identifier, MF_warning_statements, listing projection | Applies from 13 December 2024 | Verified 2026-09-20 (CDS-1800 [E13]) |
+| G-EU-3 | REACH Regulation (EC) No 1907/2006 Annex XVII entries 27 (nickel release from articles in prolonged skin contact), 23 (cadmium in jewellery), 63 (lead in jewellery), 43 (azo dyes in textiles), 72 (CMR substances in textiles and footwear) — ECHA (`eu_reach_annex_xvii_articles`) | Jewellery, accessories, textiles, footwear | restricted_content (substance limits); documentation (test evidence) | → CMP_compliance_declarations (scheme `eu_reach_annex_xvii_articles`, entries and evidence) | Ongoing; entry 72 applies since 1 November 2020 | Retrieved (not spot-verified) |
+| G-EU-4 | Directive 94/11/EC on the labelling of materials used in the main components of footwear (`eu_footwear_labelling_94_11`) | Footwear | labelling_element (material of upper, lining and sock, outer sole, by pictogram or text, at least on one shoe of each pair) | → MF_material_components (upper, lining, sole) with the directive's material categories (leather, coated leather, textile, other) | Ongoing | Unverified — organisation to confirm current status |
+| G-EU-5 | Regulation (EU) 2024/1781 ESPR (textiles and furniture are priority product groups; delegated acts pending; unsold-goods destruction disclosure and ban for apparel and footwear for large enterprises from 19 July 2026) (`eu_espr_2024_1781`) | Apparel, footwear, furniture (as delegated acts are adopted) | listing_element; documentation; post_market | Digital product passport identifiers and labels per delegated act → CMP_product_identifier, MED_technical_documents | Framework in force 18 July 2024; product-group acts not seeded | Verified 2026-09-20 (CDS-1800 [E15]) for the framework; textile act not seeded |
+| G-EU-6 | Regulation (EU) 2016/2031 plant health (plant passports for movement of plants for planting within the EU, including distance sales to final users); Regulation (EU) 2019/1009 (fertilising products; CE marking) and Regulation (EC) 1107/2009 (plant protection products; national authorisation) | Live plants, seeds, fertilisers, pesticides | pre_market (authorisation, plant passport); labelling_element; restricted_content (distance sales of plants require a plant passport) | → CMP_market_registrations, CMP_restricted_sale, MED_technical_documents (plant passport reference) | Plant health regulation applies since 14 December 2019 | Unverified — organisation to confirm |
+
+### G.5 United Kingdom (GB)
+
+| Ref | Instrument / regulator | Applies to | Obligation | Required data elements → CDS field | Trigger / dates | Verification |
+|---|---|---|---|---|---|---|
+| G-UK-1 | Textile Products (Labelling and Fibre Composition) Regulations 2012 (retaining Regulation 1007/2011 as assimilated law) — Trading Standards (`uk_textile_labelling_2012`) | Textile products | labelling_element; listing_element (fibre composition visible before purchase including online) | As G-EU-1 with English-language fibre names → MF_fibre_composition, listing projection | Ongoing | Retrieved 2026-09-20 (legislation.gov.uk) |
+| G-UK-2 | Furniture and Furnishings (Fire) (Safety) Regulations 1988 (as amended) — OPSS and Trading Standards (`uk_furniture_fire_safety_1988`) | Upholstered furniture, mattresses, cushions and other filled articles supplied in the UK | pre_market (fillings and covers meet the ignition tests); labelling_element (permanent label with the statutory wording and supplier identity; display label at point of sale — including online product pages by guidance) | → CMP_compliance_declarations (scheme `uk_furniture_fire_safety_1988`), MF_warning_statements (statutory label wording), CMP_responsible_person, listing projection | Ongoing (reform consultations continuing) | Retrieved 2026-09-20 (legislation.gov.uk) |
+| G-UK-3 | Hallmarking Act 1973 — assay offices and Trading Standards (`uk_hallmarking_act_1973`) | Articles described as gold, silver, platinum or palladium above the exemption weights | labelling_element (UK hallmark before sale and description); restricted_content (description of unhallmarked articles) | → MF_jewellery_metal, MF_metal_fineness, CMP_compliance_declarations (hallmark evidence), dealer's notice display | Ongoing | Unverified — organisation to confirm |
+| G-UK-4 | General Product Safety Regulations 2005; UK REACH Annex XVII (nickel, cadmium, lead, azo dyes) — OPSS, HSE | Apparel, footwear, jewellery, furniture, garden goods | restricted_content; labelling_element | As G-EU-2 and G-EU-3 with GB instruments | Ongoing | Unverified — organisation to confirm |
+| G-UK-5 | Plant Health (Official Controls and Miscellaneous Provisions) Regulations; UK plant passports; Plant Protection Products Regulations (GB) — Defra, APHA, HSE | Live plants, seeds, garden chemicals | pre_market; restricted_content | → CMP_market_registrations, CMP_restricted_sale | Ongoing | Unverified — organisation to confirm |
+
+### G.6 Canada (CA)
+
+| Ref | Instrument / regulator | Applies to | Obligation | Required data elements → CDS field | Trigger / dates | Verification |
+|---|---|---|---|---|---|---|
+| G-CA-1 | Textile Labelling Act and Textile Labelling and Advertising Regulations — Competition Bureau (`ca_textile_labelling_act`) | Consumer textile articles (apparel, household textiles, upholstery covers) | labelling_element (fibre content by generic name for fibres ≥ 5%, in English and French; dealer identity by name and postal address or CA identification number; country of origin for imports under the Customs Tariff marking rules); restricted_content (advertising representations) | → MF_fibre_composition (generic names, ≥ 5% rule), CMP_responsible_person (CA number), MF_country_of_origin, bilingual localisation per CDS-300 §18 | Ongoing | Verified 2026-09-20 (Competition Bureau guide to the Textile Labelling Act) |
+| G-CA-2 | Canada Consumer Product Safety Act — Textile Flammability Regulations; Children's Sleepwear Regulations; Children's Jewellery Regulations (lead and cadmium limits); Consumer Chemicals and Containers Regulations for garden chemicals — Health Canada (`ca_ccpsa_textiles_jewellery`) | Apparel and textiles, children's sleepwear, children's jewellery, consumer chemicals | pre_market (compliance testing); restricted_content (content limits); labelling_element (bilingual warnings) | → CMP_compliance_declarations, MF_warning_statements (EN and FR), CMP_restricted_sale | Ongoing | Unverified — organisation to confirm |
+| G-CA-3 | Pest Control Products Act (PMRA registration); Fertilizers Act; Seeds Act; Plant Protection Act — Health Canada, CFIA | Garden pesticides, fertilisers, seeds, live plants | pre_market (registration); labelling_element; restricted_content (import and movement conditions) | → CMP_market_registrations, CMP_restricted_sale | Ongoing | Unverified — organisation to confirm |
+
+### G.7 Other markets
+
+| Jurisdiction | Status | Note |
+|---|---|---|
+| Japan (JP), China (CN), Republic of Korea (KR), India (IN), Brazil (BR) and others | Not seeded | Textile labelling (for example the Japanese Household Goods Quality Labelling Act, China GB 5296.4, India's Legal Metrology packaged-commodity rules), hallmarking (India BIS) and furniture safety regimes differ; organisation supplies entries with local advice. |
+
+<div class="chapter"></div>
+
+# Commerce Data Standard (CDS)
+## CDS-1600 — Beauty, Health and Personal Care Industry Profile
+
+| Field | Value |
+|---|---|
+| Status | **v0.2 Review Draft** (working source; not an approved standard) |
+| Release | CDS v0.2 (single corpus release per ADR-D5); chapter added in the 2026-09-20 industry-profile expansion |
+| Date | 2026-09-20 |
+| Supersedes | Nothing — first edition. The Chapter 10 dictionary vocabularies (beauty skin types, hair types, scent families, formulations, makeup finishes) were shipped ahead of this profile and are bound here for the first time. |
+| Normative status | §1, §3, §5–§14, §19 and Appendix A are normative. §2 (pointer), §4, §15–§18, §20, §21 and Appendices B–D are informative; Appendix D seeds the jurisdiction requirement register whose record structure and obligations are normative in CDS-1500 §2.2. Every table is individually marked. |
+| Primary audience | Beauty and health merchandisers, regulatory and compliance owners, data stewards, PIM architects, catalogue managers, UX teams, developers and AI enrichment designers |
+| Depends on | CDS-000 through CDS-1500, especially CDS-200 (entity model), CDS-300 (namespaces, incl. CMP_), CDS-400 (dictionaries, units), CDS-500 (verification, preflight), CDS-600 (facets), CDS-700 (evidence classes, claims), CDS-900 (platform profiles), CDS-1500 (profile model, requirement levels, colour architecture, profile register, jurisdiction requirement register), CDS-1700 (allergen and nutrition rules for ingestible products), CDS-1900 (kits, bundles and dangerous-goods declarations) |
+| Companion package | CDS Reference Dictionary: Chapter 10 (Beauty & Personal Care), Chapter 1 (Colours), Chapter 19 (Jurisdictions & Regulatory Schemes); column contract per CDS-1500 Appendix E |
+| Profile identifier | `cds.profile.beauty_health.v0_2` (registered in CDS-1500 §2.1) |
+| Research basis | REVIEW-020 (global commerce vertical market research, 2026-09-20): Beauty & Fitness is the third-largest vertical across all Shopify stores worldwide (11.0%) and the second-largest across Shopify Plus stores worldwide (12.5%); Beauty and Health & Wellness show the highest Plus adoption rates of any vertical globally; beauty and personal care is a top-seven worldwide ecommerce revenue segment. |
+
+Terminology follows CDS-100. Attribute requirement levels (R, C, REC, O, N/A) are those of CDS-1500 §4 and are not restated here.
+
+---
+
+## 1. Purpose and Scope *(normative)*
+
+CDS-1600 defines the industry profile for products applied to, or taken into, the body: cosmetics and skincare, haircare, body and personal care, fragrance, colour cosmetics, sun care, oral care, grooming, and ingestible health products such as vitamins, supplements and complementary medicines. The profile also covers personal-care devices only where their product data is dominated by beauty attributes; devices dominated by technical specifications (hair dryers, electric toothbrushes, massage devices) apply CDS-1800 alongside this profile.
+
+The data shape this profile governs is distinctive: ordered ingredient lists with regulated naming; shade systems layered on the shared colour architecture; net quantities and pack sizes that define sellable units; suitability facts (skin type, hair type) that are frequently confused with benefit claims; ratings under declared regulatory schemes (SPF); and a dense layer of regulated identity, warnings and shelf-life information whose authority is the product's label artwork and product information file, not marketing copy. Every one of those regulated elements differs by jurisdiction, so this profile is the first to be seeded with a per-country requirement register (Appendix D).
+
+**CDS1600-R001** An implementation claiming the Beauty and Health Profile MUST represent ingredient lists, active ingredients, net quantities, regulatory identifiers, ratings and warnings as structured, typed attributes conforming to CDS-200 §7 and CDS-400 §18, never solely as free text or as content embedded in a description.
+
+**CDS1600-R002** An implementation claiming this profile MUST separate declared product facts (ingredients, quantities, suitability, ratings) from benefit, efficacy and ethical claims, and MUST govern every claim under the evidence model of CDS-700 §7 and the claim rules of §11.
+
+**CDS1600-R003** Ingestible health products (supplements, vitamins, complementary and listed medicines) MUST additionally apply the allergen declaration and nutrition-value rules of CDS-1700 §6–§7 as cited in §14.
+
+**CDS1600-R004** This profile MUST NOT weaken any rule of CDS-1500 that it reuses (colour architecture, requirement levels, dictionary binding, jurisdiction requirement register); where this chapter is silent, CDS-1500 and the core chapters govern.
+
+## 2. Profile Model *(informative pointer)*
+
+This profile applies the industry profile model of CDS-1500 §2 (Core → Industry Profile → Product Family → Category Profile), the attribute requirement levels of CDS-1500 §4 and the jurisdiction requirement register of CDS-1500 §2.2 without restatement. Its identifier and dictionary bindings are recorded in the industry profile register, CDS-1500 §2.1; its seeded jurisdiction entries are in Appendix D.
+
+## 3. Product Model *(normative)*
+
+A beauty product is a formulation or design offered in one or more sellable presentations. The Product is the formulation (the serum, the foundation line, the fragrance); Variants are the sellable presentations that differ by shade, net quantity, pack or dispenser.
+
+```
+Product: Radiance Serum                         (informative example)
+  Product scope:
+    CAT_product_type = face_serum
+    MF_product_form = serum                     # beauty_formulation dictionary
+    MF_ingredient_list = [aqua, glycerin, niacinamide, ...]   # ordered INCI list
+    MF_skin_type_suitability = [normal, combination, oily]
+    MF_period_after_opening_months = 12
+  Variant scope:
+    VAR_net_quantity = {value: 30, unit: millilitre}
+    VAR_pack_count = 1
+    STD_id / VAR_sku = SER-RAD-030
+```
+
+**CDS1600-R005** Shade, net quantity, pack count and dispenser or applicator type MUST be modelled at variant scope where they identify distinct sellable units (variant boundary rule: CDS-200 §5); formulation, ingredients, suitability and claims MUST remain at product scope unless the fact genuinely differs between variants.
+
+**CDS1600-R006** Where an ingredient list genuinely differs between shades of one product line (for example pigment-dependent colourants), the implementation MUST store the ingredient list at variant scope for the affected variants and MUST NOT publish the product-scope list as if it applied to every shade. *(Informative: several jurisdictions permit a range-level colourant list introduced by "may contain" or "+/−"; where that convention is used the implementation records the convention explicitly, see §5.)*
+
+**CDS1600-R007** Gift sets, discovery sets and value packs containing distinct formulations MUST be modelled as kits or bundles with component relationships per CDS-1900 §11, not as a single product whose ingredient list concatenates the components.
+
+**CDS1600-R008** Testers, samples and professional-size presentations MUST carry the same formulation identity as the retail product and MUST be distinguished by a governed presentation attribute (`MF_presentation_type`), never by a different ingredient list.
+
+## 4. Product Families and Category Profiles *(informative baseline; the inheritance rule of CDS1500-R016 applies)*
+
+| Product family / category | Required | Recommended | Typical variant options |
+|---|---|---|---|
+| Skincare (cleansers, serums, moisturisers, masks) | product form; ingredient list; net quantity; skin type suitability | key active ingredients; period after opening; scent family; texture | size |
+| Sun care (primary sunscreens) | SPF and rating scheme; broad-spectrum status; ingredient list; net quantity; regulatory identity per market | water-resistance duration; product form; skin type suitability | size |
+| Makeup — face | product form; shade (sellable colour); finish; ingredient list; net quantity | coverage; undertone; shade family; skin type suitability | shade, size |
+| Makeup — eyes, lips, nails | product form; shade; finish; ingredient list; net quantity | shade family; applicator type | shade |
+| Haircare (shampoo, conditioner, treatment, styling) | product form; ingredient list; net quantity; hair type suitability | scent family; period after opening | size |
+| Body and personal care (wash, lotion, deodorant, oral care) | product form; ingredient list; net quantity | scent family; skin type suitability; dangerous-goods status for aerosols | size, pack |
+| Fragrance | scent family; fragrance concentration; net quantity; ingredient list | fragrance notes (top/heart/base); dangerous-goods status | size |
+| Grooming (shaving, beard care) | product form; ingredient list; net quantity | skin type suitability; scent family | size, pack |
+| Supplements and listed medicines (§14) | dosage form; active ingredients with quantity per dose; pack quantity; directions; warnings; regulatory identity per market | allergen declarations; nutrition or supplement facts; storage conditions | pack size, flavour |
+| Beauty tools and devices | material; dimensions | power source (CDS-1800) | colour |
+
+## 5. Ingredients *(normative; seed guidance informative)*
+
+Ingredient information is regulated content whose authority is the product's label and product information file. The profile stores it as an ordered, structured list so that it can be validated, searched, projected and compared, and so that free-from statements can be checked mechanically.
+
+| Field | Meaning | Type |
+|---|---|---|
+| MF_ingredient_list | Ordered list of ingredient names as declared on the label | Ordered list of ingredient entries (name, optional canonical ingredient reference, optional function, optional percentage) |
+| MF_ingredient_naming_scheme | The naming convention the list follows | Governed value: `inci`, `english_common`, `aan` (Australian Approved Name), `chemical_name`, `mixed_as_labelled` |
+| MF_ingredient_order_basis | The ordering rule the label applies | Governed value: `descending_by_mass_or_volume`, `descending_over_one_percent_then_any_order` |
+| MF_range_colourant_convention | Whether colourants are listed per shade or for the whole range | Governed value: `per_shade`, `range_may_contain` |
+| MF_active_ingredients | Active or key ingredients with quantities | Structured list (canonical ingredient, quantity as typed measurement or percentage, unit basis) |
+| MF_fragrance_disclosure | How fragrance is declared | Governed value: `parfum_placeholder`, `components_listed`, `fragrance_free` |
+| CMP_fragrance_allergen_declarations | Declared fragrance allergens under a named jurisdiction list | List of (allergen name, regulatory scheme) |
+| MF_nanomaterial_ingredients | Ingredients present as nanomaterials, where a jurisdiction requires "nano" marking | List of ingredient references |
+
+**CDS1600-R009** `MF_ingredient_list` MUST be stored as an ordered list whose order is declared significant in the Attribute Definition (CDS400-R040) and MUST preserve the label order; an implementation MUST NOT re-sort, de-duplicate or "clean" the list without a governed change carrying label evidence.
+
+**CDS1600-R010** The ingredient naming scheme and ordering basis MUST be declared per product (or inherited from a category profile) so that a consumer of the data can interpret the list; a list without a declared scheme MUST NOT satisfy an R-level ingredient requirement.
+
+**CDS1600-R011** Active ingredients MUST carry a numeric quantity with a declared unit or percentage basis (CDS400-R056) wherever the label declares one; a textual strength such as "high strength" MUST NOT be stored as the quantity.
+
+**CDS1600-R012** Ingredient names MAY be linked to a governed ingredient dictionary for search and facet projection, but the label-declared spelling MUST be preserved as the source value with provenance (CDS400-R006, R014).
+
+**CDS1600-R013** An ingredient list captured by extraction from label artwork or packaging images (evidence class E2 or E3 per CDS-700 §7) MUST be reviewed by a human before acceptance, regardless of confidence (CDS-700 §19).
+
+*Informative — ordering conventions across the seeded jurisdictions.* Australia (Consumer Goods (Cosmetics) Information Standard 2020), New Zealand (Cosmetic Products Group Standard 2020), the United States (21 CFR 701.3), the EU (Regulation (EC) 1223/2009 Article 19) and Canada (Cosmetic Regulations) all require descending order by mass, volume or predominance, all permit ingredients under 1% in any order after those above 1%, and all permit colour additives to be listed last. Naming differs: Canada mandates INCI names; Australia and New Zealand accept INCI or English names; the EU uses the common ingredient glossary and requires "nano" in brackets for nanomaterials; the US uses the names established by regulation. The two declared fields above let a PIM record which convention a given label followed rather than guessing; Appendix D records the per-jurisdiction rule with its verification date.
+
+## 6. Product Form, Finish and Scent *(normative; dictionary bindings informative until adopted)*
+
+| Attribute | Dictionary (Chapter 10 unless stated) | Scope |
+|---|---|---|
+| MF_product_form | `beauty_formulation` (cream, serum, gel, mist, foam, powder, stick, bar, sheet mask, …) | Product |
+| MF_makeup_finish | `beauty_makeup_finish` (matte, dewy, satin, shimmer, glossy, natural) | Product |
+| MF_scent_family | `beauty_scent_family` (floral, citrus, woody, amber, …) | Product |
+| MF_fragrance_concentration | `fragrance_concentration` (parfum, eau de parfum, eau de toilette, eau de cologne, eau fraîche, body mist) — new in package 0.8.0 | Product |
+| MF_fragrance_notes | Structured top/heart/base note lists (organisation-governed vocabulary) | Product |
+
+**CDS1600-R014** Product form MUST be a governed dictionary value distinct from the product's classification; "serum" as a form and "face serum" as a product type are related but separately governed facts (classification rules: CDS-200 §6).
+
+**CDS1600-R015** Fragrance concentration MUST be a governed value and MUST NOT be inferred from price, size or marketing tier; where the manufacturer declares no concentration the attribute is unknown, not "eau de toilette".
+
+**CDS1600-R016** Scent family and fragrance notes are merchandising descriptors and MUST NOT be presented as ingredient disclosure.
+
+## 7. Suitability: Skin Type, Hair Type and Audience *(normative)*
+
+Suitability values state which skin or hair conditions a product is presented for. They are manufacturer-declared facts about intended use, not efficacy claims, and the package deliberately excludes benefit and age-state terms (anti-ageing, hypoallergenic, mature) from these vocabularies.
+
+**CDS1600-R017** `MF_skin_type_suitability` and `MF_hair_type_suitability` MUST be multi-value attributes bound to the governed `beauty_skin_type` and `beauty_hair_type` dictionaries, with a declared maximum value count per product (the CDS1500-R029 pattern), and MUST derive from manufacturer or brand declarations (evidence class E1 or E2), never from model inference over marketing copy.
+
+**CDS1600-R018** A suitability value MUST NOT be projected to a customer facet as a benefit ("treats dry skin"); the facet label MUST express intended use ("for dry skin").
+
+**CDS1600-R019** Audience attributes (target gender, age group) MUST be governed values where a channel requires them and MUST NOT be inferred from scent family, colour or packaging.
+
+## 8. Shades and Colour *(normative)*
+
+Colour cosmetics apply the CDS-1500 §7 colour architecture: the sellable shade is a canonical colour value at variant scope, the shade name is its Display Label, and the customer filter uses the governed colour-family facet. Two beauty-specific additions are required: a deterministic shade order within a range, and an optional undertone dimension.
+
+```
+Variant: Foundation, shade "Warm Sand 3.5"     (informative example)
+  VAR_colour            = colour_warm_sand_3_5       # canonical shade value_id
+  MF_colour_display     = Warm Sand 3.5              # Display Label
+  MF_colour_facet       = beige                      # governed family facet
+  VAR_shade_sort_key    = 035                        # deterministic order in the range
+  MF_undertone          = warm                       # optional: warm / cool / neutral / olive
+  MF_shade_range_id     = range_foundation_2026      # the range the shade belongs to
+```
+
+**CDS1600-R020** Shades MUST be canonical colour values with stable `value_id`s (CDS400-R009); a brand shade name is a Display Label linked to the canonical value (CDS400-R022) and MUST NOT be the only identity of the shade.
+
+**CDS1600-R021** Shades within a range MUST carry a sort key or an equivalent declared ordering mechanism so that storefronts and channels present the range in the brand's intended order rather than alphabetically (the CDS1500-R027 pattern).
+
+**CDS1600-R022** Undertone, where used, MUST be a governed single-value attribute separate from the colour family facet; it MUST NOT be encoded in the shade name alone.
+
+**CDS1600-R023** Swatch imagery and digital colour values follow CDS400-R061: they MAY be stored but MUST NOT be represented as an exact match of the product on skin.
+
+**CDS1600-R024** A shade discontinued from a range MUST follow dictionary deprecation (CDS400-R080) with a replacement pointer where a successor shade exists, so that historical orders, reviews and analytics remain interpretable.
+
+## 9. Quantity, Pack and Dosage *(normative)*
+
+**CDS1600-R025** Net quantity MUST be a typed measurement with a declared unit (millilitre, gram, or count for unit-dose products) per CDS400-R056, stored at variant scope, and MUST NOT be embedded only in the title or variant label.
+
+**CDS1600-R026** Pack count (number of identical units in the sellable pack) MUST be an integer attribute separate from net quantity per unit; a "3 × 50 ml" presentation is `VAR_pack_count = 3` and `VAR_net_quantity = 50 ml`, never a net quantity of "150 ml" alone.
+
+**CDS1600-R027** Unit-pricing base measures required by a channel or jurisdiction MUST be derived from the typed net quantity and pack count, never authored independently.
+
+**CDS1600-R028** Supplements MUST record serving size, servings per container and the dosage form as typed values (§14).
+
+## 10. Sun Protection and Declared Ratings *(normative)*
+
+Sun protection factor (SPF) is a tested rating under a declared scheme, and in some jurisdictions a primary sunscreen is a regulated therapeutic good or an over-the-counter drug. The profile treats the rating value, the scheme and the regulatory status as three separate governed facts.
+
+| Field | Meaning | Type |
+|---|---|---|
+| MF_spf_value | Declared SPF as labelled | Integer (with optional "+" flag for capped labels such as "50+") |
+| MF_spf_rating_scheme | The standard the rating was determined under | Governed value: `as_nzs_2604`, `iso_24444`, `fda_sunscreen_monograph`, `other_declared` |
+| MF_broad_spectrum | Broad-spectrum (UVA) protection status as labelled | Boolean with scheme reference |
+| MF_water_resistance_minutes | Labelled water-resistance duration | Integer minutes, or null |
+| CMP_regulatory_scheme / CMP_regulatory_id | Regulatory identity per market (§12) | Governed scheme code plus identifier |
+
+**CDS1600-R029** SPF MUST be stored as a numeric value plus a declared rating scheme; a value without a scheme MUST NOT satisfy an R-level requirement, and the scheme MUST NOT be assumed from the target market.
+
+**CDS1600-R030** A sun-protection claim in a title, description or facet MUST be derived from `MF_spf_value` and its evidence; an implementation MUST NOT accept an SPF value whose evidence class is below E2 (CDS-700 §7).
+
+**CDS1600-R031** Where a jurisdiction in the organisation's register classifies a sunscreen as a therapeutic good or drug, the regulatory identifier and any mandated label elements for that market (§12, Appendix D) MUST be present before publication to that market; publication preflight (CDS-500 §8) MUST block a therapeutic sunscreen lacking them.
+
+*Informative.* In Australia primary sunscreens are therapeutic goods regulated by the Therapeutic Goods Administration and carry an AUST L or AUST R number, active-ingredient names and proportions, batch and expiry information and storage conditions; secondary sunscreens may be cosmetics subject to conditions. In New Zealand the Cosmetic Products Group Standard allows a primary sunscreen to be labelled to the Australian Therapeutic Goods Order. In the United States a sunscreen is an over-the-counter drug whose active ingredients are declared in a Drug Facts panel before the cosmetic ingredients. In the EU and UK sunscreens are cosmetics. A retailer selling into several markets therefore records the scheme and identifier per market rather than one global value (Appendix D).
+
+## 11. Claims, Certifications and Free-From Statements *(normative)*
+
+Benefit claims ("reduces the appearance of wrinkles"), ethical claims ("cruelty-free", "vegan"), sustainability claims ("natural", "organic"), and free-from statements ("paraben-free") are the highest-risk content in this vertical. This section applies the corpus claim pattern established for apparel (CDS1500-R025, R031–R032) with beauty-specific mechanics.
+
+| Attribute | Structure | Requirement guidance |
+|---|---|---|
+| MF_claims | List of claim records: claim type (governed), claim text as labelled, evidence reference and class, scope (product or component), jurisdictions in which the claim is published, approving owner, effective/expiry dates | C — required whenever a claim is published |
+| MF_certifications | List of certification records: scheme, certifier, certificate identifier, scope, expiry | C — required when a certification is displayed |
+| MF_free_from_statements | List of governed free-from statement records naming the excluded ingredient class | C |
+| MF_natural_origin_percent / MF_organic_content_percent | Numeric, component-aware | C — required when a quantified natural or organic claim is made |
+
+**CDS1600-R032** Every published claim MUST exist as a claim record with an evidence reference of class E1 or E2 (CDS-700 §7); a claim MUST NOT be created or accepted from supplier or brand marketing copy alone (CDS400-R066 pattern).
+
+**CDS1600-R033** A free-from statement naming an ingredient or ingredient class MUST fail validation when the named ingredient (or a governed member of the named class) appears in `MF_ingredient_list` or in the variant-scope ingredient list of any variant the statement covers. The validation error MUST be classified as conflicting (CDS200-R035) and MUST block publication of the statement.
+
+**CDS1600-R034** Certification-backed claims (cruelty-free, vegan, organic, halal and comparable schemes) MUST reference the certifying body and certificate scope; expiry of the certificate MUST withdraw the claim projection without altering any product fact (the CDS1500-R032 pattern).
+
+**CDS1600-R035** Benefit and efficacy claims MUST NOT be projected as customer facets unless the organisation declares a claim-driven facet with a documented evidence threshold in its facet governance record (CDS1500-R049); such a facet MUST be fed only by accepted claim records.
+
+**CDS1600-R036** Therapeutic and health claims for ingestible products (§14) MUST be restricted to indications permitted under the applicable regulatory scheme of each market in which they are published and MUST carry the scheme reference in the claim record; a claim record MUST declare the jurisdictions it is published in so that preflight can evaluate it per market.
+
+**CDS1600-R037** AI MAY extract candidate claim language from packaging or copy, but a claim record MUST NOT be accepted at any autonomy level above suggest-only without human review (CDS-700 §5, §19); absence of evidence MUST NOT become a claim (CDS700-R018).
+
+## 12. Regulatory Identity, Responsible Person, Shelf Life, Batch and Expiry *(normative)*
+
+Regulatory identity is a per-market fact. The profile stores it as governed records keyed by jurisdiction and scheme, drawing scheme codes from the `regulatory_scheme` dictionary (package Chapter 19) and evaluating obligations through the jurisdiction requirement register (CDS-1500 §2.2; seed in Appendix D).
+
+| Field | Meaning | Scope |
+|---|---|---|
+| CMP_market_registrations | List of records: jurisdiction, regulatory scheme (governed), identifier (e.g. AUST L number, product listing reference), status (registered / listed / notified / exempt / out_of_scope), effective dates, evidence | Product (one record per market) |
+| CMP_responsible_person | The responsible person, sponsor or importer of record for the market, with the address that the market requires on the label or listing | Product (per market) |
+| MF_period_after_opening_months | Period after opening as labelled | Product |
+| MF_minimum_durability_policy | Whether the product carries a date of minimum durability or a period-after-opening symbol | Product |
+| MF_shelf_life_days | Shelf life from manufacture, where declared | Product |
+| CMP_country_of_origin | Country of origin (required on the label or listing by several markets) | Product |
+
+**CDS1600-R038** Regulatory scheme and identifier MUST be stored per target market as governed records, never as a single global free-text "registration" field; an implementation MUST be able to answer, for a given market, whether the product is registered, listed, notified, exempt or out of scope, and publication preflight for that market MUST evaluate the answer against the register (CDS1500-R057).
+
+**CDS1600-R039** Batch (lot) numbers and expiry dates are lot-level facts. An implementation MUST NOT store a single batch number or expiry date as a canonical product or variant attribute unless it declares a lot-per-variant model; lot-level dates are observed from the inventory or warehouse authority (CDS-200 §13) and MAY be published as channel fields with their authority declared.
+
+**CDS1600-R040** Period after opening and minimum durability policy MUST be typed values; a storefront or channel MUST NOT display a computed expiry as a product fact where only a period after opening is known.
+
+**CDS1600-R041** Withdrawal, recall or regulatory suspension of a product in a market MUST be expressed through lifecycle state and channel withdrawal (CDS-500 §12), never by deleting the product record.
+
+**CDS1600-R042** The responsible person or sponsor of record MUST be a governed per-market attribute; where a market requires that person's name and address on the listing or packaging (Appendix D), the channel projection for that market MUST include it and verification MUST cover it.
+
+## 13. Safety, Warnings and Handling *(normative)*
+
+**CDS1600-R043** Warnings, directions for use and precautionary statements required by a jurisdiction MUST be stored as structured, governed statement records (statement type, text as labelled, jurisdiction, mandating scheme) rather than only within description prose, so that channel projection and verification can confirm their presence per market.
+
+**CDS1600-R044** Products that are dangerous goods for transport (aerosols, alcohol-based fragrances and sanitisers, certain nail products) MUST carry a dangerous-goods declaration per CDS-1900 §12 before publication to a channel or carrier that requires it; the declaration MUST NOT be inferred from category alone.
+
+**CDS1600-R045** Age or purchase restrictions applicable in a market MUST be governed attributes evaluated at publication preflight for that market.
+
+## 14. Ingestible Health Products: Supplements and Listed Medicines *(normative)*
+
+Vitamins, minerals, herbal and nutritional supplements and complementary medicines share the ingredient, claim and regulatory pattern of cosmetics but add dosage, allergen and nutrition-panel obligations. The profile homes them here and cites CDS-1700 for the allergen and nutrition mechanics.
+
+| Field | Meaning | Type |
+|---|---|---|
+| MF_dosage_form | Tablet, capsule, softgel, powder, liquid, gummy, effervescent, … | Governed value (organisation-governed; a starter vocabulary is a candidate for package 0.9) |
+| MF_active_ingredients | Active or medicinal ingredients with quantity per dose unit | Structured list (§5) |
+| MF_serving_size / MF_servings_per_container | Dose definition | Typed |
+| MF_directions | Directions for use as labelled | Structured statement records |
+| CMP_allergen_declarations | Allergen declarations | Per CDS-1700 §6 |
+| MF_nutrition_values | Nutrition or supplement-facts values | Per CDS-1700 §7 with scheme `supplement_facts` or `nutrition_information_panel` |
+| CMP_market_registrations | Listing, licence or registration per market | §12 |
+
+**CDS1600-R046** Active ingredients MUST be stored with quantity per dose unit as typed measurements; "one-a-day" or "high potency" MUST NOT stand in for quantities.
+
+**CDS1600-R047** Allergen declarations and nutrition values for ingestible products MUST conform to CDS-1700 §6 and §7 respectively, including the distinction between "contains" and precautionary "may contain" declarations and the per-100 versus per-serving basis.
+
+**CDS1600-R048** Indications and health claims MUST reference the permitted-indication or claim scheme of the target market in the claim record (§11), and publication preflight MUST block an indication not permitted under the declared scheme for that market.
+
+**CDS1600-R049** Ingestible products MUST carry storage conditions (CDS-1700 §10 dictionary `storage_condition`) and mandatory warning statements (§13) before publication.
+
+## 15. Customer Facet Design *(informative — normative facet rules live in CDS-600)*
+
+| Facet | Recommended baseline behaviour | Anti-pattern |
+|---|---|---|
+| Product form | Governed formulation vocabulary; category-aware (serum is meaningless in fragrance) | Free-text "type" from supplier feeds |
+| Skin / hair type | Suitability vocabulary, multi-select OR | Benefit language as facet labels |
+| Shade family | Colour-family facet from CDS-1500 Appendix C; swatch plus text label (CDS600-R036) | Every shade name as a checkbox |
+| Finish | Makeup finish vocabulary in colour-cosmetics contexts only | Finish exposed on skincare |
+| Scent family | Small governed list | Note-level lists of hundreds of ingredients |
+| SPF | Numeric range facet (15+, 30+, 50+) derived from `MF_spf_value` | Marketing tiers |
+| Size | Net-quantity ranges with unit context | Mixed ml and g in one list |
+| Claims | Only claim-driven facets with declared evidence thresholds (R035) | "Clean", "natural", "hypoallergenic" as tags |
+
+Fragmentation and coverage thresholds, zero-result handling and accessibility follow CDS-600 §10, §17 and §24.
+
+## 16. Channel Projection Guidance *(informative — normative rules: CDS-500, CDS-900)*
+
+| Canonical concept | Metafield-style channel (informative) | Feed-style channel (informative) |
+|---|---|---|
+| Product form, skin type, scent | Category or custom metafields; storefront filters | Descriptive fields where supported, otherwise `product_detail` |
+| Shade | Variant option with linked colour entry (display label); family facet as filter metafield | `color` = landing-page shade name (CDS-900 §5.2 rule); family never published to `color` |
+| Net quantity, pack count | Typed metafields; variant title composition per declared title policy (CDS-700 §12) | `unit_pricing_measure` / `unit_pricing_base_measure` where required; `multipack` for identical-unit packs |
+| Ingredient list | Rich-text or list metafield generated from the structured list; never hand-edited downstream | Not a standard feed field; carried in description where policy allows |
+| SPF, regulatory identifiers, responsible person | Custom metafields; verified by read-back; per-market listing text generated from the register | Description or `product_detail`; regulatory identifiers where the channel requires them |
+| Claims and certifications | Only accepted claim records project; expiry withdraws the projection | Certification attributes where the channel defines them |
+| Warnings mandated for a market | Generated statement block per market, verified by read-back | Description block per market |
+
+Which layer feeds each channel is declared per attribute in the Attribute Definition (CDS200-R026). Unit-pricing and multipack attributes are required by some feed channels in specific countries; the dated requirements live in the CDS-900 platform profiles and are verified there, not here.
+
+## 17. AI Enrichment and Review *(informative — normative AI rules live in CDS-700)*
+
+| Task | AI may propose | Deterministic or human control |
+|---|---|---|
+| Ingredient extraction from label images | Ordered candidate list with per-entry confidence | Mandatory human review (R013); order preserved; naming scheme declared |
+| Shade family mapping | Family candidate from swatch and shade name | Dictionary validation; split-shade intake per CDS1500-R020 |
+| Suitability values | Candidates only from brand declarations (E1/E2) | Declared maxima; merchandising approval |
+| Claim language | Candidate claim records flagged "evidence required" | Never accepted without evidence and human review (R037) |
+| SPF and ratings | Parsed value and scheme from label | Scheme validation; evidence class check (R030) |
+| Free-from validation | None — deterministic | Mechanical conflict check (R033) |
+| Market obligation gaps | Candidate list of register entries a product may trigger | Register evaluation is deterministic; AI never marks an obligation satisfied |
+
+AI never manufactures ingredient lists, quantities, ratings, regulatory identifiers or certifications; abstention is a first-class outcome (CDS-700 §17).
+
+## 18. Governance and Organisational Extensions *(informative — rules in CDS-1500 §23 and CDS-800)*
+
+Organisations extend the Chapter 10 vocabularies, add ingredient dictionaries and fragrance-note vocabularies, and declare claim-evidence thresholds under the same rules as any dictionary (CDS1500-R047–R051). The jurisdiction requirement register is maintained per market under CDS-1500 §2.2 with the review cadence declared under CDS-800 §30; the Appendix D seed is a starting point, not a substitute for the organisation's own regulatory advice.
+
+## 19. Conformance Requirements *(normative — claims and levels per CDS-1000)*
+
+**CDS1600-R050** An implementation claiming the CDS Beauty and Health Profile MUST: store ingredient lists as ordered structured lists with declared naming scheme and ordering basis (R009–R010); store active-ingredient quantities, net quantities, pack counts and SPF as typed values with declared units or schemes (R011, R025–R026, R029); apply the CDS-1500 colour architecture to shades with deterministic shade ordering (R020–R021); govern suitability values from manufacturer declarations (R017); govern every claim, certification and free-from statement as an evidence-bearing record with the mechanical free-from conflict check (R032–R035); store regulatory identity and responsible person per market and keep lot-level facts out of canonical product data (R038–R039, R042); maintain and evaluate a jurisdiction requirement register for every market published to (CDS-1500 §2.2); apply category-specific requirements per CDS1500-R009; and publish and verify channel representations under CDS-500.
+
+**CDS1600-R051** An implementation whose scope includes ingestible health products MUST additionally satisfy R046–R049 and the cited CDS-1700 allergen and nutrition rules; a Beauty and Health Profile claim MUST state whether ingestible products are in scope and which jurisdictions its register covers.
+
+## 20. Worked Product Examples *(informative)*
+
+### 20.1 Foundation shade range
+
+```
+CAT_family = beauty
+CAT_product_type = liquid_foundation
+MF_product_form = liquid
+MF_makeup_finish = satin
+MF_ingredient_naming_scheme = inci
+MF_ingredient_order_basis = descending_over_one_percent_then_any_order
+MF_range_colourant_convention = range_may_contain
+MF_ingredient_list = [aqua, cyclopentasiloxane, glycerin, ..., "+/- ci_77891", "+/- ci_77491"]
+MF_skin_type_suitability = [normal, combination]
+MF_shade_range_id = range_foundation_2026
+
+Variant (VAR_sku = FND-WS35):
+  VAR_colour = colour_warm_sand_3_5      # canonical shade
+  VAR_shade_sort_key = 035
+  MF_undertone = warm
+  VAR_net_quantity = {value: 30, unit: millilitre}
+
+Market registrations:
+  {jurisdiction: EU, scheme: eu_cpnp_notification, id: <reference>, status: notified}
+  {jurisdiction: GB, scheme: uk_scpn_notification, id: <reference>, status: notified}
+  {jurisdiction: US, scheme: us_mocra_product_listing, id: <listing>, status: listed}
+  {jurisdiction: CA, scheme: ca_cosmetic_notification, id: <CNF>, status: notified}
+  {jurisdiction: AU, scheme: au_cosmetics_information_standard_2020, status: in_scope_no_registration}
+
+Projections:
+  MF_colour_display = Warm Sand 3.5
+  MF_colour_facet = beige
+  CH_google_color = Warm Sand 3.5           # landing-page shade name (CDS-900 §5.2)
+  QA_shopify_colour = MATCH
+```
+
+### 20.2 SPF 50+ sunscreen sold in Australia and the United States
+
+```
+CAT_product_type = sunscreen_lotion
+MF_spf_value = 50 (capped_label_plus = true)
+MF_spf_rating_scheme = as_nzs_2604              # AU/NZ testing scheme
+MF_broad_spectrum = true
+MF_water_resistance_minutes = 240
+MF_active_ingredients = [{ingredient: zinc_oxide, quantity: 22, basis: percent_w_w}]
+CMP_market_registrations =
+  [{jurisdiction: AU, scheme: au_artg_listed, id: "AUST L 000000", status: listed},   # placeholder id
+   {jurisdiction: US, scheme: us_fda_otc_drug, status: in_scope, evidence: drug_facts_panel}]
+CMP_dangerous_goods = not_regulated            # lotion; an aerosol would declare per CDS-1900 §12
+VAR_net_quantity = {value: 200, unit: millilitre}
+Preflight (AU): ARTG identifier present, TGO 92 label elements present -> publication permitted (R031)
+Preflight (US): Drug Facts active-ingredient block present -> publication permitted
+```
+
+### 20.3 Vitamin D supplement
+
+```
+CAT_product_type = vitamin_supplement
+MF_dosage_form = capsule
+MF_active_ingredients = [{ingredient: colecalciferol, quantity: 25, unit: microgram, per: capsule}]
+MF_serving_size = 1 capsule; MF_servings_per_container = 90
+CMP_allergen_declarations = [{allergen: soy, declaration: contains}]      # per CDS-1700 §6
+MF_storage_condition = store_below_25c                                     # CDS-1700 §10 dictionary
+CMP_market_registrations = [{jurisdiction: AU, scheme: au_artg_listed, id: "AUST L 000001", status: listed},
+                            {jurisdiction: CA, scheme: ca_nhp_product_licence, id: "NPN 00000000", status: licensed}]
+MF_claims = [{type: health_indication, text: "Supports bone health", scheme: au_permitted_indications,
+              jurisdictions: [AU], evidence: E1 sponsor evidence file, owner: regulatory_owner, status: accepted}]
+```
+
+## 21. Reference Validation Cases *(informative — the profile's contribution to the cross-industry validation set, REVIEW-020)*
+
+A test dataset supporting a claim of this profile should include, in addition to the CDS-1000 Appendix B negative cases:
+
+- a product whose ingredient list differs by shade (R006);
+- a free-from statement that conflicts with the ingredient list and must be blocked (R033);
+- a shade range whose brand order differs from alphabetical order (R021);
+- a "3 × 50 ml" pack that must not collapse to "150 ml" (R026);
+- an SPF value supplied without a scheme, which must not satisfy an R-level requirement (R029);
+- a certification whose expiry must withdraw the claim projection without a product edit (R034);
+- a therapeutic sunscreen lacking a market regulatory identifier, which preflight must block for that market while permitting publication to a market where it is a cosmetic (R031, R038);
+- a supplier feed carrying a batch number in a product field, which must be quarantined rather than stored canonically (R039);
+- a product published to the EU after 31 July 2026 whose fragrance allergen declarations follow the pre-2026 list, which the register must flag (Appendix D, D-EU-2).
+
+---
+
+## Appendix A. Beauty and Health Attribute Baseline *(normative — dictionary bindings per CDS1500-R011)*
+
+| Field | Scope | Type | Baseline requirement |
+|---|---|---|---|
+| CAT_product_type | Product | Governed classification reference | R |
+| MF_product_form | Product | Governed dictionary reference (`beauty_formulation`) | R for skincare, haircare, body, makeup; N/A for tools |
+| MF_ingredient_list | Product (variant where R006 applies) | Ordered structured list | R for formulated products |
+| MF_ingredient_naming_scheme / MF_ingredient_order_basis | Product | Governed values | R where an ingredient list is R |
+| MF_active_ingredients | Product | Structured list with typed quantities | C — R for sunscreens and ingestibles |
+| VAR_colour (shade) | Variant | Canonical value_id (colour dictionary) | C — R for colour cosmetics |
+| MF_colour_facet | Product/Variant | Derived facet value | R where shade is R (derived) |
+| VAR_shade_sort_key | Variant | Sort key | R where shade is R |
+| MF_undertone | Variant | Governed value | O |
+| MF_makeup_finish | Product | Governed dictionary reference | REC for colour cosmetics |
+| MF_skin_type_suitability / MF_hair_type_suitability | Product | Governed dictionary list with declared maximum | REC |
+| MF_scent_family | Product | Governed dictionary reference | REC for fragrance and scented products |
+| MF_fragrance_concentration | Product | Governed dictionary reference | R for fragrance |
+| VAR_net_quantity | Variant | Typed measurement | R |
+| VAR_pack_count | Variant | Integer | C — R for multi-unit packs |
+| MF_spf_value / MF_spf_rating_scheme / MF_broad_spectrum | Product | Typed value, governed scheme, boolean | R for sun-care products |
+| MF_claims / MF_certifications / MF_free_from_statements | Product | Structured records with evidence | C |
+| CMP_market_registrations | Product (per market) | Governed records (`regulatory_scheme` dictionary) | C — R where a market regulates the product |
+| CMP_responsible_person | Product (per market) | Governed record | C — R where a market requires it on the label or listing |
+| CMP_country_of_origin | Product | Governed country reference | C |
+| MF_period_after_opening_months / MF_minimum_durability_policy | Product | Integer / governed value | REC; R where a market mandates one of them |
+| MF_warning_statements | Product | Structured statement records | C — R where a jurisdiction mandates warnings |
+| CMP_dangerous_goods | Product/Variant | Declaration record per CDS-1900 §12 | C |
+| MF_dosage_form / MF_serving_size / MF_servings_per_container | Product/Variant | Governed value and typed values | R for ingestibles |
+| CMP_allergen_declarations / MF_nutrition_values | Product | Per CDS-1700 §6–§7 | R for ingestibles where labelling requires them |
+
+## Appendix B. Dictionary Bindings *(informative — becomes governed data on adoption per CDS1500-R011)*
+
+| Dictionary key | Package chapter | Bound attribute(s) | Status at 0.8.0 |
+|---|---|---|---|
+| beauty_formulation | 10 | MF_product_form | Bound by this profile |
+| beauty_makeup_finish | 10 | MF_makeup_finish | Bound |
+| beauty_scent_family | 10 | MF_scent_family | Bound |
+| beauty_skin_type / beauty_hair_type | 10 | MF_skin_type_suitability / MF_hair_type_suitability | Bound |
+| fragrance_concentration | 10 (new, 0.8.0) | MF_fragrance_concentration | Bound |
+| colour / colour_facet | 1 | VAR_colour, MF_colour_facet | Bound via CDS-1500 §7 |
+| jurisdiction / regulatory_scheme | 19 (new, 0.8.0) | CMP_market_registrations, claim and warning records | Bound via CDS-1500 §2.2 |
+| allergen / allergen_facet / storage_condition | 17 (new, 0.8.0) | CMP_allergen_declarations, MF_storage_condition (ingestibles) | Bound via CDS-1700 |
+| dangerous_goods_class | 18 (new, 0.8.0) | CMP_dangerous_goods | Bound via CDS-1900 §12 |
+
+Deliberately not shipped: ingredient dictionaries (organisations adopt an INCI-based source under their own governance), benefit and ethical claim vocabularies (evidence-gated claim types are organisation-declared), dosage forms (candidate for package 0.9 after profile use).
+
+## Appendix C. References *(informative; retrieved 2026-09-20 unless stated)*
+
+| Ref | Source | Location | Use in this chapter |
+|---|---|---|---|
+| [B1] | ACCC Product Safety — Cosmetics ingredients labelling mandatory standard (Consumer Goods (Cosmetics) Information Standard 2020) | productsafety.gov.au/business/search-mandatory-standards/cosmetics-ingredients-labelling-mandatory-standard | Ingredient ordering and naming conventions (§5, D-AU-1) |
+| [B2] | Federal Register of Legislation — Consumer Goods (Cosmetics) Information Standard 2020 | legislation.gov.au/F2020L01469 | Ordering alternatives; flavour and fragrance declaration (§5) |
+| [B3] | AICIS — Personal care, skincare, make-up and other cosmetic products (2025-02-07) | industrialchemicals.gov.au/cosmetics-and-soap | Business registration and ingredient categorisation (D-AU-2) |
+| [B4] | Therapeutic Goods Administration — Australian regulatory guidelines for sunscreens (v1.2, 2019); Labelling medicines to comply with TGO 91 and TGO 92 (March 2026); Understanding labelling and presentation requirements for listed medicines (2025-04-09) | tga.gov.au | Therapeutic sunscreen and listed medicine label elements, AUST L/R (§10, §14, D-AU-3) |
+| [B5] | New Zealand EPA — Cosmetic Products Group Standard 2020 (HSR002552, consolidated) | epa.govt.nz | NZ ingredient listing, batch code, nano marking, alternative compliance (D-NZ-1) |
+| [B6] | U.S. FDA — Cosmetics Labeling Regulations; Summary of Cosmetics Labeling Requirements (2025-11-18); 21 CFR 701.3 (eCFR, current to 2026-08-27) | fda.gov; ecfr.gov | US label elements and ingredient declaration (D-US-1) |
+| [B7] | U.S. FDA — Modernization of Cosmetics Regulation Act of 2022 (MoCRA) (2026-08-10); Guidance: Registration and Listing of Cosmetic Product Facilities and Products | fda.gov/cosmetics | Facility registration, product listing, adverse-event contact, enforcement date (D-US-2) |
+| [B8] | U.S. FDA — Dietary Supplement Labeling Guide; 21 CFR 101.4(g) and 101.36 | fda.gov | Supplement Facts, ingredient list placement (§14, D-US-4) |
+| [B9] | Regulation (EC) No 1223/2009 on cosmetic products, Article 19 (EUR-Lex; UK retained text on legislation.gov.uk) | eur-lex.europa.eu | EU/UK mandatory label particulars, PAO, batch, CPNP (D-EU-1, D-UK-1) |
+| [B10] | Commission Regulation (EU) 2023/1545 (fragrance allergens); HPRA guidance on application dates | eur-lex.europa.eu/eli/reg/2023/1545; hpra.ie | Expanded fragrance allergen labelling, 31 July 2026 / 31 July 2028 (D-EU-2) |
+| [B11] | GOV.UK — Submit a cosmetic product notification; Making cosmetic products available to consumers in Great Britain; Regulation 1223/2009 and the Cosmetic Products Enforcement Regulations 2013 guidance (2022-04-27) | gov.uk | UK Responsible Person, SCPN, PIF, serious undesirable effects (D-UK-1) |
+| [B12] | Health Canada — Industry Guide for the labelling of cosmetics; Cosmetic Regulations (C.R.C., c. 869) ss. 18, 21.2, 30–31; Cosmetic Notification Form | canada.ca; laws-lois.justice.gc.ca | CNF within 10 days, INCI on outer label, bilingual rule, shade-range colourants (D-CA-1) |
+| [B13] | Natural Health Products Regulations (SOR/2003-196) | laws-lois.justice.gc.ca | Product licence (NPN), medicinal ingredient quantity per dosage unit (D-CA-2) |
+| [B14] | OEHHA — Proposition 65 Clear and Reasonable Warnings (effective 2025-01-01) and FAQs for businesses | oehha.ca.gov; p65warnings.ca.gov | Internet warning before purchase, short-form transition to 2028 (D-US-5) |
+| [B15] | Store Leads — The State of Shopify in 2026; Shopify Plus Statistics 2026 (updated 2026-09-11) | storeleads.app | Market basis (header; REVIEW-020) |
+
+## Appendix D. Jurisdiction Requirement Register — Seed *(informative seed of the normative register defined in CDS-1500 §2.2; verification column states what was checked on 2026-09-20)*
+
+Obligation types are those of CDS-1500 §2.2 (pre_market, labelling_element, listing_element, warning_statement, rating_label, restricted_content, transport, documentation, post_market). "Verified" means the primary instrument or regulator page was read on the stated date; "retrieved" means a regulator page was retrieved but the instrument text was not read; "not seeded" means the organisation supplies the entry. Jurisdiction codes are those of the `jurisdiction` dictionary (package Chapter 19); scheme codes are those of `regulatory_scheme`.
+
+### D.1 Australia (AU)
+
+| Ref | Instrument / regulator | Applies to | Obligation | Required data elements → CDS field | Trigger / dates | Verification |
+|---|---|---|---|---|---|---|
+| D-AU-1 | Consumer Goods (Cosmetics) Information Standard 2020 — ACCC (`au_cosmetics_information_standard_2020`) | Cosmetics made or imported for sale in Australia | labelling_element | Ingredient list on container (or product, or displayed at point of sale where size prevents): descending by mass or volume, or ≥1% descending then <1% any order then colour additives; INCI or English names; flavour/fragrance as such or by components → MF_ingredient_list, MF_ingredient_naming_scheme, MF_ingredient_order_basis, MF_fragrance_disclosure. Hand sanitiser with alcohol as primary active: alcohol % v/v and warning statements → MF_active_ingredients, MF_warning_statements | Products manufactured after the 2020 standard's transition | Verified 2026-09-20 [B1][B2] |
+| D-AU-2 | Industrial Chemicals Act 2019 — AICIS (`au_aicis_registration`) | Importers and manufacturers of cosmetics containing industrial chemicals | pre_market (business-level) | Business registration before import or manufacture; ingredient categorisation (exempted / reported / assessed); annual declaration by 30 November → organisation-level record; CMP_market_registrations status `in_scope_business_registered` | Any commercial import; no value threshold | Verified 2026-09-20 [B3] |
+| D-AU-3 | Therapeutic Goods Act 1989; TGO 92 (non-prescription medicine labels); Australian regulatory guidelines for sunscreens — TGA (`au_artg_listed`, `au_artg_registered`) | Primary sunscreens; listed and registered complementary medicines and supplements | pre_market; labelling_element; warning_statement | ARTG listing/registration number (AUST L / AUST R); sponsor name and address; active ingredients by Australian Approved Name with proportions; net quantity; batch number; expiry; storage conditions; permitted indications; mandatory excipient declarations; minimum text sizes → CMP_market_registrations (id, sponsor), MF_active_ingredients, VAR_net_quantity, MF_directions, MF_warning_statements, MF_claims (scheme `au_permitted_indications`) | Before supply in Australia | Verified 2026-09-20 [B4] |
+| D-AU-4 | Poisons Standard (SUSMP) scheduling of ingredients — TGA/states | Cosmetics and health products containing scheduled substances | restricted_content | Scheduling status per ingredient; label statements where scheduled → MF_warning_statements | Ingredient-dependent | Retrieved (not spot-verified) |
+| D-AU-5 | Australian Dangerous Goods Code edition 7.9 — NTC/state regulators (`au_adg_code_7_9`) | Aerosols, flammable liquids (alcohol-based fragrance, sanitiser), certain nail products | transport | Dangerous-goods declaration per CDS-1900 §12 | Mandatory from 1 October 2025 | Verified 2026-09-20 (CDS-1900 Appendix C) |
+
+### D.2 New Zealand (NZ)
+
+| Ref | Instrument / regulator | Applies to | Obligation | Required data elements → CDS field | Trigger / dates | Verification |
+|---|---|---|---|---|---|---|
+| D-NZ-1 | Cosmetic Products Group Standard 2020 (HSR002552) — EPA (`nz_cosmetic_products_group_standard_2020`) | Cosmetic products imported or manufactured in NZ | labelling_element; pre_market (nano notification) | Ingredient list (≥1% descending, <1% any order, colour additives, flavour/fragrance wording) → MF_ingredient_list, MF_ingredient_order_basis; manufacturer source or batch code → lot-level (R039); "nano" marking → MF_nanomaterial_ingredients; nanomaterial notification to the EPA at first import → CMP_market_registrations. Alternative compliance: a label compliant with AU, US, CA, UK or EU cosmetic labelling requirements satisfies the ingredient-list and schedule conditions → CMP_market_registrations status `alternative_compliance` with the relied-on jurisdiction recorded | Group Standard in force from 30 April 2021; four-year transition to 30 April 2025 for Labelling, SDS and Packaging Notices | Verified 2026-09-20 [B5] |
+| D-NZ-2 | Sunscreen (Product Safety Standard) Act 2022 — MBIE (`nz_sunscreen_product_safety_standard`) | Primary sunscreens | pre_market; rating_label | Compliance with AS/NZS 2604 (SPF, broad-spectrum, water resistance testing) → MF_spf_value, MF_spf_rating_scheme; the Group Standard also permits labelling to the Australian Therapeutic Goods Order for primary sunscreens | From September 2022 | Retrieved (not spot-verified) |
+| D-NZ-3 | Dietary Supplements Regulations 1985 / natural health products reform — MPI/Medsafe | Supplements | labelling_element | Not seeded — organisation supplies | — | Not seeded |
+
+### D.3 United States (US, with California noted)
+
+| Ref | Instrument / regulator | Applies to | Obligation | Required data elements → CDS field | Trigger / dates | Verification |
+|---|---|---|---|---|---|---|
+| D-US-1 | FD&C Act and Fair Packaging and Labeling Act; 21 CFR parts 701 and 740 — FDA (`us_fda_cosmetic_labeling_21cfr701`) | Cosmetics sold at retail | labelling_element; warning_statement | Principal display panel: identity statement and net quantity (US customary units, metric optional) → VAR_net_quantity; information panel: name and place of business (with "Manufactured for" / "Distributed by" where applicable) → CMP_responsible_person; ingredient declaration in descending order of predominance, colour additives and ≤1% ingredients in any order, "fragrance"/"flavor" permitted, cosmetic-drug products declare active ingredients first → MF_ingredient_list, MF_ingredient_order_basis, MF_active_ingredients; required warnings (aerosols, feminine deodorant sprays, children's bubble bath, flammables; "safety not determined" where unsubstantiated) → MF_warning_statements; English mandatory | Ongoing | Verified 2026-09-20 [B6] |
+| D-US-2 | Modernization of Cosmetics Regulation Act of 2022 (MoCRA), FD&C Act s. 607 — FDA (`us_mocra_product_listing`) | Cosmetics distributed in the US (small-business exemptions apply, with exclusions) | pre_market (facility registration, product listing); post_market (adverse events); labelling_element | Facility registration (biennial renewal); product listing including ingredients, updated annually; responsible person contact for adverse-event reporting on the label; serious adverse events reported within 15 business days → CMP_market_registrations (listing reference), CMP_responsible_person | Enforcement of registration and listing from 1 July 2024; listing within 120 days of first marketing | Verified 2026-09-20 [B7] |
+| D-US-3 | OTC drug labelling (Drug Facts), 21 CFR 201.66 and the sunscreen monograph — FDA (`us_fda_otc_drug`) | Sunscreens, antiperspirants, anti-dandruff and other cosmetic-drug products | labelling_element | Drug Facts panel with active ingredients and purposes before cosmetic ingredients; SPF and broad-spectrum statements per monograph → MF_active_ingredients, MF_spf_value, MF_spf_rating_scheme=`fda_sunscreen_monograph`, MF_warning_statements | Ongoing | Verified in part 2026-09-20 [B6] (21 CFR 701.3(d)); monograph text not read |
+| D-US-4 | Dietary Supplement Health and Education Act; 21 CFR 101.36 — FDA (`us_fda_dietary_supplement_labeling`) | Dietary supplements | labelling_element | Statement of identity, net quantity, Supplement Facts panel (serving size, servings per container, dietary ingredients and amounts, %DV), ingredient list immediately below the panel, structure/function claim disclaimer, name and place of business → MF_serving_size, MF_servings_per_container, MF_nutrition_values (scheme `supplement_facts`), MF_ingredient_list, MF_claims, CMP_responsible_person | Ongoing | Verified 2026-09-20 [B8] |
+| D-US-5 | Proposition 65 (California), 27 CCR 25602–25603 — OEHHA (`us_ca_prop65_warning`) | Products causing exposure to listed chemicals, sold to California consumers by businesses with 10+ employees | warning_statement (listing_element for internet sales) | Warning on the product display page, a clearly marked "WARNING" hyperlink, or a warning prominently displayed before purchase; new short-form content names at least one chemical per endpoint; retailers have 60 days to update online warnings after notice → MF_warning_statements (jurisdiction US-CA), projected to listings | Amended regulations effective 1 January 2025; products manufactured and labelled before 1 January 2028 may use the prior short-form | Verified 2026-09-20 [B14] |
+
+### D.4 European Union (EU)
+
+| Ref | Instrument / regulator | Applies to | Obligation | Required data elements → CDS field | Trigger / dates | Verification |
+|---|---|---|---|---|---|---|
+| D-EU-1 | Regulation (EC) No 1223/2009 on cosmetic products, Articles 4, 11, 13, 19 — European Commission and member-state authorities (`eu_cosmetics_regulation_1223_2009`, `eu_cpnp_notification`) | Cosmetics made available in the EU | pre_market (Responsible Person, CPNP notification, product information file); labelling_element | Responsible Person name and address (EU) on container and packaging; country of origin for imported products; nominal content by weight or volume (exemptions <5 g/ml, samples, single-application); date of minimum durability (hourglass or "best used before the end of") where durability ≤30 months, otherwise period after opening symbol with months; particular precautions; batch number or product reference; function unless obvious; list of ingredients preceded by "ingredients", descending order by weight at time of addition, <1% any order, colourants may be listed last, "parfum"/"aroma", nanomaterials marked "(nano)", range colourants with "may contain"/"+/−"; product information file kept 10 years; notification of label and packaging photograph → CMP_responsible_person, CMP_country_of_origin, VAR_net_quantity, MF_minimum_durability_policy, MF_period_after_opening_months, MF_warning_statements, MF_ingredient_list, MF_ingredient_order_basis, MF_range_colourant_convention, MF_nanomaterial_ingredients, CMP_market_registrations | Ongoing | Verified 2026-09-20 [B9] |
+| D-EU-2 | Commission Regulation (EU) 2023/1545 amending Annex III (fragrance allergens) (`eu_fragrance_allergens_2023_1545`) | Cosmetics containing listed fragrance allergens above 0.001% (leave-on) or 0.01% (rinse-off) | labelling_element | Individual naming of each listed allergen in the ingredient list in addition to "parfum"/"aroma" → CMP_fragrance_allergen_declarations, MF_ingredient_list | Products placed on the market from 31 July 2026 must comply; products placed earlier may be made available until 31 July 2028 | Verified 2026-09-20 [B10] |
+| D-EU-3 | Regulation (EU) No 655/2013 (common criteria for claims) | Cosmetic claims | restricted_content | Claims must satisfy legal compliance, truthfulness, evidential support, honesty, fairness and informed decision-making criteria → MF_claims evidence records | Ongoing | Retrieved (not spot-verified) |
+| D-EU-4 | Regulation (EU) 2023/988 General Product Safety Regulation (`eu_gpsr_2023_988`) | Non-harmonised consumer products in this profile (beauty tools, accessories) and cross-cutting distance-selling duties | listing_element; labelling_element | Online offers must show manufacturer name, postal and electronic address, product identifier (type/batch/serial), warnings and safety information and a picture; an EU-established responsible economic operator → CMP_responsible_person, CMP_product_identifier, MF_warning_statements | Applies from 13 December 2024 | Verified 2026-09-20 (CDS-1800 Appendix C) |
+
+### D.5 United Kingdom (GB)
+
+| Ref | Instrument / regulator | Applies to | Obligation | Required data elements → CDS field | Trigger / dates | Verification |
+|---|---|---|---|---|---|---|
+| D-UK-1 | Regulation (EC) 1223/2009 as retained (UK Cosmetics Regulation) and Cosmetic Products Enforcement Regulations 2013 — OPSS (`uk_cosmetics_regulation`, `uk_scpn_notification`) | Cosmetics made available in Great Britain | pre_market (UK Responsible Person; SCPN notification before placing on the market; PIF); labelling_element; post_market (serious undesirable effects) | UK Responsible Person with a UK established address (not a PO box or mail-forwarding address) named on packaging (mandatory for all products from 31 December 2022 for those previously on the EU market); notification through the Submit Cosmetic Product Notification service with category, name, RP, PIF address, urgent contact, nanomaterials, CMR substances, ingredient summary, label image and packaging photograph; label elements as per Article 19 in English → CMP_responsible_person, CMP_market_registrations (scheme `uk_scpn_notification`), same label fields as D-EU-1 | New products since 1 January 2021 | Verified 2026-09-20 [B9][B11] |
+| D-UK-2 | Fragrance allergen labelling in GB | Cosmetics with fragrance allergens | labelling_element | GB retained the pre-2023 Annex III allergen list at the end of the transition period; whether GB adopts the expanded list is a register review item → CMP_fragrance_allergen_declarations with scheme `uk_fragrance_allergens_retained` | Review each release | Not verified — organisation confirms current GB Annex III |
+
+### D.6 Canada (CA)
+
+| Ref | Instrument / regulator | Applies to | Obligation | Required data elements → CDS field | Trigger / dates | Verification |
+|---|---|---|---|---|---|---|
+| D-CA-1 | Food and Drugs Act; Cosmetic Regulations (C.R.C., c. 869) ss. 18, 21.2–21.5, 30–31; Consumer Packaging and Labelling Act — Health Canada (`ca_cosmetic_notification`) | Cosmetics sold in Canada | pre_market (notification); labelling_element | Cosmetic Notification Form within 10 days after first sale, including product name, function (leave-on / rinse-off), ingredient list with exact concentrations or concentration ranges, form, manufacturer or importer name and address in Canada; revised notification within 10 days of any inaccuracy; ingredient list on the outer label using INCI names (or chemical name where none; Schedule EU technical name / INCI / French equivalent alternatives), botanicals by genus and species, shade-range colourants with "+/−" or "may contain/peut contenir"; all other required label information in English and French; Cosmetic Ingredient Hotlist restrictions → CMP_market_registrations (CNF reference), MF_ingredient_list (naming scheme `inci`), MF_range_colourant_convention, CMP_responsible_person, localisation dimension per CDS-300 §18 | Within 10 days of first sale; sale prohibited after the 10-day period if not notified | Verified 2026-09-20 [B12] |
+| D-CA-2 | Natural Health Products Regulations (SOR/2003-196) — Health Canada (`ca_nhp_product_licence`) | Vitamins, minerals, herbal remedies and other natural health products | pre_market (product licence); labelling_element | Product licence (NPN) before sale; application includes medicinal ingredients with proper and common names, quantity per dosage unit and potency, non-medicinal ingredients with purpose, label text; licence changes notified within 60 days → CMP_market_registrations (id = NPN), MF_active_ingredients, MF_ingredient_list | Before sale | Verified 2026-09-20 [B13] |
+
+### D.7 Other markets
+
+| Jurisdiction | Status | Note |
+|---|---|---|
+| Japan (JP), China (CN), Singapore (SG), Republic of Korea (KR), India (IN), Brazil (BR) | Not seeded | The `jurisdiction` dictionary carries codes so an organisation can extend the register; China's cosmetics regime (CSAR, NMPA filing and registration) and Japan's Pharmaceutical and Medical Device Act notably differ from the seeded markets and require local regulatory advice before publication. |
+
+END OF CDS-1600 v0.2 REVIEW DRAFT
+
+<div class="chapter"></div>
+
+# Commerce Data Standard (CDS)
+## CDS-1700 — Food, Beverage and Grocery Industry Profile
+
+| Field | Value |
+|---|---|
+| Status | **v0.2 Review Draft** (working source; not an approved standard) |
+| Release | CDS v0.2 (single corpus release per ADR-D5); chapter added in the 2026-09-20 industry-profile expansion |
+| Date | 2026-09-20 |
+| Supersedes | Nothing — first edition. Package Chapter 17 (Food & Beverage: allergens, allergen facets, dietary claim types, storage conditions) is shipped with this profile in package 0.8.0. |
+| Normative status | §1, §3, §5–§14, §19 and Appendix A are normative. §2 (pointer), §4, §15–§18, §20, §21 and Appendices B–D are informative; Appendix D seeds the jurisdiction requirement register whose record structure and obligations are normative in CDS-1500 §2.2. Every table is individually marked. |
+| Primary audience | Grocery and specialty-food merchandisers, regulatory and food-safety owners, data stewards, PIM architects, catalogue managers, UX teams, developers and AI enrichment designers |
+| Depends on | CDS-000 through CDS-1500, especially CDS-200, CDS-300 (CMP_, PRC_ conditional), CDS-400 (dictionaries, units), CDS-500 (preflight, verification), CDS-600 (facets), CDS-700 (evidence, claims), CDS-900 (platform profiles), CDS-1500 (profile model, requirement levels, profile register, jurisdiction requirement register), CDS-1900 (kits, bundles, dangerous goods), CDS-2000 (pet food cross-reference) |
+| Companion package | CDS Reference Dictionary: Chapter 17 (Food & Beverage), Chapter 19 (Jurisdictions & Regulatory Schemes); column contract per CDS-1500 Appendix E |
+| Profile identifier | `cds.profile.food_beverage.v0_2` (registered in CDS-1500 §2.1) |
+| Research basis | REVIEW-020 (global commerce vertical market research, 2026-09-20): food and beverages is a top-three worldwide ecommerce revenue segment (estimated at roughly US$0.9 trillion for 2026, with the fastest growth of the large segments); Food & Drink is the fourth-largest Shopify Plus vertical worldwide (8.3% of Plus stores). |
+
+Terminology follows CDS-100. Attribute requirement levels (R, C, REC, O, N/A) are those of CDS-1500 §4 and are not restated here.
+
+---
+
+## 1. Purpose and Scope *(normative)*
+
+CDS-1700 defines the industry profile for packaged and fresh food, non-alcoholic and alcoholic beverages, and grocery consumables. It covers ambient, chilled and frozen goods; multipacks, cases and hampers; variable-weight products; and the regulated information that every market attaches to a food label: ingredients, allergens, nutrition, quantity, date marking, storage, origin and alcohol content. Dietary supplements and complementary medicines are homed in CDS-1600 §14 and cite this chapter; pet food is homed in CDS-2000 §12 and cites this chapter's allergen and nutrition mechanics.
+
+The data shape is distinctive because most of the record is regulated content whose authority is the label and the manufacturer's specification, because "contains" and "may contain" have different legal meanings, because nutrition values are numeric tables under jurisdiction-specific schemes, and because the sellable unit hierarchy (each, inner, case) and variable weight break the assumptions of a simple product-variant model. In every seeded market, mandatory food information must be available to the consumer before an online purchase is concluded, which makes the completeness of this data a publication gate, not a merchandising nicety.
+
+**CDS1700-R001** An implementation claiming the Food and Beverage Profile MUST represent ingredients, allergen declarations, nutrition values, net quantity, date-marking policy, storage conditions, origin and alcohol content as structured, typed attributes conforming to CDS-200 §7 and CDS-400 §18, never solely as free text.
+
+**CDS1700-R002** An implementation claiming this profile MUST distinguish regulated declarations (allergens, nutrition, origin, alcohol content) from dietary and marketing claims, and MUST govern every claim under CDS-700 §7 and §8 of this chapter.
+
+**CDS1700-R003** An implementation MUST maintain a jurisdiction requirement register (CDS-1500 §2.2) for every market it publishes food to, and publication preflight for a market MUST evaluate the mandatory food information required by that market before the offer is made available.
+
+**CDS1700-R004** This profile MUST NOT weaken any rule of CDS-1500 that it reuses; where this chapter is silent, CDS-1500 and the core chapters govern.
+
+## 2. Profile Model *(informative pointer)*
+
+This profile applies the industry profile model of CDS-1500 §2, the requirement levels of CDS-1500 §4 and the jurisdiction requirement register of CDS-1500 §2.2 without restatement. Its identifier and dictionary bindings are recorded in CDS-1500 §2.1; its seeded jurisdiction entries are in Appendix D.
+
+## 3. Product Model *(normative)*
+
+A food product is a recipe or formulation offered in one or more sellable presentations. The Product is the formulation; Variants are the sellable units that differ by net quantity, pack configuration, flavour or vintage. Above the variant sits the sale-unit hierarchy (each, inner pack, case), each level of which may carry its own trade identifier.
+
+```
+Product: Toasted Muesli                          (informative example)
+  Product scope:
+    CAT_product_type = breakfast_cereal
+    MF_ingredient_list = [rolled oats (55%), honey, almonds, ...]   # ordered, with characterising %
+    CMP_allergen_declarations = [{allergen: oats, declaration: contains, gluten: true},
+                                 {allergen: almond, declaration: contains},
+                                 {allergen: milk, declaration: may_contain, basis: shared_line}]
+    MF_nutrition_values = {scheme: nip_au_nz, per_100g: {...}, per_serving: {...}, serving_size_g: 45}
+    MF_storage_condition = ambient
+    MF_date_mark_type = best_before
+    CMP_origin_declaration = {jurisdiction: AU, type: made_in_australia, australian_ingredients_band: gte_90_percent}
+  Variant scope:
+    VAR_net_quantity = {value: 750, unit: gram}
+    VAR_gtin = 09300000000001
+    VAR_sale_unit_level = each
+```
+
+**CDS1700-R005** Net quantity, pack configuration (count of identical units), flavour or variety, and vintage MUST be modelled at variant scope where they identify distinct sellable units (variant boundary rule: CDS-200 §5); ingredients, allergens, nutrition per 100 g or ml, origin and claims MUST remain at product scope unless the fact genuinely differs between variants (a flavour variant normally carries its own ingredient list and allergen declarations).
+
+**CDS1700-R006** Where a flavour or variety variant has its own ingredient list, allergen declarations or nutrition values, those facts MUST be stored at variant scope for that variant and the product-scope values MUST NOT be published as if they applied to it.
+
+**CDS1700-R007** Sale-unit levels (each, inner, case, pallet) MUST be modelled as a declared hierarchy with a level identifier, the quantity of the child unit contained, and the trade identifier of the level (GTIN-13/GTIN-14 or equivalent) where one exists; a case MUST NOT be modelled as an unrelated product.
+
+**CDS1700-R008** A multipack of identical units MUST be represented as a variant with a pack count; a bundle or hamper of different products MUST be represented as a kit with component relationships per CDS-1900 §11, with allergen and nutrition information carried by each component and the kit-level declarations derived, never authored.
+
+## 4. Product Families and Category Profiles *(informative baseline; the inheritance rule of CDS1500-R016 applies)*
+
+| Product family / category | Required | Recommended | Typical variant options |
+|---|---|---|---|
+| Ambient packaged food (pantry, snacks, cereals, confectionery) | ingredient list; allergen declarations; nutrition values; net quantity; date-mark type; storage condition; origin per market | dietary claim records; serving size; characterising ingredient percentages | size, flavour, multipack |
+| Chilled and frozen food | as ambient plus temperature class and shelf-life policy | thawing/handling instructions; minimum remaining shelf life at dispatch | size, flavour |
+| Fresh produce, meat, seafood (variable weight) | net quantity basis (per kg or per unit); origin; storage; catch-weight flag | grade; cut; sustainability certifications | weight band, pack |
+| Bakery | ingredient list; allergens; date-mark type | nutrition (where required); prepacked-for-direct-sale status | size |
+| Non-alcoholic beverages | ingredient list; allergens; nutrition; net volume; storage; caffeine and sweetener warnings where applicable | serving size; sugar content claims | volume, multipack |
+| Alcoholic beverages | alcohol by volume; standard drinks or units where required; allergens; net volume; pregnancy or health warnings per market; age restriction | vintage, varietal, region, closure (wine); style (beer); ingredients and energy where the market requires | volume, vintage, multipack |
+| Infant and special-purpose foods | as ambient plus special labelling regime | — | size |
+| Grocery non-food consumables (cleaning, paper) | net quantity; hazard statements where chemical | — | size, multipack |
+| Meal kits, hampers, gift sets | kit composition; component declarations derived | — | configuration |
+
+## 5. Ingredients *(normative; seed guidance informative)*
+
+| Field | Meaning | Type |
+|---|---|---|
+| MF_ingredient_list | Ordered statement of ingredients as declared, with compound ingredients expanded or named per the label | Ordered list of entries (name, optional canonical reference, optional percentage, optional function class and additive code, optional sub-ingredients) |
+| MF_ingredient_order_basis | Ordering rule applied | Governed value: `descending_by_ingoing_weight` (the rule in every seeded market), with declared exceptions for water, <2% groupings (US) or similar |
+| MF_characterising_ingredient_percentages | Quantitative ingredient declarations (QUID) | Structured list (ingredient, percentage) |
+| MF_additive_declaration_scheme | How additives are named | Governed value: `function_class_plus_name_or_number`, `name_only` |
+
+**CDS1700-R009** `MF_ingredient_list` MUST be stored as an ordered list whose order is declared significant (CDS400-R040) and MUST preserve the label order; the implementation MUST NOT re-sort or de-duplicate the list without a governed change carrying label or specification evidence.
+
+**CDS1700-R010** Compound ingredients MUST be represented so that their sub-ingredients remain identifiable, because allergen declarations (§6) depend on sub-ingredients still present in the finished food.
+
+**CDS1700-R011** Characterising ingredient percentages MUST be numeric values linked to the ingredient entry (CDS400-R056), never text within the ingredient name alone.
+
+**CDS1700-R012** An ingredient list captured by extraction from label images or supplier documents (evidence class E2 or E3) MUST be reviewed by a human before acceptance regardless of confidence (CDS-700 §19).
+
+## 6. Allergen Declarations *(normative; dictionary seed informative)*
+
+Allergen information is the highest-consequence data in this vertical. The profile separates three things that are routinely conflated: the regulated declared name of an allergen in a given market, the declaration type (present as an ingredient versus precautionary "may contain"), and the customer-facing facet a storefront chooses to expose.
+
+| Field | Meaning | Type |
+|---|---|---|
+| CMP_allergen_declarations | Allergen declaration records | List of records: allergen (`allergen` dictionary value_id), declaration type (`contains`, `may_contain`, `free_from_claimed`), basis (ingredient, processing aid, cross-contact, shared line), gluten flag where the allergen is a gluten-containing cereal, market naming override where a market requires a different required name |
+| CMP_allergen_scheme | The market allergen scheme the declarations are evaluated against | Governed value from `regulatory_scheme` (e.g. `au_fsanz_1_2_3_allergens`, `eu_fic_1169_2011_annex_ii`, `us_falcpa_faster`, `ca_fdr_priority_allergens`) |
+
+**CDS1700-R013** Allergen declarations MUST be stored as structured records bound to the governed `allergen` dictionary, one record per allergen, and MUST NOT be stored only as prose inside the ingredient list or description.
+
+**CDS1700-R014** The declaration type MUST distinguish an allergen present as an ingredient or processing aid (`contains`) from a precautionary cross-contact statement (`may_contain`); the two MUST NOT be merged into one list, and a channel projection MUST label them differently.
+
+**CDS1700-R015** The declared name projected to a market MUST be the required name of that market's scheme (for example the individual tree-nut name required in Australia, or the "nuts" group emphasis in the EU); the canonical dictionary value MUST resolve to the required name through the market mapping, never through free text authored per product.
+
+**CDS1700-R016** Allergen declarations MUST NOT be derived automatically from the ingredient list without human review; AI or rules MAY propose a declaration from an ingredient, but acceptance MUST require review regardless of confidence, and the absence of an allergen in the ingredient list MUST NOT generate a "free from" declaration (CDS700-R018).
+
+**CDS1700-R017** A "free from" or "allergen-free" statement is a claim (§8) and MUST fail validation when the named allergen appears in a `contains` declaration for the same product or variant (the CDS1600-R033 pattern); a `may_contain` declaration for the same allergen MUST trigger review of the claim.
+
+**CDS1700-R018** Allergen declarations MUST be evaluated at publication preflight for each market against the market's scheme: an allergen required by the market that is present in the ingredient list without a declaration MUST block publication to that market (CDS400-R033 pattern).
+
+*Informative — seeded schemes.* The package `allergen` dictionary carries the regulated required names of the seeded jurisdictions as canonical values with an ordered `allergen_facet` mapping to the fourteen EU groups (cereals containing gluten, crustaceans, eggs, fish, peanuts, soybeans, milk, nuts, celery, mustard, sesame, sulphites, lupin, molluscs). Australia's Plain English Allergen Labelling (Standard 1.2.3 and Schedule 9, mandatory from 25 February 2024) requires individual tree nuts, individual gluten cereals (barley, oats, rye when containing gluten), wheat, fish, crustacean, mollusc, egg, milk, lupin, peanut, soy, sesame and sulphites at 10 mg/kg or more, declared in bold in the ingredient list and in a "Contains" summary statement. The United States requires nine major allergens (milk, eggs, fish, crustacean shellfish, tree nuts, peanuts, wheat, soybeans, sesame) with species or type named. Canada's priority allergens add mustard and sulphites. Appendix D records the per-market rules with verification dates.
+
+## 7. Nutrition Values *(normative)*
+
+| Field | Meaning | Type |
+|---|---|---|
+| MF_nutrition_values | Nutrition declaration | Structured object: scheme (governed: `nip_au_nz`, `eu_nutrition_declaration`, `us_nutrition_facts`, `ca_nutrition_facts_table`, `supplement_facts`, `typical_analysis_pet_food`), basis columns (per 100 g / 100 ml and/or per serving as the scheme requires), serving size as typed measurement, servings per package, nutrient rows (nutrient identifier, value, unit, rounding rule applied, %DV or %RI where the scheme uses it) |
+| MF_energy_kj / MF_energy_kcal | Energy values per basis | Typed numbers (derived from the nutrition object) |
+| MF_front_of_pack_rating | Voluntary or mandatory front-of-pack scheme result | Structured (scheme, value, calculation version) |
+
+**CDS1700-R019** Nutrition values MUST be numeric, unit-bearing values under a declared scheme (CDS400-R056–R057); a scheme MUST be declared because nutrient sets, mandatory bases, rounding and %DV reference amounts differ by market, and one value set MUST NOT be presented as satisfying a scheme it was not prepared for.
+
+**CDS1700-R020** Where a market requires both a per-100 basis and a per-serving basis (Australia and New Zealand), both MUST be present; where a market requires per-serving with a defined serving size (United States, Canada), the serving size MUST be a typed measurement with its household-measure label where the scheme requires it.
+
+**CDS1700-R021** Nutrition values MUST NOT be generated, estimated or "filled in" by AI; extraction from a label image or specification is permitted only as a proposal with mandatory human review (CDS-700 §19), and an accepted value MUST retain provenance to the specification or label it came from (E1/E2).
+
+**CDS1700-R022** A front-of-pack rating (for example a health star rating, a nutrition symbol or a nutrient-profile score) MUST be stored with its scheme and calculation version and MUST NOT be recomputed by the PIM unless the organisation declares itself the calculating authority under CDS-200 §13.
+
+## 8. Dietary Suitability, Claims and Certifications *(normative; dictionary seed informative)*
+
+Dietary suitability is the primary purchase driver in this vertical and the most abused data. The profile treats every dietary statement as a claim record whose type comes from the governed `dietary_claim_type` dictionary and whose acceptance depends on evidence appropriate to the type: a regulated definition (gluten free), a certification (organic, halal, kosher), or a manufacturer declaration where no regulated definition exists (vegan, vegetarian).
+
+| Attribute | Structure | Requirement guidance |
+|---|---|---|
+| MF_dietary_claims | List of claim records: claim type (governed), evidence class and reference, certifier and certificate where applicable, jurisdictions in which the claim is published, owner, effective/expiry | C — required when any dietary statement is published |
+| MF_nutrition_content_claims | Nutrition content claims ("low fat", "source of fibre") with the scheme and condition satisfied | C |
+| MF_health_claims | Health claims with the scheme, the permitted relationship and any required dietary-context statement | C |
+| MF_certifications | Certification records (scheme, certifier, identifier, scope, expiry) | C |
+
+**CDS1700-R023** A dietary claim MUST exist as a claim record with a governed claim type and an evidence reference; a claim type whose definition is regulated in a market (for example gluten free) MUST carry the regulated threshold or definition satisfied for that market in the claim record.
+
+**CDS1700-R024** Dietary claims MUST NOT be inferred from the ingredient list by rules or AI without human review; a product with no animal ingredients is not thereby "vegan" in the canonical data (CDS400-R066, CDS700-R018).
+
+**CDS1700-R025** Nutrition content claims and health claims MUST reference the scheme under which they are permitted in each market they are published to; publication preflight MUST block a health claim not permitted under the declared scheme for that market or lacking a required accompanying statement.
+
+**CDS1700-R026** A customer facet for dietary suitability MUST be fed only by accepted claim records (a claim-driven facet, the CDS1500-R025 pattern) and MUST NOT be assigned per product from marketing copy or supplier tags.
+
+**CDS1700-R027** Certification expiry MUST withdraw the dependent claim projection without editing any product fact (CDS1500-R032).
+
+## 9. Quantity, Pack Hierarchy, Unit Pricing and Variable Weight *(normative)*
+
+**CDS1700-R028** Net quantity MUST be a typed measurement with a declared unit (gram, kilogram, millilitre, litre, or count) at variant scope; drained weight, where declared, MUST be a separate typed value.
+
+**CDS1700-R029** Pack count MUST be an integer separate from unit net quantity (a "6 × 375 ml" multipack is pack count 6 and net quantity 375 ml), and the total net quantity MUST be derived, never authored.
+
+**CDS1700-R030** Where a market or channel requires unit pricing, the unit-price base measure MUST be derived from the typed net quantity and pack count and the price authority (CDS-200 §13; `PRC_` fields only where the PIM is the declared authority), never keyed by hand.
+
+**CDS1700-R031** Variable-weight (catch-weight) products MUST carry a catch-weight flag, a pricing basis (per kilogram or per unit), and a nominal or average weight as a typed value; they MUST NOT be presented as fixed-weight products, and the sellable unit's actual weight is an order-level observation, not canonical product data.
+
+**CDS1700-R032** Trade identifiers at each sale-unit level MUST be stored with their scheme (GTIN-8/12/13/14 or an organisation-declared alternative) and MUST validate per scheme (CDS-1100 GTIN rules).
+
+## 10. Storage, Temperature, Shelf Life and Date Marking *(normative; dictionary seed informative)*
+
+| Field | Meaning | Type |
+|---|---|---|
+| MF_storage_condition | Governed storage condition (`storage_condition` dictionary: ambient, store_below_25c, refrigerate, refrigerate_after_opening, frozen, keep_frozen_do_not_refreeze, store_in_cool_dry_place) | Product |
+| MF_temperature_class | Logistics temperature class (ambient / chilled / frozen) | Governed value |
+| MF_date_mark_type | The date-mark regime the product carries (`best_before`, `use_by`, `baked_on`, `packed_on`, `none_exempt`) | Governed value |
+| MF_shelf_life_days | Shelf life from production under declared storage | Integer |
+| MF_minimum_remaining_shelf_life_days | Policy: minimum remaining life at dispatch | Integer |
+| MF_storage_instructions | Storage and after-opening instructions as labelled | Structured statement records |
+
+**CDS1700-R033** Storage condition and temperature class MUST be governed values; free text such as "keep cool" MUST NOT satisfy the requirement.
+
+**CDS1700-R034** The date-mark type MUST be a governed value that distinguishes a safety-based "use by" from a quality-based "best before"; the actual date on a unit is lot-level and MUST NOT be stored as a canonical product attribute (the CDS1600-R039 pattern), but the shelf-life policy MAY be.
+
+**CDS1700-R035** A product whose date-mark type is `use_by` MUST carry a minimum-remaining-shelf-life policy before publication to a channel that ships to consumers, so that fulfilment can be verified against it.
+
+## 11. Origin and Provenance *(normative)*
+
+| Field | Meaning | Type |
+|---|---|---|
+| CMP_country_of_origin | Country of origin under the applicable determination rule | Governed country reference |
+| CMP_origin_declarations | Per-market origin declaration records | List: jurisdiction, scheme, declaration type (e.g. `grown_in`, `produced_in`, `made_in`, `packed_in`, `product_of`, `origin_statement`), percentage-of-local-ingredients band where the scheme uses one, mark or logo eligibility |
+| MF_region_of_origin | Sub-national origin (wine region, PDO/PGI name) | Governed value where a scheme protects the name |
+
+**CDS1700-R036** Origin MUST be stored as a governed country reference plus per-market declaration records; a single free-text origin string MUST NOT be projected to markets whose schemes require a specific declaration form.
+
+**CDS1700-R037** Protected geographical names (designations of origin and geographical indications) MUST be governed values with evidence and MUST NOT be assigned from supplier descriptions without verification.
+
+## 12. Alcoholic Beverages *(normative)*
+
+| Field | Meaning | Type |
+|---|---|---|
+| MF_alcohol_by_volume | Alcoholic strength by volume at 20 °C | Decimal percentage (typed) |
+| MF_standard_drinks / MF_alcohol_units | Standard drinks (or units) per container under the market's definition | Decimal with scheme (e.g. `au_nz_standard_drink_10g`, `uk_unit_8g`) |
+| CMP_alcohol_warnings | Mandatory warning statements per market (pregnancy warning, government warning) | Structured statement records with scheme, pictogram version and size class |
+| MF_beverage_style | Wine varietal and vintage; beer style; spirit category | Governed values |
+| CMP_age_restriction | Minimum purchase age per market | Per-market records |
+
+**CDS1700-R038** Alcohol by volume MUST be a typed decimal percentage; where a market requires a different expression below a threshold (for example a "contains not more than X% alcohol by volume" statement), the projection MUST derive it from the typed value.
+
+**CDS1700-R039** Standard drinks or units MUST be stored with the definition scheme they were calculated under and MUST NOT be recalculated across schemes without a declared conversion rule (CDS400-R057).
+
+**CDS1700-R040** Mandatory alcohol warnings MUST be structured statement records with the scheme and the pictogram or wording version, evaluated per market at preflight; a product above a market's threshold lacking the market's warning MUST NOT be published to that market.
+
+**CDS1700-R041** Age restriction MUST be a governed per-market attribute evaluated at preflight and projected to channels that support age gating.
+
+## 13. Warnings, Advisory Statements and Restricted Sale *(normative)*
+
+**CDS1700-R042** Warning and advisory statements required by a market (caffeine, phenylalanine, sweeteners, quinine, kava, royal jelly, choking hazards, "contains a source of…" statements) MUST be structured statement records with the mandating scheme, evaluated per market at preflight; the trigger conditions (ingredient present, quantity threshold) MUST be expressed as rules (CDS200-R034).
+
+**CDS1700-R043** Products subject to sale restrictions in a market (alcohol, restricted supplements, tobacco where in scope) MUST carry a governed restriction attribute per market and MUST NOT be published to a channel or market whose capability declaration cannot enforce the restriction.
+
+## 14. Safety, Recalls and Dangerous Goods *(normative)*
+
+**CDS1700-R044** A recall or withdrawal MUST be expressed through lifecycle state and channel withdrawal (CDS-500 §12) with the affected lot range recorded as an observation, never by deleting the product; lot-level recall scope is outside canonical product data but MUST be linkable to the product.
+
+**CDS1700-R045** Grocery consumables that are hazardous chemicals or dangerous goods for transport (aerosols, high-strength spirits, cleaning chemicals) MUST carry a dangerous-goods declaration per CDS-1900 §12 and, where a market requires it, a safety data sheet reference (CDS-1900 §12).
+
+## 15. Customer Facet Design *(informative — normative facet rules live in CDS-600)*
+
+| Facet | Recommended baseline behaviour | Anti-pattern |
+|---|---|---|
+| Dietary suitability | Claim-driven facet fed by accepted claim records (R026); labels express the claim type (Gluten free, Vegan) | Facet populated from supplier tags or inferred from ingredients |
+| Allergen-free browsing | Exclusion filters driven by `contains` declarations only, with a visible note that precautionary statements are not filtered unless the organisation declares otherwise | Treating "may contain" as absence |
+| Category and product form | Classification-driven | Cuisine and occasion mixed with product type |
+| Size / pack | Net-quantity ranges and pack counts | Mixed grams and millilitres in one list |
+| Origin | Country and region facets from governed values | Free-text origin |
+| Storage | Ambient / chilled / frozen for delivery planning | — |
+| Alcohol | Style, varietal, region, ABV range | Health claims |
+
+Zero-result handling, coverage thresholds and accessibility follow CDS-600 §10, §17 and §24.
+
+## 16. Channel Projection Guidance *(informative — normative rules: CDS-500, CDS-900)*
+
+| Canonical concept | Metafield-style channel (informative) | Feed-style channel (informative) |
+|---|---|---|
+| Ingredient list, allergens, nutrition | Structured metafields generated from canonical records (Shopify's standard taxonomy exposes allergen, dietary and flavour attributes for food categories); read back and verified per market | Description blocks per market; no standard nutrition fields in the seeded feed channels |
+| Net quantity, pack count, unit pricing | Typed metafields; variant title composition per declared policy | `unit_pricing_measure` / `unit_pricing_base_measure` where required by country; `multipack`; `is_bundle` for kits |
+| Dietary claims | Only accepted claim records project; certification expiry withdraws | Attributes where the channel defines them |
+| Alcohol | Age-gating and warning blocks per market | Channel alcohol policies restrict listings; the dated rules live in CDS-900 |
+| Storage and temperature class | Fulfilment metafields | Not published |
+| Mandatory food information before purchase | Generated per-market information block on the product page (Appendix D) | — |
+
+Which layer feeds each channel is declared per attribute (CDS200-R026); feed-channel requiredness by country is a dated CDS-900 platform fact.
+
+## 17. AI Enrichment and Review *(informative — normative AI rules live in CDS-700)*
+
+| Task | AI may propose | Deterministic or human control |
+|---|---|---|
+| Ingredient extraction from labels or specifications | Ordered candidate list | Mandatory review (R012); order preserved |
+| Allergen declaration proposals | Candidate `contains` records from ingredients | Mandatory review regardless of confidence (R016); never auto-accepted |
+| Nutrition value extraction | Parsed table with scheme candidate | Mandatory review (R021); unit and rounding validation |
+| Dietary claim candidates | Candidate claim records flagged "evidence required" | Never accepted without evidence (R024) |
+| Origin and protected names | Candidates from specification documents | Verification of protected names (R037) |
+| Market obligation gaps | Candidate list of register entries triggered | Register evaluation deterministic; AI never marks obligations satisfied |
+
+## 18. Governance and Organisational Extensions *(informative — rules in CDS-1500 §23 and CDS-800)*
+
+Organisations extend the allergen, storage and claim-type dictionaries under CDS-400 governance; regulated allergen lists change (Australia's 2024 required names, the US sesame addition) and are handled as governed dictionary migrations, never silent edits. The jurisdiction requirement register is reviewed on the cadence declared under CDS-800 §30, with a mandatory review whenever a market changes a mandatory particular.
+
+## 19. Conformance Requirements *(normative — claims and levels per CDS-1000)*
+
+**CDS1700-R046** An implementation claiming the CDS Food and Beverage Profile MUST: store ingredients as ordered structured lists with compound ingredients identifiable (R009–R011); store allergen declarations as structured records distinguishing "contains" from "may contain", bound to the governed allergen dictionary, with market required-name mapping and preflight evaluation (R013–R018); store nutrition values as numeric, unit-bearing values under a declared scheme with the bases the scheme requires (R019–R022); govern every dietary, nutrition-content and health claim as an evidence-bearing record with claim-driven facets (R023–R027); store net quantity, pack count, sale-unit hierarchy and variable-weight facts as typed values (R028–R032); store storage, date-mark type and shelf-life policy as governed values with lot dates kept out of canonical data (R033–R035); store origin and alcohol facts per market (R036–R041); maintain and evaluate a jurisdiction requirement register for every market published to (R003, CDS-1500 §2.2); apply category-specific requirements per CDS1500-R009; and publish and verify channel representations under CDS-500.
+
+**CDS1700-R047** A Food and Beverage Profile claim MUST state which markets its register covers and whether alcoholic beverages and variable-weight products are in scope.
+
+## 20. Worked Product Examples *(informative)*
+
+### 20.1 Granola with tree nuts and a precautionary milk statement (Australia and EU)
+
+```
+CAT_product_type = breakfast_cereal
+MF_ingredient_list = [rolled oats (55%), honey (12%), almonds (8%), sunflower oil, coconut, pepitas, cinnamon]
+CMP_allergen_declarations =
+  [{allergen: oats, declaration: contains, gluten: true, basis: ingredient},
+   {allergen: almond, declaration: contains, basis: ingredient},
+   {allergen: milk, declaration: may_contain, basis: shared_line}]
+Market projections:
+  AU (scheme au_fsanz_1_2_3_allergens): ingredient list with "oats", "almonds" in bold;
+     summary statement "Contains: gluten, oats, almond"; precautionary line "May contain milk"
+  EU (scheme eu_fic_1169_2011_annex_ii): "oats" and "almonds" emphasised; allergen group facets
+     gluten_containing_cereals, tree_nuts; precautionary statement kept separate
+MF_nutrition_values = {scheme: nip_au_nz, serving_size: 45 g, servings_per_package: 16.7,
+                       per_100g: {energy_kj: 1850, protein_g: 9.1, fat_g: 18.2, saturated_g: 4.0,
+                                  carbohydrate_g: 55.0, sugars_g: 14.2, sodium_mg: 12},
+                       per_serving: {...}}
+MF_dietary_claims = []                              # "gluten free" would fail R017 (oats contain gluten)
+VAR_net_quantity = {value: 750, unit: gram}
+CMP_origin_declarations = [{jurisdiction: AU, scheme: au_cool_2016, type: made_in_australia,
+                            australian_ingredients_band: gte_90_percent, standard_mark: true}]
+Preflight AU: allergens declared for every required allergen present -> pass
+```
+
+### 20.2 Craft gin (Australia, UK)
+
+```
+CAT_product_type = gin
+MF_alcohol_by_volume = 42.0
+MF_standard_drinks = {value: 23.3, scheme: au_nz_standard_drink_10g}      # 700 ml container
+MF_alcohol_units = {value: 29.4, scheme: uk_unit_8g}
+CMP_alcohol_warnings = [{jurisdiction: AU, scheme: au_fsanz_2_7_1_alcohol, statement: pregnancy_warning_mark,
+                         size_class: "over 200 ml to 800 ml"}]
+CMP_age_restriction = [{jurisdiction: AU, minimum_age: 18}, {jurisdiction: GB, minimum_age: 18}]
+CMP_allergen_declarations = []                     # none; ingredient list not required >1.2% ABV in GB/EU
+VAR_net_quantity = {value: 700, unit: millilitre}
+CMP_dangerous_goods = {regulated: true, un_number: "UN3065", class: "3", packing_group: "III",
+                       limited_quantity_eligible: true}                   # per CDS-1900 §12
+Preflight AU: pregnancy warning present, age restriction enforceable on channel -> pass
+```
+
+### 20.3 Chilled catch-weight product
+
+```
+CAT_product_type = whole_chicken
+MF_catch_weight = true
+MF_pricing_basis = per_kilogram
+MF_nominal_weight = {value: 1.6, unit: kilogram, tolerance: "±0.3"}
+MF_temperature_class = chilled
+MF_storage_condition = refrigerate
+MF_date_mark_type = use_by
+MF_minimum_remaining_shelf_life_days = 4
+CMP_origin_declarations = [{jurisdiction: AU, scheme: au_cool_2016, type: grown_in_australia}]
+Order-level observation: actual weight 1.52 kg -> price computed by the pricing authority, not the PIM
+```
+
+## 21. Reference Validation Cases *(informative — the profile's contribution to the cross-industry validation set, REVIEW-020)*
+
+- a product whose ingredient list contains a required allergen with no declaration, which preflight must block per market (R018);
+- a "gluten free" claim on a product with a `contains` declaration for a gluten cereal, which must fail (R017);
+- a "may contain" statement that a channel projection must keep distinct from "contains" (R014);
+- an allergen whose required name differs between Australia (individual tree nut) and the EU (nuts group), resolved by dictionary mapping (R015);
+- a nutrition panel prepared for one scheme offered to a market with another scheme, which must not satisfy the requirement (R019);
+- a flavour variant with its own ingredient list (R006);
+- a "6 × 375 ml" multipack that must not collapse to "2.25 l" (R029);
+- a catch-weight product presented as fixed weight (R031);
+- a use-by product without a minimum-remaining-shelf-life policy (R035);
+- an alcoholic beverage above threshold lacking the market's warning (R040);
+- a case-level GTIN-14 that must validate and link to its each-level GTIN (R032);
+- a hamper whose kit-level allergen summary must derive from components (R008).
+
+---
+
+## Appendix A. Food and Beverage Attribute Baseline *(normative — dictionary bindings per CDS1500-R011)*
+
+| Field | Scope | Type | Baseline requirement |
+|---|---|---|---|
+| CAT_product_type | Product | Governed classification reference | R |
+| MF_ingredient_list / MF_ingredient_order_basis | Product (variant per R006) | Ordered structured list; governed value | R for multi-ingredient foods; N/A for single-ingredient exempt foods |
+| MF_characterising_ingredient_percentages | Product | Structured list | C — R where a market requires quantitative declaration |
+| CMP_allergen_declarations / CMP_allergen_scheme | Product (variant per R006) | Structured records (`allergen` dictionary) | R |
+| MF_nutrition_values | Product (variant per R006) | Structured object with declared scheme | R unless exempt in every target market |
+| MF_front_of_pack_rating | Product | Structured (scheme, value) | C |
+| MF_dietary_claims / MF_nutrition_content_claims / MF_health_claims / MF_certifications | Product | Structured records with evidence | C |
+| VAR_net_quantity | Variant | Typed measurement | R |
+| VAR_pack_count | Variant | Integer | C — R for multipacks |
+| VAR_sale_unit_level / VAR_gtin | Variant and sale-unit levels | Governed level; identifier with scheme | R where trade identifiers exist |
+| MF_catch_weight / MF_pricing_basis / MF_nominal_weight | Product/Variant | Boolean; governed value; typed measurement | R for variable-weight products |
+| MF_storage_condition / MF_temperature_class | Product | Governed dictionary references | R |
+| MF_date_mark_type / MF_shelf_life_days / MF_minimum_remaining_shelf_life_days | Product | Governed value; integers | R / REC / C (R for use-by products sold online) |
+| CMP_country_of_origin / CMP_origin_declarations | Product | Governed country; per-market records | R where a market requires origin |
+| MF_alcohol_by_volume / MF_standard_drinks / CMP_alcohol_warnings / CMP_age_restriction | Product/Variant | Typed values; statement records; per-market records | R for alcoholic beverages |
+| MF_warning_statements | Product | Structured statement records | C — R where a market mandates a statement |
+| CMP_responsible_person | Product (per market) | Governed record | R where a market requires the food business operator's name and address |
+| CMP_dangerous_goods | Product/Variant | Declaration record per CDS-1900 §12 | C |
+| CMP_market_registrations | Product (per market) | Governed records | C |
+
+## Appendix B. Dictionary Bindings *(informative — becomes governed data on adoption per CDS1500-R011)*
+
+| Dictionary key | Package chapter | Bound attribute(s) | Status at 0.8.0 |
+|---|---|---|---|
+| allergen | 17 (new) | CMP_allergen_declarations | Bound by this profile |
+| allergen_facet | 17 (new) | Customer-facing allergen grouping; EU group mapping | Bound |
+| dietary_claim_type | 17 (new) | MF_dietary_claims.type | Bound (claim-type registry; evidence-gated) |
+| storage_condition | 17 (new) | MF_storage_condition | Bound |
+| jurisdiction / regulatory_scheme | 19 (new) | CMP_* market records, claim and warning schemes | Bound via CDS-1500 §2.2 |
+| dangerous_goods_class | 18 (new) | CMP_dangerous_goods | Bound via CDS-1900 §12 |
+
+Deliberately not shipped: nutrient identifier lists per scheme (organisations adopt their regulator's nutrient set), country lists (ISO 3166 at adoption), protected geographical name registers, flavour vocabularies (open-ended), wine varietal and region lists (organisation- or registry-sourced).
+
+## Appendix C. References *(informative; retrieved 2026-09-20 unless stated)*
+
+| Ref | Source | Location | Use in this chapter |
+|---|---|---|---|
+| [F1] | FSANZ — Allergen labelling for food businesses (Standard 1.2.3, Schedule 9; PEAL from 25 February 2024); DAFF IFN 10-25 | foodstandards.gov.au/business/labelling/allergen-labelling; agriculture.gov.au | Required allergen names, bold and summary statement (§6, D-AU-1) |
+| [F2] | FSANZ — Standard 1.2.8 Nutrition information requirements (compilation 2024-10-29); Food Standards Code compilation (March 2026) | legislation.gov.au/F2015L00395 | NIP content, per-serving and per-unit-quantity bases (§7, D-AU-2) |
+| [F3] | FSANZ — Standard 1.2.7 Nutrition, health and related claims (compilation 2025-08-13); Schedule 4 | legislation.gov.au/F2015L00394 | General and high-level health claims, NPSC, dietary context statements (§8, D-AU-3) |
+| [F4] | FSANZ — Standard 2.7.1 Labelling of alcoholic beverages (compilation 2025-08-13); Labelling of alcoholic beverages (2025-09-10) | legislation.gov.au/F2015L00469; foodstandards.gov.au | ABV statement, standard drinks, pregnancy warning label sizes (§12, D-AU-4) |
+| [F5] | Country of Origin Food Labelling Information Standard 2016; business.gov.au guidance | legislation.gov.au/F2016L00528; business.gov.au | Standard mark, bar chart, kangaroo logo, origin statement (§11, D-AU-5) |
+| [F6] | FSANZ — Call for information: Health Star Rating and NIP (Nov 2024) | consultations.foodstandards.gov.au | HSR voluntary status and 70% uptake target by 14 November 2025 (D-AU-6) |
+| [F7] | Consumer Information Standards (Origin of Food) Regulations 2021 (NZ) | legislation.govt.nz/regulation/public/2021/0097 | NZ origin disclosure for regulated fresh and single-ingredient foods from 12 February 2022 (D-NZ-1) |
+| [F8] | U.S. FDA — Food Labeling Guide; 21 CFR 101.3, 101.4, 101.5, 101.7, 101.9 (eCFR) | fda.gov; ecfr.gov | Identity, net quantity, ingredient order, Nutrition Facts, name and place of business (§5, §7, §9, D-US-1) |
+| [F9] | U.S. FDA — Food Allergies; FALCPA; FASTER Act (sesame from 1 January 2023); Guidance Edition 5 (2025) | fda.gov/food/nutrition-food-labeling-and-critical-foods/food-allergies | Nine major allergens, species and type naming, "Contains" statement (§6, D-US-2) |
+| [F10] | EFSA — Food allergens (EU 14) (2025-04-22); Regulation (EU) No 1169/2011 Articles 9, 12, 14, 18, 21 (EUR-Lex; UK retained text) | efsa.europa.eu; eur-lex.europa.eu | EU mandatory particulars, distance-selling availability before purchase (§1, §6, D-EU-1) |
+| [F11] | Regulation (EU) 2021/2117 (wine ingredient and nutrition labelling) | eur-lex.europa.eu | Wine sector labelling from 8 December 2023 (D-EU-2) |
+| [F12] | Food Standards Agency (UK) — PPDS allergen labelling (Natasha's Law, 1 October 2021); Food allergen labelling technical guidance; Food Information Regulations 2014 (as at 2021-10-01) | food.gov.uk; legislation.gov.uk/uksi/2014/1855 | UK allergen rules, gluten-free 20 mg/kg, distance selling (D-UK-1) |
+| [F13] | The Food (Promotion and Placement) (England) Regulations 2021; Food (Promotion and Presentation) (Wales) Regulations 2025 | legislation.gov.uk/uksi/2021/1368; legislation.gov.uk/wsi/2025/395 | HFSS online placement and volume price promotion restrictions (D-UK-2) |
+| [F14] | Canadian Food Inspection Agency — Food labelling requirements checklist; Front-of-package nutrition symbol (compliance 1 January 2026); Health Canada FOP guide v3 | inspection.canada.ca; canada.ca | Bilingual labelling, NFt, priority allergens, FOP symbol (D-CA-1) |
+| [F15] | Store Leads — Shopify Plus Statistics 2026 (updated 2026-09-11); global ecommerce revenue by segment (Statista Market Insights, March 2026, via secondary reporting) | storeleads.app; statista.com | Market basis (REVIEW-020) |
+
+## Appendix D. Jurisdiction Requirement Register — Seed *(informative seed of the normative register defined in CDS-1500 §2.2)*
+
+Conventions as in CDS-1600 Appendix D.
+
+### D.1 Australia (AU)
+
+| Ref | Instrument / regulator | Applies to | Obligation | Required data elements → CDS field | Trigger / dates | Verification |
+|---|---|---|---|---|---|---|
+| D-AU-1 | Australia New Zealand Food Standards Code, Standard 1.2.3 and Schedule 9 (allergen declarations) — FSANZ; enforced by state and territory agencies and DAFF for imports (`au_fsanz_1_2_3_allergens`) | Food for sale requiring a label (and unlabelled food via other means) | labelling_element | Required names: wheat, fish, crustacean, mollusc, egg, milk, lupin, peanut, soy, sesame, almond, Brazil nut, cashew, hazelnut, macadamia, pecan, pine nut, pistachio, walnut, barley/oats/rye when containing gluten, sulphites ≥10 mg/kg; declared in bold in the statement of ingredients and in a separate bold "Contains" summary statement in the same field of view; "gluten" listed with wheat and for gluten-containing cereals → CMP_allergen_declarations (scheme `au_fsanz_1_2_3_allergens`), projection rules | Food manufactured or produced from 25 February 2024 | Verified 2026-09-20 [F1] |
+| D-AU-2 | Standard 1.2.8 Nutrition information requirements; Schedule 12 format (`au_fsanz_1_2_8_nip`) | Packaged food unless exempt (e.g. standardised alcoholic beverages, herbs, tea, single-ingredient produce, small packages) | labelling_element | Nutrition information panel: servings per package, serving size (g/ml), unit quantity (100 g/ml), energy (kJ, optionally kcal), protein, fat, saturated fat, carbohydrate, sugars (g), sodium (mg), plus any claimed nutrient; per serving and per 100 g/ml; ≤3 significant figures → MF_nutrition_values (scheme `nip_au_nz`) | Ongoing | Verified 2026-09-20 [F2] |
+| D-AU-3 | Standard 1.2.7 Nutrition, health and related claims; Schedule 4 (permitted claims); Schedule 5 (NPSC) (`au_fsanz_1_2_7_claims`) | Foods bearing nutrition content or health claims | restricted_content | Health claims only where the food meets the nutrient profiling scoring criterion and the food–health relationship is in Schedule 4 (high level) or Schedule 4 / self-substantiated and notified (general level); dietary context statement; claims prohibited on kava, infant formula and most alcohol >1.15% → MF_health_claims, MF_nutrition_content_claims (scheme `au_fsanz_1_2_7_claims`) | Ongoing | Verified 2026-09-20 [F3] |
+| D-AU-4 | Standard 2.7.1 Labelling of alcoholic beverages (`au_fsanz_2_7_1_alcohol`) | Beverages ≥0.5% ABV; food containing alcohol | labelling_element; warning_statement | Alcohol content as % ABV (or mL/100 mL) for >1.15%; "contains not more than X% alcohol by volume" for 0.5–1.15%; statement of approximate number of standard drinks (10 g ethanol) for >0.5%; pregnancy warning pictogram or mark for >1.15% with size classes by container volume (≤200 ml pictogram ≥8 mm; >200–800 ml mark ≥6 mm; >800 ml ≥9 mm; outer packs ≥11 mm); energy statement for prescribed beverages → MF_alcohol_by_volume, MF_standard_drinks (scheme `au_nz_standard_drink_10g`), CMP_alcohol_warnings | Pregnancy warning mandatory since 1 August 2023 | Verified 2026-09-20 [F4] |
+| D-AU-5 | Country of Origin Food Labelling Information Standard 2016 — ACCC (`au_cool_2016`) | Food sold in Australia (priority and non-priority foods; imported foods) | labelling_element | Standard mark (kangaroo logo where grown, produced or made in Australia; bar chart with percentage of Australian ingredients; explanatory text; box) for priority foods grown, produced, made or packed in Australia; country of origin statement ("Made in X", "Product of X") for non-priority and imported foods, boxed for packaged priority foods → CMP_origin_declarations (scheme `au_cool_2016`, declaration type, ingredient band, mark eligibility) | Ongoing | Verified 2026-09-20 [F5] |
+| D-AU-6 | Health Star Rating system (voluntary front-of-pack) — Food ministers/FSANZ (`au_health_star_rating`) | Packaged foods | rating_label (voluntary) | HSR value and calculator version where displayed; ministers set a 70% uptake target by 14 November 2025 with mandating under consideration → MF_front_of_pack_rating (scheme `au_health_star_rating`) | Voluntary; review 2026 | Verified 2026-09-20 [F6] |
+| D-AU-7 | Standards 1.2.4 (statement of ingredients), 1.2.5 (date marking), 1.2.6 (directions for use and storage), 1.2.10 (characterising ingredients) | Food requiring a label | labelling_element | Ingredients in descending ingoing weight; best-before / use-by regime; storage directions; characterising ingredient percentages → MF_ingredient_list, MF_date_mark_type, MF_storage_instructions, MF_characterising_ingredient_percentages | Ongoing | Retrieved 2026-09-20 (Code compilation index; standard texts not read in full) |
+| D-AU-8 | Unit Pricing Code (Competition and Consumer (Industry Codes—Unit Pricing) Regulations) — ACCC (`au_unit_pricing_code`) | Grocery retailers above the floor-area threshold and online grocery retailers | listing_element | Unit price per prescribed unit of measure displayed with the selling price online → derived per R030 | Ongoing | Retrieved (not spot-verified) |
+
+### D.2 New Zealand (NZ)
+
+| Ref | Instrument / regulator | Applies to | Obligation | Required data elements → CDS field | Trigger / dates | Verification |
+|---|---|---|---|---|---|---|
+| D-NZ-1 | Australia New Zealand Food Standards Code (joint standards 1.2.3, 1.2.7, 1.2.8, 2.7.1 apply in NZ) — MPI | Food for sale in NZ | as D-AU-1 to D-AU-4 | Same data elements as the joint standards; Standard 1.2.10 (characterising ingredients) is Australia-only; country of origin under the Code does not apply in NZ → CMP_allergen_scheme, MF_nutrition_values, CMP_alcohol_warnings as for AU | Ongoing | Verified 2026-09-20 [F2] (Code compilation notes application) |
+| D-NZ-2 | Consumer Information Standards (Origin of Food) Regulations 2021 — MBIE/Commerce Commission (`nz_origin_of_food_2021`) | Regulated single-ingredient fresh or thawed fruit, vegetables, meat, fish and seafood (and certain frozen items) | listing_element; labelling_element | Origin information disclosed when the item is supplied, offered or advertised for sale, including online; replacement statements where origin changes often → CMP_origin_declarations (scheme `nz_origin_of_food_2021`) | From 12 February 2022 (frozen items later per the regulations) | Verified 2026-09-20 [F7] |
+
+### D.3 United States (US)
+
+| Ref | Instrument / regulator | Applies to | Obligation | Required data elements → CDS field | Trigger / dates | Verification |
+|---|---|---|---|---|---|---|
+| D-US-1 | FD&C Act; Fair Packaging and Labeling Act; 21 CFR part 101 — FDA (`us_fda_food_labeling_21cfr101`) | Packaged food under FDA jurisdiction (USDA regulates meat, poultry and egg products) | labelling_element | Statement of identity and net quantity on the principal display panel (weight, measure or count; fluid measure for liquids); ingredient statement by common or usual name in descending order of predominance by weight (≤2% grouping permitted); name and place of business ("Manufactured for"/"Distributed by" qualifiers); Nutrition Facts per 21 CFR 101.9 (serving size in household measure plus metric, servings per container, calories, mandatory nutrients incl. added sugars, vitamin D, calcium, iron, potassium, %DV, dual-column rules) → VAR_net_quantity, MF_ingredient_list, CMP_responsible_person, MF_nutrition_values (scheme `us_nutrition_facts`) | Nutrition Facts compliance since 2020/2021 | Verified 2026-09-20 [F8] |
+| D-US-2 | FALCPA 2004 and FASTER Act 2021 (FD&C Act s. 403(w)) — FDA (`us_falcpa_faster`) | FDA-regulated packaged foods and dietary supplements | labelling_element | Nine major allergens (milk, egg, fish, crustacean shellfish, tree nuts, peanuts, wheat, soybeans, sesame) declared by food source in the ingredient list or in a "Contains" statement immediately after it; type of tree nut, species of fish and crustacean named → CMP_allergen_declarations (scheme `us_falcpa_faster`), projection rules | Sesame effective 1 January 2023 | Verified 2026-09-20 [F9] |
+| D-US-3 | FDA gluten-free labeling rule (21 CFR 101.91) (`us_fda_gluten_free`) | Foods labelled "gluten-free" | restricted_content | Claim permitted only where gluten is below 20 ppm and no gluten-containing grain ingredient is used unless processed to remove gluten → MF_dietary_claims (type `gluten_free`, threshold 20 ppm) | Ongoing | Retrieved (not spot-verified) |
+| D-US-4 | USDA National Organic Program (7 CFR part 205) (`us_usda_nop_organic`) | Foods labelled organic | restricted_content; documentation | "100% organic", "organic" (≥95%), "made with organic" categories; certifier named on the information panel → MF_dietary_claims (type `organic`), MF_certifications | Ongoing | Retrieved (not spot-verified) |
+| D-US-5 | Federal Alcohol Administration Act; 27 CFR parts 4, 5, 7 and 16 — TTB (`us_ttb_alcohol_labeling`) | Wine, distilled spirits, malt beverages | labelling_element; warning_statement; pre_market (COLA) | Brand name, class or type, alcohol content, net contents, name and address, country of origin for imports, sulfite declaration ≥10 ppm, Government Warning statement; certificate of label approval before sale in interstate commerce → MF_alcohol_by_volume, VAR_net_quantity, CMP_alcohol_warnings (scheme `us_ttb_alcohol_labeling`), CMP_market_registrations (COLA) | Ongoing | Retrieved (not spot-verified) |
+| D-US-6 | Proposition 65 (California) — OEHHA (`us_ca_prop65_warning`) | Foods causing exposure to listed chemicals sold to California consumers | warning_statement; listing_element | Food-specific short-form or full warning (no triangle symbol required for food; food web address); internet warning before purchase → MF_warning_statements (jurisdiction US-CA) | Amended regulations effective 1 January 2025 | Verified 2026-09-20 (CDS-1600 [B14]) |
+
+### D.4 European Union (EU)
+
+| Ref | Instrument / regulator | Applies to | Obligation | Required data elements → CDS field | Trigger / dates | Verification |
+|---|---|---|---|---|---|---|
+| D-EU-1 | Regulation (EU) No 1169/2011 on food information to consumers (FIC), Articles 9, 12, 14, 16, 18, 21, 30 and Annexes II–V — European Commission and member states (`eu_fic_1169_2011`) | Prepacked food; distance selling of prepacked and non-prepacked food | labelling_element; listing_element | Mandatory particulars: name of the food; list of ingredients (descending by weight as recorded at use); allergens (Annex II: 14 groups) emphasised in the ingredient list; quantity of certain ingredients (QUID); net quantity; date of minimum durability or use-by date; special storage conditions or conditions of use; name or business name and address of the food business operator; country of origin or place of provenance where required; instructions for use where needed; actual alcoholic strength for beverages >1.2% ABV; nutrition declaration (energy, fat, saturates, carbohydrate, sugars, protein, salt per 100 g/ml; exemptions in Annex V; not mandatory for >1.2% ABV). Distance selling (Article 14): all mandatory information except the date mark must be available before the purchase is concluded on the material supporting the sale, free of charge; all particulars at delivery → MF_ingredient_list, CMP_allergen_declarations (scheme `eu_fic_1169_2011_annex_ii`), MF_characterising_ingredient_percentages, VAR_net_quantity, MF_date_mark_type, MF_storage_instructions, CMP_responsible_person, CMP_origin_declarations, MF_alcohol_by_volume, MF_nutrition_values (scheme `eu_nutrition_declaration`); preflight rule R003 | Ongoing | Verified 2026-09-20 [F10] |
+| D-EU-2 | Regulation (EU) 2021/2117 amending Regulation (EU) No 1308/2013 (wine) and (EU) No 251/2014 (aromatised wine) (`eu_wine_labelling_2021_2117`) | Wine and aromatised wine products | labelling_element | Nutrition declaration and list of ingredients compulsory; energy value may be on-label with full declaration and ingredients provided electronically (no tracking or marketing); allergens remain on the label; de-alcoholised products <10% ABV carry a date of minimum durability → MF_nutrition_values, MF_ingredient_list, CMP_allergen_declarations, electronic-label link record | Applies to wine produced from 8 December 2023 (existing stocks may be sold through) | Verified 2026-09-20 [F11] |
+| D-EU-3 | Regulation (EC) No 1924/2006 nutrition and health claims (`eu_claims_1924_2006`); Commission Implementing Regulation (EU) No 828/2014 (gluten) (`eu_gluten_828_2014`) | Foods bearing claims | restricted_content | Only authorised health claims and defined nutrition claims; "gluten-free" ≤20 mg/kg, "very low gluten" ≤100 mg/kg → MF_health_claims, MF_nutrition_content_claims, MF_dietary_claims | Ongoing | Verified in part 2026-09-20 [F12] (gluten thresholds via FSA); claims regulation retrieved |
+| D-EU-4 | Regulation (EU) 2018/848 organic production and labelling (`eu_organic_2018_848`) | Foods labelled organic | restricted_content; documentation | EU organic logo conditions, code number of the control body, origin statement → MF_dietary_claims (type `organic`), MF_certifications | Ongoing | Retrieved (not spot-verified) |
+
+### D.5 United Kingdom (GB)
+
+| Ref | Instrument / regulator | Applies to | Obligation | Required data elements → CDS field | Trigger / dates | Verification |
+|---|---|---|---|---|---|---|
+| D-UK-1 | Assimilated Regulation (EU) No 1169/2011 and the Food Information Regulations 2014 (England; Wales and NI equivalents; Scotland separate) — FSA/FSS and local authorities (`uk_fir_2014`) | Prepacked, non-prepacked and prepacked-for-direct-sale (PPDS) food; distance selling | labelling_element; listing_element | Same mandatory particulars as D-EU-1 (assimilated); 14 allergens emphasised; PPDS food must carry the name and a full ingredients list with allergens emphasised (from 1 October 2021); distance selling: mandatory allergen information available before purchase and at delivery; gluten-free ≤20 mg/kg; alcohol >1.2% ABV exempt from ingredient list but allergens must be declared → as D-EU-1 with scheme `uk_fir_2014` | PPDS from 1 October 2021 | Verified 2026-09-20 [F12] |
+| D-UK-2 | The Food (Promotion and Placement) (England) Regulations 2021; Food (Promotion and Presentation) (Wales) Regulations 2025 — DHSC/Welsh Government (`uk_hfss_promotion_placement`) | Qualifying businesses (50+ employees) offering specified less-healthy (HFSS) prepacked food online | listing_element (placement); restricted_content (promotions) | Specified food must not be offered on the online home page, in non-related browsing or search results (with exceptions), on pop-ups, favourites (except previously bought), or checkout pages; volume price promotions (multibuys, extra free) prohibited; nutrient profiling score determines "specified food" → MF_hfss_classification (jurisdiction GB), channel placement rules | Placement restrictions since October 2022; England volume-price promotion restrictions from 1 October 2025; Wales regulations 2025 | Verified 2026-09-20 [F13] |
+| D-UK-3 | Alcohol labelling (assimilated FIC Article 16; Weights and Measures; voluntary UK unit guidance) (`uk_alcohol_labelling`) | Alcoholic beverages | labelling_element | ABV >1.2%; units (8 g ethanol) and pregnancy logo are voluntary industry practice → MF_alcohol_by_volume, MF_alcohol_units (scheme `uk_unit_8g`) | Ongoing | Retrieved (not spot-verified) |
+
+### D.6 Canada (CA)
+
+| Ref | Instrument / regulator | Applies to | Obligation | Required data elements → CDS field | Trigger / dates | Verification |
+|---|---|---|---|---|---|---|
+| D-CA-1 | Food and Drugs Act and Regulations; Safe Food for Canadians Act and Regulations; Consumer Packaging and Labelling — CFIA and Health Canada (`ca_fdr_food_labelling`) | Prepackaged food sold in Canada | labelling_element | Common name; net quantity in metric; list of ingredients with priority allergens, gluten sources and added sulphites declared by prescribed source names in the list or a "Contains" statement, with cross-contamination statements permitted; Nutrition Facts table (serving size in household measure and metric, energy and 12 core nutrients, %DV, format families, small-package exemptions); bilingual English and French for mandatory information (dealer name and address may be in one language); country of origin declaration "Product of [country]" where required; date marking and storage → MF_ingredient_list, CMP_allergen_declarations (scheme `ca_fdr_priority_allergens`), MF_nutrition_values (scheme `ca_nutrition_facts_table`), VAR_net_quantity, CMP_origin_declarations, localisation dimension per CDS-300 §18 | Ongoing | Verified 2026-09-20 [F14] |
+| D-CA-2 | Food and Drug Regulations B.01.350–B.01.354 (front-of-package nutrition symbol) — Health Canada/CFIA (`ca_fop_nutrition_symbol`) | Prepackaged foods at or above thresholds of saturated fat, sugars or sodium (≥15% DV default; ≥10% for reference amounts ≤30 g/ml; ≥30% for main dishes), with exemptions and prohibitions | rating_label | Nutrition symbol on the principal display panel in prescribed bilingual format; multipack and assortment rules → MF_front_of_pack_rating (scheme `ca_fop_nutrition_symbol`) | Compliance from 1 January 2026, no enforcement discretion | Verified 2026-09-20 [F14] |
+
+### D.7 Other markets
+
+| Jurisdiction | Status | Note |
+|---|---|---|
+| Japan (JP), China (CN), Singapore (SG), Republic of Korea (KR), India (IN), Brazil (BR) and others | Not seeded | China's GB 7718 labelling standard and Japan's Food Labeling Act differ materially (allergen lists, nutrition bases, language); the organisation extends the register with local advice before publishing food to those markets. |
+
+END OF CDS-1700 v0.2 REVIEW DRAFT
+
+<div class="chapter"></div>
+
+# Commerce Data Standard (CDS)
+## CDS-1800 — Consumer Electronics, Appliances and Technical Goods Industry Profile
+
+| Field | Value |
+|---|---|
+| Status | **v0.2 Review Draft** (working source; not an approved standard) |
+| Release | CDS v0.2 (single corpus release per ADR-D5); chapter added in the 2026-09-20 industry-profile expansion |
+| Date | 2026-09-20 |
+| Supersedes | Nothing — first edition. The Chapter 11 dictionary vocabularies (connectivity, screen technologies, power sources, installation types, energy rating systems) were shipped ahead of this profile and are bound here for the first time; battery chemistries and product conditions are added in package 0.8.0. |
+| Normative status | §1, §3, §5–§12, §17 and Appendix A are normative. §2 (pointer), §4, §13–§16, §18, §19 and Appendices B–D are informative; Appendix D seeds the jurisdiction requirement register whose record structure and obligations are normative in CDS-1500 §2.2. Every table is individually marked. |
+| Primary audience | Electronics and appliance merchandisers, compliance and product-safety owners, data stewards, PIM architects, catalogue managers, UX teams, developers and AI enrichment designers |
+| Depends on | CDS-000 through CDS-1500, especially CDS-200 (entity model, relationships), CDS-300 (CMP_, MED_, SUP_), CDS-400 (dictionaries, units), CDS-500 (preflight, verification), CDS-600 (facets), CDS-700 (evidence), CDS-900 (platform profiles), CDS-1100 (identifier and measurement contracts), CDS-1500 (profile model, requirement levels, profile register, jurisdiction requirement register), CDS-1900 (product relationship record, kits and bundles, dangerous-goods declarations) |
+| Companion package | CDS Reference Dictionary: Chapter 11 (Electronics & Appliances), Chapter 18 (Parts, Automotive & Industrial: product conditions, dangerous-goods classes), Chapter 19 (Jurisdictions & Regulatory Schemes) |
+| Profile identifier | `cds.profile.electronics.v0_2` (registered in CDS-1500 §2.1) |
+| Research basis | REVIEW-020 (global commerce vertical market research, 2026-09-20): consumer electronics is the largest worldwide ecommerce category by revenue (estimated at roughly US$1 trillion for 2026) and the largest category of Amazon's global gross merchandise value (38% in 2025); electronics stores carry among the largest catalogues on Shopify (average above 2,400 products per store), so the vertical's PIM intensity far exceeds its store count. |
+
+Terminology follows CDS-100. Attribute requirement levels (R, C, REC, O, N/A) are those of CDS-1500 §4 and are not restated here. "Technical goods" in this chapter means products whose purchase decision is dominated by measured specifications and compatibility rather than by appearance.
+
+---
+
+## 1. Purpose and Scope *(normative)*
+
+CDS-1800 defines the industry profile for consumer electronics (phones, computers, audio, video, cameras, gaming, wearables, smart home), small and large domestic appliances, and technical accessories (cables, chargers, mounts, storage media). It also governs the technical-specification layer of products homed in other profiles (a beauty device, a power tool, a bicycle computer) where those chapters cite it.
+
+The data shape is distinctive for four reasons: identity is manufacturer-anchored (brand plus manufacturer part number, usually with a GTIN) and variants differ by capacity, colour, region or plug rather than by size; the record is dominated by dozens to hundreds of measured, unit-bearing specifications whose set depends on the product type; compatibility ("works with", "fits", "requires") is a relationship between products or standards, not an attribute; and a large regulated layer (electrical safety marks, radio approvals, energy labels, battery and transport rules, repairability and take-back obligations) differs by jurisdiction and, in several markets, must be shown online next to the price.
+
+**CDS1800-R001** An implementation claiming the Electronics Profile MUST represent technical specifications as typed, unit-bearing attribute values governed by Attribute Definitions (CDS-200 §7, CDS-400 §18), never solely as specification text, tables in descriptions or images of specification sheets.
+
+**CDS1800-R002** An implementation claiming this profile MUST represent compatibility, inclusion and accessory relationships as product relationship records per CDS-1900 §5, never as tags, free text or category membership.
+
+**CDS1800-R003** An implementation MUST maintain a jurisdiction requirement register (CDS-1500 §2.2) for every market it publishes electrical or electronic goods to, and publication preflight for a market MUST evaluate the market's pre-market, marking, energy-label, battery, transport and listing obligations before the offer is made available.
+
+**CDS1800-R004** This profile MUST NOT weaken any rule of CDS-1500 that it reuses; where this chapter is silent, CDS-1500 and the core chapters govern.
+
+## 2. Profile Model *(informative pointer)*
+
+This profile applies the industry profile model of CDS-1500 §2, the requirement levels of CDS-1500 §4 and the jurisdiction requirement register of CDS-1500 §2.2 without restatement. Its identifier and dictionary bindings are in CDS-1500 §2.1; its seeded jurisdiction entries are in Appendix D.
+
+## 3. Product Model *(normative)*
+
+A technical product is a manufacturer model offered in one or more sellable configurations. The Product is the model (the television model, the laptop model line as configured by the manufacturer); Variants are the sellable configurations that differ by capacity, memory, screen size within a model line, colour, region, plug type or bundled accessories. Model families (a generation, a series) are relationships, not product attributes.
+
+```
+Product: 65-inch 4K OLED television, model X65Q      (informative example)
+  Product scope:
+    STD_brand = Example Electronics
+    SUP_manufacturer_part_number = X65Q-AU
+    CAT_product_type = television
+    MF_screen_size_in = 65
+    MF_screen_technology = oled                        # screen_technology dictionary
+    MF_resolution = {horizontal: 3840, vertical: 2160}
+    MF_connectivity = [hdmi, wifi, bluetooth, ethernet]
+    MF_hdmi_port_count = 4
+    MF_power_consumption_w = 180
+    CMP_energy_ratings = [{jurisdiction: AU, scheme: au_energy_rating, value: 4.5, registration_id: ...},
+                          {jurisdiction: EU, scheme: eu_energy_label, class: F, eprel_id: ...}]
+  Variant scope:
+    VAR_region = AU
+    VAR_plug_type = AU
+    VAR_gtin = 09300000000010
+```
+
+**CDS1800-R005** Capacity, memory, storage, screen size within a model line, colour, region and plug type MUST be modelled at variant scope where they identify distinct sellable units (variant boundary rule: CDS-200 §5); specifications shared by every configuration MUST remain at product scope.
+
+**CDS1800-R006** Where a specification differs between configurations (battery capacity, weight, energy rating), the implementation MUST store the differing value at variant scope for the affected variants and MUST NOT publish a product-scope value as if it applied to every configuration.
+
+**CDS1800-R007** Model families, generations and successor relationships MUST be product relationship records (CDS-1900 §5) with typed relationship types, never encoded only in titles or in a free-text "series" field.
+
+**CDS1800-R008** Where a channel's variant-option limit is smaller than the model's configuration dimensions, the implementation MUST apply a documented decomposition strategy (CDS900-R024) and MUST preserve the canonical configuration dimensions in the PIM.
+
+## 4. Product Families and Category Profiles *(informative baseline; the inheritance rule of CDS1500-R016 applies)*
+
+| Product family / category | Required | Recommended | Typical variant options |
+|---|---|---|---|
+| Mobile phones and tablets | brand; MPN; GTIN; screen size and technology; storage; memory; battery capacity; connectivity; operating system; region; charging port type and power; battery chemistry and transport class | ingress-protection rating; energy label per market; repairability class where a market issues one; included charger status | storage, colour, region |
+| Computers | brand; MPN; processor; memory; storage; screen size; operating system; ports; battery capacity (portables) | dimensions and weight; energy label per market | configuration, colour |
+| Audio (headphones, speakers) | brand; MPN; connectivity; power source; battery capacity where rechargeable | driver size; codec support; ingress rating; case battery | colour |
+| Television and video | brand; MPN; screen size; screen technology; resolution; connectivity and port counts; energy rating per market; installation type | HDR formats; refresh rate; smart platform | size |
+| Cameras and optics | brand; MPN; sensor format; resolution; lens mount; battery | video capabilities; weather sealing | kit configuration |
+| Small appliances | brand; MPN; power source; wattage; capacity; dimensions; electrical safety compliance per market | energy or water rating where regulated; installation type | colour |
+| Large and white goods | brand; MPN; capacity; dimensions; energy and water ratings per market; installation type; electrical compliance | noise level; programme features; delivery class | colour, finish |
+| Smart home and networking | brand; MPN; connectivity standards and versions; power source; compatibility relationships | hub or ecosystem requirements as relationships | colour |
+| Accessories (cables, chargers, mounts, cases) | brand; MPN; connector or mount standard; compatibility relationships; power delivery where applicable | length; material | length, colour |
+| Batteries and power banks | chemistry; capacity (Wh and mAh); voltage; cell count; transport classification | charging ports; power delivery | capacity |
+
+## 5. Identity and Identifiers *(normative)*
+
+| Field | Meaning | Type |
+|---|---|---|
+| STD_brand | Brand as marketed | Governed brand dictionary value |
+| SUP_manufacturer | Legal manufacturer where different from brand | Governed value |
+| SUP_manufacturer_part_number | Manufacturer part or model number (MPN) | Identifier |
+| MF_model_name | Marketed model name | Text |
+| VAR_gtin | Trade item identifier with scheme | Identifier (GTIN-8/12/13/14 or declared alternative) |
+| MF_identifier_exists | Whether a manufacturer-assigned trade identifier exists | Boolean |
+| MF_series / MF_generation | Family and generation | Relationship records (R007) plus optional governed labels |
+| MF_release_date / lifecycle.end_of_sale_date | Market release and end-of-sale dates | Dates |
+
+**CDS1800-R009** Brand and manufacturer part number MUST be governed identity attributes; a GTIN MUST be stored with its scheme and MUST validate per scheme (CDS-1100), and the absence of a manufacturer-assigned identifier MUST be an explicit declaration (`MF_identifier_exists = false`), never an empty field.
+
+**CDS1800-R010** A retailer SKU MUST NOT be substituted for the manufacturer part number in the MPN attribute; the two are distinct identifiers with distinct authority.
+
+**CDS1800-R011** Model name and model number MUST be separate attributes; a regional suffix on a part number (for example a plug-region code) MUST be represented at variant scope, not by forking the product.
+
+**CDS1800-R012** Where a market requires a product identification element (type, batch or serial number) and the manufacturer's identity and address on the product or in the online offer (Appendix D), the product identifier MUST be a governed attribute and the responsible-person record (CDS-1600 §12 pattern; `CMP_responsible_person`) MUST be maintained per market.
+
+**CDS1800-R013** Release date and end-of-sale date MUST be typed dates in the product lifecycle group (CDS-1100 §8); "new" and "discontinued" storefront states MUST derive from them under governed rules (CDS600-R086).
+
+## 6. Technical Specifications *(normative)*
+
+Specifications are the heart of this profile. Every specification is an Attribute Definition with a declared data type, unit, cardinality, validation range and comparison strategy; the set of specifications required for a product type is declared in the category profile, not improvised per product.
+
+| Rule area | Mechanism |
+|---|---|
+| Specification sets | Each category profile declares its specification set with requirement levels (R/C/REC/O) — for example a television declares screen size, technology, resolution, refresh rate, port counts, power consumption, dimensions with and without stand, weight |
+| Units | Every numeric specification carries a governed unit; storage capacity declares its base (decimal gigabyte or binary gibibyte) per organisation policy |
+| Standards and versions | Interface and protocol standards (Wi-Fi 6E, Bluetooth 5.3, HDMI 2.1, USB4, DisplayPort 2.1, Thunderbolt 4) are governed dictionary values with version as part of the value, not free text |
+| Ranges and "up to" | Manufacturer maximums ("up to 20 hours") are stored as typed values with a basis qualifier (`manufacturer_rated`, `measured_under_scheme`), never as bare numbers implying measurement |
+| Provenance | Each accepted specification value carries provenance to the manufacturer specification sheet or regulatory database (evidence class E1) or to an official product page (E2) |
+
+**CDS1800-R014** Every specification exposed for search, filtering, comparison or channel publication MUST be an Attribute Definition with a declared data type, unit (where numeric), validation range and comparison strategy (CDS200-R023, CDS400-R056); a specification that exists only inside description text MUST NOT be treated as populated.
+
+**CDS1800-R015** The specification set for a product type MUST be declared in the category profile with requirement levels; requiredness MUST NOT be evaluated against a flat universal specification list (CDS1500-R009).
+
+**CDS1800-R016** Interface, protocol and standard versions MUST be governed dictionary values that include the version where the version is commercially meaningful (the `connectivity` dictionary pattern), and MUST NOT be free text.
+
+**CDS1800-R017** A manufacturer-rated maximum or typical value MUST carry a basis qualifier distinguishing it from a value measured under a declared scheme; the two MUST NOT be compared as equivalent.
+
+**CDS1800-R018** Specification values MUST carry provenance to an eligible source (CDS-700 §7 E1 or E2); an AI-extracted specification MUST be a proposal with evidence and MUST be validated against the Attribute Definition's unit and range before acceptance, and an implementation MUST NOT accept a specification value with no eligible evidence (CDS700-R018).
+
+**CDS1800-R019** Where two eligible sources disagree on a specification, the conflict MUST be surfaced for review (CDS700-R019); the implementation MUST NOT silently prefer the more favourable value.
+
+## 7. Compatibility and Standards Compliance *(normative)*
+
+Compatibility is the single most-asked question in this vertical and the most-often faked. The profile represents it as relationships and standards, never as inference.
+
+**CDS1800-R020** Compatibility between products (an accessory and the devices it fits, a component and the systems it works in) MUST be expressed as product relationship records of a governed type (`compatible_with`, `accessory_for`, `requires`, `fits`) per CDS-1900 §5, with the target expressed as a product, a model family, a governed standard or an application record; it MUST NOT be expressed as tags, category placement or free text alone.
+
+**CDS1800-R021** "Universal" compatibility MUST be an explicit declaration bound to a governed standard (for example a connector or mount standard) rather than an absence of relationship records.
+
+**CDS1800-R022** Compatibility MUST NOT be inferred from category similarity, title similarity or shared brand by rules or AI; a proposed relationship requires eligible evidence and human review before publication.
+
+**CDS1800-R023** Standards-compliance and certification claims (certified to a wireless, connector, safety or performance standard) MUST be governed claim or certification records with the certifying scheme and evidence (CDS-1600 §11 pattern; `MF_certifications`), and MUST NOT be projected as facets unless fed by accepted records.
+
+**CDS1800-R024** Port and slot counts MUST be typed integer specifications per governed interface value (for example `MF_hdmi_port_count`), never a comma-separated list.
+
+## 8. Power, Batteries and Energy Ratings *(normative; dictionary bindings informative)*
+
+| Field | Meaning | Type |
+|---|---|---|
+| MF_power_source | Governed value (`power_source` dictionary: mains, rechargeable battery, replaceable battery, USB powered, …) | Product |
+| MF_input_voltage_range_v / MF_input_frequency_hz | Electrical input | Typed measurements or ranges |
+| VAR_plug_type | Plug or socket standard supplied | Governed value (variant scope; CDS-1500 §13) |
+| MF_rated_power_w / MF_power_consumption_w | Rated power and consumption | Typed measurements |
+| MF_battery_chemistry | Governed value (`battery_chemistry` dictionary: lithium_ion, lithium_polymer, lithium_metal, nickel_metal_hydride, alkaline, lead_acid, sodium_ion, …) | Product/Variant |
+| MF_battery_capacity_wh / MF_battery_capacity_mah / MF_battery_voltage_v | Battery capacity and voltage | Typed measurements (watt-hours mandatory for lithium transport classification) |
+| MF_battery_removable / MF_battery_included / MF_battery_count | Battery facts | Booleans and integer |
+| CMP_dangerous_goods | Transport declaration | Record per CDS-1900 §12 (UN 3480/3481 lithium-ion, 3090/3091 lithium metal, 3551/3552 sodium-ion, and others) |
+| MF_charging_port / MF_charging_power_min_w / MF_charging_power_max_w / MF_usb_pd_supported / MF_charger_included | Charging capabilities as labelled | Governed value; typed watts; booleans |
+| CMP_energy_ratings | Per-market energy or water rating records | List: jurisdiction, scheme (`energy_rating_system` dictionary), rating value or class, class range in force, registration identifier, label artefact reference, product information sheet reference, verification date |
+
+**CDS1800-R025** Power source, input electrical characteristics and plug type MUST be governed or typed values; plug type MUST be variant-scoped where it defines the sellable unit.
+
+**CDS1800-R026** Battery chemistry MUST be a governed value and battery capacity MUST be a typed measurement in watt-hours (with milliampere-hours and voltage where labelled) for every product containing or supplied with a battery; these values MUST be present before a dangerous-goods declaration is made.
+
+**CDS1800-R027** Every product containing or packed with a lithium or sodium-ion battery MUST carry a dangerous-goods declaration per CDS-1900 §12 before publication to a channel or carrier that ships it; the declaration MUST distinguish batteries contained in equipment, packed with equipment and shipped alone, and MUST NOT be inferred from category.
+
+**CDS1800-R028** Energy and water ratings MUST be stored as per-market records with the scheme, the rating value or class, the class range in force for the scheme (where a scheme uses a range), the registration identifier where the scheme registers models, and a reference to the label artefact and product information sheet; a rating MUST NOT be stored as a single global number or as a marketing claim.
+
+**CDS1800-R029** Where a market requires the energy label, class arrow, product information sheet or rating icon to be shown online close to the price (Appendix D), the channel projection for that market MUST include the required artefact or class-and-range display, generated from the rating record, and verification MUST cover it.
+
+**CDS1800-R030** Charging capabilities required to be labelled in a market (charging port standard, minimum and maximum charging power, protocol support, whether a charger is included) MUST be typed attributes and, where the market requires the pictogram or label online close to the price, MUST be projected and verified for that market.
+
+**CDS1800-R031** A regulated energy or water rating MUST derive from the scheme's registration or supplier documentation (E1); it MUST NOT be estimated or copied from a similar model.
+
+**CDS1800-R032** Efficiency programme membership that is voluntary in a market (for example a certification programme) is a certification claim under R023, not a rating; the `energy_rating_system` dictionary marks such schemes as evidence-gated.
+
+## 9. Physical Attributes, Installation and Packaging *(normative)*
+
+**CDS1800-R033** Product dimensions and weight MUST be typed measurements distinguishing the product (with and without stand or accessories where relevant) from the packaged unit; packaged dimensions and weight MUST be present for products published to channels that compute shipping.
+
+**CDS1800-R034** Installation and mounting types MUST be governed values (`installation_type` dictionary; mounting standards such as display-mount patterns as governed specifications).
+
+**CDS1800-R035** Delivery class (parcel, oversized, two-person, installation required) MUST be a governed logistics attribute where the organisation ships the product, derived from packaged measurements and category rules, not authored per product.
+
+## 10. Contents, Kits and Accessories *(normative)*
+
+**CDS1800-R036** Items included in the box MUST be represented as `includes` relationship records with quantities (CDS-1900 §11), not only as a descriptive list, so that channel content, warranty and returns processes can rely on them.
+
+**CDS1800-R037** Bundles combining a device with accessories or services MUST be modelled as kits with component relationships per CDS-1900 §11, with each component retaining its own identity, specifications and compliance records.
+
+## 11. Condition, Warranty, Lifecycle and Repair *(normative)*
+
+| Field | Meaning | Type |
+|---|---|---|
+| MF_condition | Governed value (`product_condition` dictionary: new, refurbished, remanufactured, used) | Variant |
+| MF_refurbished_grade | Organisation-governed grade where condition is refurbished | Governed value |
+| MF_warranty_months / MF_warranty_type / MF_warranty_provider | Warranty term, type (manufacturer, retailer, extended) and provider, per market | Per-market records |
+| MF_software_support_until | Declared operating-system or security update period | Date |
+| MF_spare_parts_availability_years / MF_repairability_class | Repair information where a market requires or scores it | Typed values with scheme |
+
+**CDS1800-R038** Condition MUST be a governed value at variant scope; a refurbished or used product MUST NOT share a variant with a new one, and channels that require a condition attribute MUST receive it from this value.
+
+**CDS1800-R039** Warranty MUST be stored per market as typed records; a warranty statement in a description MUST derive from the record.
+
+**CDS1800-R040** Where a market requires repair, spare-part availability or software-support information to be made available (Appendix D), the information MUST be a typed attribute with the scheme and MUST be projected for that market.
+
+**CDS1800-R041** Product recalls and safety withdrawals MUST be expressed through lifecycle state and channel withdrawal (CDS-500 §12), with the affected serial or batch range recorded as an observation, never by deleting the product.
+
+**CDS1800-R042** Region locking, regional software or regional service restrictions MUST be governed variant attributes evaluated at preflight for the target market.
+
+## 12. Compliance, Safety Marks and Technical Documentation *(normative)*
+
+| Field | Meaning | Type |
+|---|---|---|
+| CMP_compliance_declarations | Per-market compliance records | List: jurisdiction, scheme (`regulatory_scheme` dictionary), obligation type, mark or marking applied, registration or certificate identifier, responsible supplier or economic operator, declaration of conformity reference, evidence, status, dates |
+| CMP_responsible_person | Responsible supplier, importer, authorised representative or economic operator per market | Per-market record |
+| CMP_product_identifier | Type, batch or serial identification element required by a market | Governed attribute |
+| MED_technical_documents | Typed document set | Records: type (user manual, quick start, specification sheet, declaration of conformity, energy label, product information sheet, safety data sheet, test summary), language, version, URL or asset reference |
+| MF_warning_statements | Mandatory warnings per market (for example button-battery warnings) | Structured statement records with scheme |
+
+**CDS1800-R043** Compliance with a market's electrical-safety, electromagnetic-compatibility, radio, energy, water, battery, take-back or general-safety regime MUST be a governed compliance record per market referencing the scheme and its evidence; a conformity mark in an image or a phrase in a description MUST NOT be treated as the compliance fact.
+
+**CDS1800-R044** Compliance declarations and conformity marks MUST NOT be projected as customer facets or claims unless fed by accepted records; they MAY be displayed as information where the market requires or permits it.
+
+**CDS1800-R045** Technical documents MUST be typed media records (MED_) with language and version, linked to the product or variant they describe; documents a market requires to be made available online (Appendix D) MUST be projected for that market and their presence verified.
+
+**CDS1800-R046** Mandatory warnings applying to a product type in a market (for example products containing button or coin batteries) MUST be structured statement records evaluated per market at preflight and projected to the market's listing where the market requires or recommends an online warning.
+
+**CDS1800-R047** Where a market requires a battery test summary, a declaration of conformity or a product information sheet to be available to purchasers on request or online, the document reference MUST be present in `MED_technical_documents` before publication to that market.
+
+## 13. Customer Facet Design *(informative — normative facet rules live in CDS-600)*
+
+| Facet | Recommended baseline behaviour | Anti-pattern |
+|---|---|---|
+| Brand | Governed brand dictionary | Supplier spellings |
+| Specification ranges (screen size, capacity, wattage) | Numeric range facets with units (CDS600-R043) | Text buckets typed per product |
+| Connectivity and standards | Governed dictionary values, multi-select OR | Free-text feature lists |
+| Compatibility ("works with") | Fed by relationship records; target-model facets only where the catalogue supports them | Tags such as "iphone-compatible" |
+| Energy rating | Per-market facet from rating records; display class and range as the market requires | A global star facet applied to every market |
+| Condition | Governed condition values | "Like new" free text |
+| Installation type | Governed values | — |
+
+## 14. Channel Projection Guidance *(informative — normative rules: CDS-500, CDS-900)*
+
+| Canonical concept | Metafield-style channel (informative) | Feed-style channel (informative) |
+|---|---|---|
+| Specifications | Category metafields where the taxonomy defines them (connectivity, display technology, battery, compatibility attributes exist for many electronics categories), custom metafields otherwise; verified by read-back | `product_detail` name/value pairs; identifiers `brand`, `gtin`, `mpn`, `identifier_exists` |
+| Compatibility | Relationship projections (complementary-product and compatibility metafields where supported) | Not a standard feed field in the seeded channels; title and product_detail |
+| Energy rating | Per-market metafield plus label artefact; nested class arrow for markets that require it | `energy_efficiency_class` and related attributes are accepted only for specific countries in the Google profile (verified 2026-09-20: Switzerland, Norway, UK); `certification` attribute for EU energy labels — dated facts in CDS-900 |
+| Condition | Condition metafield or variant option | `condition` (new / refurbished / used) |
+| Battery and transport | Fulfilment metafields; carrier declarations from the DG record | Not published to consumers; carrier integration |
+| Warnings and compliance information | Per-market generated blocks; verified | Description blocks where policy allows |
+
+## 15. AI Enrichment and Review *(informative — normative AI rules live in CDS-700)*
+
+| Task | AI may propose | Deterministic or human control |
+|---|---|---|
+| Specification extraction from specification sheets (E1) | Typed candidates with units | Unit and range validation; provenance required (R018); conflicts surfaced (R019) |
+| Standards and version normalisation | Dictionary candidates | Governed dictionary; unknown versions quarantined |
+| Compatibility proposals | Candidate relationships with evidence | Never accepted without evidence and review (R022) |
+| Energy and battery data | None — regulatory database or supplier document only | R031, R026 |
+| Market obligation gaps | Candidate register entries triggered by category and attributes | Register evaluation deterministic |
+
+## 16. Governance and Organisational Extensions *(informative — rules in CDS-1500 §23 and CDS-800)*
+
+Specification sets per category are organisational schema decisions governed under CDS-800 §23 with impact assessment on facets, channels and comparison. External specification models (ETIM classes and features, GS1 GPC brick attributes, marketplace category attributes) may be adopted as the source of a category's specification set through Taxonomy Mappings and attribute crosswalks (CDS-1900 §8). The jurisdiction requirement register for electrical goods changes frequently (energy-label rescaling, battery regulation phase-ins, charger rules) and is reviewed on the declared cadence with a mandatory review on each market change.
+
+## 17. Conformance Requirements *(normative — claims and levels per CDS-1000)*
+
+**CDS1800-R048** An implementation claiming the CDS Electronics Profile MUST: govern brand, manufacturer part number and trade identifiers with declared schemes and explicit identifier-absence (R009–R011); store every exposed specification as a typed, unit-bearing Attribute Definition value with a declared category specification set, basis qualifiers and provenance (R014–R019); express compatibility, inclusion, family and successor relationships as governed relationship records (R007, R020–R022, R036–R037); store power, battery and per-market energy or water ratings as typed and governed records with dangerous-goods declarations for battery products (R025–R032); store condition, warranty and lifecycle as governed values (R038–R042); maintain per-market compliance records, responsible-person records, typed technical documents and mandatory warnings (R043–R047); maintain and evaluate a jurisdiction requirement register for every market published to (R003); apply category-specific requirements per CDS1500-R009; and publish and verify channel representations under CDS-500, including market-mandated online label and information displays (R029, R030, R045).
+
+**CDS1800-R049** An Electronics Profile claim MUST state which markets its register covers and whether battery-containing products and large appliances are in scope.
+
+## 18. Worked Product Examples *(informative)*
+
+### 18.1 Television sold in Australia and the EU
+
+```
+STD_brand = Example Electronics; SUP_manufacturer_part_number = X65Q
+CAT_product_type = television
+MF_screen_size_in = 65; MF_screen_technology = oled; MF_resolution = {3840, 2160}; MF_refresh_rate_hz = 120
+MF_connectivity = [hdmi, wifi, bluetooth, ethernet]; MF_hdmi_port_count = 4; MF_hdmi_version = hdmi_2_1
+MF_power_consumption_w = 180; MF_installation_type = freestanding (wall_mounted supported; mount pattern 300x300)
+CMP_energy_ratings =
+  [{jurisdiction: AU, scheme: au_energy_rating, value: 4.5, registration_id: <GEMS registration>, label_ref: MED-.., verified: 2026-09-20},
+   {jurisdiction: EU, scheme: eu_energy_label, class: F, class_range: "A-G", eprel_id: <EPREL model id>, label_ref: MED-.., pis_ref: MED-..}]
+CMP_compliance_declarations =
+  [{jurisdiction: AU, scheme: au_eess_rcm, level: 2, registration: <EESS>, responsible_supplier: ...},
+   {jurisdiction: AU, scheme: au_acma_rcm, ...},
+   {jurisdiction: EU, scheme: eu_ce_marking_electrical, directives: [LVD, EMC, RED, RoHS], doc_ref: MED-..},
+   {jurisdiction: EU, scheme: eu_weee_2012_19, marking: crossed_out_bin, producer_registration: ...}]
+Variant AU: VAR_plug_type = AU; VAR_gtin = 09300000000010
+Variant EU: VAR_plug_type = EU; VAR_gtin = 04000000000017
+EU projection: class arrow "F" with range A-G adjacent to price; link labelled "Product Information Sheet" -> verified
+AU projection: Energy Rating Icon generated from the registration data -> verified
+```
+
+### 18.2 Wireless earbuds with charging case
+
+```
+CAT_product_type = wireless_earbuds
+MF_connectivity = [bluetooth]; MF_bluetooth_version = bluetooth_5_3
+MF_battery_chemistry = lithium_polymer
+MF_battery_capacity_wh = 0.2 (each earbud); MF_case_battery_capacity_wh = 1.9
+MF_battery_removable = false; MF_charging_port = usb_c; MF_charger_included = false
+CMP_dangerous_goods = {regulated: true, un_number: "UN3481", proper_shipping_name: "Lithium ion batteries packed with equipment",
+                       class: "9", watt_hours_per_battery: 1.9, transport_modes: [road, air], test_summary_ref: MED-..}
+CMP_compliance_declarations = [{jurisdiction: EU, scheme: eu_common_charger_2022_2380, pictogram: charger_not_included,
+                                charging_label: {min_w: 3, max_w: 5, usb_pd: false}}, ...]
+EU projection: charger pictogram and charging label shown close to the price -> verified
+```
+
+### 18.3 Dishwasher with energy and water ratings
+
+```
+CAT_product_type = dishwasher
+MF_installation_type = freestanding; MF_capacity_place_settings = 14
+MF_dimensions_mm = {h: 850, w: 600, d: 600}; MF_packaged_weight_kg = 52; MF_delivery_class = two_person
+CMP_energy_ratings =
+  [{jurisdiction: AU, scheme: au_energy_rating, value: 4.0, registration_id: ...},
+   {jurisdiction: AU, scheme: wels_water_rating, value: 5.5, registration_id: ...},
+   {jurisdiction: CA, scheme: ca_energuide, annual_kwh: 240, verification_mark: <certification body>},
+   {jurisdiction: US, scheme: us_ftc_energyguide, label_ref: MED-.., annual_cost_usd: 30}]
+US projection: EnergyGuide label image or icon hyperlink close to the price -> verified
+```
+
+## 19. Reference Validation Cases *(informative — the profile's contribution to the cross-industry validation set, REVIEW-020)*
+
+- a specification present only in description text, which must count as unpopulated (R014);
+- two eligible sources disagreeing on battery capacity, which must surface a conflict (R019);
+- an accessory whose compatibility is asserted only by a tag, which must fail (R020);
+- a lithium-battery product lacking watt-hours or a dangerous-goods declaration, which preflight must block for shipping channels (R026–R027);
+- a single global "energy rating" number offered to two markets with different schemes, which must not satisfy either (R028);
+- an EU listing without the class arrow and product information sheet link, which verification must report (R029);
+- a refurbished unit sharing a variant with a new unit (R038);
+- a product containing a button battery published to Australia without the mandated warning text in the listing (R046, D-AU-5);
+- a phone published to the EU after 20 June 2025 without its energy label and repairability class (D-EU-3);
+- a manufacturer part number overwritten by a retailer SKU (R010).
+
+---
+
+## Appendix A. Electronics Attribute Baseline *(normative — dictionary bindings per CDS1500-R011)*
+
+| Field | Scope | Type | Baseline requirement |
+|---|---|---|---|
+| STD_brand / SUP_manufacturer_part_number / VAR_gtin / MF_identifier_exists | Product / Variant | Governed identity values | R |
+| CAT_product_type | Product | Governed classification reference | R |
+| Category specification set | Product / Variant | Typed Attribute Definitions per category profile | Per category profile (R/C/REC/O) |
+| MF_connectivity | Product | Governed dictionary list | R where the product has interfaces |
+| MF_screen_technology / MF_screen_size_in / MF_resolution | Product | Governed value; typed measurements | R for display products |
+| MF_power_source / MF_input_voltage_range_v / VAR_plug_type / MF_rated_power_w | Product / Variant | Governed and typed values | R for mains-powered products |
+| MF_battery_chemistry / MF_battery_capacity_wh / MF_battery_removable / MF_battery_included | Product / Variant | Governed value; typed measurement; booleans | R for battery products |
+| CMP_dangerous_goods | Product / Variant | Declaration per CDS-1900 §12 | R for battery and other regulated products |
+| MF_charging_port / MF_charging_power_min_w / MF_charging_power_max_w / MF_charger_included | Product | Governed and typed values | C — R where a market mandates charging labelling |
+| CMP_energy_ratings | Product / Variant (per market) | Rating records (`energy_rating_system` dictionary) | R where a market regulates the product type |
+| MF_installation_type | Product | Governed dictionary reference | REC; R for appliances |
+| MF_dimensions / MF_weight / packaged equivalents | Product / Variant | Typed measurements | R |
+| Relationship records (`compatible_with`, `includes`, `accessory_for`, `requires`, `successor_of`) | Product | Records per CDS-1900 §5 | C — R where compatibility or contents are published |
+| MF_condition | Variant | Governed dictionary reference (`product_condition`) | R |
+| MF_warranty_months / MF_warranty_type / MF_warranty_provider | Product (per market) | Typed records | REC; R where a market requires warranty disclosure |
+| CMP_compliance_declarations / CMP_responsible_person / CMP_product_identifier | Product (per market) | Governed records | R where a market regulates the product |
+| MED_technical_documents | Product / Variant | Typed media records | REC; R where a market requires online availability |
+| MF_warning_statements | Product | Structured statement records | C — R where a market mandates a warning |
+| MF_spare_parts_availability_years / MF_repairability_class / MF_software_support_until | Product | Typed values with scheme | C |
+
+## Appendix B. Dictionary Bindings *(informative — becomes governed data on adoption per CDS1500-R011)*
+
+| Dictionary key | Package chapter | Bound attribute(s) | Status at 0.8.0 |
+|---|---|---|---|
+| connectivity | 11 | MF_connectivity and interface versions | Bound by this profile |
+| screen_technology | 11 | MF_screen_technology | Bound |
+| power_source | 11 | MF_power_source | Bound |
+| installation_type | 11 | MF_installation_type | Bound |
+| energy_rating_system | 11 | CMP_energy_ratings.scheme | Bound |
+| battery_chemistry | 11 (new, 0.8.0) | MF_battery_chemistry | Bound |
+| product_condition | 18 (new, 0.8.0) | MF_condition | Bound (shared with CDS-1900) |
+| relationship_type | 18 (new, 0.8.0) | Relationship records | Bound via CDS-1900 §5 |
+| dangerous_goods_class | 18 (new, 0.8.0) | CMP_dangerous_goods | Bound via CDS-1900 §12 |
+| jurisdiction / regulatory_scheme | 19 (new, 0.8.0) | CMP_* records | Bound via CDS-1500 §2.2 |
+
+Deliberately not shipped: per-category specification sets (adopt ETIM, GS1 GPC or marketplace attribute sets under CDS-1900 §8), brand dictionaries, mount-pattern and connector registries beyond the connectivity vocabulary, vendor ecosystem lists (excluded by the package rules).
+
+## Appendix C. References *(informative; retrieved 2026-09-20 unless stated)*
+
+| Ref | Source | Location | Use in this chapter |
+|---|---|---|---|
+| [E1] | EESS — Registration of in-scope electrical equipment; Marking of electrical equipment; In-scope equipment definitions and risk levels v4.3 (2024); ACMA requirements — use of RCM | eess.gov.au | AU Levels 1–3 registration, RCM marking, responsible supplier (D-AU-1, D-AU-2) |
+| [E2] | Energy Rating (energyrating.gov.au) — Displaying the label and icon; Register a product | energyrating.gov.au | AU/NZ GEMS registration, mandatory label products, online icon (D-AU-3) |
+| [E3] | ACCC Product Safety — Button and coin batteries mandatory standards; Products containing button/coin batteries information standard (2026-02-19); Consumer Goods (Products Containing Button/Coin Batteries) Safety and Information Standards 2020 | productsafety.gov.au; legislation.gov.au | Secure compartments, warnings on packaging, instructions and online listings (D-AU-5) |
+| [E4] | WorkSafe New Zealand — Supplier declaration of conformity; High and medium risk products; Electrical safety compliance; Electricity (Safety) Regulations 2010 reg 83 (as at 2026-01-15); RSM Step 4 (SDoC) | worksafe.govt.nz; legislation.govt.nz; rsm.govt.nz | NZ declared medium/high risk articles, SDoC, RCM, radio SDoC (D-NZ-1, D-NZ-2) |
+| [E5] | FCC — Equipment Authorization: RF Device; KDB 784748 D01 (labelling) and D02 (e-labelling) | fcc.gov; apps.fcc.gov | SDoC and certification labelling, FCC ID, e-labels (D-US-1) |
+| [E6] | FTC — 16 CFR 305.27 Paper catalogs and websites; EnergyGuide Labeling FAQs | ecfr.gov; ftc.gov | EnergyGuide label or icon online near price (D-US-2) |
+| [E7] | OEHHA — Proposition 65 warnings for internet purchases (regulations effective 2025-01-01) | oehha.ca.gov; p65warnings.ca.gov | Online warning before purchase (D-US-3) |
+| [E8] | California SB 244 Right to Repair Act (Public Resources Code 42488–42488.3), operative 2024-07-01 | leginfo.legislature.ca.gov | Parts, tools and documentation availability 3 or 7 years (D-US-4) |
+| [E9] | European Commission — EPREL: Dealers; Suppliers; Commission Implementing Regulation (EU) 2024/994; Dealers webinar on smartphones and slate tablets (June 2025) | energy-efficient-products.ec.europa.eu | Online label and product information sheet display, nested arrow, QR (D-EU-2, D-EU-3) |
+| [E10] | Commission Delegated Regulation (EU) 2023/1669 (energy labelling of smartphones and slate tablets); Commission Regulation (EU) 2023/1670 (ecodesign) | eur-lex.europa.eu | Label content, repairability class, spare parts and information requirements from 20 June 2025 (D-EU-3) |
+| [E11] | Regulation (EU) 2023/1542 concerning batteries (consolidated 2024-07-18) | eur-lex.europa.eu | Separate collection symbol from 18 August 2025, general label from 18 August 2026, QR code from 18 February 2027 (D-EU-4) |
+| [E12] | Directive (EU) 2024/884 amending the WEEE Directive 2012/19/EU (marking per EN 50419:2022) | eur-lex.europa.eu | Crossed-out wheeled bin marking (D-EU-5) |
+| [E13] | Regulation (EU) 2023/988 General Product Safety Regulation (applies from 13 December 2024) | eur-lex.europa.eu | Traceability, responsible economic operator, online offer information (D-EU-6) |
+| [E14] | Directive (EU) 2022/2380 (common charger) | eur-lex.europa.eu | USB-C receptacle, charging label and pictogram close to the price in distance selling from 28 December 2024 (laptops from 28 April 2026) (D-EU-7) |
+| [E15] | Regulation (EU) 2024/1781 Ecodesign for Sustainable Products (ESPR) | eur-lex.europa.eu | Digital product passport framework, dealer obligations in distance selling (D-EU-8) |
+| [E16] | GOV.UK — Placing UKCA or CE marked products on the market in Great Britain (2026-03-31); Product regulations by sector (2026-03-31); Electrical Equipment (Safety) Regulations 2016 guidance; Product Safety and Metrology etc. (Amendment) Regulations 2024 explanatory memorandum | gov.uk; legislation.gov.uk | Indefinite CE recognition from 1 October 2024, UKCA labelling flexibilities to 31 December 2027, manufacturer and importer labelling (D-UK-1) |
+| [E17] | The Waste Electrical and Electronic Equipment Regulations 2013 (as amended to 2025-02-27) | legislation.gov.uk | Distance-seller producer obligations, crossed-out bin and date mark (D-UK-2) |
+| [E18] | Natural Resources Canada — Introduction to the Regulations (2026-06-19); EnerGuide label for appliances; Energy Efficiency Regulations, 2016 (SOR/2016-311) ss. 4, 5, 13; Energy Efficiency Act s. 4 | natural-resources.canada.ca; laws-lois.justice.gc.ca | Verification mark, energy efficiency report, EnerGuide label products (D-CA-1) |
+| [E19] | CSA Group — US/Canada (FCC/ISED) certification for household appliances (2019) | csagroup.org | ISED SDoC and IC certification pattern (D-CA-2; retrieved) |
+| [E20] | IATA — Lithium Battery Guidance Document (2026 edition) | iata.org | UN numbers 3480/3481/3090/3091/3551/3552, 30% state of charge, test summary availability (§8) |
+| [E21] | ECDB — Amazon product categories by revenue 2025; secondary reporting of Statista Market Insights ecommerce revenue by segment (2026) | ecdb.com; statista.com | Market basis (REVIEW-020) |
+
+## Appendix D. Jurisdiction Requirement Register — Seed *(informative seed of the normative register defined in CDS-1500 §2.2)*
+
+Conventions as in CDS-1600 Appendix D.
+
+### D.1 Australia (AU)
+
+| Ref | Instrument / regulator | Applies to | Obligation | Required data elements → CDS field | Trigger / dates | Verification |
+|---|---|---|---|---|---|---|
+| D-AU-1 | Electrical Equipment Safety System (EESS) under state and territory electrical safety laws; AS/NZS 4417 — ERAC/state regulators (`au_eess_rcm`) | In-scope electrical equipment (household-type, ≤ certain ratings) sold in participating jurisdictions | pre_market (responsible supplier registration; Level 2 and 3 equipment registration in the national database; Level 3 certificate of conformity); labelling_element (RCM marking) | Responsible supplier registration; equipment level (1/2/3); equipment registration and, for Level 3, certificate of conformity; compliance folder or evidence of compliance with the relevant standard; RCM marked per AS/NZS 4417.1 near the model identification → CMP_compliance_declarations (scheme `au_eess_rcm`, level, registration, certificate), CMP_responsible_person, marking flag | Ongoing; Level 3 registrations for 1, 2 or 5 years | Verified 2026-09-20 [E1] |
+| D-AU-2 | Radiocommunications (Compliance Labelling) notices incl. EMC Notice 2017 — ACMA (`au_acma_rcm`) | Radiocommunications, EMC, telecommunications and EME-regulated devices | pre_market (responsible supplier registration on the national database); labelling_element (RCM); documentation (compliance records) | Supplier registration (ACMA-only registration has no fee); compliance level 1/2/3 (ACMA levels do not correlate with EESS levels); RCM applied; compliance records held → CMP_compliance_declarations (scheme `au_acma_rcm`, level), CMP_responsible_person | Ongoing | Verified 2026-09-20 [E1] |
+| D-AU-3 | Greenhouse and Energy Minimum Standards (GEMS) Act 2012 and product determinations — Energy Rating (`au_gems_energy_rating`) | Regulated products (clothes dryers, washers, dishwashers, refrigerators and freezers, televisions, computer monitors, air conditioners up to 30 kW, pool pumps and other MEPS products) | pre_market (registration before supply); rating_label (label in stores; icon for online sales) | Registration in the Energy Rating Product Registration System (brand, model number, energy performance); Energy Rating Label displayed when supplying in Australian retail stores; the Energy Rating Icon may be used online and in advertising and can be generated from the regulated product data extract → CMP_energy_ratings (scheme `au_energy_rating`, star rating, annual kWh, registration id, icon artefact) | Ongoing; cancelled registrations on determination updates | Verified 2026-09-20 [E2] |
+| D-AU-4 | Water Efficiency Labelling and Standards (WELS) Act 2005 (`au_wels_water_rating`) | Washing machines, dishwashers, taps, showers, toilets, urinals, flow controllers | pre_market (registration); rating_label | WELS registration; star rating and water consumption on the label; display of the label or rating in advertising and online → CMP_energy_ratings (scheme `wels_water_rating`) | Ongoing | Retrieved (not spot-verified) |
+| D-AU-5 | Consumer Goods (Products Containing Button/Coin Batteries) Safety Standard 2020 and Information Standard 2020; Consumer Goods (Button/Coin Batteries) Safety and Information Standards 2020 — ACCC (`au_button_battery_standards_2020`) | Consumer goods containing or supplied with button or coin batteries; button and coin batteries | pre_market (compliance testing of representative samples); labelling_element; warning_statement; listing_element (recommended) | Secure battery compartment (tool or two independent movements) for consumer-replaceable batteries; batteries must not release under foreseeable use or misuse; captive fasteners; warnings in instructions, on packaging (safety alert symbol on the front panel) or attached to unpackaged goods covering: alert word, symbol, hazard and keep-away statement, lithium 2-hour severe-injury statement or non-lithium serious-injury statement, seek-immediate-medical-attention advice; child-resistant packaging for batteries; online listings should include the warning in the product description → MF_battery_chemistry (button/coin form), MF_warning_statements (scheme `au_button_battery_standards_2020`), CMP_compliance_declarations (test evidence), listing projection | Mandatory from 22 June 2022 | Verified 2026-09-20 [E3] |
+| D-AU-6 | Australian Dangerous Goods Code 7.9 (lithium batteries UN 3480/3481 etc.) (`au_adg_code_7_9`) | Battery products for road and rail transport | transport | Dangerous-goods declaration per CDS-1900 §12 | Mandatory from 1 October 2025 | Verified 2026-09-20 (CDS-1900 Appendix C) |
+
+### D.2 New Zealand (NZ)
+
+| Ref | Instrument / regulator | Applies to | Obligation | Required data elements → CDS field | Trigger / dates | Verification |
+|---|---|---|---|---|---|---|
+| D-NZ-1 | Electricity (Safety) Regulations 2010 regs 81–86A — WorkSafe Energy Safety (`nz_electricity_safety_regulations_2010`) | Declared medium-risk articles (SDoC required; list includes lithium-ion/polymer batteries) and declared high-risk articles (approval or recognised certification, or EESS registration by an NZ-registered responsible or affiliated supplier deemed approval) | pre_market; documentation (SDoC available to purchasers on request within 10 days) | Supplier Declaration of Conformity (description, standard cited from Schedule 4 or AS/NZS 3820, ISO/IEC 17050-1 form) with supporting test report; approval number or RCM on high-risk articles; SDoC available to consumers and to WorkSafe within 10 days → CMP_compliance_declarations (scheme `nz_electricity_safety_regulations_2010`, article class, SDoC reference), MED_technical_documents (SDoC, test report) | Ongoing | Verified 2026-09-20 [E4] |
+| D-NZ-2 | Radiocommunications Act 1989 supplier compliance — RSM (`nz_rsm_sdoc`) | Radio and EMC products | pre_market (SDoC per product or significant variation); labelling_element (R-NZ mark or RCM) | SDoC for Level of Conformity 1 radio products and all Level 2, 3, A1–A3 products; Australian SDoC recognised under the mutual recognition notice → CMP_compliance_declarations (scheme `nz_rsm_sdoc`) | Ongoing | Verified 2026-09-20 [E4] |
+| D-NZ-3 | Energy Efficiency (Energy Using Products) Regulations 2002 — EECA (`nz_eeca_meps`) | MEPS and MEPL regulated products | pre_market (registration in NZ or in Australia under trans-Tasman mutual recognition); rating_label | Registration and Energy Rating Label per the joint scheme; icon rules differ from Australia → CMP_energy_ratings (scheme `au_energy_rating`, jurisdiction NZ) | Ongoing | Verified in part 2026-09-20 [E2][E4] |
+
+### D.3 United States (US, with California noted)
+
+| Ref | Instrument / regulator | Applies to | Obligation | Required data elements → CDS field | Trigger / dates | Verification |
+|---|---|---|---|---|---|---|
+| D-US-1 | 47 CFR Parts 2, 15 and 18 equipment authorization — FCC (`us_fcc_equipment_authorization`) | RF devices: unintentional radiators (most digital devices) via Supplier's Declaration of Conformity; intentional radiators (transmitters) via certification | pre_market (SDoC or certification before marketing or import); labelling_element (FCC ID for certified devices; unique identification and compliance information statement for SDoC; e-labelling permitted with a temporary physical label); documentation (compliance statement, Part 15 user information) | FCC ID or SDoC compliance information (responsible party in the US, identification, statement), Part 15.19/15.105 statements in manuals or packaging, e-label access in ≤3 steps → CMP_compliance_declarations (scheme `us_fcc_equipment_authorization`, procedure, FCC ID, responsible party), MED_technical_documents | Ongoing | Verified 2026-09-20 [E5] |
+| D-US-2 | Energy Labeling Rule, 16 CFR Part 305 (§305.27 websites and catalogs) — FTC (`us_ftc_energyguide`) | Covered products (refrigerators, freezers, room and portable air conditioners, clothes washers, dishwashers, ceiling fans, water heaters, pool heaters, central air conditioners, heat pumps, furnaces, televisions, lamps; plumbing products by text disclosure) | rating_label (EnergyGuide/Lighting Facts label); listing_element (websites) | Website pages with price and detailed description must display a recognisable, legible label image close to the price, or hyperlink via the FTC EnergyGuide icon without requiring download; manufacturers post labels online and report data via DOE CCMS → CMP_energy_ratings (scheme `us_ftc_energyguide`, annual cost or efficiency, label artefact), listing projection | Website display since 15 January 2014 | Verified 2026-09-20 [E6] |
+| D-US-3 | Proposition 65 (California), 27 CCR 25602–25603 — OEHHA (`us_ca_prop65_warning`) | Products exposing California consumers to listed chemicals (common for cables, cords, batteries, plastics) | warning_statement; listing_element | Warning on the product display page, "WARNING" hyperlink or prominent pre-purchase warning; new short-form names a chemical per endpoint; 60-day online update window → MF_warning_statements (jurisdiction US-CA) | Effective 1 January 2025; transition to 1 January 2028 | Verified 2026-09-20 [E7] |
+| D-US-4 | Right to Repair Act (California SB 244, PRC 42488) and comparable state laws (`us_right_to_repair_state`) | Electronic and appliance products first sold in California on or after 1 July 2021 with wholesale price ≥ US$50 | post_market (parts, tools and documentation for 3 years at US$50–99.99 wholesale, 7 years at ≥ US$100) | Availability of documentation, functional parts and tools on fair and reasonable terms; independent repairer notices → MF_spare_parts_availability_years (scheme `us_ca_sb244`), MED_technical_documents | Operative 1 July 2024; other states (for example New York, Minnesota, Oregon, Colorado) have their own effective dates — not seeded | Verified 2026-09-20 [E8] (California); other states retrieved (not spot-verified) |
+| D-US-5 | DOE conservation standards and certification (10 CFR 429/430); UL/NRTL safety listing (voluntary but retailer-required); 49 CFR hazardous materials (batteries) | Appliances; electrical products; battery shipments | pre_market; documentation; transport | DOE certification in CCMS; NRTL listing marks; hazmat declarations → CMP_compliance_declarations, CMP_dangerous_goods | Ongoing | Retrieved (not spot-verified) |
+
+### D.4 European Union (EU)
+
+| Ref | Instrument / regulator | Applies to | Obligation | Required data elements → CDS field | Trigger / dates | Verification |
+|---|---|---|---|---|---|---|
+| D-EU-1 | Low Voltage Directive 2014/35/EU, EMC Directive 2014/30/EU, Radio Equipment Directive 2014/53/EU, RoHS Directive 2011/65/EU — CE marking (`eu_ce_marking_electrical`) | Electrical, electronic and radio equipment | pre_market (conformity assessment, EU declaration of conformity, technical file); labelling_element (CE marking; manufacturer and importer name, trade mark, postal address; type, batch or serial number) | CE marking; manufacturer and importer identification; product identification element; DoC available; instructions and safety information in the required language → CMP_compliance_declarations (scheme `eu_ce_marking_electrical`, directives, DoC ref), CMP_responsible_person, CMP_product_identifier, MED_technical_documents | Ongoing | Retrieved (not spot-verified this pass; directive texts not read) |
+| D-EU-2 | Energy Labelling Regulation (EU) 2017/1369; product-specific delegated regulations; Commission Implementing Regulation (EU) 2024/994 (EPREL) (`eu_energy_label_2017_1369`) | Energy-labelled product groups (dishwashers, washing machines, washer-dryers, refrigerators, electronic displays, light sources, tyres, smartphones and tablets, and others) | pre_market (supplier registers the model in EPREL before placing on the market); rating_label; listing_element (dealers, including online stores) | Online stores must show the energy label and product information sheet close to the price (nested display permitted: class arrow pointing left, letter at least the size of the price, full label on click or hover; link named "Product Information Sheet" in the local language; also on list pages and basket pages); QR code readable; suppliers communicate the EPREL registration number to dealers; advertisements show class and range → CMP_energy_ratings (scheme `eu_energy_label`, class, range, EPREL id, label and PIS artefacts), listing projection and verification | Ongoing; EPREL implementing act 2024 | Verified 2026-09-20 [E9] |
+| D-EU-3 | Commission Delegated Regulation (EU) 2023/1669 (energy labelling of smartphones and slate tablets) and Commission Regulation (EU) 2023/1670 (ecodesign) (`eu_smartphone_energy_label_2023_1669`) | Smartphones and slate tablets (labelling); also mobile and cordless phones (ecodesign) | rating_label; listing_element; post_market (spare parts, OS updates, repair information) | Label: energy efficiency class A–G and range, battery endurance per cycle, repeated free-fall reliability class, repairability class, battery endurance in cycles, ingress protection rating; product information sheet in EPREL; dealers show label and PIS online near the price; suppliers publish ingress rating, minimum battery endurance in cycles, recycled content, critical raw material ranges, and make spare parts available to professional repairers for 7 years after end of placement → CMP_energy_ratings (scheme `eu_smartphone_energy_label_2023_1669`, class, endurance, repairability class, IP rating), MF_spare_parts_availability_years, MF_repairability_class, MED_technical_documents | Units placed on the market from 20 June 2025 | Verified 2026-09-20 [E9][E10] |
+| D-EU-4 | Regulation (EU) 2023/1542 concerning batteries and waste batteries (`eu_batteries_2023_1542`) | Batteries, including batteries incorporated in appliances, sold by distance contracts | labelling_element; documentation; post_market (producer responsibility; distance sellers established elsewhere are producers) | Separate collection symbol on all batteries from 18 August 2025; general information label from 18 August 2026; QR code linking to information (and, for certain batteries, the battery passport) from 18 February 2027; carbon footprint declaration accompanying industrial and EV batteries until accessible via QR; producer registration → CMP_compliance_declarations (scheme `eu_batteries_2023_1542`, markings applied, producer registration), MF_battery_chemistry, MF_battery_capacity_wh | Phased 2025–2027 | Verified 2026-09-20 [E11] |
+| D-EU-5 | WEEE Directive 2012/19/EU as amended by Directive (EU) 2024/884 (`eu_weee_2012_19`) | Electrical and electronic equipment | labelling_element (crossed-out wheeled bin per EN 50419:2022, date mark); post_market (producer registration, distance sellers via authorised representative) | Crossed-out bin marking (on packaging, instructions and warranty only in exceptional cases); producer registration number per member state → CMP_compliance_declarations (scheme `eu_weee_2012_19`) | Ongoing | Verified 2026-09-20 [E12] |
+| D-EU-6 | Regulation (EU) 2023/988 General Product Safety Regulation (`eu_gpsr_2023_988`) | All consumer products (cross-cutting distance-selling duties also for harmonised products) | listing_element; labelling_element; pre_market (responsible economic operator established in the EU) | Product bears type, batch or serial number and manufacturer name, trade mark, postal and electronic address (importer details where applicable); online offers show the manufacturer's (or responsible operator's) name, address and contact, product identification information, warnings and safety information, and a picture; warnings and instructions in a language easily understood; traceability records 6 years → CMP_responsible_person, CMP_product_identifier, MF_warning_statements, listing projection | Applies from 13 December 2024 | Verified 2026-09-20 [E13] |
+| D-EU-7 | Directive (EU) 2022/2380 amending the Radio Equipment Directive (common charger) (`eu_common_charger_2022_2380`) | Handheld mobile phones, tablets, cameras, headphones, headsets, handheld videogame consoles, portable speakers, e-readers, keyboards, mice, navigation systems, earbuds (from 28 December 2024); laptops (from 28 April 2026) rechargeable by wired charging | labelling_element; listing_element | USB Type-C receptacle; label with charging specifications (minimum and maximum power in watts, USB PD support) printed in the instructions and on packaging; pictogram indicating whether a charging device is included; in distance selling the pictogram and label displayed close to the price → MF_charging_port, MF_charging_power_min_w, MF_charging_power_max_w, MF_usb_pd_supported, MF_charger_included, listing projection | 28 December 2024; laptops 28 April 2026 | Verified 2026-09-20 [E14] |
+| D-EU-8 | Regulation (EU) 2024/1781 Ecodesign for Sustainable Products (ESPR) and delegated acts (`eu_espr_2024_1781`) | Product groups as delegated acts are adopted (digital product passport, labels, unsold-goods rules) | listing_element; documentation | Dealers and online marketplaces make the data carrier or unique product identifier accessible to potential customers in distance selling; labels displayed as delegated acts specify → CMP_product_identifier (DPP link), MED_technical_documents | Framework in force 18 July 2024; obligations per delegated act | Verified 2026-09-20 [E15] (framework); product-group acts not seeded |
+
+### D.5 United Kingdom (GB)
+
+| Ref | Instrument / regulator | Applies to | Obligation | Required data elements → CDS field | Trigger / dates | Verification |
+|---|---|---|---|---|---|---|
+| D-UK-1 | Electrical Equipment (Safety) Regulations 2016; Electromagnetic Compatibility Regulations 2016; Radio Equipment Regulations 2017; RoHS Regulations 2012; Product Safety and Metrology etc. (Amendment) Regulations 2024 — OPSS (`uk_electrical_equipment_regulations_ukca_ce`) | Electrical, electronic and radio equipment placed on the GB market | pre_market (UK or EU declaration of conformity; UKCA or CE marking — CE recognition continued indefinitely from 1 October 2024; "Fast-Track UKCA" on EU conformity assessment); labelling_element (manufacturer name, registered trade name or mark, postal address, type/batch/serial; importer details, which may be on packaging or documents until 31 December 2027; UKCA on a label or accompanying document permitted until 31 December 2027) | Conformity marking choice, DoC reference, manufacturer and importer identification, product identifier → CMP_compliance_declarations (scheme `uk_electrical_equipment_regulations_ukca_ce`), CMP_responsible_person, CMP_product_identifier | CE recognition indefinite from 1 October 2024; labelling flexibilities to 31 December 2027 | Verified 2026-09-20 [E16] |
+| D-UK-2 | The Waste Electrical and Electronic Equipment Regulations 2013 (as amended, incl. online marketplace provisions 2025) — Environment Agency (`uk_weee_2013`) | EEE placed on the UK market, including by distance sellers established outside the UK and via online marketplaces | labelling_element (crossed-out wheeled bin; date mark); post_market (producer scheme membership; distributor take-back) | Crossed-out bin symbol and post-13 August 2005 date mark; producer registration; distributor take-back or scheme membership → CMP_compliance_declarations (scheme `uk_weee_2013`) | Ongoing; marketplace provisions 2025 | Verified 2026-09-20 [E17] |
+| D-UK-3 | Energy Information Regulations 2011 (GB energy label) and Ecodesign for Energy-Related Products Regulations 2010 (`uk_energy_information_2011`) | Energy-labelled product groups | rating_label; listing_element | GB energy label and product information sheet displayed online close to the price in the same manner as the EU scheme (UK label, no EPREL) → CMP_energy_ratings (scheme `uk_energy_label`, existing `energy_rating_system` value) | Ongoing; CE recognition for ecodesign continued from 1 October 2024 | Retrieved 2026-09-20 [E16] (sector table); regulation text not read |
+| D-UK-4 | Waste Batteries and Accumulators Regulations 2009; Batteries and Accumulators (Placing on the Market) Regulations 2008 — Defra (`uk_batteries_2009`) | Batteries and battery-containing products | labelling_element (crossed-out bin); post_market (producer registration; distributor take-back) | Markings and producer registration; no conformity marking required in GB (EU battery CE marking applies only in Northern Ireland) → CMP_compliance_declarations (scheme `uk_batteries_2009`) | Ongoing; UK considering its approach to the EU regulation | Retrieved 2026-09-20 [E16] (sector table) |
+
+### D.6 Canada (CA)
+
+| Ref | Instrument / regulator | Applies to | Obligation | Required data elements → CDS field | Trigger / dates | Verification |
+|---|---|---|---|---|---|---|
+| D-CA-1 | Energy Efficiency Act (S.C. 1992, c. 36) and Energy Efficiency Regulations, 2016 (SOR/2016-311) — Natural Resources Canada (`ca_energy_efficiency_regulations_2016`) | Regulated energy-using products imported or shipped between provinces for sale or lease (appliances, water heaters, HVAC, lighting, electronics, commercial equipment) | pre_market (energy efficiency report to NRCan before import or interprovincial shipment; product meets the standard; energy efficiency verification mark from an SCC-accredited certification body or equivalent province); rating_label (bilingual EnerGuide label on clothes washers, dryers, dishwashers, refrigerators, freezers, ranges, room air conditioners and others; lighting labels; walk-in nameplates) | Verification mark (readily visible; on packaging for chargers, power supplies and lamps); energy efficiency report (product name, brand, model number, manufacturer, certification body); EnerGuide label with annual kWh (or CEER) attached before first retail sale; NRCan does not currently require labels to be posted online → CMP_energy_ratings (scheme `ca_energuide`, annual kWh, verification body), CMP_compliance_declarations (report reference) | Ongoing | Verified 2026-09-20 [E18] |
+| D-CA-2 | Radio Standards Specifications and ICES standards — ISED (`ca_ised_radio_equipment`); electrical product safety certification required by provincial and territorial electrical safety authorities (`ca_electrical_safety_certification`) | Radio equipment (IC certification or SDoC per RSS/ICES); electrical products (certification mark from an accredited body before sale in each province) | pre_market; labelling_element | IC certification number or SDoC statement; recognised certification mark (for example cCSAus, cULus) → CMP_compliance_declarations | Ongoing | Retrieved 2026-09-20 [E19] (not spot-verified against ISED or provincial authorities) |
+| D-CA-3 | Consumer Packaging and Labelling Act and Regulations; Canada Consumer Product Safety Act — CFIA/Health Canada | Prepackaged consumer products | labelling_element | Bilingual product identity, net quantity and dealer identity; mandatory safety information → localisation dimension per CDS-300 §18, CMP_responsible_person | Ongoing | Retrieved (not spot-verified) |
+
+### D.7 Other markets
+
+| Jurisdiction | Status | Note |
+|---|---|---|
+| Singapore (SG), Japan (JP), China (CN) | Energy-label schemes only | The `energy_rating_system` dictionary already carries `sg_energy_label`, `jp_energy_label` and `cn_energy_label`; safety, radio and transport regimes for those markets are not seeded. |
+| Republic of Korea (KR), India (IN), Brazil (BR) and others | Not seeded | Organisation supplies entries with local advice (for example KC marking, BIS registration, INMETRO certification). |
+
+END OF CDS-1800 v0.2 REVIEW DRAFT
+
+<div class="chapter"></div>
+
+# Commerce Data Standard (CDS)
+## CDS-1900 — Parts, Automotive, Industrial and Fitment Industry Profile
+
+| Field | Value |
+|---|---|
+| Status | **v0.2 Review Draft** (working source; not an approved standard) |
+| Release | CDS v0.2 (single corpus release per ADR-D5); chapter added in the 2026-09-20 industry-profile expansion |
+| Date | 2026-09-20 |
+| Supersedes | Nothing — first edition. Package Chapter 18 (Parts, Automotive & Industrial: relationship types, part origin types, product conditions, dangerous-goods classes) is shipped with this profile in package 0.8.0. |
+| Normative status | §1, §3, §5–§14, §19 and Appendix A are normative. §2 (pointer), §4, §15–§18, §20, §21 and Appendices B–D are informative; Appendix D seeds the jurisdiction requirement register whose record structure and obligations are normative in CDS-1500 §2.2. Every table is individually marked. **This chapter is the single normative home (CDS000-R005) for three cross-industry mechanisms: the Product Relationship record (§5), kits, bundles and assemblies (§11) and the dangerous-goods declaration (§12).** Other industry chapters cite these sections and do not restate them. |
+| Primary audience | Parts and industrial merchandisers, catalogue and fitment data managers, compliance and dangerous-goods owners, B2B ecommerce operators, data stewards, PIM architects, developers and AI enrichment designers |
+| Depends on | CDS-000 through CDS-1500, especially CDS-200 (entity model, taxonomy mappings, relationships), CDS-300 (CMP_, SUP_, PRC_ and INV_ conditional), CDS-400 (dictionaries, units, related values), CDS-500 (preflight, verification, observation coverage), CDS-600 (facets), CDS-700 (evidence), CDS-900 (platform profiles, supplier import profile), CDS-1100 (entity references, identifiers), CDS-1500 (profile model, requirement levels, profile register, jurisdiction requirement register), CDS-1800 (technical specification rules, cited) |
+| Companion package | CDS Reference Dictionary: Chapter 18 (Parts, Automotive & Industrial), Chapter 19 (Jurisdictions & Regulatory Schemes) |
+| Profile identifier | `cds.profile.parts_fitment.v0_2` (registered in CDS-1500 §2.1) |
+| Research basis | REVIEW-020 (global commerce vertical market research, 2026-09-20): automotive and hardware-and-tools stores carry the largest catalogues of any Shopify vertical (averages above 5,700 and 4,200 products per store respectively), DIY and hardware is a top-five worldwide ecommerce revenue segment (roughly US$0.4 trillion for 2026), and industrial and scientific categories are among the fastest-growing on Amazon; store counts are modest, PIM intensity per store is the highest of any archetype. |
+
+Terminology follows CDS-100. Attribute requirement levels (R, C, REC, O, N/A) are those of CDS-1500 §4 and are not restated here. "Fitment" means the declared applicability of a part to a vehicle, machine, appliance or other host; "interchange" means equivalence between part numbers.
+
+---
+
+## 1. Purpose and Scope *(normative)*
+
+CDS-1900 defines the industry profile for automotive and powersports parts and accessories, industrial and maintenance supplies, tools and hardware, electrical and plumbing components, hobby components (radio-control, model, craft hardware) and spare parts for appliances and equipment. It also defines, for the whole corpus, how products relate to one another (compatibility, fitment, inclusion, interchange, supersession), how kits and bundles are composed, and how dangerous goods are declared for transport.
+
+The data shape is distinctive because the purchase decision is "will this fit?" rather than "do I like this?": the record is dominated by relationships to hosts and to other parts, by part-number equivalences and supersession chains, by typed technical attributes in the language of an external classification standard, by units of measure and pack quantities that determine what a sale actually delivers, and by hazardous-materials data that determines whether the item can be shipped at all.
+
+**CDS1900-R001** An implementation claiming the Parts and Fitment Profile MUST represent fitment, compatibility, inclusion, interchange and supersession as product relationship records (§5), never as tags, free text, title conventions or category placement.
+
+**CDS1900-R002** An implementation claiming this profile MUST represent units of measure, pack quantities, sale-unit hierarchies and variable-length or variable-quantity sale forms as typed attributes (§10) so that the delivered quantity of every order line is deterministic.
+
+**CDS1900-R003** An implementation MUST declare a dangerous-goods status for every product (§12) and MUST maintain a jurisdiction requirement register (CDS-1500 §2.2) for every market it publishes parts, chemicals or equipment to.
+
+**CDS1900-R004** This profile MUST NOT weaken any rule of CDS-1500 that it reuses; where this chapter is silent, CDS-1500, CDS-1800 (for technical specifications) and the core chapters govern.
+
+## 2. Profile Model *(informative pointer)*
+
+This profile applies the industry profile model of CDS-1500 §2, the requirement levels of CDS-1500 §4 and the jurisdiction requirement register of CDS-1500 §2.2 without restatement. Its identifier and dictionary bindings are in CDS-1500 §2.1; its seeded jurisdiction entries are in Appendix D.
+
+## 3. Product Model *(normative)*
+
+A part is identified by its manufacturer part number under a brand. The Product is the part; Variants are rare and arise only from sellable-unit differences (pack quantity, finish, length cut) — never from the hosts the part fits.
+
+```
+Product: Front brake pad set, brand ExampleBrake, part number EB-1234    (informative example)
+  Product scope:
+    STD_brand = ExampleBrake
+    SUP_manufacturer_part_number = EB-1234
+    CAT_product_type = brake_pad_set
+    MF_part_origin_type = aftermarket               # part_origin_type dictionary
+    MF_position = front
+    MF_quantity_per_application = 1                  # one set per vehicle
+    MF_unit_of_sale = set; MF_units_per_sale = 4     # four pads per set
+    relationships:
+      - {type: fits, target: application {make: Example, model: Sedan, years: 2018–2023, engine: 2.0L}, position: front}
+      - {type: alternative_to, target: external_part {brand: OEM, number: 04465-00000}}
+      - {type: superseded_by, target: product EB-1234A, effective: 2026-03-01}
+  Variant scope:
+    VAR_gtin = 09300000000027
+```
+
+**CDS1900-R005** Fitment MUST NOT be modelled as variants; a part that fits many hosts is one product with many `fits` relationship records (§6).
+
+**CDS1900-R006** Pack quantity, finish, colour, length cut and hand (left/right) MAY be variant options where they identify distinct sellable units; position on the host (front, rear, left, right) is a fitment qualifier (§6) unless a distinct part number exists per position, in which case it is a separate product.
+
+**CDS1900-R007** Brand and manufacturer part number MUST be governed identity attributes (CDS-1800 §5 rules R009–R011 apply); the same part number under two brands is two products related by `cross_reference`, never one product with two brands.
+
+## 4. Product Families and Category Profiles *(informative baseline; the inheritance rule of CDS1500-R016 applies)*
+
+| Product family / category | Required | Recommended | Typical variant options |
+|---|---|---|---|
+| Automotive replacement parts | brand; MPN; part origin type; fitment records with declared vocabulary source; position and quantity per application; condition; interchange records | supersession; technical attributes per category; core charge status; warranty; compliance marks per market (E-mark, DOT, CARB EO) | pack quantity |
+| Automotive accessories and consumables (oils, fluids, care) | brand; MPN; fitment or universal declaration; dangerous-goods declaration; SDS reference where hazardous; net quantity | specification standards (viscosity grade, approvals as certifications) | size, multipack |
+| Tyres and wheels | brand; MPN; size designation; load index; speed rating; regulated tyre label per market; DOT/E-mark compliance | season; run-flat; noise class | — |
+| Tools and hardware | brand; MPN; technical attributes (size, drive, material, rating); unit of sale and pack quantity; hazardous status for chemicals | compatibility with systems (battery platforms as relationships); external classification code | size, pack |
+| Electrical and plumbing components | brand; MPN; class attributes per an adopted classification model (e.g. ETIM class features); certification records per market; unit of sale (each / metre / box) | — | length, pack |
+| Industrial MRO supplies | brand; MPN; classification code (UNSPSC/ETIM/GPC); unit of sale; MOQ and order multiple where B2B | SDS; shelf life for chemicals | pack |
+| Hobby components (RC, model, craft) | brand; MPN; compatibility records; scale or standard; battery and DG where applicable | included items (kits) | colour, pack |
+| Appliance and equipment spare parts | brand; MPN; fitment to appliance models (fits records); original vs compatible origin type | exploded-view diagram reference | — |
+
+## 5. Product Relationship Record *(normative — single home for the corpus)*
+
+CDS-200's entity model gives products a `relationships` collection of entity references; this section defines the record that collection carries. A product relationship is a governed, directed, typed link from a product (or variant) to a target, with the evidence and lifecycle of any other governed fact.
+
+| Property | Meaning | Requirement |
+|---|---|---|
+| relationship_id | Stable identifier | Required |
+| source | Product or variant reference | Required |
+| relationship_type | Governed value from the `relationship_type` dictionary (package Chapter 18): `fits`, `compatible_with`, `accessory_for`, `requires`, `includes`, `part_of_set`, `replaces`, `superseded_by`, `alternative_to`, `cross_reference`, `successor_of`, `variant_family_of` | Required |
+| target_kind | `product`, `variant`, `model_family`, `standard`, `application`, `external_part`, `external_product` | Required |
+| target | Reference or embedded record appropriate to the kind (a product reference; a governed standard value; an application record per §6; an external part record with brand and number) | Required |
+| quantity | Quantity of the target per source (for `includes`, `requires`) or of the source per application (for `fits`) | Conditional |
+| qualifiers | Governed qualifiers (position, side, drive, engine code, option code, notes from a governed qualifier vocabulary) | Optional |
+| direction | `directed` or `symmetric` (declared per relationship type in the dictionary) | Required |
+| status | Lifecycle per CDS-400 §17.1 (proposed / active / deprecated / retired / rejected) | Required |
+| effective_from / effective_to | Validity window (supersession dates, model years) | Optional |
+| provenance | Source, evidence class, actor, timestamps (CDS-400 §23; CDS-700 for AI proposals) | Required |
+| version | Record version | Required |
+
+**CDS1900-R008** Every product relationship MUST be a record conforming to this section, carried in the product's `relationships` collection (CDS-1100 §8) or an equivalent governed structure, with a governed `relationship_type`, a typed target and provenance.
+
+**CDS1900-R009** Relationship types MUST be governed dictionary values whose direction (directed or symmetric) is declared in the dictionary; an implementation MUST NOT invent relationship semantics per product.
+
+**CDS1900-R010** Relationships MUST NOT be stored as tags, in free-text fields, in titles or in category membership as the system of record; such projections MAY be generated from relationship records.
+
+**CDS1900-R011** A relationship whose target is another product in the catalogue MUST reference that product's stable identifier; a relationship whose target is outside the catalogue (an OEM number, a competitor part, a vehicle) MUST use the external target kinds with the identifying scheme declared.
+
+**CDS1900-R012** Relationships MUST carry provenance and evidence class (CDS-700 §7); an AI-proposed relationship MUST be a proposal with evidence and MUST NOT be published without human review (CDS-700 §19), because a wrong fitment or compatibility is a safety and returns event.
+
+**CDS1900-R013** Relationships are versioned governed facts: changes follow CDS-400 §24 (versioning, deprecation with replacement, breaking-change migration) and a superseded relationship MUST be retained with its validity window, never deleted.
+
+**CDS1900-R014** Where a channel accepts relationship data (compatibility lists, complementary products, fitment tables), the projection MUST be generated from relationship records, declared in the Field Mapping with its comparison strategy, and verified under CDS-500; where the channel exposes no read-back for relationships, the verification status MUST be UNOBSERVABLE, not MATCH.
+
+**CDS1900-R015** Symmetric relationships (`compatible_with`, `alternative_to`, `part_of_set`) MUST be stored once and evaluated in both directions; directed relationships MUST NOT be assumed to hold in reverse.
+
+**CDS1900-R016** Cycles in `superseded_by` and `replaces` chains MUST be rejected at validation (the CDS400-R036 pattern).
+
+## 6. Fitment and Application Data *(normative)*
+
+Fitment is a `fits` relationship whose target is an application record: a description of the host (vehicle, machine, appliance model) drawn from a declared vocabulary. The corpus ships no vehicle or equipment tables — the leading reference databases are licensed (for example the Auto Care Association's vehicle configuration database used by the ACES standard, or manufacturer model lists) — so the organisation declares which vocabulary and release each application record uses.
+
+| Application record property | Meaning |
+|---|---|
+| vocabulary_source | Governed value naming the reference vocabulary and release (for example `aces_vcdb_<release>`, `manufacturer_model_list_<brand>_<version>`, `organisation_vehicle_dictionary_v3`) |
+| host_type | vehicle, powersport, marine, equipment, appliance, other |
+| make / model / submodel / body / series | Governed values from the vocabulary |
+| year_from / year_to (or model year list) | Typed integers |
+| engine / transmission / drive / fuel / region qualifiers | Governed qualifier values from the vocabulary |
+| equipment or appliance model identifiers | Governed values where the host is not a vehicle |
+| position | Governed value (front, rear, left, right, upper, lower, inner, outer, …) |
+| quantity_per_application | Integer |
+| notes | Governed qualifier statements only (from a qualifier vocabulary), never free text |
+
+**CDS1900-R017** Every fitment MUST be a `fits` relationship with an application record whose vocabulary source and release are declared; application values MUST be governed values of that vocabulary, never free text.
+
+**CDS1900-R018** Universal fitment MUST be an explicit declaration (`MF_fitment_scope = universal` with the governed scope it is universal within), never the absence of fitment records; a part with neither fitment records nor a universal declaration MUST NOT satisfy an R-level fitment requirement.
+
+**CDS1900-R019** Position and quantity per application MUST be typed qualifiers on the fitment record where the part's applicability depends on them.
+
+**CDS1900-R020** Fitment MUST NOT be derived from titles, descriptions, supplier category names or image text by rules or AI without human review; a proposed fitment carries evidence (manufacturer application catalogue, E1; certified data feed, E2) and review state.
+
+**CDS1900-R021** Model years MUST be typed integers or ranges; a fitment record MUST NOT encode years in free text.
+
+**CDS1900-R022** When the declared vocabulary releases a new version, the organisation MUST record the migration of affected application records as a governed dictionary migration (CDS400-R082 pattern); records bound to a retired vocabulary release MUST be flagged for review, not silently re-pointed.
+
+**CDS1900-R023** Fitment published to a channel (a vehicle compatibility table, a fitment metafield, a "fits your vehicle" lookup) MUST be generated from fitment records and verified under CDS-500 where the channel exposes read-back; otherwise reported UNOBSERVABLE (R014).
+
+**CDS1900-R024** A storefront "shop by vehicle" or "shop by model" selector is an application filter over fitment records, distinct from customer facets (CDS-600); it MUST use the same governed vocabulary as the fitment records and MUST NOT be populated from free-text vehicle tags.
+
+## 7. Interchange, Cross-Reference and Supersession *(normative)*
+
+**CDS1900-R025** Original-equipment part numbers, competitor and aftermarket equivalents MUST be `alternative_to` or `cross_reference` relationships with external part targets that carry the issuing brand and its identifier scheme; the organisation's own SKU MUST NOT be stored in a manufacturer- or OEM-number attribute (CDS-1800 R010).
+
+**CDS1900-R026** Supersession MUST be a directed `superseded_by` relationship with an effective date; a superseded part's lifecycle state MUST reflect its status and its record MUST be retained (R013) so that searches for the old number resolve to the replacement.
+
+**CDS1900-R027** Equivalence ("alternative_to") MUST declare its basis (form-fit-function equivalent, functional equivalent, manufacturer-declared) as a governed qualifier; an equivalence asserted without a basis MUST be treated as a proposal.
+
+**CDS1900-R028** Where a channel or marketplace uses interchange data for search, the projection MUST be generated from relationship records (R014).
+
+**CDS1900-R029** Cross-reference numbers MUST be searchable through governed search synonyms or identifier indexing (CDS600-R075) without being exposed as facets.
+
+## 8. Technical Attributes and External Classification *(normative)*
+
+Technical attributes follow the specification rules of CDS-1800 §6 (typed, unit-bearing, category specification sets, basis qualifiers, provenance). This section adds the mechanism for adopting an external classification and attribute model as the source of a category's specification set.
+
+| External model (informative) | What it provides |
+|---|---|
+| ETIM (electro-technical, HVAC, building, tools, shipbuilding sectors) | Classes with typed features (alphanumeric from value lists, numeric with units, logical, range); one class per product; released in versions |
+| GS1 Global Product Classification (GPC) | Segment / family / class / brick with brick attributes and values; 8-digit codes; updated twice yearly |
+| UNSPSC | Procurement commodity codes (segment / family / class / commodity); no attributes |
+| Auto Care Association PCdb and PAdb (used by ACES/PIES) | Part terminology and part attributes for the automotive aftermarket; licensed |
+| Marketplace category attribute sets | Channel-specific required attributes |
+
+**CDS1900-R030** An organisation MAY adopt an external classification model as the source of a category's specification set; where it does, each external class or brick MUST be mapped to an internal category through a Taxonomy Mapping (CDS-200 §6) with the model's version, and each external feature MUST be mapped to an Attribute Definition with a declared crosswalk (name, unit, value list mapping).
+
+**CDS1900-R031** External classification codes MUST be stored as Taxonomy Mappings or governed identifiers with their model version, never as free text, and a product MUST be assigned to exactly one class in any one model.
+
+**CDS1900-R032** Values drawn from an external value list MUST be governed dictionary values with alias mappings for the external codes (CDS-400 §7), so that a change of model version is a governed migration.
+
+**CDS1900-R033** Dimensional, threaded and tolerance attributes MUST be structured (nominal value, unit, tolerance, thread standard) rather than a single text token such as "M8x1.25".
+
+**CDS1900-R034** Weight and dimensions used for logistics MUST be typed measurements of the sale unit (§10), distinguished from the technical dimensions of the part.
+
+## 9. Origin Type, Brand, Manufacturer and Condition *(normative; dictionary bindings informative)*
+
+| Field | Meaning | Dictionary |
+|---|---|---|
+| MF_part_origin_type | Genuine (original equipment as sold by the vehicle or equipment maker), original equipment supplier (OES), aftermarket | `part_origin_type` (Chapter 18) |
+| MF_condition | new, refurbished, remanufactured, used | `product_condition` (Chapter 18) |
+| STD_brand / SUP_manufacturer / MF_remanufacturer | Brand as sold; legal manufacturer; remanufacturer where condition is remanufactured | Governed values |
+| PRC_core_charge | Core charge where the PIM is the pricing authority | Conditional (CDS-300 §14) |
+
+**CDS1900-R035** Part origin type MUST be a governed value and MUST NOT be inferred from brand alone; a "genuine" claim MUST carry evidence (E1/E2) because it is a claim about the maker's supply chain.
+
+**CDS1900-R036** Condition MUST be a governed variant-scope value; remanufactured MUST be distinguished from refurbished and from used, and a channel that supports fewer condition values MUST receive a declared mapping (for example remanufactured → refurbished) recorded on the Attribute Definition.
+
+**CDS1900-R037** Brand, manufacturer and remanufacturer MUST be separate attributes where they differ.
+
+**CDS1900-R038** Core-charge and exchange-part terms MUST be typed attributes under the pricing authority and MUST NOT be encoded in titles.
+
+## 10. Units of Measure, Pack Quantity and B2B Terms *(normative)*
+
+| Field | Meaning | Type |
+|---|---|---|
+| MF_unit_of_sale | The unit one order line delivers (each, pair, set, box, roll, metre, litre, kilogram) | Governed value |
+| MF_units_per_sale | Number of base units in the sale unit (pads per set, pieces per box) | Integer |
+| MF_sold_by_measure | Whether the item is sold by cut length, weight or volume rather than by count | Boolean |
+| MF_measure_increment / MF_measure_minimum / MF_measure_maximum | Increments and bounds for cut-length or measured sales | Typed measurements |
+| MF_minimum_order_quantity / MF_order_multiple | B2B ordering constraints | Integers (conditional on authority) |
+| VAR_sale_unit_level | each / inner / case / pallet with contained quantities and identifiers | Per CDS-1700 R007 pattern |
+
+**CDS1900-R039** Every product MUST declare its unit of sale and the number of base units per sale unit; a "set of four" and a single unit MUST be distinguishable without reading the title.
+
+**CDS1900-R040** Products sold by cut length, weight or volume MUST declare the measure, its increment and bounds as typed values; the delivered quantity is an order-level fact and MUST NOT be a product variant per length unless the organisation sells fixed pre-cut lengths.
+
+**CDS1900-R041** Sale-unit levels (each, inner, case) MUST follow the hierarchy rules of CDS1700-R007 with trade identifiers per level where they exist.
+
+**CDS1900-R042** Minimum order quantities, order multiples and B2B price breaks MUST be typed attributes under the declared pricing or commercial authority (CDS-200 §13; `PRC_`/`INV_` only where the PIM is the authority) and MUST be evaluated at preflight for channels that enforce them.
+
+**CDS1900-R043** Logistics measurements (packaged dimensions and weight of the sale unit) MUST be typed and distinct from technical dimensions (R034); oversized and hazardous handling classes MUST be derived under governed rules.
+
+## 11. Kits, Bundles and Assemblies *(normative — single home for the corpus)*
+
+A kit is a product whose sellable content is composed of other products. The corpus distinguishes a **stocked kit** (a manufacturer or retailer-assembled item with its own identifier and inventory), a **virtual bundle** (assembled at order time from component inventory) and an **assembly** (a product whose components are also sold separately as spare parts).
+
+**CDS1900-R044** A kit, bundle or assembly MUST be a product whose composition is expressed as `includes` relationship records with quantities (§5); component identity, specifications, compliance records and declarations remain on the components.
+
+**CDS1900-R045** The kit kind (stocked kit, virtual bundle, assembly) MUST be a governed attribute (`MF_kit_kind`), because inventory authority, trade identifiers and channel projection differ: a stocked kit MAY carry its own GTIN; a virtual bundle MUST NOT claim a trade identifier it does not have.
+
+**CDS1900-R046** Kit-level declarations that depend on components (allergens and nutrition for food hampers per CDS-1700; ingredients for beauty sets per CDS-1600; dangerous-goods status per §12; battery facts per CDS-1800) MUST be derived from the component records under declared rules and MUST NOT be independently authored.
+
+**CDS1900-R047** Where a channel supports bundle semantics (a bundle flag, component listing, bundle pricing), the projection MUST be generated from the relationship records and declared in the Field Mapping; availability of a virtual bundle MUST be derived from component availability under the inventory authority and MUST be verifiable (CDS-500).
+
+**CDS1900-R048** Removing or replacing a component MUST be a governed relationship change (R013) with the kit's revision advanced (CDS-200 §14), so that a published kit state can be traced to its composition.
+
+## 12. Hazardous Materials and Dangerous Goods *(normative — single home for the corpus)*
+
+Whether a product can be shipped, by which mode, in what packaging and with which documents is determined by its classification under the transport-of-dangerous-goods regimes, and whether it must be accompanied by a safety data sheet is determined by workplace and consumer chemical regimes. The declaration is a product fact; the carrier's documentation is a projection of it.
+
+| Property | Meaning |
+|---|---|
+| CMP_dangerous_goods.regulated | Boolean: whether the product (or any component of a kit) is regulated for transport in any declared mode; **an explicit `false` is a declaration, not a default** |
+| un_number | UN number (e.g. UN3480) |
+| proper_shipping_name | Proper shipping name |
+| class_or_division | Governed value from the `dangerous_goods_class` dictionary (Chapter 18) |
+| subsidiary_hazards | Governed values |
+| packing_group | I / II / III or none |
+| quantity_per_package / net_quantity_basis | Typed measurements used for limited and excepted quantity determination |
+| limited_quantity_eligible / excepted_quantity_eligible | Booleans with the regime they were evaluated under |
+| transport_modes | Modes and regimes evaluated (road/rail under the national code, sea under IMDG, air under ICAO/IATA) |
+| battery_specifics | Watt-hours or lithium content, cells or batteries per package, contained-in/packed-with/alone, state of charge constraints, test summary reference (CDS-1800 §8) |
+| sds_reference | Safety data sheet document (MED_) with format (GHS revision) and date |
+| hazard_communication | GHS pictograms, signal word, hazard and precautionary statements as labelled |
+| declared_by / declared_at / evidence | Provenance |
+
+**CDS1900-R049** Every product MUST carry a dangerous-goods declaration record whose `regulated` value is an explicit declaration; a product with no record MUST NOT be published to a channel or carrier integration that requires shipping data, and the absence of a record MUST be reported as a missing required value (CDS200-R035), never treated as "not regulated".
+
+**CDS1900-R050** A regulated product's declaration MUST carry the UN number, proper shipping name, class or division and packing group (where applicable) from the governing regime, and the quantity facts needed to evaluate limited or excepted quantity provisions.
+
+**CDS1900-R051** Dangerous-goods classification MUST NOT be inferred from category, title or description by rules or AI; it MUST derive from the safety data sheet, the manufacturer's declaration or a competent classification (E1) and MUST be reviewed by a person accountable for dangerous-goods compliance before acceptance.
+
+**CDS1900-R052** Where a product is a hazardous chemical in a market that requires a safety data sheet to be prepared or supplied (Appendix D), the SDS MUST be a typed document record with its GHS revision and date, linked to the product, and its presence MUST be evaluated at preflight for that market; a consumer-market exemption from SDS supply MUST be recorded as the reason where relied on.
+
+**CDS1900-R053** GHS hazard communication elements as labelled (pictograms, signal word, hazard and precautionary statements) MUST be structured statement records where a market requires them, and MUST NOT be projected as customer facets.
+
+**CDS1900-R054** Kits inherit the most restrictive dangerous-goods status of their components under declared rules (R046); a kit containing a regulated component MUST be declared regulated.
+
+**CDS1900-R055** Carrier and channel shipping declarations MUST be projections of the record, declared in the Field Mapping with write semantics and verified under CDS-500 where read-back exists; a carrier rejection MUST be imported as an observed quality event, not written into the canonical record.
+
+**CDS1900-R056** Products whose transport is prohibited in a mode (for example damaged, defective or recalled lithium batteries by air) MUST carry the prohibition as a governed attribute evaluated at preflight for channels shipping by that mode.
+
+## 13. Compliance, Certifications and Vehicle Standards *(normative)*
+
+**CDS1900-R057** Regulatory compliance marks and approvals for parts (vehicle-component type approvals, emissions executive orders, design-rule compliance, electrical and machinery conformity marks, tyre labels) MUST be governed compliance records per market (the CDS-1800 §12 pattern: scheme, identifier, evidence, responsible party, status, dates) and MUST NOT be treated as populated because a mark appears in an image or a phrase in copy.
+
+**CDS1900-R058** Where a market requires a label or class information to be shown online close to the price (tyre labels in the EU and GB, Appendix D), the projection MUST be generated from the compliance record and verified.
+
+**CDS1900-R059** Performance and quality standards a part is claimed to meet (viscosity grades, industry specifications, manufacturer approvals) MUST be certification or claim records with evidence (CDS-1600 §11 pattern); they MAY feed claim-driven facets only under CDS1500-R049 governance.
+
+**CDS1900-R060** Country of origin and tariff classification, where required for cross-border sale, MUST be governed attributes (`CMP_country_of_origin`, `CMP_tariff_code` with scheme and version) with provenance.
+
+## 14. Media and Technical Documentation *(normative)*
+
+**CDS1900-R061** Exploded-view diagrams, installation instructions, technical data sheets, safety data sheets and certificates MUST be typed media records (MED_) with language, version and the product or relationship they document; a diagram callout that identifies a part MUST link to the part's product record.
+
+**CDS1900-R062** Documents a market requires to be available to purchasers (Appendix D) MUST be present before publication to that market and their presence verified.
+
+## 15. Customer Facet and Navigation Design *(informative — normative facet rules live in CDS-600)*
+
+| Construct | Recommended baseline behaviour | Anti-pattern |
+|---|---|---|
+| Shop by vehicle / model | Application filter over fitment records using the governed vocabulary (R024) | Free-text vehicle tags; category per vehicle |
+| Brand | Governed brand dictionary | Supplier spellings |
+| Position / side | Governed qualifier values | Free text |
+| Origin type | Genuine / OES / aftermarket from the governed value | Unevidenced "genuine" |
+| Condition | Governed condition values | — |
+| Technical attributes | Typed specification facets with units and ranges per category | Text buckets |
+| Universal fit | Explicit declaration facet | Absence of fitment treated as universal |
+| Hazardous handling | Never a customer facet; a fulfilment attribute | — |
+
+## 16. Channel Projection Guidance *(informative — normative rules: CDS-500, CDS-900)*
+
+| Canonical concept | Metafield-style channel (informative) | Feed-style channel (informative) |
+|---|---|---|
+| Fitment | Fitment metafields or app-managed compatibility tables generated from records; read back where the app exposes it, otherwise UNOBSERVABLE | The seeded feed channels (Google Merchant Center, Meta) define no fitment attributes (verified 2026-09-20); carry vehicle applicability in `product_detail` and titles under a declared policy. Marketplaces with fitment models (for example automotive parts marketplaces) are candidates for future CDS-900 platform profiles |
+| Interchange and supersession | Search synonyms and redirects generated from records | Not published |
+| Unit of sale and pack | Typed metafields; title composition policy | `multipack`, `is_bundle`, `unit_pricing_measure` where relevant |
+| Condition | Condition metafield or option | `condition`; remanufactured mapped per R036 |
+| Dangerous goods | Fulfilment metafields; carrier declarations | Not consumer-facing |
+| Compliance labels required online (tyre label) | Generated per-market block near price | Description where policy allows |
+
+## 17. AI Enrichment and Review *(informative — normative AI rules live in CDS-700)*
+
+| Task | AI may propose | Deterministic or human control |
+|---|---|---|
+| Fitment extraction from application catalogues | Candidate `fits` records bound to the declared vocabulary | Mandatory review (R020); vocabulary validation |
+| Cross-reference proposals | Candidate `alternative_to` / `cross_reference` records with evidence | Mandatory review; equivalence basis required (R027) |
+| Technical attribute extraction | Typed candidates (CDS-1800 §15) | Unit and range validation; provenance |
+| External class assignment | Candidate ETIM/GPC class | Taxonomy mapping governance; one class per model (R031) |
+| Dangerous-goods classification | None — SDS or manufacturer declaration only | R051 |
+| Kit composition | Candidate component lists from documents | Relationship governance (R044) |
+
+## 18. Governance and Organisational Extensions *(informative — rules in CDS-1500 §23 and CDS-800)*
+
+The relationship-type, origin-type and condition dictionaries are extended under CDS-400; the declared application vocabulary is a governed external dictionary with release-based migration (R022). Dangerous-goods classification changes (a new UN entry, a regime edition such as the Australian Code 7.9 replacing 7.8) are handled as governed dictionary and record migrations with an accountable dangerous-goods owner (CDS-800 §5). The jurisdiction requirement register for parts and chemicals is reviewed on the declared cadence and whenever a market changes a transport, chemical or vehicle-equipment rule.
+
+## 19. Conformance Requirements *(normative — claims and levels per CDS-1000)*
+
+**CDS1900-R063** An implementation claiming the CDS Parts and Fitment Profile MUST: represent every fitment, compatibility, inclusion, interchange and supersession fact as a governed product relationship record with provenance, versioning and verification (R001, R008–R016); bind fitment to a declared application vocabulary with typed years, positions and quantities and explicit universal-fit declarations (R017–R024); keep OEM and cross-reference numbers as external targets and supersession as dated directed relationships (R025–R029); adopt external classification models only through governed Taxonomy Mappings and attribute crosswalks (R030–R034); govern origin type, condition, brand and manufacturer (R035–R038); declare unit of sale, pack quantity, measured sale forms and B2B constraints as typed values (R039–R043); model kits as `includes` relationships with derived kit-level declarations (R044–R048); declare dangerous-goods status explicitly for every product with SDS and hazard-communication records where required (R049–R056); maintain per-market compliance records and required documents (R057–R062); maintain and evaluate a jurisdiction requirement register for every market published to (R003); apply category-specific requirements per CDS1500-R009; and publish and verify channel representations under CDS-500.
+
+**CDS1900-R064** A Parts and Fitment Profile claim MUST name the application vocabulary sources and releases in use, state whether hazardous chemicals are in scope, and state which markets its register covers. Implementations claiming other industry profiles that cite §5, §11 or §12 of this chapter MUST satisfy the cited sections without claiming this profile.
+
+## 20. Worked Product Examples *(informative)*
+
+### 20.1 Brake pad set with fitment, cross-reference and supersession
+
+```
+STD_brand = ExampleBrake; SUP_manufacturer_part_number = EB-1234; CAT_product_type = brake_pad_set
+MF_part_origin_type = aftermarket; MF_condition = new
+MF_unit_of_sale = set; MF_units_per_sale = 4; MF_quantity_per_application = 1
+relationships:
+  {type: fits, target: application {vocabulary_source: aces_vcdb_2026_08, host_type: vehicle,
+       make: Example, model: Sedan, submodel: GT, year_from: 2018, year_to: 2023, engine: "2.0L L4 turbo"},
+   qualifiers: {position: front}, provenance: {source: manufacturer_application_catalogue, class: E1}}
+  {type: fits, target: application {..., model: Wagon, year_from: 2019, year_to: 2023}, qualifiers: {position: front}}
+  {type: cross_reference, target: external_part {brand: ExampleMotors, scheme: oem_part_number, number: "04465-00000"},
+   qualifiers: {basis: form_fit_function}}
+  {type: superseded_by, target: product EB-1234A, effective_from: 2026-03-01}
+CMP_dangerous_goods = {regulated: false, declared_by: dg_owner, declared_at: 2026-09-01}
+CMP_compliance_declarations = [{jurisdiction: EU, scheme: eu_unece_type_approval, mark: "E-mark R90", certificate: ...}]
+Channel: fitment table generated from `fits` records; feed channel carries applicability in product_detail;
+         verification: metafield MATCH; feed UNOBSERVABLE (no read-back of fitment)
+```
+
+### 20.2 Hydraulic hose sold by the metre
+
+```
+CAT_product_type = hydraulic_hose
+MF_sold_by_measure = true; MF_unit_of_sale = metre; MF_measure_increment = {0.5, metre}
+MF_measure_minimum = {1, metre}; MF_measure_maximum = {50, metre}
+MF_inside_diameter = {nominal: 12.7, unit: millimetre}; MF_working_pressure = {value: 210, unit: bar}
+Taxonomy mapping: ETIM class EC0xxxxx (release 10.0) -> internal category Hydraulics > Hoses; feature crosswalk declared
+Order line: 7.5 m -> delivered quantity computed at order time, not a variant
+```
+
+### 20.3 Engine oil (dangerous goods and SDS)
+
+```
+CAT_product_type = engine_oil
+VAR_net_quantity = {value: 5, unit: litre}
+MF_viscosity_grade = sae_5w_30 (governed); MF_certifications = [{scheme: api_service_category, value: "SP", evidence: E1}]
+CMP_dangerous_goods = {regulated: false, transport_modes: [road, air], basis: "not classified under ADG 7.9 / IATA",
+                       sds_reference: MED-sds-2026-01 (GHS rev 7, 2026-01-10), declared_by: dg_owner}
+CMP_country_of_origin = AU; CMP_tariff_code = {scheme: hs_2022, code: "2710.19"}
+AU preflight: SDS present (hazardous chemical for workplace supply; consumer retail exemption not relied on) -> pass
+```
+
+### 20.4 Radio-control servo with compatibility
+
+```
+CAT_product_type = rc_servo
+relationships:
+  {type: compatible_with, target: standard {standard: "servo_connector_jr_3_pin"}, direction: symmetric}
+  {type: accessory_for, target: model_family {brand: ExampleRC, family: "Crawler 1/10"}}
+MF_voltage_range_v = {min: 4.8, max: 8.4}; MF_torque_kg_cm = 25
+MF_kit_kind = none; MF_unit_of_sale = each
+```
+
+## 21. Reference Validation Cases *(informative — the profile's contribution to the cross-industry validation set, REVIEW-020)*
+
+- a fitment held only in a tag or title, which must fail (R001, R010);
+- a part with neither fitment records nor a universal declaration offered as "fits all", which must not satisfy an R-level requirement (R018);
+- a fitment with free-text years ("2018–current") (R021);
+- a vocabulary release change that must produce a governed migration rather than silent re-pointing (R022);
+- a `superseded_by` cycle that validation must reject (R016);
+- an OEM number stored in the organisation's own SKU attribute (R025);
+- a "set of four" whose unit of sale is not declared, making the delivered quantity ambiguous (R039);
+- a product with no dangerous-goods record published to a shipping channel, which must be reported as missing (R049);
+- a kit containing a lithium-battery component declared "not regulated" at kit level (R054);
+- a dangerous-goods classification proposed by AI from a category, which must be refused (R051);
+- a tyre listed in the EU without the tyre label near the price (R058, D-EU-3);
+- an aftermarket emissions part sold into California without an Executive Order reference (D-US-3);
+- a "genuine" origin claim without evidence (R035).
+
+---
+
+## Appendix A. Parts and Fitment Attribute Baseline *(normative — dictionary bindings per CDS1500-R011)*
+
+| Field | Scope | Type | Baseline requirement |
+|---|---|---|---|
+| STD_brand / SUP_manufacturer_part_number / VAR_gtin | Product / Variant | Governed identity values | R |
+| CAT_product_type | Product | Governed classification reference | R |
+| MF_part_origin_type | Product | Governed dictionary reference (`part_origin_type`) | R |
+| MF_condition | Variant | Governed dictionary reference (`product_condition`) | R |
+| `fits` relationship records or MF_fitment_scope = universal | Product | Relationship records / declaration | R for application-specific parts |
+| `alternative_to` / `cross_reference` / `superseded_by` / `replaces` records | Product | Relationship records | C — R where interchange or supersession is published |
+| `includes` records / MF_kit_kind | Product | Relationship records / governed value | R for kits and bundles |
+| Category technical attributes | Product | Typed Attribute Definitions (CDS-1800 §6; external crosswalk per §8) | Per category profile |
+| CMP_external_classifications | Product | Taxonomy Mappings with model and version | REC; R where a trading partner requires the code |
+| MF_unit_of_sale / MF_units_per_sale | Product | Governed value; integer | R |
+| MF_sold_by_measure / MF_measure_increment / MF_measure_minimum / MF_measure_maximum | Product | Boolean; typed measurements | R for measured sale forms |
+| VAR_sale_unit_level | Variant / levels | Governed level with quantities and identifiers | C |
+| MF_minimum_order_quantity / MF_order_multiple | Product | Integers (authority-conditional) | C |
+| Logistics dimensions and weight of the sale unit | Product / Variant | Typed measurements | R where the organisation ships |
+| CMP_dangerous_goods | Product / Variant | Declaration record (§12) | R (explicit `regulated` value for every product) |
+| MED_technical_documents (SDS, diagrams, certificates, instructions) | Product | Typed media records | C — R where a market requires availability |
+| CMP_compliance_declarations | Product (per market) | Governed records | C — R where a market regulates the part |
+| CMP_country_of_origin / CMP_tariff_code | Product | Governed values | C — R for cross-border sale |
+| MF_warranty_months / MF_warranty_type | Product (per market) | Typed records | REC |
+
+## Appendix B. Dictionary Bindings *(informative — becomes governed data on adoption per CDS1500-R011)*
+
+| Dictionary key | Package chapter | Bound attribute(s) | Status at 0.8.0 |
+|---|---|---|---|
+| relationship_type | 18 (new) | Product relationship records (§5) | Bound (corpus-wide) |
+| part_origin_type | 18 (new) | MF_part_origin_type | Bound |
+| product_condition | 18 (new) | MF_condition | Bound (shared with CDS-1800) |
+| dangerous_goods_class | 18 (new) | CMP_dangerous_goods.class_or_division | Bound (corpus-wide) |
+| jurisdiction / regulatory_scheme | 19 (new) | CMP_* records | Bound via CDS-1500 §2.2 |
+| connectivity, power_source, battery_chemistry | 11 | Technical attributes where relevant | Bound via CDS-1800 |
+
+Deliberately not shipped: vehicle and equipment application vocabularies (licensed or manufacturer-sourced; declared per organisation), part terminology and attribute databases (licensed), the full UN dangerous-goods list (regime-published; only the class and division vocabulary is seeded), units of measure (CDS-400 §18 reference data), qualifier statement vocabularies (organisation- or standard-sourced).
+
+## Appendix C. References *(informative; retrieved 2026-09-20 unless stated)*
+
+| Ref | Source | Location | Use in this chapter |
+|---|---|---|---|
+| [P1] | Auto Care Association — Data Standards; ACES 5.0 and PIES 8.0 release (2026-04-02); supporting databases (VCdb, Qdb, PCdb, PAdb, Brand Table) | autocare.org | Fitment and product information exchange model, licensed reference databases (§6, §8) |
+| [P2] | ETIM International — Classification Guidelines (v3, 2020) | etim-international.com | Class/feature/value model, one class per product, IXF release format (§8) |
+| [P3] | GS1 — Global Product Classification Development & Implementation Guide (2023); How GPC works | gs1.org | Segment/family/class/brick with attributes; 8-digit coding (§8) |
+| [P4] | National Transport Commission — Australian Dangerous Goods Code edition 7.9 (usable from 1 October 2024, mandatory from 1 October 2025) | ntc.gov.au | Classes and divisions, limited and excepted quantities, lithium battery mark (§12, D-AU-1) |
+| [P5] | Safe Work Australia — Adoption of GHS 7 (mandatory from 1 January 2023); model Code of Practice: Preparation of safety data sheets (2023); Suppliers and users information sheet (June 2023) | safeworkaustralia.gov.au | SDS obligations for hazardous chemicals incl. consumer products supplied to workplaces (D-AU-2) |
+| [P6] | IATA — Lithium Battery Guidance Document (2026) | iata.org | UN 3480/3481/3090/3091/3551/3552, 30% state of charge, test summary availability (§12) |
+| [P7] | Regulation (EU) 2020/740 on the labelling of tyres (applies from 1 May 2021); UK retained text | eur-lex.europa.eu; legislation.gov.uk | Tyre label content and display close to the price in distance selling; product information sheet (D-EU-3, D-UK-2) |
+| [P8] | Regulation (EU) 2023/988 General Product Safety Regulation (applies from 13 December 2024) | eur-lex.europa.eu | Traceability and online offer information (D-EU-4) |
+| [P9] | ICC Compliance Center — Consumer chemical products and GHS SDS requirements (Canada CCCR 2001 / HPR; OSHA HazCom consumer-use exemption; REACH Article 31(4)) (2022) | thecompliancecenter.com | Consumer-product SDS exemptions by jurisdiction (D-CA-1, D-US-2, D-EU-2; retrieved, secondary) |
+| [P10] | OEHHA — Proposition 65 amendments effective 2025-01-01 including tailored warnings for passenger or off-highway motor vehicle parts and recreational marine vessel parts | oehha.ca.gov | Vehicle-parts warning content and internet warnings (D-US-4) |
+| [P11] | StoreInspect — Best Shopify categories to target in 2026 (updated 2026-09-19); ECDB Amazon marketplace report (2026) | storeinspect.com; ecdb.com | Catalogue-size and growth basis (REVIEW-020) |
+
+## Appendix D. Jurisdiction Requirement Register — Seed *(informative seed of the normative register defined in CDS-1500 §2.2)*
+
+Conventions as in CDS-1600 Appendix D. Vehicle-equipment type-approval and emissions regimes are seeded at summary level; most were retrieved but not spot-verified this pass and are marked accordingly.
+
+### D.1 Australia (AU)
+
+| Ref | Instrument / regulator | Applies to | Obligation | Required data elements → CDS field | Trigger / dates | Verification |
+|---|---|---|---|---|---|---|
+| D-AU-1 | Australian Code for the Transport of Dangerous Goods by Road and Rail, edition 7.9 (aligned to UN Model Regulations 23rd revised edition), given force by state and territory dangerous goods transport laws — NTC and state competent authorities (`au_adg_code_7_9`) | Dangerous goods of Classes 2–6, 8 and 9 consigned by road or rail (Classes 1 and 7 under other laws) | transport; documentation | Classification (UN number, proper shipping name, class/division, packing group), packaging and marking incl. limited-quantity and lithium battery marks, transport documentation and emergency information; very small consignment and limited quantity provisions → CMP_dangerous_goods (all properties), carrier projection | Usable from 1 October 2024; mandatory from 1 October 2025 | Verified 2026-09-20 [P4] |
+| D-AU-2 | Model WHS Regulations (as adopted by each jurisdiction) — GHS Revision 7 classification, labelling and safety data sheets — Safe Work Australia and state regulators (`au_ghs7_sds`) | Hazardous chemicals manufactured or imported for use, handling or storage at workplaces, including hazardous chemicals intended as consumer products (exemptions include potable liquids that are consumer products at retail premises) | documentation (SDS prepared before first supply to a workplace, reviewed at least every 5 years, Australian manufacturer or importer contact details); labelling_element (GHS 7 labels) | SDS in the Australian 16-section format with GHS 7 classification, signal word, pictograms, hazard and precautionary statements, transport information; supplier must provide the SDS with supply to a workplace → MED_technical_documents (SDS, GHS rev 7, date), CMP_dangerous_goods.hazard_communication | GHS 7 only from 1 January 2023 | Verified 2026-09-20 [P5] |
+| D-AU-3 | Road Vehicle Standards Act 2018 and Australian Design Rules; state vehicle standards for modifications — Department of Infrastructure and state regulators (`au_adr_vehicle_standards`) | Replacement components and accessories subject to design rules (lighting, tyres, child restraints via mandatory standards, seatbelts) and modifications | pre_market (component certification where an ADR applies); labelling_element (markings) | ADR compliance evidence and markings per component; tyre markings → CMP_compliance_declarations (scheme `au_adr_vehicle_standards`) | Ongoing | Retrieved (not spot-verified) |
+| D-AU-4 | Proposition-style warnings do not apply; Australian Consumer Law mandatory safety and information standards apply to specific products (for example quad bikes, portable ladders, vehicle jacks) — ACCC | Specific consumer products | labelling_element; warning_statement | Product-specific mandatory standard elements → MF_warning_statements, CMP_compliance_declarations | Product-specific | Not seeded (organisation supplies per product type) |
+
+### D.2 New Zealand (NZ)
+
+| Ref | Instrument / regulator | Applies to | Obligation | Required data elements → CDS field | Trigger / dates | Verification |
+|---|---|---|---|---|---|---|
+| D-NZ-1 | Land Transport Rule: Dangerous Goods 2005 (aligned to the UN Model Regulations / ADG) — Waka Kotahi NZ Transport Agency (`nz_dangerous_goods_rule_2005`) | Dangerous goods transported by land | transport; documentation | Classification and documentation as for AU with NZ variations → CMP_dangerous_goods | Ongoing | Retrieved (not spot-verified) |
+| D-NZ-2 | Hazardous Substances and New Organisms Act 1996; Hazardous Substances (Labelling) Notice 2017 and (Safety Data Sheets) Notice 2017 — EPA and WorkSafe (`nz_hsno_labelling_sds`) | Hazardous substances, including consumer chemical products | labelling_element; documentation (SDS) | GHS-aligned labels; SDS supplied with substances for workplaces → MED_technical_documents (SDS), CMP_dangerous_goods.hazard_communication | Ongoing (Group Standards provide alternative compliance routes) | Retrieved (not spot-verified) |
+
+### D.3 United States (US, with California noted)
+
+| Ref | Instrument / regulator | Applies to | Obligation | Required data elements → CDS field | Trigger / dates | Verification |
+|---|---|---|---|---|---|---|
+| D-US-1 | Hazardous Materials Regulations, 49 CFR parts 171–180 — PHMSA/DOT (`us_49cfr_hazmat`) | Hazardous materials offered for transport in commerce (road, rail, air, water; air also under ICAO/IATA) | transport; documentation | UN number, proper shipping name, hazard class, packing group, limited quantity and ORM-D-style consumer commodity provisions (as amended), lithium battery mark and test summary → CMP_dangerous_goods | Ongoing | Retrieved (not spot-verified) |
+| D-US-2 | Hazard Communication Standard, 29 CFR 1910.1200 (updated 2024 to GHS Revision 7) — OSHA (`us_osha_hazcom`) | Hazardous chemicals in workplaces; consumer products exempt where workplace use mirrors consumer use in duration and frequency | documentation (SDS); labelling_element | 16-section SDS and GHS labels for workplace-supplied hazardous chemicals → MED_technical_documents (SDS), exemption reason where relied on (R052) | 2024 update with phased compliance | Retrieved 2026-09-20 [P9] (secondary; not spot-verified) |
+| D-US-3 | California Air Resources Board aftermarket parts Executive Orders (Vehicle Code 27156) (`us_carb_executive_order`) | Aftermarket emissions-related parts sold or installed in California (and states adopting California standards) | pre_market (Executive Order exemption); labelling_element (EO number) | CARB Executive Order number for the part and applications → CMP_compliance_declarations (scheme `us_carb_executive_order`, EO number), fitment scope | Ongoing | Retrieved (not spot-verified) |
+| D-US-4 | Proposition 65 (California), 27 CCR 25607.50–25607.53 tailored warnings for passenger or off-highway motor vehicle parts and recreational marine vessel parts; internet warning rules — OEHHA (`us_ca_prop65_warning`) | Vehicle and vessel parts causing exposure to listed chemicals sold to California consumers | warning_statement; listing_element | Tailored safe-harbour warning content; warning on the product display page, "WARNING" hyperlink or prominent pre-purchase display → MF_warning_statements (jurisdiction US-CA, scheme with the vehicle-parts variant), listing projection | Effective 1 January 2025 | Verified 2026-09-20 [P10] |
+| D-US-5 | Federal Motor Vehicle Safety Standards and equipment marking (49 CFR part 571; DOT tire identification number 49 CFR 574) — NHTSA (`us_fmvss_equipment`) | Regulated motor vehicle equipment (lighting, brake hoses, tyres, glazing, child restraints) | pre_market (self-certification); labelling_element (DOT symbol, tire identification number) | DOT marking and TIN → CMP_compliance_declarations | Ongoing | Retrieved (not spot-verified) |
+
+### D.4 European Union (EU)
+
+| Ref | Instrument / regulator | Applies to | Obligation | Required data elements → CDS field | Trigger / dates | Verification |
+|---|---|---|---|---|---|---|
+| D-EU-1 | European Agreement concerning the International Carriage of Dangerous Goods by Road (ADR) as applied by Directive 2008/68/EC; IMDG and ICAO/IATA for sea and air (`eu_adr_transport`) | Dangerous goods in transport | transport; documentation | Classification, packaging, marking, documentation → CMP_dangerous_goods | Biennial ADR editions | Retrieved (not spot-verified) |
+| D-EU-2 | REACH Regulation (EC) No 1907/2006 Article 31 (safety data sheets); CLP Regulation (EC) No 1272/2008 (classification, labelling, packaging) — ECHA and member states (`eu_reach_sds_article_31`, `eu_clp_1272_2008`) | Hazardous substances and mixtures | documentation (SDS to professional users; for products sold to the general public an SDS need not be supplied where sufficient information is provided, but must be supplied on request by a downstream user or distributor); labelling_element (CLP pictograms, signal word, hazard and precautionary statements) | SDS document, CLP hazard communication elements → MED_technical_documents (SDS), CMP_dangerous_goods.hazard_communication | Ongoing | Verified in part 2026-09-20 [P9] (Article 31(4) via secondary source; regulation text not read) |
+| D-EU-3 | Regulation (EU) 2020/740 on the labelling of tyres (`eu_tyre_label_2020_740`) | C1, C2 and C3 tyres (passenger, light and heavy commercial), retreads once a test method exists | rating_label; listing_element; documentation (product information sheet); pre_market (supplier enters values in the product database, EPREL) | Tyre label with fuel efficiency class (A–E), wet grip class (A–E), external rolling noise class and dB value, severe-snow and ice-grip pictograms; product information sheet (supplier, tyre type identifier, size designation, load index, speed symbol, classes, production start and end dates); label displayed close to the price in distance selling and online (nested display permitted), PIS accessible and printable on request; hosting service providers enable the display → CMP_compliance_declarations (scheme `eu_tyre_label_2020_740`, classes, EPREL id), MF_tyre_size_designation, MF_load_index, MF_speed_rating, MED_technical_documents (label, PIS), listing projection | Applies from 1 May 2021 | Verified 2026-09-20 [P7] |
+| D-EU-4 | Regulation (EU) 2023/988 General Product Safety Regulation (`eu_gpsr_2023_988`) | Non-harmonised consumer products (many tools, accessories, hobby components) and cross-cutting online duties | listing_element; labelling_element; pre_market (responsible economic operator) | Manufacturer name, address and electronic contact; product identifier; warnings and safety information; picture in online offers → CMP_responsible_person, CMP_product_identifier, MF_warning_statements | Applies from 13 December 2024 | Verified 2026-09-20 [P8] |
+| D-EU-5 | UNECE type-approval regulations for vehicle components (E-mark), Regulation (EU) 2018/858 and (EU) 2019/2144 (general safety); Machinery Regulation (EU) 2023/1230 (CE marking for machinery and tools, applies from 20 January 2027) (`eu_unece_type_approval`, `eu_machinery_regulation_2023_1230`) | Replacement components subject to type approval (lighting, braking components, tyres, mirrors, glazing); machinery and power tools | pre_market (type approval; conformity assessment); labelling_element (E-mark with approval number; CE marking) | Approval number and marking → CMP_compliance_declarations | Ongoing; machinery regulation from 20 January 2027 | Retrieved (not spot-verified) |
+
+### D.5 United Kingdom (GB)
+
+| Ref | Instrument / regulator | Applies to | Obligation | Required data elements → CDS field | Trigger / dates | Verification |
+|---|---|---|---|---|---|---|
+| D-UK-1 | Carriage of Dangerous Goods and Use of Transportable Pressure Equipment Regulations 2009 (ADR as applied in GB); UK REACH and GB CLP — HSE (`uk_carriage_dangerous_goods_2009`, `uk_reach_clp`) | Dangerous goods in transport; hazardous substances and mixtures | transport; documentation (SDS); labelling_element | As for D-EU-1 and D-EU-2 with GB-specific formats → CMP_dangerous_goods, MED_technical_documents (SDS) | Ongoing | Retrieved (not spot-verified) |
+| D-UK-2 | Regulation (EU) 2020/740 as retained in GB (tyre labelling) — DfT/OPSS (`uk_tyre_label_retained_2020_740`) | C1, C2 and C3 tyres | rating_label; listing_element | Tyre label and product information sheet displayed close to the price online, as in the EU scheme (no EPREL) → CMP_compliance_declarations (scheme `uk_tyre_label_retained_2020_740`), listing projection | Ongoing | Verified in part 2026-09-20 [P7] (retained text on legislation.gov.uk read; post-2021 GB amendments not checked) |
+| D-UK-3 | Supply of Machinery (Safety) Regulations 2008; UKCA or CE marking with indefinite CE recognition from 1 October 2024 — OPSS (`uk_machinery_regulations_2008`) | Machinery and power tools | pre_market; labelling_element | Conformity marking choice, DoC, manufacturer and importer identification → CMP_compliance_declarations | CE recognition indefinite from 1 October 2024 | Verified in part 2026-09-20 (CDS-1800 [E16] sector table lists machinery among the 2024 regulations) |
+
+### D.6 Canada (CA)
+
+| Ref | Instrument / regulator | Applies to | Obligation | Required data elements → CDS field | Trigger / dates | Verification |
+|---|---|---|---|---|---|---|
+| D-CA-1 | Transportation of Dangerous Goods Act 1992 and Regulations — Transport Canada (`ca_tdg_regulations`); Hazardous Products Act and Hazardous Products Regulations (WHMIS 2015, GHS-aligned) for workplace products; Consumer Chemicals and Containers Regulations 2001 (CCCR) under the Canada Consumer Product Safety Act for consumer chemical products (no SDS requirement, consumer labelling instead) — Health Canada (`ca_whmis_2015`, `ca_cccr_2001`) | Dangerous goods in transport; workplace hazardous products; consumer chemical products sold at retail | transport; documentation (SDS for workplace products only); labelling_element (CCCR hazard symbols and bilingual statements for consumer products) | TDG classification → CMP_dangerous_goods; SDS for products not sold at retail in the same container size → MED_technical_documents with exemption reason (R052); CCCR consumer labelling → MF_warning_statements (bilingual) | Ongoing | Verified in part 2026-09-20 [P9] (secondary source on the HPA consumer-product exclusion; regulations not read) |
+| D-CA-2 | Motor Vehicle Safety Act; Canada Motor Vehicle Safety Standards (CMVSS) — Transport Canada (`ca_cmvss_equipment`) | Regulated motor vehicle equipment (tyres, lighting, brake hoses, child restraints) | pre_market; labelling_element (national safety mark or DOT equivalents as recognised) | Compliance marking → CMP_compliance_declarations | Ongoing | Retrieved (not spot-verified) |
+
+### D.7 Other markets
+
+| Jurisdiction | Status | Note |
+|---|---|---|
+| Japan (JP), China (CN), Republic of Korea (KR), India (IN), Brazil (BR) and others | Not seeded | Vehicle-equipment approval (for example JIS marks, CCC certification, KC marks, BIS, INMETRO) and chemical regimes differ; organisation supplies entries with local advice. All UN Model Regulations-aligned transport regimes share the UN number, class and packing-group vocabulary seeded in the `dangerous_goods_class` dictionary. |
+
+END OF CDS-1900 v0.2 REVIEW DRAFT
+
+<div class="chapter"></div>
+
+# Commerce Data Standard (CDS)
+## CDS-2000 — Sports and Outdoor, Toys and Games, and Pet Supplies Industry Profiles
+
+| Field | Value |
+|---|---|
+| Status | **v0.2 Review Draft** (working source; not an approved standard) |
+| Release | CDS v0.2 (single corpus release per ADR-D5); chapter added in the 2026-09-20 industry-profile expansion |
+| Date | 2026-09-20 |
+| Supersedes | Nothing — first edition. The Chapter 12 (Sports & Outdoor), Chapter 13 (Toys & Games) and Chapter 14 (Pet Supplies) dictionary vocabularies were shipped ahead of these profiles and are bound here for the first time; pet food forms are added in package 0.8.0. |
+| Normative status | §1, §3, §5–§8, §13 and Appendix A are normative. §2 (pointer), §4, §9–§12, §14, §15 and Appendices B–D are informative; Appendix D seeds the jurisdiction requirement register whose record structure and obligations are normative in CDS-1500 §2.2. Every table is individually marked. |
+| Primary audience | Sports, outdoor, toy and pet merchandisers, product-safety and compliance owners, data stewards, PIM architects, catalogue managers, UX teams, developers and AI enrichment designers |
+| Depends on | CDS-000 through CDS-1500, especially CDS-200, CDS-300, CDS-400, CDS-500, CDS-600, CDS-700, CDS-900, CDS-1100, CDS-1500 (profile model, requirement levels, profile register, jurisdiction requirement register, apparel size and colour rules), CDS-1600 (claims, ingredients and restricted-sale patterns), CDS-1700 (ingredient, nutrition and net-quantity patterns), CDS-1800 (technical specifications, batteries), CDS-1900 (relationships, kits, dangerous goods) |
+| Companion package | CDS Reference Dictionary: Chapters 12, 13, 14, 5 (size systems), 19 (Jurisdictions & Regulatory Schemes) |
+| Profile identifiers | `cds.profile.sports_outdoor.v0_2`, `cds.profile.toys_games.v0_2`, `cds.profile.pets.v0_2` (registered in CDS-1500 §2.1) |
+| Research basis | REVIEW-020 (global commerce vertical market research, 2026-09-20): sports, toys and hobbies, and pet supplies are each mid-sized worldwide store populations (roughly 2–6% of Shopify Plus stores each) with above-average catalogue depth (sports stores average more than 1,200 products) and, for toys, the densest product-safety regulation of any consumer vertical. They are grouped in one chapter because they share three mechanisms — activity or audience targeting, safety-driven age and warning data, and technical attributes inherited from other profiles — rather than because they share a market. |
+
+Terminology follows CDS-100. Attribute requirement levels (R, C, REC, O, N/A) are those of CDS-1500 §4 and are not restated here. Each of the three profiles in this chapter is claimed independently (§13).
+
+---
+
+## 1. Purpose and Scope *(normative)*
+
+CDS-2000 defines three industry profiles: **Sports and Outdoor** (equipment, activewear and footwear where sold by activity, camping and outdoor gear, cycling, water sports, fitness), **Toys and Games** (toys, games, puzzles, hobby kits, ride-ons, children's play equipment) and **Pet Supplies** (pet food and treats, accessories, habitats, grooming, health products). Apparel and footwear sold in these verticals apply CDS-1500 for size, colour and composition; electronic and battery-powered goods apply CDS-1800; kits, compatibility and dangerous goods apply CDS-1900; ingredients and nutrition apply CDS-1700 patterns; claims apply CDS-1600 §11.
+
+What distinguishes these verticals is who or what the product is for and what it is for: a sport or activity, a child's age and developmental stage, an animal's species, life stage and size. Those targeting attributes drive navigation ("shop by sport", "shop by age", "shop by pet") and, for toys and pet food, they are also regulated facts (age warnings, nutritional adequacy) that must be kept separate from the merchandising attributes that resemble them.
+
+**CDS2000-R001** An implementation claiming any profile in this chapter MUST represent the targeting attributes of that profile (activity, age band, pet type, life stage, pet size) as governed dictionary values, never as tags or free text, and MUST keep merchandising targeting distinct from regulated safety or adequacy statements (§6, §7).
+
+**CDS2000-R002** An implementation claiming any profile in this chapter MUST apply CDS-1500, CDS-1800 and CDS-1900 for the apparel, technical and relationship layers of its products where those layers are present, without claiming those profiles.
+
+**CDS2000-R003** An implementation MUST maintain a jurisdiction requirement register (CDS-1500 §2.2) for every market it publishes toys, children's products, protective equipment, pet food or pet health products to, and publication preflight for a market MUST evaluate the market's obligations before the offer is made available.
+
+**CDS2000-R004** These profiles MUST NOT weaken any rule of CDS-1500 that they reuse; where this chapter is silent, CDS-1500 and the core chapters govern.
+
+## 2. Profile Model *(informative pointer)*
+
+The three profiles apply the industry profile model of CDS-1500 §2, the requirement levels of CDS-1500 §4 and the jurisdiction requirement register of CDS-1500 §2.2 without restatement. Their identifiers and dictionary bindings are in CDS-1500 §2.1; their seeded jurisdiction entries are in Appendix D.
+
+## 3. Shared Product Model *(normative)*
+
+Products in these verticals follow the standard product and variant model. Variant options are typically size (apparel and footwear sizes under CDS-1500 §9; equipment sizes under a declared size system), colour, pack or bag size (pet food), and configuration (piece count, player count edition). Targeting attributes are product-scope descriptive attributes, never variant options.
+
+```
+Product: Adult cycling helmet, model Ridge            (informative example)
+  Product scope:
+    CAT_product_type = bicycle_helmet
+    MF_sport_activity = [cycling, mountain_biking]     # sport_activities dictionary
+    MF_certifications = [{scheme: as_nzs_2063, evidence: E1}, {scheme: cpsc_16_cfr_1203, evidence: E1}]
+    MF_size_system = head_circumference_cm             # size_systems dictionary (0.8.0)
+    MF_weight_g = 310
+  Variant scope:
+    VAR_size_label = "M (55-59 cm)"; VAR_size_min = 55; VAR_size_max = 59
+    VAR_colour = matte_black
+```
+
+**CDS2000-R005** Sport or activity, age band, play type, pet type, life stage and pet size MUST be product-scope governed attributes; where a product genuinely serves several values (a multi-sport shoe, a toy for two age bands, a food for dogs and cats) the attribute MUST be multi-valued with a declared maximum (the CDS-1500 §10 pattern), not duplicated products.
+
+**CDS2000-R006** Equipment sizes (helmets, frames, boards, wetsuits, harnesses, pet collars and coats) MUST identify their size system (the CDS1500-R026 pattern) and MUST store measured bounds (head circumference, frame size, chest or neck girth, pet weight range) as typed measurements where the size is defined by a measurement, so that size guides and facets derive from data.
+
+**CDS2000-R007** Kits, sets and bundles (a tent with footprint, a game with expansion, a starter aquarium) MUST follow CDS-1900 §11; batteries and rechargeable products MUST follow CDS-1800 §8 and CDS-1900 §12.
+
+**CDS2000-R008** Included and required-but-not-included items (batteries, balls, mounting hardware, food bowls) MUST be `includes` and `requires` relationship records (CDS-1900 §5) so that "batteries not included" and similar statements derive from data.
+
+## 4. Product Families and Category Profiles *(informative baseline; the inheritance rule of CDS1500-R016 applies)*
+
+| Profile | Product family / category | Required | Recommended | Typical variant options |
+|---|---|---|---|---|
+| Sports & Outdoor | Activewear and sports footwear | CDS-1500 apparel or footwear baseline; sport activity | performance attributes with basis qualifiers; weather suitability | size, colour |
+| Sports & Outdoor | Cycling (bikes, components) | brand; MPN; frame size system and size; wheel size; compatibility records (CDS-1900 §5); weight | groupset, gearing, geometry as typed values; e-bike battery and motor per CDS-1800 | frame size, colour |
+| Sports & Outdoor | Water sports (surf, swim, paddle) | sport activity; wetsuit style, thickness, zip entry and seam (wetsuits); board dimensions and volume | fin system as relationship; buoyancy certification (PFDs) | size, colour |
+| Sports & Outdoor | Camping and outdoor gear | capacity (persons, litres); packed and assembled dimensions; weight; season or temperature rating with basis | materials; waterproof rating with scheme; fuel type (stoves) with dangerous goods per CDS-1900 §12 | size, colour |
+| Sports & Outdoor | Fitness equipment | dimensions; weight; user weight limit; power source (if powered) | assembly type; connectivity per CDS-1800 | weight/resistance level |
+| Sports & Outdoor | Protective equipment (helmets, guards, eyewear) | size system and size; certification records per market; sport activity | replacement date guidance; lens category (sunglasses) | size, colour |
+| Toys & Games | Toys (0–12 years) | retail age band; play type; safety age warning where applicable; piece count; battery facts; compliance records per market | material; dimensions; educational themes as governed values | colour |
+| Toys & Games | Games and puzzles | player count (min, max); recommended age; play time; piece count; language | complexity or difficulty as governed value | edition, language |
+| Toys & Games | Hobby kits and models | scale; skill level as governed value; included and required items; paint or adhesive dangerous goods | assembled dimensions | — |
+| Toys & Games | Ride-ons and outdoor play | age band and weight limit; dimensions; assembly type; compliance records; battery facts for powered ride-ons | — | colour |
+| Pet Supplies | Pet food and treats | pet type; life stage; pet size where formulated by size; food form; ingredient list; typical or guaranteed analysis; nutritional adequacy statement and scheme; net quantity; feeding guide reference | breed size; dietary claims with evidence; storage condition | bag size, flavour |
+| Pet Supplies | Pet health and supplements | pet type; active ingredients; registration per market; restricted sale status; dosage form | — | pack size |
+| Pet Supplies | Accessories (collars, leads, beds, apparel) | pet type; size system and measured bounds; material | colour facet; washable status | size, colour |
+| Pet Supplies | Habitats and equipment (aquariums, cages, feeders) | pet type; dimensions and capacity; power source where powered (CDS-1800) | compatibility records for consumables (filters, cartridges) | size |
+
+## 5. Sports and Outdoor Profile *(normative; dictionary bindings informative)*
+
+| Field | Meaning | Dictionary / type |
+|---|---|---|
+| MF_sport_activity | Activities the product is designed for | `sport_activity` (Chapter 12), multi-valued with declared maximum |
+| MF_wetsuit_style / MF_wetsuit_thickness / MF_wetsuit_zip / MF_wetsuit_seam | Wetsuit construction | Chapter 12 dictionaries |
+| MF_size_system + VAR_size_label + measured bounds | Equipment sizing | `size_system` (Chapter 5, incl. `bike_frame_cm`, `head_circumference_cm` at 0.8.0) |
+| MF_temperature_rating / MF_season_rating / MF_waterproof_rating | Performance ratings | Typed values with scheme and basis qualifier (CDS-1800 R017 pattern) |
+| MF_user_weight_limit_kg / MF_capacity_persons / MF_capacity_l | Limits and capacities | Typed measurements |
+| MF_certifications | Safety and performance certifications (helmet, PFD, eyewear, climbing standards) | Certification records with scheme and evidence (CDS-1600 §11 pattern) |
+| Relationship records | Compatibility (components, fin systems, mounts), included items | CDS-1900 §5 |
+
+**CDS2000-R009** Sport or activity MUST be a governed multi-valued attribute bound to the `sport_activity` dictionary (or its governed extension) and MUST NOT be derived from category placement alone; the "shop by sport" facet is a projection of this attribute (CDS-600).
+
+**CDS2000-R010** Performance ratings (temperature or season rating, waterproof or breathability rating, buoyancy, load rating) MUST be typed values carrying the rating scheme and a basis qualifier (manufacturer-rated or measured under a named standard); ratings with different schemes MUST NOT be compared or filtered as equivalent.
+
+**CDS2000-R011** Protective equipment (helmets, personal flotation devices, eye protection, climbing and fall-protection equipment) MUST carry certification records naming the standard and the evidence for each market it is sold to; a certification MUST NOT be projected as a facet or claim unless fed by an accepted record, and a market that mandates the certification (Appendix D) MUST block publication when the record is absent.
+
+**CDS2000-R012** Wetsuit style, thickness, zip entry and seam construction MUST be governed values bound to the Chapter 12 dictionaries where those facets are exposed; thickness MUST be stored as the governed thickness value with its millimetre components, not as free text.
+
+**CDS2000-R013** Cycling and other component-based equipment MUST express component compatibility (frame, wheel size, drivetrain, mount standards) through relationship records or governed standard values per CDS-1900 §5 and §7; "fits most bikes" MUST be an explicit universal-fit declaration within a governed scope (CDS1900-R018).
+
+**CDS2000-R014** Powered sports equipment (e-bikes, e-scooters, electric surfboards, fitness machines) MUST apply CDS-1800 §8 and §12 for battery, energy and compliance facts, and CDS-1900 §12 for transport declarations.
+
+**CDS2000-R015** Skill level, intended use environment and performance tier, where exposed, MUST be governed organisation dictionaries (the package deliberately ships none because they are not comparable across brands); they MUST NOT be projected as claims.
+
+**CDS2000-R016** Fuel, gas cartridges, bear spray, marine flares and similar outdoor consumables MUST carry dangerous-goods declarations per CDS-1900 §12 and restricted-sale flags where a market restricts them.
+
+**CDS2000-R017** Apparel and footwear sold under this profile MUST satisfy the CDS-1500 apparel or footwear baseline; this profile adds activity and performance attributes and does not replace them.
+
+## 6. Toys and Games Profile *(normative; dictionary bindings informative)*
+
+The profile separates three age facts that are routinely conflated: the **retail age band** (a merchandising recommendation), the **manufacturer's recommended age** (a product fact from the maker), and the **safety age warning** (a regulated statement such as "Not suitable for children under 36 months" with its hazard, required by law in most markets and, in several, required to be visible online before purchase).
+
+| Field | Meaning | Dictionary / type |
+|---|---|---|
+| MF_age_band | Retail age band for navigation | `toy_age_range` (Chapter 13), multi-valued with declared maximum |
+| MF_recommended_age_min_months / MF_recommended_age_max_months | Manufacturer's recommended age | Integers (months) |
+| MF_safety_age_warning | Regulated age warning with hazard statement and scheme | Structured statement record (MF_warning_statements) |
+| MF_play_type | Play type | `play_type` (Chapter 13) |
+| MF_piece_count | Number of pieces or parts | Integer |
+| MF_player_count_min / MF_player_count_max / MF_play_time_min / MF_play_time_max | Game facts | Integers |
+| MF_language | Language content of games and books | Governed language codes (CDS-300 §18) |
+| MF_small_parts / MF_contains_magnets / MF_contains_button_batteries / MF_projectile / MF_cord_length_mm | Hazard-relevant facts driving warnings | Booleans and typed measurements |
+| Battery fields | Per CDS-1800 §8 | — |
+| CMP_compliance_declarations / CMP_responsible_person / CMP_product_identifier | Per-market compliance (toy safety marking, children's product certificate, tracking label, importer identity) | Governed records (CDS-1800 §12 pattern) |
+| MF_weight_limit_kg | User weight limit for ride-ons and play equipment | Typed measurement |
+
+**CDS2000-R018** Retail age band, manufacturer's recommended age and safety age warning MUST be three separate attributes; a safety age warning MUST NOT be derived from the retail age band or the manufacturer's recommendation, and the retail age band MUST NOT contradict a safety age warning (a product warned as unsuitable under 36 months MUST NOT carry the 0–2 years band).
+
+**CDS2000-R019** Safety age warnings and hazard warnings (small parts, magnets, cords, projectiles, balloons, small balls, button batteries) MUST be structured statement records with the applicable scheme per market, derived from hazard-relevant facts under governed rules with human review, and MUST be projected to a market's listing where the market requires the warning to be visible before purchase (Appendix D); their presence MUST be verified under CDS-500.
+
+**CDS2000-R020** Hazard-relevant facts (small parts present, magnets, button or coin batteries, projectiles, cords, sharp points or edges) MUST be explicit boolean or typed declarations with provenance, never inferred from category by rules or AI; an unknown value MUST be quarantined, not defaulted to false.
+
+**CDS2000-R021** Play type and age band MUST be governed values bound to the Chapter 13 dictionaries (or governed extensions); "educational" and developmental-benefit statements are claims under CDS-1600 §11 pattern rules and MUST NOT be facets unless fed by accepted records.
+
+**CDS2000-R022** Game facts (player count, play time, recommended age, language, edition) MUST be typed attributes; player count MUST be a bounded range with integer minimum and maximum (CDS1500-R041 pattern).
+
+**CDS2000-R023** Per-market toy-safety compliance (conformity marking, declaration or certificate of conformity, third-party test reports, tracking or batch labels, importer or responsible-person identity) MUST be governed compliance records (CDS-1800 §12 pattern) and MUST be evaluated at preflight for each market; a conformity mark visible in an image MUST NOT be treated as the compliance fact.
+
+**CDS2000-R024** Products with batteries MUST satisfy CDS-1800 §8 and CDS-1900 §12; products containing button or coin batteries MUST additionally carry the market-mandated warnings (R019) and secure-compartment compliance evidence where required.
+
+**CDS2000-R025** Piece count MUST be an integer; where a product's piece count varies by variant (edition, size), it MUST be variant-scoped.
+
+**CDS2000-R026** Licensed character and franchise properties MUST be governed values in an organisation dictionary distinct from brand, so that licence-based facets and expiry are governable; they MUST NOT be stored as tags.
+
+**CDS2000-R027** Toys that are also apparel (dress-ups), electronics (children's tablets) or sports equipment (junior bikes) MUST satisfy the applicable layers of CDS-1500, CDS-1800 or §5 in addition to this profile.
+
+## 7. Pet Supplies Profile *(normative; dictionary bindings informative)*
+
+| Field | Meaning | Dictionary / type |
+|---|---|---|
+| MF_pet_type | Species the product is for | `pet_type` (Chapter 14), multi-valued with declared maximum |
+| MF_pet_life_stage | Life stage the product is formulated or designed for | `pet_life_stage` (Chapter 14) |
+| MF_pet_size | Size class where formulated or designed by size | `pet_size` (Chapter 14) with measured bounds (weight range) |
+| MF_breed_suitability | Breed or breed-size targeting | Governed organisation dictionary (the package ships none) |
+| MF_pet_food_form | Food form (dry kibble, wet, raw, freeze-dried, treats, …) | `pet_food_form` (Chapter 14, new at 0.8.0) |
+| MF_ingredient_list / MF_ingredient_naming_scheme | Ordered ingredients | CDS-1700 §5 pattern |
+| MF_nutrition_values | Typical or guaranteed analysis | CDS-1700 R019 with scheme `typical_analysis_pet_food` or `guaranteed_analysis_pet_food` |
+| MF_nutritional_adequacy | Adequacy statement, scheme and life stage (complete and balanced / complementary / treat) | Structured record with scheme (AAFCO, FEDIAF, AS 5812 or market scheme) and evidence |
+| MF_feeding_guide | Feeding directions | Structured table or document reference |
+| VAR_net_quantity | Net weight or volume | CDS-1700 §9 pattern |
+| MF_storage_condition / MF_date_mark_type | Storage and date marking | CDS-1700 §10 pattern |
+| CMP_market_registrations / CMP_restricted_sale | Registration and restricted-sale status for veterinary medicines, parasiticides and supplements | CDS-1600 §12 and §14 patterns |
+| MF_active_ingredients / MF_dosage_form / MF_dosage_by_weight | Health-product facts | CDS-1600 §14 pattern |
+
+**CDS2000-R028** Pet type MUST be a governed multi-valued attribute bound to the `pet_type` dictionary (or its governed extension) and MUST be present for every pet product; life stage and pet size MUST be governed values where the product is formulated or designed by them.
+
+**CDS2000-R029** Pet size classes MUST carry measured bounds (the weight range each class covers, as declared by the organisation or the manufacturer) so that "medium dog" is comparable across brands only where bounds match; a size class without bounds MUST NOT feed a numeric filter.
+
+**CDS2000-R030** Pet food ingredients MUST be stored as ordered structured lists per CDS-1700 §5 (naming scheme declared; composite ingredients expanded where the market requires); "grain-free", "single-protein" and similar dietary statements are claims requiring evidence under CDS-1700 §8 pattern rules.
+
+**CDS2000-R031** Typical or guaranteed analysis MUST be stored as typed nutrition values with the analysis scheme and basis (as-fed or dry-matter) per CDS-1700 R019, never as text; a channel that displays the analysis MUST receive it from the record.
+
+**CDS2000-R032** Nutritional adequacy MUST be a structured record naming the scheme (a feeding-trial or nutrient-profile standard), the life stage it applies to and whether the product is complete and balanced, complementary or a treat; the statement MUST NOT be inferred from ingredients or from the merchandising life stage, and a market requiring the statement (Appendix D) MUST block publication when it is absent.
+
+**CDS2000-R033** Food form MUST be a governed value bound to the `pet_food_form` dictionary; net quantity, unit pricing and pack counts follow CDS-1700 §9.
+
+**CDS2000-R034** Pet health products (veterinary medicines, parasiticides, supplements, prescription diets) MUST carry per-market registration and restricted-sale records under the CDS-1600 §12 and §14 patterns; a product restricted to veterinary prescription or authorised sellers in a market MUST be blocked from channels in that market that cannot enforce the restriction.
+
+**CDS2000-R035** Accessories designed by size (collars, harnesses, coats, crates, beds) MUST declare the size system and measured bounds (neck or chest girth, pet weight, crate internal dimensions) per R006.
+
+**CDS2000-R036** Live animals, live feeder insects and live plants for aquaria MUST NOT be modelled under this profile without an organisation extension declaring the welfare, biosecurity and carriage rules that apply; the package ships no live-animal vocabulary.
+
+**CDS2000-R037** Consumable compatibility (filter cartridges for a filter model, litter for a system, replacement parts for feeders) MUST be `compatible_with`, `accessory_for` or `fits` relationship records per CDS-1900 §5.
+
+## 8. Warnings, Restricted Sale and Recalls *(normative)*
+
+**CDS2000-R038** All mandatory warnings under the three profiles MUST be structured statement records (`MF_warning_statements`) with scheme, market and hazard, evaluated per market at preflight and projected to listings where a market requires or recommends online display (Appendix D); free-text warnings in descriptions MUST derive from the records.
+
+**CDS2000-R039** Restricted-sale status (age-restricted sporting goods such as knives and air guns, prescription pet medicines, products banned in a market) MUST be governed per-market attributes evaluated at preflight (the CDS-1700 §12 pattern).
+
+**CDS2000-R040** Recalls and safety withdrawals MUST be handled through lifecycle state and channel withdrawal (CDS-500 §12) with affected batch or date ranges recorded as observations; deletion of the product record is prohibited (CDS-200 §14).
+
+## 9. Customer Facet Design *(informative — normative facet rules live in CDS-600)*
+
+| Facet | Recommended baseline behaviour | Anti-pattern |
+|---|---|---|
+| Shop by sport | Governed `sport_activity` values, multi-select OR, top-level navigation entry | Category per sport duplicating products |
+| Shop by age | Governed `toy_age_range` bands; never the safety warning | Bands typed per product; "3+" as text |
+| Play type | Governed values | Marketing theme tags |
+| Players / play time | Numeric range facets | Text buckets |
+| Shop by pet | Governed `pet_type` values; life stage and size as secondary facets | Species from category name |
+| Food form / dietary | Governed `pet_food_form`; dietary claims only from accepted claim records | "Grain-free" tag without evidence |
+| Size (equipment) | Size-system-qualified facets with measured bounds | Unqualified "M" across systems |
+| Certification | Never a facet unless fed by accepted records | "CE certified" tag |
+
+## 10. Channel Projection Guidance *(informative — normative rules: CDS-500, CDS-900)*
+
+| Canonical concept | Metafield-style channel (informative) | Feed-style channel (informative) |
+|---|---|---|
+| Sport activity, age band, pet type | Category metafields where the taxonomy defines them (activity, age group, pet type attributes exist in the seeded channel taxonomy), custom metafields otherwise | Title and `product_detail`; Google `age_group` is an apparel audience attribute (newborn, infant, toddler, kids, adult), not a toy age band — do not map toy age bands to it |
+| Safety age and hazard warnings | Per-market generated blocks near the price or in the description, verified | Description; where a market requires visibility before purchase, the listing must carry it |
+| Nutritional adequacy and analysis | Structured metafields; generated description block | `product_detail` |
+| Certification and compliance | Information blocks generated from records | Not published as attributes |
+| Restricted sale | Channel exclusion rules | Channel exclusion; `adult` flag where the channel uses it |
+
+## 11. AI Enrichment and Review *(informative — normative AI rules live in CDS-700)*
+
+| Task | AI may propose | Deterministic or human control |
+|---|---|---|
+| Activity, play type, pet type from copy and images | Dictionary candidates with evidence | Governed dictionaries; review for multi-value maxima |
+| Age band suggestion | Retail band candidates | Never the safety warning (R018–R020) |
+| Hazard facts | None from category; extraction from packaging or test reports (E1) as proposals | Human review; unknown quarantined (R020) |
+| Ingredient and analysis extraction | Structured candidates from labels (E1) | Scheme and unit validation (CDS-1700 §5–§6) |
+| Nutritional adequacy | None — manufacturer statement only | R032 |
+| Compatibility (components, consumables) | Candidate relationships with evidence | CDS-1900 §5 review rules |
+
+## 12. Governance and Organisational Extensions *(informative — rules in CDS-1500 §23 and CDS-800)*
+
+The Chapter 12–14 vocabularies are extended under CDS-400. Organisations add skill-level, breed, franchise, use-environment and theme dictionaries as governed extensions (§5 R015, §6 R026, §7 R028). Toy-safety and pet-food regimes change on multi-year cycles with long transition periods (for example the EU toy regulation's 2030 application date); the register review cadence should align to those transitions and to any market's list changes for mandatory standards.
+
+## 13. Conformance Requirements *(normative — claims and levels per CDS-1000)*
+
+**CDS2000-R041** An implementation claiming the CDS Sports and Outdoor Profile MUST: govern sport or activity as a multi-valued dictionary attribute (R005, R009); identify equipment size systems with measured bounds (R006); store performance ratings with scheme and basis (R010); maintain certification records for protective equipment with per-market preflight (R011); bind wetsuit attributes to governed dictionaries where exposed (R012); express compatibility and inclusion through relationship records (R008, R013); apply CDS-1800 and CDS-1900 for powered equipment and consumables (R014, R016); satisfy the CDS-1500 apparel and footwear baselines for apparel sold under the profile (R017); maintain warnings, restricted-sale and recall handling (R038–R040); maintain a jurisdiction requirement register for every market published to (R003); and publish and verify channel representations under CDS-500.
+
+**CDS2000-R042** An implementation claiming the CDS Toys and Games Profile MUST: keep retail age band, manufacturer's recommended age and safety age warning as separate attributes (R018); maintain structured hazard facts and market-specific warnings projected and verified where required online (R019–R020, R024, R038); bind age band and play type to governed dictionaries (R021); store game facts as typed values (R022, R025); maintain per-market compliance records evaluated at preflight (R023); govern licensed properties (R026); apply other profiles' layers where present (R027); handle restricted sale and recalls (R039–R040); maintain a jurisdiction requirement register for every market published to (R003); and publish and verify channel representations under CDS-500.
+
+**CDS2000-R043** An implementation claiming the CDS Pet Supplies Profile MUST: govern pet type, life stage and size with measured bounds (R028–R029, R035); store ingredients, analysis and nutritional adequacy as structured records with schemes and evidence (R030–R032); bind food form to the governed dictionary (R033); maintain per-market registration and restricted-sale records for health products (R034); exclude live animals absent a declared extension (R036); express consumable compatibility through relationship records (R037); handle warnings, restricted sale and recalls (R038–R040); maintain a jurisdiction requirement register for every market published to (R003); and publish and verify channel representations under CDS-500.
+
+## 14. Worked Product Examples *(informative)*
+
+### 14.1 Toy — Magnetic building set
+
+```
+CAT_product_type = construction_toy; MF_play_type = [construction, stem]
+MF_age_band = [age_3_5, age_6_8]; MF_recommended_age_min_months = 36
+MF_contains_magnets = true; MF_small_parts = true; MF_piece_count = 100
+MF_safety_age_warning = {scheme: eu_toy_safety_2009_48, statement: "Warning. Not suitable for children under 36 months. Small parts. Choking hazard.", hazard: [small_parts]}
+MF_warning_statements += {scheme: eu_toy_safety_2009_48, statement: "Warning. This toy contains magnets or magnetic components..."},
+                         {scheme: us_cpsc_16_cfr_1500_19, statement: "WARNING: CHOKING HAZARD - Small parts. Not for children under 3 yrs."},
+                         {scheme: au_toys_containing_magnets_2020, statement: <mandatory warning text>}
+CMP_compliance_declarations = [{jurisdiction: EU, scheme: eu_toy_safety_2009_48, mark: CE, doc_ref: MED-..},
+                               {jurisdiction: US, scheme: us_cpsia_children_product, cpc_ref: MED-.., tracking_label: true},
+                               {jurisdiction: AU, scheme: au_toys_containing_magnets_2020, test_report: MED-..}]
+EU listing: warning visible before purchase -> verified; US listing: cautionary statement displayed -> verified
+```
+
+### 14.2 Pet food — Dry dog food, large breed adult
+
+```
+CAT_product_type = dog_food_dry; MF_pet_type = [dog]; MF_pet_life_stage = adult; MF_pet_size = large {weight_min_kg: 25, weight_max_kg: 45}
+MF_pet_food_form = dry_kibble
+MF_ingredient_list = [chicken_meal, brown_rice, ...] (scheme: manufacturer_declared, order: descending_by_weight)
+MF_nutrition_values = {scheme: guaranteed_analysis_pet_food, basis: as_fed, values: [{crude_protein, min, 26, %}, {crude_fat, min, 12, %}, {crude_fibre, max, 4, %}, {moisture, max, 10, %}]}
+MF_nutritional_adequacy = {scheme: aafco_dog_food_nutrient_profiles, life_stage: adult_maintenance, status: complete_and_balanced, evidence: E1}
+Variants: 3 kg (VAR_net_quantity = {3, kilogram}), 12 kg, 20 kg; unit price per kilogram derived
+AU: complies with AS 5812 (voluntary) recorded as certification; US: state feed registration recorded per state where required
+```
+
+### 14.3 Sports — Wetsuit
+
+```
+CAT_product_type = wetsuit; MF_sport_activity = [surfing]
+MF_wetsuit_style = full_suit; MF_wetsuit_thickness = t_3_2 (3/2 mm); MF_wetsuit_zip = chest_zip; MF_wetsuit_seam = glued_blind_stitched
+VAR_size_system = <brand_wetsuit_size_system>; VAR_size_label = "MT"; measured bounds: height 178-185 cm, chest 96-101 cm
+MF_temperature_rating = {value_min: 12, value_max: 17, unit: celsius, basis: manufacturer_rated}
+```
+
+## 15. Reference Validation Cases *(informative — the profiles' contribution to the cross-industry validation set, REVIEW-020)*
+
+- a safety age warning derived from the retail age band (must fail R018);
+- a toy with `MF_contains_magnets` unknown defaulted to false (must quarantine, R020);
+- an EU toy listing without the age warning visible before purchase (verification must report, R019, D-EU-1);
+- a US internet listing of a small-parts toy without the cautionary statement (R019, D-US-1);
+- a helmet sold into Australia without a bicycle-helmet certification record (must block, R011, D-AU-2);
+- a sport activity encoded as a category rather than an attribute (R009);
+- a temperature rating compared across two different schemes (R010);
+- a pet food with adequacy "inferred" from ingredients (R032);
+- a "medium dog" size class with no weight bounds feeding a weight filter (R029);
+- a prescription pet medicine published to a marketplace that cannot enforce the restriction (R034);
+- a wetsuit thickness stored as free text "3/2mm" (R012);
+- a "batteries not included" statement with no `requires` record (R008).
+
+---
+
+## Appendix A. Attribute Baselines *(normative — dictionary bindings per CDS1500-R011)*
+
+### A.1 Sports and Outdoor
+
+| Field | Scope | Type | Baseline requirement |
+|---|---|---|---|
+| CAT_product_type | Product | Governed classification reference | R |
+| MF_sport_activity | Product | Governed dictionary list (`sport_activity`) | R |
+| VAR_size_system / VAR_size_label / measured bounds | Variant | Governed system; text; typed measurements | R for sized equipment and apparel |
+| MF_wetsuit_style / MF_wetsuit_thickness / MF_wetsuit_zip / MF_wetsuit_seam | Product | Governed dictionary references | R for wetsuits where exposed; REC otherwise |
+| MF_temperature_rating / MF_waterproof_rating / MF_season_rating | Product | Typed values with scheme and basis | C |
+| MF_user_weight_limit_kg / MF_capacity_persons / MF_capacity_l | Product | Typed measurements | C — R where a limit exists |
+| MF_certifications | Product (per market) | Certification records | R for protective equipment |
+| Relationship records (`compatible_with`, `includes`, `requires`, `fits`) | Product | Records per CDS-1900 §5 | C |
+| Battery and power fields | Product / Variant | Per CDS-1800 §8 | R for powered products |
+| CMP_dangerous_goods | Product / Variant | Declaration per CDS-1900 §12 | R (explicit value) |
+| MF_warning_statements / CMP_restricted_sale | Product (per market) | Structured records | C |
+| Apparel and footwear baseline | — | Per CDS-1500 Appendices A and A.1 | R where applicable |
+
+### A.2 Toys and Games
+
+| Field | Scope | Type | Baseline requirement |
+|---|---|---|---|
+| CAT_product_type | Product | Governed classification reference | R |
+| MF_age_band | Product | Governed dictionary list (`toy_age_range`) | R |
+| MF_recommended_age_min_months / MF_recommended_age_max_months | Product | Integers | REC; R where a market requires the manufacturer's age |
+| MF_safety_age_warning | Product | Structured statement record | C — R where a market mandates it |
+| MF_play_type | Product | Governed dictionary list (`play_type`) | REC |
+| MF_piece_count | Product / Variant | Integer | C |
+| MF_player_count_min / MF_player_count_max / MF_play_time_min / MF_play_time_max | Product | Integers | R for games |
+| MF_language | Product / Variant | Governed language codes | C |
+| MF_small_parts / MF_contains_magnets / MF_contains_button_batteries / MF_projectile / MF_cord_length_mm | Product | Booleans; typed measurement | R (explicit values; unknown quarantined) |
+| MF_warning_statements | Product (per market) | Structured records | C — R where mandated |
+| CMP_compliance_declarations / CMP_responsible_person / CMP_product_identifier | Product (per market) | Governed records | R where a market regulates toys |
+| Battery and power fields / CMP_dangerous_goods | Product / Variant | Per CDS-1800 §8, CDS-1900 §12 | R for battery products |
+| MF_licensed_property | Product | Governed organisation dictionary | C |
+| MF_weight_limit_kg | Product | Typed measurement | R for ride-ons and play equipment |
+
+### A.3 Pet Supplies
+
+| Field | Scope | Type | Baseline requirement |
+|---|---|---|---|
+| CAT_product_type | Product | Governed classification reference | R |
+| MF_pet_type | Product | Governed dictionary list (`pet_type`) | R |
+| MF_pet_life_stage | Product | Governed dictionary reference (`pet_life_stage`) | C — R for food formulated by life stage |
+| MF_pet_size | Product | Governed dictionary reference (`pet_size`) with bounds | C |
+| MF_pet_food_form | Product | Governed dictionary reference (`pet_food_form`) | R for food and treats |
+| MF_ingredient_list / MF_ingredient_naming_scheme | Product | Ordered structured list | R for food, treats and supplements |
+| MF_nutrition_values | Product | Typed values with scheme and basis | R for food where a market requires analysis; REC otherwise |
+| MF_nutritional_adequacy | Product | Structured record with scheme | R for complete foods; C otherwise |
+| MF_feeding_guide | Product | Structured table or document | REC; R where a market requires feeding directions |
+| VAR_net_quantity | Variant | Typed measurement | R |
+| MF_storage_condition / MF_date_mark_type | Product | Governed values | C |
+| CMP_market_registrations / CMP_restricted_sale / MF_active_ingredients / MF_dosage_form | Product (per market) | Governed records | R for health products |
+| Relationship records (`compatible_with`, `accessory_for`, `fits`) | Product | Records per CDS-1900 §5 | C |
+| MF_warning_statements | Product (per market) | Structured records | C |
+
+## Appendix B. Dictionary Bindings *(informative — becomes governed data on adoption per CDS1500-R011)*
+
+| Dictionary key | Package chapter | Bound attribute(s) | Status at 0.8.0 |
+|---|---|---|---|
+| sport_activity | 12 | MF_sport_activity | Bound by this chapter |
+| wetsuit_style / wetsuit_thickness / wetsuit_zip / wetsuit_seam | 12 | MF_wetsuit_* | Bound |
+| play_type / toy_age_range | 13 | MF_play_type / MF_age_band | Bound |
+| pet_type / pet_life_stage / pet_size | 14 | MF_pet_type / MF_pet_life_stage / MF_pet_size | Bound |
+| pet_food_form | 14 (new, 0.8.0) | MF_pet_food_form | Bound |
+| size_system (`bike_frame_cm`, `head_circumference_cm` added at 0.8.0) | 5 | VAR_size_system | Bound |
+| storage_condition, allergen, dietary_claim_type | 17 | Per CDS-1700 patterns where used | Bound via CDS-1700 |
+| battery_chemistry, product_condition, relationship_type, dangerous_goods_class | 11, 18 | Per CDS-1800 and CDS-1900 | Bound via those chapters |
+| jurisdiction / regulatory_scheme | 19 | CMP_* records, warning schemes | Bound via CDS-1500 §2.2 |
+
+Deliberately not shipped: skill levels, performance tiers, breed lists, licensed-property registries, theme and character vocabularies, live-animal vocabularies, pet nutrient profiles (scheme-published).
+
+## Appendix C. References *(informative; retrieved 2026-09-20 unless stated)*
+
+| Ref | Source | Location | Use in this chapter |
+|---|---|---|---|
+| [S1] | ACCC Product Safety — mandatory standards: Toys for children up to and including 36 months (Consumer Goods (Toys for Children up to and including 36 months of age) Safety Standard 2023, AS/NZS ISO 8124.1:2023); Toys containing magnets (2020); Projectile toys (2020); Bicycle helmets (2024); Sunglasses and fashion spectacles (2017); Products containing button/coin batteries (2020) | productsafety.gov.au; legislation.gov.au | D-AU-1 to D-AU-4 (retrieved; instrument texts not read this pass except button batteries, see CDS-1800 [E3]) |
+| [S2] | Standards Australia — AS 5812:2023 Manufacturing and marketing of pet food (voluntary; referenced by the Pet Food Industry Association of Australia); APVMA — Agvet Code registration of veterinary chemical products | standards.org.au; apvma.gov.au | D-AU-5, D-AU-6 (retrieved) |
+| [S3] | New Zealand — Product Safety Standards (Children's Toys) Regulations 2005; ACVM Act 1997 (pet food exemptions and standards) | legislation.govt.nz; mpi.govt.nz | D-NZ-1, D-NZ-2 (retrieved) |
+| [S4] | US CPSC — Consumer Product Safety Improvement Act 2008 (children's product certificate, third-party testing, tracking labels); 16 CFR 1500.19 (small parts and other cautionary labelling), 16 CFR 1500.20 (labelling in internet and catalogue advertising), 16 CFR 1501 (small parts test), 16 CFR 1250 (ASTM F963 toy standard), 16 CFR 1203 (bicycle helmets) | cpsc.gov; ecfr.gov | D-US-1 to D-US-3 (retrieved; not spot-verified this pass) |
+| [S5] | US FDA — Pet food labelling (21 CFR 501); AAFCO — Model Regulations for pet food and specialty pet food (product name, guaranteed analysis, ingredient statement, nutritional adequacy statement, feeding directions, quantity, manufacturer); state feed control laws | fda.gov; aafco.org | D-US-4 (retrieved) |
+| [S6] | Directive 2009/48/EC on the safety of toys (warnings determining the decision to purchase visible before purchase including online); Regulation (EU) 2025/2509 on the safety of toys (in force 1 January 2026; applies from 1 August 2030; digital product passport; online offers) | eur-lex.europa.eu | D-EU-1 (regulation verified 2026-09-20; directive detail retrieved) |
+| [S7] | Regulation (EU) 2016/425 on personal protective equipment; Regulation (EU) 2023/988 (GPSR) | eur-lex.europa.eu | D-EU-2, D-EU-3 |
+| [S8] | Regulation (EC) No 767/2009 on the placing on the market and use of feed (labelling of pet food); Regulation (EC) No 1831/2003 (feed additives); FEDIAF Code of Good Labelling Practice for Pet Food | eur-lex.europa.eu; europeanpetfood.org | D-EU-4 (retrieved) |
+| [S9] | UK — Toys (Safety) Regulations 2011; Personal Protective Equipment (Enforcement) Regulations 2018 with retained 2016/425; General Product Safety Regulations 2005; retained Regulation 767/2009 — OPSS, Defra | legislation.gov.uk; gov.uk | D-UK-1 to D-UK-3 (retrieved) |
+| [S10] | Canada — Canada Consumer Product Safety Act; Toys Regulations (SOR/2011-17); Consumer Packaging and Labelling Act (bilingual); CFIA guidance on pet food (imports and labelling) | laws-lois.justice.gc.ca; inspection.canada.ca | D-CA-1, D-CA-2 (retrieved) |
+| [S11] | StoreLeads (Shopify Plus category distribution, 2026-09-11); StoreInspect (average products per store by category, 2026-09-19) | storeleads.app; storeinspect.com | Market basis (REVIEW-020) |
+
+## Appendix D. Jurisdiction Requirement Register — Seed *(informative seed of the normative register defined in CDS-1500 §2.2)*
+
+Conventions as in CDS-1600 Appendix D. Most entries in this chapter were retrieved from regulator pages without reading the instrument text in this pass and are marked accordingly; organisations verify before relying on them.
+
+### D.1 Australia (AU)
+
+| Ref | Instrument / regulator | Applies to | Obligation | Required data elements → CDS field | Trigger / dates | Verification |
+|---|---|---|---|---|---|---|
+| D-AU-1 | Consumer Goods (Toys for Children up to and including 36 months of age) Safety Standard 2023 (AS/NZS ISO 8124.1:2023 provisions on small parts, sharp points and edges, cords); Consumer Goods (Toys Containing Magnets) Safety Standard 2020; Consumer Goods (Projectile Toys) Safety Standard 2020 — ACCC and state regulators (`au_toys_under_36_months_2023`, `au_toys_containing_magnets_2020`, `au_projectile_toys_2020`) | Toys for children up to 36 months; toys containing magnets; projectile toys | pre_market (compliance with the referenced standard provisions); warning_statement (magnet toys: mandatory warning on packaging or the toy); labelling_element | Small-parts, magnet and projectile compliance evidence; magnet warning text → MF_small_parts, MF_contains_magnets, MF_projectile, MF_warning_statements, CMP_compliance_declarations (test evidence) | Ongoing (2023 standard replaced the 2020 standard) | Retrieved 2026-09-20 [S1] (not spot-verified) |
+| D-AU-2 | Consumer Goods (Bicycle Helmets) Safety Standard 2024 (AS/NZS 2063 and recognised international standards) — ACCC (`au_bicycle_helmets_2024`) | Bicycle helmets supplied in Australia | pre_market (certification to an accepted standard); labelling_element (certification marking) | Standard and certification evidence → MF_certifications (scheme `au_bicycle_helmets_2024`), CMP_compliance_declarations | Ongoing | Retrieved 2026-09-20 [S1] |
+| D-AU-3 | Consumer Goods (Sunglasses and Fashion Spectacles) Safety Standard 2017 (AS/NZS 1067.1:2016 lens categories) — ACCC (`au_sunglasses_2017`) | Sunglasses and fashion spectacles | labelling_element (lens category and required markings) | Lens category 0–4 and marking → MF_lens_category, MF_warning_statements | Ongoing | Retrieved 2026-09-20 [S1] |
+| D-AU-4 | Button and coin battery safety and information standards 2020 — ACCC (`au_button_battery_standards_2020`) | Toys and products containing button or coin batteries | As CDS-1800 D-AU-5 | Per CDS-1800 D-AU-5 → MF_contains_button_batteries, MF_warning_statements, listing projection | Mandatory from 22 June 2022 | Verified 2026-09-20 (CDS-1800 [E3]) |
+| D-AU-5 | AS 5812:2023 Manufacturing and marketing of pet food (voluntary industry standard; PFIAA membership requirement) (`au_as_5812_pet_food`) | Pet food | documentation (voluntary labelling: product name, species, life stage, complete or complementary statement, ingredient list, typical analysis, feeding guide, net quantity, batch and best-before, manufacturer details) | Elements → MF_pet_type, MF_pet_life_stage, MF_nutritional_adequacy (scheme `au_as_5812_pet_food`), MF_ingredient_list, MF_nutrition_values, MF_feeding_guide, VAR_net_quantity | Voluntary (no mandatory national pet-food standard as at 2026-09-20; state stock-food laws apply in some states) | Retrieved 2026-09-20 [S2] |
+| D-AU-6 | Agricultural and Veterinary Chemicals Code Act 1994 — APVMA (`au_apvma_agvet_code`) | Veterinary medicines, parasiticides and treatments for animals | pre_market (registration and approved label); restricted_content (scheduled medicines; prescription-only products); labelling_element | APVMA registration number, approved label, schedule and supply restrictions → CMP_market_registrations (scheme `au_apvma_agvet_code`), CMP_restricted_sale, MF_active_ingredients | Ongoing | Retrieved 2026-09-20 [S2] |
+
+### D.2 New Zealand (NZ)
+
+| Ref | Instrument / regulator | Applies to | Obligation | Required data elements → CDS field | Trigger / dates | Verification |
+|---|---|---|---|---|---|---|
+| D-NZ-1 | Product Safety Standards (Children's Toys) Regulations 2005 (AS/NZS ISO 8124.1 provisions for toys for children under 36 months) — MBIE and Commerce Commission (`nz_childrens_toys_regulations_2005`) | Toys for children under 36 months | pre_market (compliance with the referenced provisions) | Small parts, sharp points, cords compliance → MF_small_parts, CMP_compliance_declarations | Ongoing | Retrieved 2026-09-20 [S3] |
+| D-NZ-2 | Agricultural Compounds and Veterinary Medicines Act 1997 — MPI (`nz_acvm_act_1997`) | Pet food (exempt from registration subject to conditions) and veterinary medicines (registration) | pre_market (veterinary medicines); documentation (pet food exemption conditions) | Registration or exemption status → CMP_market_registrations (scheme `nz_acvm_act_1997`) | Ongoing | Retrieved 2026-09-20 [S3] |
+
+### D.3 United States (US)
+
+| Ref | Instrument / regulator | Applies to | Obligation | Required data elements → CDS field | Trigger / dates | Verification |
+|---|---|---|---|---|---|---|
+| D-US-1 | Federal Hazardous Substances Act; 16 CFR 1500.19 (cautionary labelling for small parts, small balls, marbles, balloons) and 16 CFR 1500.20 (cautionary statements in internet and catalogue advertising) — CPSC (`us_cpsc_16_cfr_1500_19`) | Toys and games intended for children 3 to under 6 years with small parts; balloons; small balls; marbles | warning_statement; listing_element (the same cautionary statement must appear in internet advertising that offers direct purchase) | Statutory cautionary statement text and format → MF_safety_age_warning / MF_warning_statements (scheme `us_cpsc_16_cfr_1500_19`), listing projection and verification | Ongoing | Retrieved 2026-09-20 [S4] |
+| D-US-2 | Consumer Product Safety Improvement Act 2008; 16 CFR 1250 (ASTM F963 toy safety standard); 16 CFR 1107 (third-party testing); 16 CFR 1130 (tracking labels) — CPSC (`us_cpsia_children_product`) | Children's products (designed or intended primarily for children 12 and under) | pre_market (Children's Product Certificate based on accredited third-party testing); labelling_element (tracking label with manufacturer, location and date of production, batch); documentation | CPC reference, test reports, tracking label data → CMP_compliance_declarations (scheme `us_cpsia_children_product`, CPC ref), CMP_product_identifier, MED_technical_documents | Ongoing | Retrieved 2026-09-20 [S4] |
+| D-US-3 | 16 CFR 1203 Safety Standard for Bicycle Helmets — CPSC (`us_cpsc_16_cfr_1203`) | Bicycle helmets | pre_market (certification); labelling_element | Certification evidence and label → MF_certifications (scheme `us_cpsc_16_cfr_1203`) | Ongoing | Retrieved 2026-09-20 [S4] |
+| D-US-4 | Federal Food, Drug, and Cosmetic Act and 21 CFR 501 (animal food labelling) — FDA; state feed laws adopting the AAFCO Model Regulations (product name, net quantity, guaranteed analysis, ingredient statement, nutritional adequacy statement, feeding directions, manufacturer or distributor name and address; state registration and licensing) (`us_fda_21_cfr_501_pet_food`, `us_aafco_state_feed_law`) | Pet food and treats sold in the US | labelling_element; documentation; pre_market (state product registration where required) | Elements → MF_nutrition_values (scheme `guaranteed_analysis_pet_food`), MF_nutritional_adequacy (scheme `aafco_*_nutrient_profiles` or feeding trial), MF_ingredient_list, MF_feeding_guide, VAR_net_quantity, CMP_responsible_person, CMP_market_registrations per state | Ongoing | Retrieved 2026-09-20 [S5] |
+| D-US-5 | Proposition 65 (California) — OEHHA (`us_ca_prop65_warning`) | Toys, sporting goods and pet products causing listed-chemical exposure | warning_statement; listing_element | Per CDS-1800 D-US-3 | Effective 1 January 2025 | Verified 2026-09-20 (CDS-1800 [E7]) |
+
+### D.4 European Union (EU)
+
+| Ref | Instrument / regulator | Applies to | Obligation | Required data elements → CDS field | Trigger / dates | Verification |
+|---|---|---|---|---|---|---|
+| D-EU-1 | Directive 2009/48/EC on the safety of toys (CE marking, EC declaration of conformity, manufacturer and importer identification, warnings including age warnings and specific warnings for toys in Annex V; warnings that determine the decision to purchase must be clearly visible before purchase including online) — to be replaced by Regulation (EU) 2025/2509 (applies from 1 August 2030; digital product passport; online offers to display warnings and safety information) (`eu_toy_safety_2009_48`, `eu_toy_safety_regulation_2025_2509`) | Toys (products designed or intended for use in play by children under 14) | pre_market (conformity assessment; DoC; technical file); labelling_element (CE marking; manufacturer and importer name and address; type/batch/serial); warning_statement; listing_element | Warning texts (preceded by "Warning"), age warning with hazard where applicable, CE marking, identification, DoC reference → MF_safety_age_warning, MF_warning_statements (scheme `eu_toy_safety_2009_48`), CMP_compliance_declarations, CMP_responsible_person, CMP_product_identifier, listing projection | Directive in force until 1 August 2030; regulation in force 1 January 2026 | Regulation verified 2026-09-20 [S6]; directive online-visibility detail retrieved (not spot-verified) |
+| D-EU-2 | Regulation (EU) 2016/425 on personal protective equipment (`eu_ppe_2016_425`) | Helmets, eye protection, flotation aids, protective sports equipment classified as PPE (Category I–III) | pre_market (conformity assessment by category; DoC; notified body for II/III); labelling_element (CE marking; identification; instructions) | Category, standard, notified body number where applicable, DoC → MF_certifications, CMP_compliance_declarations (scheme `eu_ppe_2016_425`), MED_technical_documents | Ongoing | Retrieved 2026-09-20 [S7] (not spot-verified) |
+| D-EU-3 | Regulation (EU) 2023/988 General Product Safety Regulation (`eu_gpsr_2023_988`) | Non-harmonised sports equipment, pet accessories and other consumer products; cross-cutting online-offer duties | listing_element; labelling_element; pre_market (responsible economic operator) | Per CDS-1800 D-EU-6 | Applies from 13 December 2024 | Verified 2026-09-20 (CDS-1800 [E13]) |
+| D-EU-4 | Regulation (EC) No 767/2009 on the placing on the market and use of feed (Chapter 4 labelling: type of feed, feed business operator, net quantity, composition, analytical constituents, additives, moisture, best-before, batch, instructions for proper use, species and category of animal, complete or complementary designation); Regulation (EC) No 1831/2003 (additives); FEDIAF labelling code (`eu_feed_labelling_767_2009`) | Pet food (feed for pet animals) | labelling_element; documentation | Elements → MF_pet_type, MF_pet_life_stage, MF_nutritional_adequacy (complete/complementary; scheme `fediaf_nutritional_guidelines` where claimed), MF_ingredient_list (composition by category or ingredient), MF_nutrition_values (scheme `eu_analytical_constituents`), MF_feeding_guide, VAR_net_quantity, MF_date_mark_type, CMP_responsible_person | Ongoing | Retrieved 2026-09-20 [S8] (not spot-verified) |
+| D-EU-5 | Regulation (EU) 2019/6 on veterinary medicinal products (`eu_veterinary_medicines_2019_6`) | Veterinary medicines and medicated products | pre_market (marketing authorisation); restricted_content (prescription status; online retail rules per member state) | Authorisation and prescription status → CMP_market_registrations, CMP_restricted_sale | Applies from 28 January 2022 | Retrieved (not spot-verified) |
+
+### D.5 United Kingdom (GB)
+
+| Ref | Instrument / regulator | Applies to | Obligation | Required data elements → CDS field | Trigger / dates | Verification |
+|---|---|---|---|---|---|---|
+| D-UK-1 | Toys (Safety) Regulations 2011 — OPSS (`uk_toys_safety_regulations_2011`) | Toys placed on the GB market | pre_market (UKCA or CE marking with indefinite CE recognition from 1 October 2024; DoC; technical file); labelling_element; warning_statement (warnings visible before purchase including online) | As D-EU-1 with GB marking and importer identification → MF_safety_age_warning, MF_warning_statements (scheme `uk_toys_safety_regulations_2011`), CMP_compliance_declarations, CMP_responsible_person | Ongoing; CE recognition indefinite from 1 October 2024 | Retrieved 2026-09-20 [S9] |
+| D-UK-2 | Regulation (EU) 2016/425 as retained (PPE) with the Personal Protective Equipment (Enforcement) Regulations 2018; General Product Safety Regulations 2005 — OPSS (`uk_ppe_retained_2016_425`, `uk_gpsr_2005`) | PPE (helmets, eyewear, flotation); non-harmonised consumer products | pre_market; labelling_element | Certification and identification → MF_certifications, CMP_compliance_declarations | Ongoing | Retrieved 2026-09-20 [S9] |
+| D-UK-3 | Regulation (EC) 767/2009 as retained (animal feed labelling); Veterinary Medicines Regulations 2013 (as amended 2024) — Defra, VMD (`uk_feed_labelling_retained_767_2009`, `uk_veterinary_medicines_regulations`) | Pet food; veterinary medicines | labelling_element; pre_market; restricted_content (distribution categories POM-V, POM-VPS, NFA-VPS, AVM-GSL) | As D-EU-4; authorisation and distribution category → CMP_market_registrations, CMP_restricted_sale | Ongoing | Retrieved 2026-09-20 [S9] |
+
+### D.6 Canada (CA)
+
+| Ref | Instrument / regulator | Applies to | Obligation | Required data elements → CDS field | Trigger / dates | Verification |
+|---|---|---|---|---|---|---|
+| D-CA-1 | Canada Consumer Product Safety Act; Toys Regulations (SOR/2011-17) (small parts, magnets, cords, noise, toxic substances, age-related requirements); Consumer Packaging and Labelling Act (bilingual identity, net quantity, dealer) — Health Canada (`ca_toys_regulations_2011`) | Toys and children's products | pre_market (compliance; no certificate regime but records on request); warning_statement (bilingual); labelling_element | Bilingual warnings and identity → MF_warning_statements (scheme `ca_toys_regulations_2011`, EN and FR), CMP_responsible_person, localisation per CDS-300 §18 | Ongoing | Retrieved 2026-09-20 [S10] |
+| D-CA-2 | Pet food: Consumer Packaging and Labelling Act and Competition Act (labelling and representations); Feeds Act (largely excludes pet food); Health of Animals Act import conditions — CFIA and Competition Bureau (`ca_pet_food_labelling`) | Pet food sold in Canada | labelling_element (bilingual identity, net quantity, dealer identity); documentation (import conditions) | Elements → MF_pet_type, VAR_net_quantity, CMP_responsible_person; voluntary AAFCO-style adequacy statements → MF_nutritional_adequacy | Ongoing | Retrieved 2026-09-20 [S10] |
+
+### D.7 Other markets
+
+| Jurisdiction | Status | Note |
+|---|---|---|
+| Japan (JP), China (CN), Republic of Korea (KR), India (IN), Brazil (BR) and others | Not seeded | Toy safety marks (ST mark, CCC, KC), PPE and pet-food regimes differ; organisation supplies entries with local advice. |
+
+END OF CDS-2000 v0.2 REVIEW DRAFT
 
 <div class="chapter"></div>
 
@@ -8810,7 +11566,7 @@ All v0.1 chapter-local ADRs are superseded by or consolidated into this register
 
 # Appendix B. Requirements Index (summary)
 
-1,034 requirements: 584 MUST · 231 MUST NOT · 161 SHOULD · 31 MAY · 11 SHOULD NOT · 16 constitutive/indicative. Full machine-readable index: `requirements-index.csv`.
+1,320 requirements: 765 MUST · 334 MUST NOT · 161 SHOULD · 32 MAY · 11 SHOULD NOT · 17 constitutive/indicative (counted by each requirement's primary keyword). Full machine-readable index: `requirements-index.csv`.
 
 # Appendix C. Bibliography and Evidence Base
 
@@ -8818,3 +11574,5 @@ All v0.1 chapter-local ADRs are superseded by or consolidated into this register
 - Platform documentation (priority 3, verified 2026-08-03/04, full register REVIEW-006/006A): help.shopify.com (product category; variants; Search & Discovery filters; store permissions; activity logs); shopify.dev (productUpdate; ProductUpdateInput; storefront filtering; webhooks; metafields); support.google.com/merchants (7052112; 6324436; 6324487); facebook.com/business/help (365831587397584; 125074381480892).
 - Literature (priority 4): Jorij Abraham, *Product Information Management — Theory and Practice*, Springer 2014 (cross-check REVIEW-002B).
 - Licence practice research: REVIEW-006A (OpenAPI, JSON Schema, AsyncAPI, schema.org, W3C, CloudEvents; accessed 2026-08-04).
+- Industry-profile expansion research (REVIEW-020, retrieved 2026-09-20): global store-population data (StoreLeads worldwide and Shopify Plus category distributions and catalogue-size bands; StoreInspect average products per category), revenue segmentation (Statista Market Insights as reported by ECDB; ECDB Amazon category GMV), regional cross-checks (Australia Post Inside Australian Online Shopping 2026; StoreLeads Australia), channel taxonomies (Google product taxonomy 2021-09-21; Shopify Standard Product Taxonomy 2026-11-unstable; Google Merchant Center attribute specifications) and industry data standards (Auto Care Association ACES 5.0/PIES 8.0; ETIM; GS1 GPC; IATA lithium battery guidance 2026).
+- Regulatory instruments and regulator publications cited per jurisdiction in the Appendix D tables of CDS-1600 through CDS-2000 and Appendix G of CDS-1500 (ACCC, TGA, FSANZ, EESS/ERAC, ACMA, Energy Rating, Safe Work Australia, NTC, APVMA; WorkSafe NZ, RSM, MPI; FDA, FTC, CPSC, FCC, OEHHA, CARB, USDA, TTB; EUR-Lex, ECHA, EPREL; GOV.UK and legislation.gov.uk, OPSS, HSE, VMD; Health Canada, CFIA, NRCan, ISED, Competition Bureau), each entry marked verified, retrieved or unverified as at 2026-09-20.
